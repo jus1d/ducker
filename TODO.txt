@@ -1,0 +1,20 @@
+commands to release:
+ # anti @everyone tag               | 
+ # welcome message                  | 
+ -command for easy oinging bot      | done
+ -channelid                         | done
+ -invitelink                        | done
+ -addreactions                      | 
+ -writeme                           | 
+ -userinfo                          | done
+ -clear                             | 
+ -mute                              | 
+ -help                              | 
+ -help <command>                    | 
+ -avatarurl <user>                  | done
+ -kick <user>                       | ?
+
+ ======================
+
+ TASKS:
+ -
