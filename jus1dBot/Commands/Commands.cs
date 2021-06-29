@@ -20,19 +20,7 @@ namespace jus1dBot
         {
             msg.Channel.SendMessageAsync("pong");
         }
-
-        // response
-        [Command("response")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task Resonse(CommandContext msg)
-        {
-            var interactivity = msg.Client.GetInteractivity();
-
-            var message = await interactivity.WaitForMessageAsync(x => x.Channel == msg.Channel).ConfigureAwait(false);
-
-            await msg.Channel.SendMessageAsync(message.Result.Content);
-        }
-
+        
         // -channelid
         [Command("channelid")]
         [Description("Returns current channel ID")]
@@ -44,7 +32,7 @@ namespace jus1dBot
             msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
         }
         [Command("channelid")]
-        [Description("Returns current channel ID")]
+        [Description("Returns tagged channel ID")]
         public async Task ChannelID(CommandContext msg, DiscordChannel channel)
         {
             if(msg.Channel.Name != "bot-commands")
