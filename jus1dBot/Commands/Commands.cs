@@ -117,7 +117,17 @@ namespace jus1dBot
         [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task UserAvatar(CommandContext msg, DiscordMember user)
         {
-            msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}");
+            msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
         }
+        
+        // -clearallchannels
+        /*[Command("clearallchannels")]
+        [RequireRoles(RoleCheckMode.All, "admin")]
+        public async Task ClearAllChannels(CommandContext msg)
+        {
+            msg.Guild.DeleteAllChannelsAsync().ConfigureAwait(false);
+        }*/
+        
+        
     }
 }
