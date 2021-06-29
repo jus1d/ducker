@@ -12,7 +12,7 @@ namespace jus1dBot
 {
     public class Commands : BaseCommandModule
     {
-        //pinging
+        // pinging
         [Command("ping")]
         [Description("returns pong")]
         [RequireRoles(RoleCheckMode.All, "admin")]
@@ -21,7 +21,7 @@ namespace jus1dBot
             msg.Channel.SendMessageAsync("pong");
         }
 
-        //response
+        // response
         [Command("response")]
         [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task Resonse(CommandContext msg)
