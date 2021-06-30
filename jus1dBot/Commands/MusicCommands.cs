@@ -38,6 +38,7 @@ namespace jus1dBot
             
             await node.ConnectAsync(channel);
         }
+        
         [Command("join")]
         [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task Join(CommandContext msg, DiscordChannel channel)
@@ -91,6 +92,7 @@ namespace jus1dBot
             await conn.DisconnectAsync();
             await msg.Channel.SendMessageAsync($"Left {channel.Name}!");
         }
+        
         [Command("quit")]
         [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task Quit(CommandContext msg)
@@ -160,6 +162,7 @@ namespace jus1dBot
 
             await msg.Channel.SendMessageAsync($"Now playing {track.Title}!");
         }
+        
         [Command("play")]
         public async Task Play(CommandContext msg, Uri url)
         {
@@ -219,6 +222,7 @@ namespace jus1dBot
             await conn.PauseAsync();
         }
 
+        // -stop
         [Command("stop")]
         public async Task Stop(CommandContext msg)
         {
