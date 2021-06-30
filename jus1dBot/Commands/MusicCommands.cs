@@ -30,9 +30,9 @@ namespace jus1dBot
             
             var node = lava.ConnectedNodes.Values.First();
             
-            if (msg.Member.VoiceState.Channel == null)
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice");
+                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
                 return;
             }
             
@@ -51,9 +51,9 @@ namespace jus1dBot
             
             var node = lava.ConnectedNodes.Values.First();
             
-            if (msg.Member.VoiceState == null)
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("U are not in a voice");
+                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
                 return;
             }
             
