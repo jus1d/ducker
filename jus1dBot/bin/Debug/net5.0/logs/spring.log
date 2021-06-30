@@ -601,3 +601,5 @@ Identify and stop the process that's listening on port 2333 or configure this ap
 2021-06-30 21:25:30.896  INFO 16700 --- [XNIO-1 task-54] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:53620
 2021-06-30 21:25:39.904  INFO 16700 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"sessionId":"cb8717ff187aa3c01b78f6caf71eaf9f","event":{"token":"9aa041d784de8768","guild_id":"859567445298774077","endpoint":"russia3575.discord.media:443"},"op":"voiceUpdate","guildId":"859567445298774077"}
 2021-06-30 21:27:34.781  INFO 16700 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"sessionId":"cb8717ff187aa3c01b78f6caf71eaf9f","event":{"token":"7939f1fd4edf373c","guild_id":"696496218934608004","endpoint":"russia3325.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-06-30 21:35:53.003  INFO 16700 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53620 -- CloseStatus[code=1006, reason=]
+2021-06-30 21:35:53.003  INFO 16700 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
