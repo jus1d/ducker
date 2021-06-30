@@ -463,3 +463,14 @@ Identify and stop the process that's listening on port 2333 or configure this ap
 2021-06-30 17:38:31.876 ERROR 16700 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Authentication failed from /127.0.0.1:61010
 2021-06-30 17:38:49.562  INFO 16700 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:61018
 2021-06-30 17:38:49.606  INFO 16700 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:61018
+2021-06-30 17:43:03.361  INFO 16700 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:61018 -- CloseStatus[code=1006, reason=]
+2021-06-30 17:43:03.361  INFO 16700 --- [XNIO-1 I/O-10] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-06-30 17:44:06.102  INFO 16700 --- [XNIO-1 task-17] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58613
+2021-06-30 17:44:06.106  INFO 16700 --- [XNIO-1 task-17] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:58613
+2021-06-30 18:03:22.316  INFO 16700 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58613 -- CloseStatus[code=1006, reason=]
+2021-06-30 18:03:22.316  INFO 16700 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-06-30 18:03:26.389  INFO 16700 --- [XNIO-1 task-18] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56319
+2021-06-30 18:03:26.396  INFO 16700 --- [XNIO-1 task-18] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:56319
+2021-06-30 18:03:48.543  INFO 16700 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"sessionId":"88c8cc2c92de37935a0d3c97bdcfca94","event":{"token":"4a8dcac804c2b50e","guild_id":"859567445298774077","endpoint":"russia123.discord.media:443"},"op":"voiceUpdate","guildId":"859567445298774077"}
+2021-06-30 18:04:04.087  INFO 16700 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"sessionId":"88c8cc2c92de37935a0d3c97bdcfca94","event":{"token":"7eed05855a81c258","guild_id":"849010474133880854","endpoint":"russia8512.discord.media:443"},"op":"voiceUpdate","guildId":"849010474133880854"}
+2021-06-30 18:05:21.674  INFO 16700 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"sessionId":"88c8cc2c92de37935a0d3c97bdcfca94","event":{"token":"6ac64da5361f50e7","guild_id":"849010474133880854","endpoint":"russia2632.discord.media:443"},"op":"voiceUpdate","guildId":"849010474133880854"}
