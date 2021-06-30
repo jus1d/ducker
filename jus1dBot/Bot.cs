@@ -53,7 +53,7 @@ namespace jus1dBot
                 StringPrefixes = new string[] { configJson.Prefix },
                 EnableDms = false,
                 EnableMentionPrefix = true,
-                DmHelp = true,
+                DmHelp = true
             };
 
             commands = client.UseCommandsNext(commandsConfig);
@@ -65,6 +65,12 @@ namespace jus1dBot
 
         private Task OnClientReady(DiscordClient c, ReadyEventArgs e)
         {
+            var activity = new DiscordActivity
+            {
+                ActivityType = ActivityType.Playing,
+                Name = "with ducks | -help",
+            };
+            client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
         }
     }
