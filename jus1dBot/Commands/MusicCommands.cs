@@ -163,7 +163,7 @@ namespace jus1dBot
         [Command("play")]
         public async Task Play(CommandContext msg, Uri url)
         {
-            Join(msg);
+            await Join(msg);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
@@ -223,7 +223,7 @@ namespace jus1dBot
         public async Task Stop(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
-            Quit(msg, channel);
+            await Quit(msg, channel);
         }
     }
 }
