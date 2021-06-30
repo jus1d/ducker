@@ -65,5 +65,68 @@ namespace jus1dBot
             await conn.DisconnectAsync();
             await msg.RespondAsync($"Left {channel.Name}!");
         }
+
+        [Command("play")]
+        public async Task Play(CommandContext msg, [RemainingText] string search)
+        {
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await msg.RespondAsync("You are not in a voice channel.");
+                return;
+            }
+
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+
+            if (conn == null)
+            {
+                await msg.RespondAsync("Lavalink is not connected.");
+                return;
+            }
+
+            var loadResult = await node.Rest.GetTracksAsync(search);
+
+            if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed 
+                || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
+            {
+                await msg.RespondAsync($"Track search failed for {search}.");
+                return;
+            }
+
+            var track = loadResult.Tracks.First();
+
+            await conn.PlayAsync(track);
+
+            await msg.RespondAsync($"Now playing {track.Title}!");
+        }
+        
+        [Command("pause")]
+        public async Task Pause(CommandContext msg)
+        {
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await msg.RespondAsync("You are not in a voice channel.");
+                return;
+            }
+
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+
+            if (conn == null)
+            {
+                await msg.RespondAsync("Lavalink is not connected.");
+                return;
+            }
+
+            if (conn.CurrentState.CurrentTrack == null)
+            {
+                await msg.RespondAsync("There are no tracks loaded.");
+                return;
+            }
+
+            await conn.PauseAsync();
+        }
     }
 }
