@@ -116,6 +116,17 @@ namespace jus1dBot
             msg.Guild.DeleteAllChannelsAsync().ConfigureAwait(false);
         }*/
         
-        
+        // -writeme
+        [Command("writeme")]
+        public async Task WriteMe(CommandContext msg, params string[] text)
+        {
+            string textForSend = "";
+            
+            for (int i = 0; i < text.Length; i++)
+            {
+                textForSend = textForSend + " " + text[i];
+            }
+            msg.Member.SendMessageAsync(textForSend);
+        }
     }
 }
