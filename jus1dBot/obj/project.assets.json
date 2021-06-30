@@ -56,6 +56,18 @@
           "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {}
         }
       },
+      "DSharpPlus.Lavalink/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "DSharpPlus": "4.0.1"
+        },
+        "compile": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
+        }
+      },
       "Emzi0767.Common/2.6.1": {
         "type": "package",
         "dependencies": {
@@ -1287,6 +1299,19 @@
         "dsharpplus.interactivity.nuspec",
         "lib/netstandard2.0/DSharpPlus.Interactivity.dll",
         "lib/netstandard2.0/DSharpPlus.Interactivity.xml"
+      ]
+    },
+    "DSharpPlus.Lavalink/4.0.1": {
+      "sha512": "hiUzLdTQBUQ5U9ISp+jW6FvwOiRCitLm6/E7akFgatZRpXlyI1wg40PRAd8vanEa8eeIwxQDDD7gTDx+Yur0cg==",
+      "type": "package",
+      "path": "dsharpplus.lavalink/4.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dsharpplus.lavalink.4.0.1.nupkg.sha512",
+        "dsharpplus.lavalink.nuspec",
+        "lib/netstandard2.0/DSharpPlus.Lavalink.dll",
+        "lib/netstandard2.0/DSharpPlus.Lavalink.xml"
       ]
     },
     "Emzi0767.Common/2.6.1": {
@@ -4252,7 +4277,8 @@
     "net5.0": [
       "DSharpPlus >= 4.0.1",
       "DSharpPlus.CommandsNext >= 4.0.1",
-      "DSharpPlus.Interactivity >= 4.0.1"
+      "DSharpPlus.Interactivity >= 4.0.1",
+      "DSharpPlus.Lavalink >= 4.0.1"
     ]
   },
   "packageFolders": {
@@ -4308,6 +4334,10 @@
             "version": "[4.0.1, )"
           },
           "DSharpPlus.Interactivity": {
+            "target": "Package",
+            "version": "[4.0.1, )"
+          },
+          "DSharpPlus.Lavalink": {
             "target": "Package",
             "version": "[4.0.1, )"
           }

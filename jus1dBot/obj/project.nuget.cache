@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "mRnZLsD1shhIJb8yV/7rTfXr9bM9abt8paMJtl+HJXzuLxv/pfSC+DPUGySVccIMC0q6uHN9Qn34DwT1qVt9Fg==",
+  "dgSpecHash": "8ps22ybpAEpnSiOa3E8NgksUSDow4WXAWhbM69sA9z92RO3aOqeRa3oAs7ZZMt0latI22rSmdmBQ33h2SCnLTQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Artem\\Documents\\CODE\\C#\\jus1dBot\\jus1dBot\\jus1dBot.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\Artem\\.nuget\\packages\\dsharpplus\\4.0.1\\dsharpplus.4.0.1.nupkg.sha512",
     "C:\\Users\\Artem\\.nuget\\packages\\dsharpplus.commandsnext\\4.0.1\\dsharpplus.commandsnext.4.0.1.nupkg.sha512",
     "C:\\Users\\Artem\\.nuget\\packages\\dsharpplus.interactivity\\4.0.1\\dsharpplus.interactivity.4.0.1.nupkg.sha512",
+    "C:\\Users\\Artem\\.nuget\\packages\\dsharpplus.lavalink\\4.0.1\\dsharpplus.lavalink.4.0.1.nupkg.sha512",
     "C:\\Users\\Artem\\.nuget\\packages\\emzi0767.common\\2.6.1\\emzi0767.common.2.6.1.nupkg.sha512",
     "C:\\Users\\Artem\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\5.0.1\\microsoft.extensions.dependencyinjection.5.0.1.nupkg.sha512",
     "C:\\Users\\Artem\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\5.0.0\\microsoft.extensions.dependencyinjection.abstractions.5.0.0.nupkg.sha512",

@@ -55,6 +55,10 @@
             "DSharpPlus.Interactivity": {
               "target": "Package",
               "version": "[4.0.1, )"
+            },
+            "DSharpPlus.Lavalink": {
+              "target": "Package",
+              "version": "[4.0.1, )"
             }
           },
           "imports": [
