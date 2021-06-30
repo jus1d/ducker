@@ -129,7 +129,7 @@ namespace jus1dBot
         [Command("play")]
         public async Task Play(CommandContext msg, [RemainingText] string search)
         {
-            Join(msg);
+            await Join(msg);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
