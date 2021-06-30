@@ -4,7 +4,6 @@ commands to release:
  -command for easy oinging bot      | done
  -channelid                         | done
  -invitelink                        | done
- -addreactions                      | 
  -writeme                           | 
  -userinfo                          | done
  -clear                             | 
@@ -17,4 +16,4 @@ commands to release:
  ======================
 
  TASKS:
- -update README.md file             | 
+ -update README.md file             | done
