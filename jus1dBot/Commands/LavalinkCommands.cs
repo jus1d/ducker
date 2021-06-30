@@ -20,7 +20,7 @@ namespace jus1dBot
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await msg.RespondAsync("The Lavalink connection is not established");
+                await msg.RespondAsync("Connection is not established");
                 return;
             }
             
@@ -34,6 +34,36 @@ namespace jus1dBot
             
             await node.ConnectAsync(channel);
             await msg.Channel.SendMessageAsync($"Joined {channel.Name}!");
+        }
+
+        [Command("leave")]
+        public async Task Leave(CommandContext msg, DiscordChannel channel)
+        {
+            var lava = msg.Client.GetLavalink();
+            if (!lava.ConnectedNodes.Any())
+            {
+                await msg.RespondAsync("Connection is not established");
+                return;
+            }
+
+            var node = lava.ConnectedNodes.Values.First();
+
+            if (channel.Type != ChannelType.Voice)
+            {
+                await msg.RespondAsync("Not a valid voice channel.");
+                return;
+            }
+
+            var conn = node.GetGuildConnection(channel.Guild);
+
+            if (conn == null)
+            {
+                await msg.RespondAsync("I'm is not connected.");
+                return;
+            }
+
+            await conn.DisconnectAsync();
+            await msg.RespondAsync($"Left {channel.Name}!");
         }
     }
 }
