@@ -24,3 +24,4 @@ C:\Users\Artem\Documents\CODE\C#\jus1dBot\jus1dBot\obj\Debug\net5.0\jus1dBot.dll
 C:\Users\Artem\Documents\CODE\C#\jus1dBot\jus1dBot\obj\Debug\net5.0\ref\jus1dBot.dll
 C:\Users\Artem\Documents\CODE\C#\jus1dBot\jus1dBot\obj\Debug\net5.0\jus1dBot.pdb
 C:\Users\Artem\Documents\CODE\C#\jus1dBot\jus1dBot\obj\Debug\net5.0\jus1dBot.genruntimeconfig.cache
+C:\Users\Artem\Documents\CODE\C#\jus1dBot\jus1dBot\bin\Debug\net5.0\DSharpPlus.Lavalink.dll

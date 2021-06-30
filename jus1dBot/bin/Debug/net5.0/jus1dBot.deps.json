@@ -10,7 +10,8 @@
         "dependencies": {
           "DSharpPlus": "4.0.1",
           "DSharpPlus.CommandsNext": "4.0.1",
-          "DSharpPlus.Interactivity": "4.0.1"
+          "DSharpPlus.Interactivity": "4.0.1",
+          "DSharpPlus.Lavalink": "4.0.1"
         },
         "runtime": {
           "jus1dBot.dll": {}
@@ -61,6 +62,17 @@
         },
         "runtime": {
           "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {
+            "assemblyVersion": "4.0.1.0",
+            "fileVersion": "4.0.1.0"
+          }
+        }
+      },
+      "DSharpPlus.Lavalink/4.0.1": {
+        "dependencies": {
+          "DSharpPlus": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {
             "assemblyVersion": "4.0.1.0",
             "fileVersion": "4.0.1.0"
           }
@@ -739,6 +751,13 @@
       "sha512": "sha512-KUemYwZqzWJKQOJXclbQED72Hc85ySPwTkE7HFTAa4TlLCFGgPm59f7YXUCsF7QlvZcmKfxR9t+yD5/sRXDXWA==",
       "path": "dsharpplus.interactivity/4.0.1",
       "hashPath": "dsharpplus.interactivity.4.0.1.nupkg.sha512"
+    },
+    "DSharpPlus.Lavalink/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hiUzLdTQBUQ5U9ISp+jW6FvwOiRCitLm6/E7akFgatZRpXlyI1wg40PRAd8vanEa8eeIwxQDDD7gTDx+Yur0cg==",
+      "path": "dsharpplus.lavalink/4.0.1",
+      "hashPath": "dsharpplus.lavalink.4.0.1.nupkg.sha512"
     },
     "Emzi0767.Common/2.6.1": {
       "type": "package",
