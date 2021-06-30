@@ -36,8 +36,8 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync($"Joined {channel.Name}!");
         }
 
-        [Command("leave")]
-        public async Task Leave(CommandContext msg, DiscordChannel channel)
+        [Command("quit")]
+        public async Task Quit(CommandContext msg, DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
