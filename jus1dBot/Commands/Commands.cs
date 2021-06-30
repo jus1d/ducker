@@ -19,7 +19,7 @@ namespace jus1dBot
         [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task Ping(CommandContext msg)
         {
-            msg.Channel.SendMessageAsync("pong");
+            await msg.Channel.SendMessageAsync("pong");
         }
         
         // -channelid
@@ -30,7 +30,7 @@ namespace jus1dBot
             if(msg.Channel.Name != "bot-commands")
                 return;
             
-            msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
+            await msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
         }
         
         // -channelid <channel>
@@ -41,7 +41,7 @@ namespace jus1dBot
             if(msg.Channel.Name != "bot-commands")
                 return;
             
-            msg.Channel.SendMessageAsync($"{channel.Mention} channel ID: {channel.Id}").ConfigureAwait(false);
+            await msg.Channel.SendMessageAsync($"{channel.Mention} channel ID: {channel.Id}").ConfigureAwait(false);
         }
         
         // -channelid <text>
@@ -60,7 +60,7 @@ namespace jus1dBot
                 
             };
             
-            msg.Channel.SendMessageAsync(templateEmbed).ConfigureAwait(false);
+            await msg.Channel.SendMessageAsync(templateEmbed).ConfigureAwait(false);
         }
         
         // -invitelink
@@ -84,10 +84,10 @@ namespace jus1dBot
                 userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
             }
 
-            msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                         $"User ID: {user.Id}\n" +
-                                         $"Date account created: {userCreatedDate}\n" +
-                                         $"User's avatar URL: {user.AvatarUrl}");
+            await msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
+                                               $"User ID: {user.Id}\n" +
+                                               $"Date account created: {userCreatedDate}\n" +
+                                               $"User's avatar URL: {user.AvatarUrl}");
         }
         
         // -userinfo <user>
@@ -101,10 +101,10 @@ namespace jus1dBot
                 userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
             }
             
-            msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                         $"User ID: {user.Id}\n" +
-                                         $"Date account created: {userCreatedDate}\n" +
-                                         $"User's avatar URL: {user.AvatarUrl}");
+            await msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
+                                               $"User ID: {user.Id}\n" +
+                                               $"Date account created: {userCreatedDate}\n" +
+                                               $"User's avatar URL: {user.AvatarUrl}");
         }
         
         // -useravatar <user>
@@ -112,7 +112,7 @@ namespace jus1dBot
         [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task UserAvatar(CommandContext msg, DiscordMember user)
         {
-            msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
+            await msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
         }
         
         // -writeme <text>
@@ -125,7 +125,7 @@ namespace jus1dBot
             {
                 textForSend = textForSend + " " + text[i];
             }
-            msg.Member.SendMessageAsync(textForSend);
+            await msg.Member.SendMessageAsync(textForSend);
         }
         
         // -random <min> <max>
@@ -133,7 +133,17 @@ namespace jus1dBot
         public async Task Random(CommandContext msg, int minValue, int maxValue)
         {
             var rnd = new Random();
-            msg.Channel.SendMessageAsync($"Random number: {rnd.Next(minValue, maxValue + 1)}");
+            await msg.Channel.SendMessageAsync($"Random number: {rnd.Next(minValue, maxValue + 1)}");
+        }
+        
+        // -dice <dices>
+        [Command("dice")]
+        public async Task Dice(CommandContext msg, int dices = 1)
+        {
+            int result = 0;
+
+            int maxPossibleresult = dices * 6;
+            
         }
         
         // -clearallchannels
