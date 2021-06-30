@@ -11,7 +11,7 @@ using Microsoft.VisualBasic;
 
 namespace jus1dBot
 {
-    public class Commands : BaseCommandModule
+    public partial class Commands : BaseCommandModule
     {
         // pinging
         [Command("ping")]
