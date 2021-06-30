@@ -32,6 +32,8 @@ namespace jus1dBot
             
             msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
         }
+        
+        // -channelid <channel>
         [Command("channelid")]
         [Description("Returns tagged channel ID")]
         public async Task ChannelID(CommandContext msg, DiscordChannel channel)
@@ -41,6 +43,8 @@ namespace jus1dBot
             
             msg.Channel.SendMessageAsync($"{channel.Mention} channel ID: {channel.Id}").ConfigureAwait(false);
         }
+        
+        // -channelid <text>
         [Command("channelid")]
         [Description("Returns current channel ID")]
         public async Task ChannelID(CommandContext msg, params string[] parametres)
@@ -85,6 +89,8 @@ namespace jus1dBot
                                          $"Date account created: {userCreatedDate}\n" +
                                          $"User's avatar URL: {user.AvatarUrl}");
         }
+        
+        // -userinfo <user>
         [Command("userinfo")]
         public async Task UserInfo(CommandContext msg, DiscordMember user)
         {
@@ -101,7 +107,7 @@ namespace jus1dBot
                                          $"User's avatar URL: {user.AvatarUrl}");
         }
         
-        // -useravatar <@user>
+        // -useravatar <user>
         [Command("useravatar")]
         [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task UserAvatar(CommandContext msg, DiscordMember user)
@@ -117,7 +123,7 @@ namespace jus1dBot
             msg.Guild.DeleteAllChannelsAsync().ConfigureAwait(false);
         }*/
         
-        // -writeme
+        // -writeme <text>
         [Command("writeme")]
         public async Task WriteMe(CommandContext msg, params string[] text)
         {
