@@ -115,14 +115,6 @@ namespace jus1dBot
             msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
         }
         
-        // -clearallchannels
-        /*[Command("clearallchannels")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task ClearAllChannels(CommandContext msg)
-        {
-            msg.Guild.DeleteAllChannelsAsync().ConfigureAwait(false);
-        }*/
-        
         // -writeme <text>
         [Command("writeme")]
         public async Task WriteMe(CommandContext msg, params string[] text)
@@ -135,5 +127,21 @@ namespace jus1dBot
             }
             msg.Member.SendMessageAsync(textForSend);
         }
+        
+        // -random <min> <max>
+        [Command("random")]
+        public async Task Random(CommandContext msg, int minValue, int maxValue)
+        {
+            var rnd = new Random();
+            msg.Channel.SendMessageAsync($"Random number: {rnd.Next(minValue, maxValue + 1)}");
+        }
+        
+        // -clearallchannels
+        /*[Command("clearallchannels")]
+        [RequireRoles(RoleCheckMode.All, "admin")]
+        public async Task ClearAllChannels(CommandContext msg)
+        {
+            msg.Guild.DeleteAllChannelsAsync().ConfigureAwait(false);
+        }*/
     }
 }
