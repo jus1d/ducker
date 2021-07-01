@@ -15,7 +15,7 @@ namespace jus1dBot
     {
         // -channelid
         [Command("channelid")]
-        [Description("Returns tagged channel ID")]
+        [Description("Send you tagged (or bot-commands) channel ID")]
         public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
         {
             if(msg.Channel.Name != "bot-commands")
@@ -33,7 +33,8 @@ namespace jus1dBot
         
         // -channelid <text>
         [Command("channelid")]
-        [Description("Returns current channel ID")]
+        [Description("Send you tagged (or bot-commands) channel ID")]
+        
         public async Task ChannelID(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
         {
             if(msg.Channel.Name != "bot-commands")
