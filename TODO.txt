@@ -1,17 +1,18 @@
 commands to release:
- # anti @everyone tag                            | 
- # welcome message                               | 
+ # anti @everyone tag                            | IMPORTANT
+ # welcome message                               | IMPORTANT
  -command for easy oinging bot                   | done
  -channelid                                      | done
  -invitelink                                     | done
- -writeme                                        | 
+ -writeme                                        | done (hz zach)
  -userinfo                                       | done
  -clear                                          | 
  -mute                                           | 
- -help                                           | 
- -help <command>                                 | 
+ -help                                           | auto
+ -help <command>                                 | auto
  -avatarurl <user>                               | done
  -kick <user>                                    | ?
+ -add descriptions for all commands              | 2/3 (stayed music commands)
 
  ======================
 

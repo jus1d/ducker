@@ -240,3 +240,10 @@ com.sedmelluq.discord.lavaplayer.tools.FriendlyException: Unknown file format.
 2021-07-01 23:41:24.056  INFO 14308 --- [XNIO-1 task-55] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:хуй говно и муравей"
 2021-07-01 23:41:24.672  INFO 14308 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: хуй говно и муравей
 2021-07-01 23:41:24.681  INFO 14308 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"track":"QAAAqwIAJNCl0YPQuSwg0LPQvtCy0L3QviDQuCDQvNGD0YDQsNCy0LXQuQAt0JDQu9C10LrRgdCw0L3QtNGAINCb0LDRjdGA0YLRgdC60LjQuSAtIFRvcGljAAAAAAAB0NgAC3VJOWQzTzVOeVlrAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9dUk5ZDNPNU55WWsAB3lvdXR1YmUAAAAAAAAAAA==","op":"play","guildId":"859567445298774077"}
+2021-07-01 23:44:15.669  INFO 14308 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:50020 -- CloseStatus[code=1006, reason=]
+2021-07-01 23:44:15.669  INFO 14308 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-01 23:49:00.189  INFO 14308 --- [XNIO-1 task-57] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49545
+2021-07-01 23:49:00.193  INFO 14308 --- [XNIO-1 task-57] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:49545
+2021-07-01 23:49:12.102  INFO 14308 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : {"sessionId":"53beadff5a1e85d9fc79efca486db0c9","event":{"token":"d4c10681301ac944","guild_id":"696496218934608004","endpoint":"russia692.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-01 23:56:10.593  INFO 14308 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49545 -- CloseStatus[code=1006, reason=]
+2021-07-01 23:56:10.594  INFO 14308 --- [XNIO-1 I/O-9] lavalink.server.io.SocketContext         : Shutting down 0 playing players.

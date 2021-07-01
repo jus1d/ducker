@@ -52,6 +52,7 @@ namespace jus1dBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
+            // client.GuildMemberAdded += MemberAdded();
 
             var commandsConfig = new CommandsNextConfiguration
             {
@@ -94,6 +95,11 @@ namespace jus1dBot
             };
             client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
+        }
+
+        private async Task MemberAdded(DiscordGuild guild)
+        {
+            await guild.RulesChannel.SendMessageAsync($"hi");
         }
     }
 }
