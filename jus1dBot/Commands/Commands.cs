@@ -34,7 +34,7 @@ namespace jus1dBot
         // -channelid <text>
         [Command("channelid")]
         [Description("Returns current channel ID")]
-        public async Task ChannelID(CommandContext msg, params string[] parametres)
+        public async Task ChannelID(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
         {
             if(msg.Channel.Name != "bot-commands")
                 return;
