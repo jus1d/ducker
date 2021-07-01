@@ -43,9 +43,6 @@ namespace jus1dBot
             
             client = new DiscordClient(config);
 
-            var activity = "new DiscordActivity();";
-            
-            
             client.Ready += OnClientReady;
             client.UpdateStatusAsync();
             client.UseInteractivity(new InteractivityConfiguration

@@ -64,6 +64,50 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
         }
         
+        // -voicemute
+        [Command("voicemute")]
+        [RequireRoles(RoleCheckMode.All, "admin")]
+        [Description("Mute(voice) tagged user")]
+        public async Task VoiceMute(CommandContext msg, [Description("User, for mute")] DiscordMember user = null)
+        {
+            if (user == null)
+            {
+                var templateEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Template -voicemute:",
+                    Description = "-voicemute <user>\n",
+                    Color = DiscordColor.Azure
+                
+                };
+
+                msg.Channel.SendMessageAsync(templateEmbed);
+                return;
+            }
+            
+            user.SetMuteAsync(true);
+        }
         
+        // -voiceunmute
+        [Command("voiceunmute")]
+        [RequireRoles(RoleCheckMode.All, "admin")]
+        [Description("Unmute(voice) tagged user")]
+        public async Task VoiceUnmute(CommandContext msg, [Description("User, for unmute")] DiscordMember user = null)
+        {
+            if (user == null)
+            {
+                var templateEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Template -voiceunmute:",
+                    Description = "-voiceunmute <user>\n",
+                    Color = DiscordColor.Azure
+                
+                };
+
+                msg.Channel.SendMessageAsync(templateEmbed);
+                return;
+            }
+            
+            user.SetMuteAsync(false);
+        }
     }
 }
