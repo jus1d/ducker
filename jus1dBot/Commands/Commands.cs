@@ -54,6 +54,7 @@ namespace jus1dBot
         
         // -invitelink
         [Command("invitelink")]
+        [Description("Send you bot's invite link")]
         public async Task InviteLink(CommandContext msg)
         {
             var message = msg.Channel.SendMessageAsync($"Here your link, {msg.User.Mention}\n " +
@@ -62,7 +63,8 @@ namespace jus1dBot
 
         // -writeme <text>
         [Command("writeme")]
-        public async Task WriteMe(CommandContext msg, params string[] text)
+        [Description("Bot will type to you your text")]
+        public async Task WriteMe(CommandContext msg, [Description("your text")] params string[] text)
         {
             string textForSend = "";
             
@@ -75,7 +77,8 @@ namespace jus1dBot
         
         // -random <min> <max>
         [Command("random")]
-        public async Task Random(CommandContext msg, int minValue, int maxValue)
+        [Description("Send you randon value in your tange")]
+        public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")]int maxValue)
         {
             var rnd = new Random();
             await msg.Channel.SendMessageAsync($"Random number: {rnd.Next(minValue, maxValue + 1)}");
@@ -83,7 +86,8 @@ namespace jus1dBot
         
         // -dice <dices>
         [Command("dice")]
-        public async Task Dice(CommandContext msg, int dices = 1)
+        [Description("Send you random value, possible on dices")]
+        public async Task Dice(CommandContext msg, [Description("optinal dices amount")] int dices = 1)
         {
             int result = 0;
 
