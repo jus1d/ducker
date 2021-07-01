@@ -12,7 +12,7 @@ using Microsoft.VisualBasic;
 
 namespace jus1dBot
 {
-    public partial class Commands
+    public partial class Commands : BaseCommandModule
     {
         // -join
         [Command("join")]

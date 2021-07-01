@@ -13,15 +13,6 @@ namespace jus1dBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // pinging
-        [Command("ping")]
-        [Description("returns pong")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task Ping(CommandContext msg)
-        {
-            await msg.Channel.SendMessageAsync("pong");
-        }
-        
         // -channelid
         [Command("channelid")]
         [Description("Returns current channel ID")]
@@ -70,51 +61,7 @@ namespace jus1dBot
             var message = msg.Channel.SendMessageAsync($"Here your link, {msg.User.Mention}\n " +
                                                        $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot");
         }
-        
-        // -userinfo
-        [Command("userinfo")]
-        public async Task UserInfo(CommandContext msg)
-        {
-            var user = msg.User;
-            
-            string userCreatedDate = "";
-            
-            for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
-            {
-                userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
-            }
 
-            await msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                               $"User ID: {user.Id}\n" +
-                                               $"Date account created: {userCreatedDate}\n" +
-                                               $"User's avatar URL: {user.AvatarUrl}");
-        }
-        
-        // -userinfo <user>
-        [Command("userinfo")]
-        public async Task UserInfo(CommandContext msg, DiscordMember user)
-        {
-            string userCreatedDate = "";
-            
-            for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
-            {
-                userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
-            }
-            
-            await msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                               $"User ID: {user.Id}\n" +
-                                               $"Date account created: {userCreatedDate}\n" +
-                                               $"User's avatar URL: {user.AvatarUrl}");
-        }
-        
-        // -useravatar <user>
-        [Command("useravatar")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task UserAvatar(CommandContext msg, DiscordMember user)
-        {
-            await msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
-        }
-        
         // -writeme <text>
         [Command("writeme")]
         public async Task WriteMe(CommandContext msg, params string[] text)
