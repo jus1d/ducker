@@ -15,24 +15,20 @@ namespace jus1dBot
     {
         // -channelid
         [Command("channelid")]
-        [Description("Returns current channel ID")]
-        public async Task ChannelID(CommandContext msg)
-        {
-            if(msg.Channel.Name != "bot-commands")
-                return;
-            
-            await msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
-        }
-        
-        // -channelid <channel>
-        [Command("channelid")]
         [Description("Returns tagged channel ID")]
-        public async Task ChannelID(CommandContext msg, DiscordChannel channel)
+        public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
         {
             if(msg.Channel.Name != "bot-commands")
                 return;
-            
-            await msg.Channel.SendMessageAsync($"{channel.Mention} channel ID: {channel.Id}").ConfigureAwait(false);
+
+            if (channel == null)
+            {
+                await msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
+            }
+            else
+            {
+                await msg.Channel.SendMessageAsync($"{channel.Mention} channel ID: {channel.Id}").ConfigureAwait(false);
+            }
         }
         
         // -channelid <text>
@@ -46,7 +42,8 @@ namespace jus1dBot
             var templateEmbed = new DiscordEmbedBuilder
             {
                 Title = "Template -channelid:",
-                Description = "-channelid <channel>",
+                Description = "-channelid <channel>\n" +
+                              "for voice channels with emoji - use template: **-channelid <#id>**",
                 Color = DiscordColor.Azure
                 
             };
