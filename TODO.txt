@@ -7,7 +7,7 @@ commands to release:
  -writeme                                        | done (hz zach)
  -userinfo                                       | done
  -clear                                          | 
- -mute                                           | 
+ -mute                                           | 1/2 (stayed role-mute)
  -help                                           | auto
  -help <command>                                 | auto
  -avatarurl <user>                               | done
