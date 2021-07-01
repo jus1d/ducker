@@ -53,6 +53,7 @@ namespace jus1dBot
                 Timeout = TimeSpan.FromMinutes(2)
             });
             // client.GuildMemberAdded += MemberAdded();
+            // client.MessageCreated += MessageCreated();
 
             var commandsConfig = new CommandsNextConfiguration
             {
