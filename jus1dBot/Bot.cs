@@ -95,9 +95,14 @@ namespace jus1dBot
             return Task.CompletedTask;
         }
 
-        private async Task MemberAdded(DiscordGuild guild)
+        private async Task MessageCreated(DiscordMessage msg)
         {
-            await guild.RulesChannel.SendMessageAsync($"hi");
+            
+        }
+        
+        private async Task MemberAdded(DiscordMessage msg)
+        {
+            
         }
     }
 }

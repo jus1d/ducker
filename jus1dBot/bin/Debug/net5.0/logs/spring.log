@@ -18,3 +18,9 @@
 2021-07-02 02:03:37.342  INFO 14308 --- [XNIO-1 task-62] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:60631
 2021-07-02 02:06:00.701  INFO 14308 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60631 -- CloseStatus[code=1006, reason=]
 2021-07-02 02:06:00.701  INFO 14308 --- [XNIO-1 I/O-7] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-02 02:20:48.692  INFO 14308 --- [XNIO-1 task-63] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50582
+2021-07-02 02:20:48.696  INFO 14308 --- [XNIO-1 task-63] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:50582
+2021-07-02 02:35:58.547  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"838e0b1dfc08f436ba1e30041c89117f","event":{"token":"545debecbb491893","guild_id":"696496218934608004","endpoint":"russia2945.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-02 02:39:41.696  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op":"destroy","guildId":"696496218934608004"}
+2021-07-02 02:39:54.723  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"838e0b1dfc08f436ba1e30041c89117f","event":{"token":"0cdd583d2f2f4017","guild_id":"696496218934608004","endpoint":"russia4171.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-02 02:40:32.517  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"838e0b1dfc08f436ba1e30041c89117f","event":{"token":"0cdd583d2f2f4017","guild_id":"696496218934608004","endpoint":"russia490.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
