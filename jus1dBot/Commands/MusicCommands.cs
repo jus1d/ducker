@@ -121,10 +121,30 @@ namespace jus1dBot
         
         // -play
         [Command("play")]
+        public async Task Play(CommandContext msg, Uri url)
+        {
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                return;
+            }
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (conn == null)
+            {
+                await msg.Channel.SendMessageAsync("ya is not connected.");
+                return;
+            }
+            var loadResult = await node.Rest.GetTracksAsync(url);
+            var track = loadResult.Tracks.First();
+            await conn.PlayAsync(track);
+            await msg.Channel.SendMessageAsync($"Now playing {track.Title}!\n {url}");
+        }
+        
+        [Command("play")]
         public async Task Play(CommandContext msg, [RemainingText] string search)
         {
-            await Join(msg);
-            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
@@ -155,36 +175,6 @@ namespace jus1dBot
             await conn.PlayAsync(track);
 
             await msg.Channel.SendMessageAsync($"Now playing {track.Title}!");
-        }
-        
-        [Command("play")]
-        public async Task Play(CommandContext msg, Uri url)
-        {
-            await Join(msg);
-            
-            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
-            {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
-                return;
-            }
-
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-
-            if (conn == null)
-            {
-                await msg.Channel.SendMessageAsync("ya is not connected.");
-                return;
-            }
-
-            var loadResult = await node.Rest.GetTracksAsync(url);
-
-            var track = loadResult.Tracks.First();
-
-            await conn.PlayAsync(track);
-
-            await msg.Channel.SendMessageAsync($"Now playing {track.Title}!\n {url}");
         }
         
         // -pause
