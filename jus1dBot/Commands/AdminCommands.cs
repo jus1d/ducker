@@ -19,8 +19,9 @@ namespace jus1dBot
         
         // -userinfo
         [Command("userinfo")]
-        [Description("Command seng you information about tagged user, or you")]
-        public async Task UserInfo(CommandContext msg, [Description("User,for this command")] DiscordMember user = null)
+        [RequireRoles(RoleCheckMode.All, "admin")]
+        [Description("Bot will send you information about tagged user, or you")]
+        public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
         {
             if (user == null)
             {
@@ -57,7 +58,8 @@ namespace jus1dBot
         // -useravatar
         [Command("useravatar")]
         [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task UserAvatar(CommandContext msg, DiscordMember user)
+        [Description("Bot will send you URL of tagged user's avatar")]
+        public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user)
         {
             await msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
         }
