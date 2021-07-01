@@ -16,7 +16,7 @@ namespace jus1dBot
     {
         // -join
         [Command("join")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        // [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task Join(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -57,7 +57,7 @@ namespace jus1dBot
 
         // -quit
         [Command("quit")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        // [RequireRoles(RoleCheckMode.All, "admin")]
         public async Task Quit(CommandContext msg, DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
