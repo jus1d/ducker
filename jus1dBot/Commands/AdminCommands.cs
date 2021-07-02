@@ -119,6 +119,7 @@ namespace jus1dBot
         public async Task Ban(CommandContext msg, DiscordMember user)
         {
             user.Guild.BanMemberAsync(user);
+            
         }
     }
 }
