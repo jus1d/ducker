@@ -51,6 +51,7 @@ namespace jus1dBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
+            
             client.MessageCreated += async (args, msg ) =>
             {
                 Console.WriteLine(msg.Message);
