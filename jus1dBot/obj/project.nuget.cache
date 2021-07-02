@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8ps22ybpAEpnSiOa3E8NgksUSDow4WXAWhbM69sA9z92RO3aOqeRa3oAs7ZZMt0latI22rSmdmBQ33h2SCnLTQ==",
+  "dgSpecHash": "nyAAJUo3tBUqH0WW9KpjTQsZVlbPpkM5h224FbLD8DLJDXpnmPiQJbFfwCg7//woKDxffXOaiCCVHbLUVvg9Zg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Artem\\Documents\\CODE\\C#\\jus1dBot\\jus1dBot\\jus1dBot.csproj",
+  "projectFilePath": "C:\\Users\\Artem\\Documents\\CODE\\jus1dBot\\jus1dBot\\jus1dBot.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Artem\\.nuget\\packages\\concurrenthashset\\1.1.0\\concurrenthashset.1.1.0.nupkg.sha512",
     "C:\\Users\\Artem\\.nuget\\packages\\dsharpplus\\4.0.1\\dsharpplus.4.0.1.nupkg.sha512",
