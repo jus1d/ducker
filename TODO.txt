@@ -1,20 +1,21 @@
 commands to release:
- # anti @everyone tag               | 
- # welcome message                  | 
- -command for easy oinging bot      | done
- -channelid                         | done
- -invitelink                        | done
- -addreactions                      | 
- -writeme                           | 
- -userinfo                          | done
- -clear                             | 
- -mute                              | 
- -help                              | 
- -help <command>                    | 
- -avatarurl <user>                  | done
- -kick <user>                       | ?
+ # anti @everyone tag                            | IMPORTANT
+ # welcome message                               | IMPORTANT
+ -command for easy oinging bot                   | done
+ -channelid                                      | done
+ -invitelink                                     | done
+ -writeme                                        | done (hz zach)
+ -userinfo                                       | done
+ -clear                                          | 
+ -mute                                           | 1/2 (stayed role-mute)
+ -help                                           | auto
+ -help <command>                                 | auto
+ -avatarurl <user>                               | done
+ -kick <user>                                    | ?
+ -add descriptions for all commands              | 2/3 (stayed music commands)
 
  ======================
 
  TASKS:
- -
+ -update README.md file                          | done
+ -custom status (playing with ducks | -help)     | done
