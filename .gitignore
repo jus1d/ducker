@@ -1,2 +1,6 @@
 jus1dBot/bin/Debug/net5.0/config.json
 Bot.lnk
+.idea/
+.vs/
+jus1dBot/bin/
+jus1dBot/obj/
