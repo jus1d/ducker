@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -108,6 +109,16 @@ namespace jus1dBot
             }
             
             user.SetMuteAsync(false);
+        }
+        
+        // -ban
+        [Command("ban")]
+        // [RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("")]
+        public async Task Ban(CommandContext msg, DiscordMember user)
+        {
+            user.Guild.BanMemberAsync(user);
         }
     }
 }
