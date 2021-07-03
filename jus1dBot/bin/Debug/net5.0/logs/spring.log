@@ -1,26 +1,44 @@
-2021-07-02 01:47:09.294  INFO 14308 --- [XNIO-1 task-58] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58902
-2021-07-02 01:47:09.331  INFO 14308 --- [XNIO-1 task-58] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:58902
-2021-07-02 01:50:01.600  INFO 14308 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58902 -- CloseStatus[code=1006, reason=]
-2021-07-02 01:50:01.601  INFO 14308 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2021-07-02 01:50:06.564  INFO 14308 --- [XNIO-1 task-59] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64189
-2021-07-02 01:50:06.571  INFO 14308 --- [XNIO-1 task-59] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64189
-2021-07-02 01:51:51.139  INFO 14308 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64189 -- CloseStatus[code=1006, reason=]
-2021-07-02 01:51:51.139  INFO 14308 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2021-07-02 01:51:55.831  INFO 14308 --- [XNIO-1 task-60] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:53511
-2021-07-02 01:51:55.834  INFO 14308 --- [XNIO-1 task-60] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:53511
-2021-07-02 02:02:43.351  INFO 14308 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:53511 -- CloseStatus[code=1006, reason=]
-2021-07-02 02:02:43.351  INFO 14308 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2021-07-02 02:02:49.121  INFO 14308 --- [XNIO-1 task-61] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60621
-2021-07-02 02:02:49.125  INFO 14308 --- [XNIO-1 task-61] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:60621
-2021-07-02 02:03:32.659  INFO 14308 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60621 -- CloseStatus[code=1006, reason=]
-2021-07-02 02:03:32.660  INFO 14308 --- [XNIO-1 I/O-9] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2021-07-02 02:03:37.338  INFO 14308 --- [XNIO-1 task-62] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60631
-2021-07-02 02:03:37.342  INFO 14308 --- [XNIO-1 task-62] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:60631
-2021-07-02 02:06:00.701  INFO 14308 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60631 -- CloseStatus[code=1006, reason=]
-2021-07-02 02:06:00.701  INFO 14308 --- [XNIO-1 I/O-7] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
-2021-07-02 02:20:48.692  INFO 14308 --- [XNIO-1 task-63] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:50582
-2021-07-02 02:20:48.696  INFO 14308 --- [XNIO-1 task-63] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:50582
-2021-07-02 02:35:58.547  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"838e0b1dfc08f436ba1e30041c89117f","event":{"token":"545debecbb491893","guild_id":"696496218934608004","endpoint":"russia2945.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
-2021-07-02 02:39:41.696  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op":"destroy","guildId":"696496218934608004"}
-2021-07-02 02:39:54.723  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"838e0b1dfc08f436ba1e30041c89117f","event":{"token":"0cdd583d2f2f4017","guild_id":"696496218934608004","endpoint":"russia4171.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
-2021-07-02 02:40:32.517  INFO 14308 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"838e0b1dfc08f436ba1e30041c89117f","event":{"token":"0cdd583d2f2f4017","guild_id":"696496218934608004","endpoint":"russia490.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-03 16:39:12.257  INFO 10848 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        2ac6bf4e0dcab9ba7493b0494316b8bee698913d-SNAPSHOT
+	Build:          1232
+	Build time:     20.04.2021 07:05:21 UTC
+	Branch          master
+	Commit:         2ac6bf4
+	Commit time:    20.04.2021 07:02:46 UTC
+	JVM:            16.0.1
+	Lavaplayer      1.3.76
+
+2021-07-03 16:39:12.335  INFO 10848 --- [main] o.s.boot.SpringApplication               : 
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.1.8.RELEASE)
+
+
+2021-07-03 16:39:12.492  INFO 10848 --- [main] lavalink.server.Launcher                 : Starting Launcher on Artem with PID 10848 (C:\Users\Artem\Documents\CODE\C#\jus1dBot\jus1dBot\bin\Debug\net5.0\Lavalink.jar started by Artem in C:\Users\Artem\Documents\CODE\C#\jus1dBot\jus1dBot\bin\Debug\net5.0)
+2021-07-03 16:39:12.493  INFO 10848 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2021-07-03 16:39:12.551  WARN 10848 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2021-07-03 16:39:14.024  WARN 10848 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2021-07-03 16:39:14.070  INFO 10848 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2021-07-03 16:39:14.070  INFO 10848 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1520 ms
+2021-07-03 16:39:14.491  WARN 10848 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2021-07-03 16:39:14.904  INFO 10848 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2021-07-03 16:39:15.191  INFO 10848 --- [main] lavalink.server.config.KoeConfiguration  : OS: Windows 10, Arch: amd64
+2021-07-03 16:39:15.191  WARN 10848 --- [main] lavalink.server.config.KoeConfiguration  : This system and architecture appears to not support native audio sending! GC pauses may cause your bot to stutter during playback.
+2021-07-03 16:39:15.478  INFO 10848 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2021-07-03 16:39:15.880  INFO 10848 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2021-07-03 16:39:15.903  INFO 10848 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2021-07-03 16:39:16.005  INFO 10848 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 2333 (http) with context path ''
+2021-07-03 16:39:16.011  INFO 10848 --- [main] lavalink.server.Launcher                 : Started Launcher in 4.801 seconds (JVM running for 6.112)
+2021-07-03 16:39:16.013  INFO 10848 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
