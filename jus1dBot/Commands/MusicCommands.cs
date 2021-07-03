@@ -20,7 +20,7 @@ namespace jus1dBot
         // -join
         [Command("join")]
         [RequirePermissions(Permissions.Administrator)]
-        [Description(("Bot joined to your voice channel"))]
+        [Description(("bot joined to your voice channel"))]
         public async Task Join(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -46,7 +46,7 @@ namespace jus1dBot
         // -join channel
         [Command("join")]
         [RequireRoles(RoleCheckMode.All, "admin")]
-        [Description("Bot joined to tagged voice channel")]
+        [Description("bot joined to tagged voice channel")]
         public async Task Join(CommandContext msg, [Description("voice channel")] DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
@@ -64,6 +64,7 @@ namespace jus1dBot
         // -quit
         [Command("quit")]
         [RequirePermissions(Permissions.Administrator)]
+        [Description("bot quit from your channel")]
         public async Task Quit(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -97,7 +98,8 @@ namespace jus1dBot
         // -quit channel
         [Command("quit")]
         [RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(CommandContext msg, DiscordChannel channel)
+        [Description("bot quit from tagged channel")]
+        public async Task Quit(CommandContext msg, [Description("voice channel to quit")] DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
@@ -127,7 +129,7 @@ namespace jus1dBot
         
         // -play url
         [Command("play")]
-        [Description("Bot joined to your voice, and playing video or track by your search query")]
+        [Description("bot joined to your voice, and playing video or track by your search query")]
         [Aliases("p")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
@@ -158,7 +160,8 @@ namespace jus1dBot
         
         // -play search
         [Command("play")]
-        [Description("Bot joined to your voice and playing video by your search query")]
+        [Description("bot joined to your voice and playing video by your search query")]
+        [Aliases("p")]
         public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -201,6 +204,7 @@ namespace jus1dBot
         
         // -play (resume)
         [Command("play")]
+        [Description("resume playing music")]
         public async Task Play(CommandContext msg)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -233,6 +237,7 @@ namespace jus1dBot
         
         // -pause
         [Command("pause")]
+        [Description("pause playing music")]
         public async Task Pause(CommandContext msg)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -265,6 +270,7 @@ namespace jus1dBot
 
         // -stop
         [Command("stop")]
+        [Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
             if (msg.Channel.Name != MusicChannelName)

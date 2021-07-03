@@ -119,3 +119,5 @@
 2021-07-03 20:22:21.577  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
 2021-07-03 20:22:26.096  INFO 10848 --- [XNIO-1 task-24] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56790
 2021-07-03 20:22:26.099  INFO 10848 --- [XNIO-1 task-24] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:56790
+2021-07-03 20:35:26.909  INFO 10848 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56790 -- CloseStatus[code=1006, reason=]
+2021-07-03 20:35:26.910  INFO 10848 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
