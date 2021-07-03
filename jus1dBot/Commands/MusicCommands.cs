@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -121,8 +122,12 @@ namespace jus1dBot
         
         // -play
         [Command("play")]
-        public async Task Play(CommandContext msg, Uri url)
+        [Description("Bot joined to your voice, and playing video or track by your search query")]
+        public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
+            Join(msg);
+            Thread.Sleep(500);
+            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
@@ -143,8 +148,12 @@ namespace jus1dBot
         }
         
         [Command("play")]
-        public async Task Play(CommandContext msg, [RemainingText] string search)
+        [Description("Bot joined to your voice and playing video by your search query")]
+        public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
+            Join(msg);
+            Thread.Sleep(500);
+
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
