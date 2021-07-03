@@ -170,13 +170,18 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync(templateEmbed).ConfigureAwait(false);
         }
         
-        // -test
-        [Command("test")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        [Description("test command for devs")]
-        public async Task TestCommand(CommandContext msg)
+        // -clone
+        [Command("clone"), Description("clone channel"), RequirePermissions(Permissions.Administrator)]
+        public async Task TestCommand(CommandContext msg, [Description("channel to clone")] DiscordChannel channel = null)
         {
-            msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":kissing_heart:"));
+            if (channel == null)
+            {
+                msg.Channel.CloneAsync();
+            }
+            else
+            {
+                channel.CloneAsync();
+            }
         }
     }
 }
