@@ -15,6 +15,8 @@ namespace jus1dBot
 {
     public partial class Commands : BaseCommandModule
     {
+        private string MusicChannelName = "🎶music";
+        
         // -join
         [Command("join")]
         [RequirePermissions(Permissions.Administrator)]
@@ -41,6 +43,7 @@ namespace jus1dBot
             await node.ConnectAsync(channel);
         }
         
+        // -join channel
         [Command("join")]
         [RequireRoles(RoleCheckMode.All, "admin")]
         [Description("Bot joined to tagged voice channel")]
@@ -59,36 +62,6 @@ namespace jus1dBot
         }
 
         // -quit
-        [Command("quit")]
-        [RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(CommandContext msg, DiscordChannel channel)
-        {
-            var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-            {
-                await msg.Channel.SendMessageAsync("Connection is not established");
-                return;
-            }
-
-            var node = lava.ConnectedNodes.Values.First();
-
-            if (channel.Type != ChannelType.Voice)
-            {
-                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
-                return;
-            }
-
-            var conn = node.GetGuildConnection(channel.Guild);
-
-            if (conn == null)
-            {
-                await msg.Channel.SendMessageAsync("I'm is not connected.");
-                return;
-            }
-
-            await conn.DisconnectAsync();
-        }
-
         [Command("quit")]
         [RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
@@ -121,11 +94,46 @@ namespace jus1dBot
             await conn.DisconnectAsync();
         }
         
+        // -quit channel
+        [Command("quit")]
+        [RequirePermissions(Permissions.Administrator)]
+        public async Task Quit(CommandContext msg, DiscordChannel channel)
+        {
+            var lava = msg.Client.GetLavalink();
+            if (!lava.ConnectedNodes.Any())
+            {
+                await msg.Channel.SendMessageAsync("Connection is not established");
+                return;
+            }
+
+            var node = lava.ConnectedNodes.Values.First();
+
+            if (channel.Type != ChannelType.Voice)
+            {
+                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
+                return;
+            }
+
+            var conn = node.GetGuildConnection(channel.Guild);
+
+            if (conn == null)
+            {
+                await msg.Channel.SendMessageAsync("I'm is not connected.");
+                return;
+            }
+
+            await conn.DisconnectAsync();
+        }
+        
         // -play url
         [Command("play")]
         [Description("Bot joined to your voice, and playing video or track by your search query")]
+        [Aliases("p")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
+            if (msg.Channel.Name != MusicChannelName)
+                return;
+            
             Join(msg);
             Thread.Sleep(1000);
             
@@ -153,6 +161,9 @@ namespace jus1dBot
         [Description("Bot joined to your voice and playing video by your search query")]
         public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
+            if (msg.Channel.Name != MusicChannelName)
+                return;
+            
             Join(msg);
             Thread.Sleep(1000);
 
@@ -188,10 +199,13 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync($"Now playing {track.Title}!");
         }
         
-        // -play resume
+        // -play (resume)
         [Command("play")]
         public async Task Play(CommandContext msg)
         {
+            if (msg.Channel.Name != MusicChannelName)
+                return;
+            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
@@ -221,6 +235,9 @@ namespace jus1dBot
         [Command("pause")]
         public async Task Pause(CommandContext msg)
         {
+            if (msg.Channel.Name != MusicChannelName)
+                return;
+            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
@@ -250,6 +267,9 @@ namespace jus1dBot
         [Command("stop")]
         public async Task Stop(CommandContext msg)
         {
+            if (msg.Channel.Name != MusicChannelName)
+                return;
+            
             DiscordChannel channel = msg.Member.VoiceState.Channel;
             await Quit(msg, channel);
         }

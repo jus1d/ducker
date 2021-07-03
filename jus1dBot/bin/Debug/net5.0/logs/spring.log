@@ -47,3 +47,75 @@
 2021-07-03 19:23:10.402  INFO 10848 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 26 ms
 2021-07-03 19:23:10.434  INFO 10848 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:61044
 2021-07-03 19:23:10.518  INFO 10848 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:61044
+2021-07-03 19:26:08.256  INFO 10848 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:61044 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:26:08.257  INFO 10848 --- [XNIO-1 I/O-12] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 19:26:12.330  INFO 10848 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58963
+2021-07-03 19:26:12.333  INFO 10848 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:58963
+2021-07-03 19:26:17.735  INFO 10848 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58963 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:26:17.736  INFO 10848 --- [XNIO-1 I/O-7] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 19:26:23.568  INFO 10848 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:58969
+2021-07-03 19:26:23.570  INFO 10848 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:58969
+2021-07-03 19:29:43.124  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"sessionId":"f881886550993a24218663ec4a1b7bc6","event":{"token":"a422c87e7aa2c922","guild_id":"849010474133880854","endpoint":"russia266.discord.media:443"},"op":"voiceUpdate","guildId":"849010474133880854"}
+2021-07-03 19:29:43.836  INFO 10848 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=ipKa7zzdtjw&ab_channel=Loony"
+2021-07-03 19:29:44.607  INFO 10848 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track I Survived 5000 Days in Hardcore Minecraft - The Movie
+2021-07-03 19:29:44.638  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"track":"QAAAlQIANkkgU3Vydml2ZWQgNTAwMCBEYXlzIGluIEhhcmRjb3JlIE1pbmVjcmFmdCAtIFRoZSBNb3ZpZQAFTG9vbnkAAAAAABoTyAALaXBLYTd6emR0ancAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1pcEthN3p6ZHRqdwAHeW91dHViZQAAAAAAAAAA","op":"play","guildId":"849010474133880854"}
+2021-07-03 19:29:53.744  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"pause":true,"op":"pause","guildId":"849010474133880854"}
+2021-07-03 19:30:01.768  INFO 10848 --- [XNIO-1 task-6] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=O3hY11e9Hnw&list=PLQOaTSbfxUtD6kMmAYc8Fooqya3pjLs1N&index=91&ab_channel=%23SimpleCode"
+2021-07-03 19:30:02.187  INFO 10848 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist C# ????? | C# ?? ??????? ? ?????????????
+2021-07-03 19:30:02.211  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"track":"QAAAxgIAYUMjINCe0KIg0J3QntCS0JjQp9Ca0JAg0Jog0J/QoNCe0KTQldCh0KHQmNCe0J3QkNCb0KMgfCDQniDQmtCj0KDQodCVINCYINCf0JvQkNCd0JDQpSDQmtCQ0J3QkNCb0JAACyNTaW1wbGVDb2RlAAAAAAAIvkgAC0t5RldxYlJmV0lBAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9S3lGV3FiUmZXSUEAB3lvdXR1YmUAAAAAAAAAAA==","op":"play","guildId":"849010474133880854"}
+2021-07-03 19:37:43.736  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"sessionId":"f881886550993a24218663ec4a1b7bc6","event":{"token":"ab26e93f82d01f35","guild_id":"696496218934608004","endpoint":"russia431.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-03 19:37:44.012  INFO 10848 --- [XNIO-1 task-8] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=Q-nFYbjYBJ8&ab_channel=AlekseyFedulov"
+2021-07-03 19:37:44.405  INFO 10848 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track ???? ????????? Luftwaffe March(unofficial)
+2021-07-03 19:37:44.408  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"track":"QAAAoAIAN9Cc0LDRgNGIINCb0Y7RhNGC0LLQsNGE0YTQtSBMdWZ0d2FmZmUgTWFyY2godW5vZmZpY2lhbCkAD0FsZWtzZXkgRmVkdWxvdgAAAAAAAyiYAAtRLW5GWWJqWUJKOAABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PVEtbkZZYmpZQko4AAd5b3V0dWJlAAAAAAAAAAA=","op":"play","guildId":"696496218934608004"}
+2021-07-03 19:38:50.126  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"pause":true,"op":"pause","guildId":"696496218934608004"}
+2021-07-03 19:39:04.190  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"pause":false,"op":"pause","guildId":"696496218934608004"}
+2021-07-03 19:39:22.163  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"pause":true,"op":"pause","guildId":"696496218934608004"}
+2021-07-03 19:40:24.987  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:58969 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:40:24.987  INFO 10848 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 19:40:28.879  INFO 10848 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52614
+2021-07-03 19:40:28.882  INFO 10848 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:52614
+2021-07-03 19:42:07.889  INFO 10848 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52614 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:42:07.889  INFO 10848 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 19:43:32.986  INFO 10848 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52697
+2021-07-03 19:43:32.989  INFO 10848 --- [XNIO-1 task-11] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:52697
+2021-07-03 19:44:52.207  INFO 10848 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52697 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:44:52.208  INFO 10848 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 19:44:56.290  INFO 10848 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52702
+2021-07-03 19:44:56.292  INFO 10848 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:52702
+2021-07-03 19:45:58.185  INFO 10848 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52702 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:45:58.185  INFO 10848 --- [XNIO-1 I/O-10] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 19:46:18.327  INFO 10848 --- [XNIO-1 task-13] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:52716
+2021-07-03 19:46:18.330  INFO 10848 --- [XNIO-1 task-13] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:52716
+2021-07-03 19:48:11.013  INFO 10848 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:52716 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:48:11.014  INFO 10848 --- [XNIO-1 I/O-12] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 19:49:02.557  INFO 10848 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60758
+2021-07-03 19:49:02.560  INFO 10848 --- [XNIO-1 task-14] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:60758
+2021-07-03 19:49:43.967  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"6b83ad88c33579fd28488d2865c656a0","event":{"token":"21405fe8d446e102","guild_id":"696496218934608004","endpoint":"russia431.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-03 19:49:44.225  INFO 10848 --- [XNIO-1 task-15] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "ytsearch:???"
+2021-07-03 19:49:44.887  INFO 10848 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: ???
+2021-07-03 19:49:44.908  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"track":"QAAAbAIABtCl0YPQuQAMTm9ndSBTdmVsw7MhAAAAAAADHOAACy1CY2RXSmxOZENJAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9LUJjZFdKbE5kQ0kAB3lvdXR1YmUAAAAAAAAAAA==","op":"play","guildId":"696496218934608004"}
+2021-07-03 19:50:48.579  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op":"destroy","guildId":"696496218934608004"}
+2021-07-03 19:51:39.333  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60758 -- CloseStatus[code=1006, reason=]
+2021-07-03 19:51:39.334  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 20:13:57.744  INFO 10848 --- [XNIO-1 task-17] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62955
+2021-07-03 20:13:57.751  INFO 10848 --- [XNIO-1 task-17] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:62955
+2021-07-03 20:16:20.118  INFO 10848 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62955 -- CloseStatus[code=1006, reason=]
+2021-07-03 20:16:20.119  INFO 10848 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 20:16:24.851  INFO 10848 --- [XNIO-1 task-18] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65393
+2021-07-03 20:16:24.855  INFO 10848 --- [XNIO-1 task-18] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65393
+2021-07-03 20:20:13.648  INFO 10848 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65393 -- CloseStatus[code=1006, reason=]
+2021-07-03 20:20:13.649  INFO 10848 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2021-07-03 20:20:18.161  INFO 10848 --- [XNIO-1 task-19] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64502
+2021-07-03 20:20:18.165  INFO 10848 --- [XNIO-1 task-19] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64502
+2021-07-03 20:20:43.819  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"0b339ffdd36fb6435c359a0fedc4460f","event":{"token":"66b8ab44bfe51ac7","guild_id":"696496218934608004","endpoint":"russia431.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-03 20:20:44.523  INFO 10848 --- [XNIO-1 task-20] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=w_1GiwDvwlk&ab_channel=?????????????"
+2021-07-03 20:20:45.012  INFO 10848 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track ????? ???????
+2021-07-03 20:20:45.029  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"track":"QAAAjgIAGdCh0JDQm9CQ0Jwg0JDQm9CV0JnQmtCj0JwAG9CQ0LvQtdC60YHQtdC5INCo0LXQstGG0L7QsgAAAAAACY1QAAt3XzFHaXdEdndsawABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXdfMUdpd0R2d2xrAAd5b3V0dWJlAAAAAAAAAAA=","op":"play","guildId":"696496218934608004"}
+2021-07-03 20:20:52.636  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"sessionId":"0b339ffdd36fb6435c359a0fedc4460f","event":{"token":"023fe5495c2bbcd7","guild_id":"696496218934608004","endpoint":"russia431.discord.media:443"},"op":"voiceUpdate","guildId":"696496218934608004"}
+2021-07-03 20:20:53.234  INFO 10848 --- [XNIO-1 task-22] l.server.player.AudioLoaderRestHandler   : Got request to load for identifier "https://www.youtube.com/watch?v=w_1GiwDvwlk&ab_channel=?????????????"
+2021-07-03 20:20:53.686  INFO 10848 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track ????? ???????
+2021-07-03 20:20:53.691  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"track":"QAAAjgIAGdCh0JDQm9CQ0Jwg0JDQm9CV0JnQmtCj0JwAG9CQ0LvQtdC60YHQtdC5INCo0LXQstGG0L7QsgAAAAAACY1QAAt3XzFHaXdEdndsawABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PXdfMUdpd0R2d2xrAAd5b3V0dWJlAAAAAAAAAAA=","op":"play","guildId":"696496218934608004"}
+2021-07-03 20:22:21.576  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64502 -- CloseStatus[code=1006, reason=]
+2021-07-03 20:22:21.577  INFO 10848 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2021-07-03 20:22:26.096  INFO 10848 --- [XNIO-1 task-24] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:56790
+2021-07-03 20:22:26.099  INFO 10848 --- [XNIO-1 task-24] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:56790

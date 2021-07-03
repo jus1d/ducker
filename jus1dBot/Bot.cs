@@ -60,8 +60,6 @@ namespace jus1dBot
             
             client.MessageCreated += async (args, msg ) =>
             {
-                Console.WriteLine(msg.Message);
-
                 DiscordMember member = (DiscordMember)msg.Author;
                 
                 if (msg.Message.MentionEveryone)
