@@ -61,16 +61,7 @@ namespace jus1dBot
                                                    $"User's avatar URL: {user.AvatarUrl}");
             }
         }
-        
-        // -useravatar
-        [Command("useravatar")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("Bot will send you URL of tagged user's avatar")]
-        public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user)
-        {
-            await msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}").ConfigureAwait(false);
-        }
-        
+
         // -voicemute
         [Command("voicemute")]
         [RequirePermissions(Permissions.Administrator)]
@@ -124,6 +115,58 @@ namespace jus1dBot
         public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
         {
             user.Guild.BanMemberAsync(user);
+        }
+        
+        // -channelid
+        [Command("channelid")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("Send you tagged (or bot-commands) channel ID")]
+        public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
+        {
+            if (channel == null)
+            {
+                var Embed = new DiscordEmbedBuilder
+                {
+                    Title = "Channel ID",
+                    Description = $"{msg.Channel.Mention} channel ID: {msg.Channel.Id}",
+                    Color = DiscordColor.Azure
+                };
+                
+                await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
+            }
+            else
+            {
+                var Embed = new DiscordEmbedBuilder
+                {
+                    Title = "Channel ID",
+                    Description = $"{channel.Mention} channel ID: {channel.Id}",
+                    Color = DiscordColor.Azure
+                };
+                
+                await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
+            }
+        }
+        
+        // -channelid <text>
+        [Command("channelid")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("Send you tagged (or bot-commands) channel ID")]
+        
+        public async Task ChannelID(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
+        {
+            if(msg.Channel.Name != "bot-commands")
+                return;
+
+            var templateEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Template -channelid:",
+                Description = "-channelid <channel>\n" +
+                              "for voice channels with emoji - use template: **-channelid <#id>**",
+                Color = DiscordColor.Azure
+                
+            };
+            
+            await msg.Channel.SendMessageAsync(templateEmbed).ConfigureAwait(false);
         }
         
         // -test

@@ -13,43 +13,19 @@ namespace jus1dBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // -channelid
-        [Command("channelid")]
-        [Description("Send you tagged (or bot-commands) channel ID")]
-        public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
+        // -useravatar
+        [Command("useravatar")]
+        [Description("Bot will send you URL of tagged user's avatar")]
+        public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user)
         {
-            if(msg.Channel.Name != "bot-commands")
-                return;
-
-            if (channel == null)
+            var Embed = new DiscordEmbedBuilder
             {
-                await msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
-            }
-            else
-            {
-                await msg.Channel.SendMessageAsync($"{channel.Mention} channel ID: {channel.Id}").ConfigureAwait(false);
-            }
-        }
-        
-        // -channelid <text>
-        [Command("channelid")]
-        [Description("Send you tagged (or bot-commands) channel ID")]
-        
-        public async Task ChannelID(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
-        {
-            if(msg.Channel.Name != "bot-commands")
-                return;
-
-            var templateEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Template -channelid:",
-                Description = "-channelid <channel>\n" +
-                              "for voice channels with emoji - use template: **-channelid <#id>**",
+                Title = "User avatar",
+                Description = $"{user.Mention}'s avatar: {user.AvatarUrl}",
                 Color = DiscordColor.Azure
-                
             };
             
-            await msg.Channel.SendMessageAsync(templateEmbed).ConfigureAwait(false);
+            await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
         }
         
         // -invitelink
@@ -57,8 +33,14 @@ namespace jus1dBot
         [Description("Send you bot's invite link")]
         public async Task InviteLink(CommandContext msg)
         {
-            var message = msg.Channel.SendMessageAsync($"Here your link, {msg.User.Mention}\n " +
-                                                       $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot");
+            var Embed = new DiscordEmbedBuilder
+            {
+                Title = "Invite Link",
+                Description = $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot \n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Azure
+            };
+            
+            msg.Channel.SendMessageAsync(Embed);
         }
 
         // -writeme <text>
@@ -81,18 +63,13 @@ namespace jus1dBot
         public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")]int maxValue)
         {
             var rnd = new Random();
-            await msg.Channel.SendMessageAsync($"Random number: {rnd.Next(minValue, maxValue + 1)}");
-        }
-        
-        // -dice <dices>
-        [Command("dice")]
-        [Description("Send you random value, possible on dices")]
-        public async Task Dice(CommandContext msg, [Description("optinal dices amount")] int dices = 1)
-        {
-            int result = 0;
-
-            int maxPossibleresult = dices * 6;
-            
+            var Embed = new DiscordEmbedBuilder
+            {
+                Title = "Random number",
+                Description = $"Random number: **{rnd.Next(minValue, maxValue + 1)}** [for {msg.Member.Mention}]",
+                Color = DiscordColor.Azure
+            };
+            await msg.Channel.SendMessageAsync(Embed);
         }
     }
 }
