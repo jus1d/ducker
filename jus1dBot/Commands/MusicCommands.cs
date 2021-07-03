@@ -17,6 +17,7 @@ namespace jus1dBot
     {
         // -join
         [Command("join")]
+        //[RequireRoles(RoleCheckMode.All, "admin")]
         [Description(("Bot joined to your voice channel"))]
         public async Task Join(CommandContext msg)
         {
@@ -85,7 +86,7 @@ namespace jus1dBot
             }
 
             await conn.DisconnectAsync();
-            await msg.Channel.SendMessageAsync($"Left {channel.Name}!");
+            await msg.Channel.SendMessageAsync($"Left {channel.Mention}!");
         }
         
         [Command("quit")]
@@ -118,15 +119,16 @@ namespace jus1dBot
             }
 
             await conn.DisconnectAsync();
+            await msg.Channel.SendMessageAsync($"Left {channel.Mention}!");
         }
         
-        // -play
+        // -play url
         [Command("play")]
         [Description("Bot joined to your voice, and playing video or track by your search query")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
             Join(msg);
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
@@ -147,12 +149,13 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync($"Now playing {track.Title}!\n {url}");
         }
         
+        // -play search
         [Command("play")]
         [Description("Bot joined to your voice and playing video by your search query")]
         public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
             Join(msg);
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
@@ -184,6 +187,35 @@ namespace jus1dBot
             await conn.PlayAsync(track);
 
             await msg.Channel.SendMessageAsync($"Now playing {track.Title}!");
+        }
+        
+        // -play resume
+        [Command("play")]
+        public async Task Play(CommandContext msg)
+        {
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                return;
+            }
+
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+
+            if (conn == null)
+            {
+                await msg.Channel.SendMessageAsync("Lavalink is not connected.");
+                return;
+            }
+
+            if (conn.CurrentState.CurrentTrack == null)
+            {
+                await msg.Channel.SendMessageAsync("There are no tracks loaded.");
+                return;
+            }
+
+            await conn.ResumeAsync();
         }
         
         // -pause
