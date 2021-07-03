@@ -126,7 +126,7 @@ namespace jus1dBot
         [Description("test command for devs")]
         public async Task TestCommand(CommandContext msg)
         {
-            
+            msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":kissing_heart:"));
         }
     }
 }

@@ -19,6 +19,7 @@ commands to release:
  TASKS:
  -update README.md file                          | done
  -custom status (playing with ducks | -help)     | done
+ -create embeds respond messages for all commands| 
 
  ==============================================================================================================
 

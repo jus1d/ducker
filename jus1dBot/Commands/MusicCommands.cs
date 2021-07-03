@@ -154,7 +154,15 @@ namespace jus1dBot
             var loadResult = await node.Rest.GetTracksAsync(url);
             var track = loadResult.Tracks.First();
             await conn.PlayAsync(track);
-            await msg.Channel.SendMessageAsync($"Now playing {track.Title}!\n {url}");
+            
+            var playEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Now playing",
+                Description = track.Title + $"\nURL: {url} \n[ordered by {msg.Member.Mention}]",
+                Color = DiscordColor.Azure
+            };
+            
+            await msg.Channel.SendMessageAsync(playEmbed);
         }
         
         // -play search
@@ -196,8 +204,15 @@ namespace jus1dBot
             var track = loadResult.Tracks.First();
 
             await conn.PlayAsync(track);
+            
+            var playEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Now playing",
+                Description = track.Title + $"\nURL: {track.Uri} \n[ordered by {msg.Member.Mention}]",
+                Color = DiscordColor.Azure
+            };
 
-            await msg.Channel.SendMessageAsync($"Now playing {track.Title}!");
+            await msg.Channel.SendMessageAsync(playEmbed);
         }
         
         // -play (resume)
