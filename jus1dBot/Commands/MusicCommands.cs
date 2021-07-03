@@ -16,6 +16,7 @@ namespace jus1dBot
     {
         // -join
         [Command("join")]
+        [Description(("Bot joined to your voice channel"))]
         public async Task Join(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -40,7 +41,8 @@ namespace jus1dBot
         
         [Command("join")]
         [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task Join(CommandContext msg, DiscordChannel channel)
+        [Description("Bot joined to tagged voice channel")]
+        public async Task Join(CommandContext msg, [Description("voice channel")] DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
