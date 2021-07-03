@@ -130,7 +130,6 @@ namespace jus1dBot
         // -play url
         [Command("play")]
         [Description("bot joined to your voice, and playing video or track by your search query")]
-        [Aliases("p")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -161,7 +160,6 @@ namespace jus1dBot
         // -play search
         [Command("play")]
         [Description("bot joined to your voice and playing video by your search query")]
-        [Aliases("p")]
         public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
             if (msg.Channel.Name != MusicChannelName)
