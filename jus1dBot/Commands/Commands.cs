@@ -5,119 +5,71 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Lavalink;
 using DSharpPlus.Interactivity.Extensions;
 using Microsoft.VisualBasic;
 
 namespace jus1dBot
 {
-    public class Commands : BaseCommandModule
+    public partial class Commands : BaseCommandModule
     {
-        //pinging
-        [Command("ping")]
-        [Description("returns pong")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task Ping(CommandContext msg)
+        // -useravatar
+        [Command("useravatar")]
+        [Description("Bot will send you URL of tagged user's avatar")]
+        public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user)
         {
-            msg.Channel.SendMessageAsync("pong");
-        }
-
-        //response
-        [Command("response")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task Resonse(CommandContext msg)
-        {
-            var interactivity = msg.Client.GetInteractivity();
-
-            var message = await interactivity.WaitForMessageAsync(x => x.Channel == msg.Channel).ConfigureAwait(false);
-
-            await msg.Channel.SendMessageAsync(message.Result.Content);
-        }
-
-        // -channelid
-        [Command("channelid")]
-        [Description("Returns current channel ID")]
-        public async Task ChannelID(CommandContext msg)
-        {
-            if(msg.Channel.Name != "bot-commands")
-                return;
-            
-            msg.Channel.SendMessageAsync(msg.Channel.Id.ToString()).ConfigureAwait(false);
-        }
-        [Command("channelid")]
-        [Description("Returns current channel ID")]
-        public async Task ChannelID(CommandContext msg, DiscordChannel channel)
-        {
-            if(msg.Channel.Name != "bot-commands")
-                return;
-            
-            msg.Channel.SendMessageAsync($"{channel.Mention} channel ID: {channel.Id}").ConfigureAwait(false);
-        }
-        [Command("channelid")]
-        [Description("Returns current channel ID")]
-        public async Task ChannelID(CommandContext msg, params string[] parametres)
-        {
-            if(msg.Channel.Name != "bot-commands")
-                return;
-
-            var templateEmbed = new DiscordEmbedBuilder
+            var Embed = new DiscordEmbedBuilder
             {
-                Title = "Template -channelid:",
-                Description = "-channelid <channel>",
+                Title = "User avatar",
+                Description = $"{user.Mention}'s avatar: {user.AvatarUrl}",
                 Color = DiscordColor.Azure
-                
             };
             
-            msg.Channel.SendMessageAsync(templateEmbed).ConfigureAwait(false);
+            await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
         }
         
         // -invitelink
         [Command("invitelink")]
+        [Description("Send you bot's invite link")]
         public async Task InviteLink(CommandContext msg)
         {
-            var message = msg.Channel.SendMessageAsync($"Here your link, {msg.User.Mention}\n " +
-                                                       $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot");
-        }
-        
-        // -userinfo
-        [Command("userinfo")]
-        public async Task UserInfo(CommandContext msg)
-        {
-            var user = msg.User;
-            
-            string userCreatedDate = "";
-            
-            for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
+            var Embed = new DiscordEmbedBuilder
             {
-                userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
-            }
+                Title = "Invite Link",
+                Description = $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot \n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Azure
+            };
+            
+            msg.Channel.SendMessageAsync(Embed);
+        }
 
-            msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                         $"User ID: {user.Id}\n" +
-                                         $"Date account created: {userCreatedDate}\n" +
-                                         $"User's avatar URL: {user.AvatarUrl}");
-        }
-        [Command("userinfo")]
-        public async Task UserInfo(CommandContext msg, DiscordMember user)
+        // -writeme <text>
+        [Command("writeme")]
+        [Description("Bot will type to you your text")]
+        public async Task WriteMe(CommandContext msg, [Description("your text")] params string[] text)
         {
-            string userCreatedDate = "";
+            string textForSend = "";
             
-            for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
+            for (int i = 0; i < text.Length; i++)
             {
-                userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
+                textForSend = textForSend + " " + text[i];
             }
-            
-            msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                         $"User ID: {user.Id}\n" +
-                                         $"Date account created: {userCreatedDate}\n" +
-                                         $"User's avatar URL: {user.AvatarUrl}");
+            await msg.Member.SendMessageAsync(textForSend);
         }
         
-        // -useravatar <@user>
-        [Command("useravatar")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task UserAvatar(CommandContext msg, DiscordMember user)
+        // -random <min> <max>
+        [Command("random")]
+        [Description("Send you randon value in your tange")]
+        public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")]int maxValue)
         {
-            msg.Channel.SendMessageAsync($"{user.Mention}'s avatar URL: {user.AvatarUrl}");
+            var rnd = new Random();
+            var Embed = new DiscordEmbedBuilder
+            {
+                Title = "Random number",
+                Description = $"Random number: **{rnd.Next(minValue, maxValue + 1)}** [for {msg.Member.Mention}]",
+                Color = DiscordColor.Azure
+            };
+            await msg.Channel.SendMessageAsync(Embed);
         }
     }
 }
