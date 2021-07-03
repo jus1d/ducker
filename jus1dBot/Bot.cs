@@ -54,7 +54,6 @@ namespace jus1dBot
             });
             client.GuildMemberAdded += async (args, member) =>
             {
-                Thread.Sleep(1000);
                 await member.Member.SendMessageAsync($"Hello");
             };
             
