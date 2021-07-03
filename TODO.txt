@@ -1,18 +1,18 @@
 commands to release:
  # anti @everyone tag                              | 1/2 done (stay require admin perms)
- # welcome message                                 | IMPORTANT
+ # welcome message                                 | IMPORTANT ?
  -command for easy oinging bot                     | done
  -channelid                                        | done
  -invitelink                                       | done
  -writeme                                          | done (hz zach)
  -userinfo                                         | done
- -clear                                            | 
+ -clear                                            | ?
  -mute                                             | 1/2 done (stay role-mute)
  -help                                             | auto
  -help <command>                                   | auto
  -avatarurl <user>                                 | done
  -kick <user>                                      | ?
- -add descriptions for all commands                | 2/3 done (stay music commands)
+ -add descriptions for all commands                | done
 
  ==============================================================================================================
 
