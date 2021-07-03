@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -51,6 +52,11 @@ namespace jus1dBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
+            client.GuildMemberAdded += async (args, member) =>
+            {
+                Thread.Sleep(1000);
+                await member.Member.SendMessageAsync($"Hello");
+            };
             
             client.MessageCreated += async (args, msg ) =>
             {
