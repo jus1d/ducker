@@ -1,21 +1,29 @@
 commands to release:
- # anti @everyone tag                            | IMPORTANT
- # welcome message                               | IMPORTANT
- -command for easy oinging bot                   | done
- -channelid                                      | done
- -invitelink                                     | done
- -writeme                                        | done (hz zach)
- -userinfo                                       | done
- -clear                                          | 
- -mute                                           | 1/2 (stayed role-mute)
- -help                                           | auto
- -help <command>                                 | auto
- -avatarurl <user>                               | done
- -kick <user>                                    | ?
- -add descriptions for all commands              | 2/3 (stayed music commands)
+ # anti @everyone tag                              | 1/2 done (stay require admin perms)
+ # welcome message                                 | IMPORTANT
+ -command for easy oinging bot                     | done
+ -channelid                                        | done
+ -invitelink                                       | done
+ -writeme                                          | done (hz zach)
+ -userinfo                                         | done
+ -clear                                            | 
+ -mute                                             | 1/2 done (stay role-mute)
+ -help                                             | auto
+ -help <command>                                   | auto
+ -avatarurl <user>                                 | done
+ -kick <user>                                      | ?
+ -add descriptions for all commands                | 2/3 done (stay music commands)
 
- ======================
+ ==============================================================================================================
 
  TASKS:
- -update README.md file                          | done
- -custom status (playing with ducks | -help)     | done
+ -update README.md file                            | done
+ -custom status (playing with ducks | -help)       | done
+ -create embeds respond messages for all commands  | 
+
+ ==============================================================================================================
+
+ TO FIX, FINALIZE:
+ -commands                                         | 
+ -adminCommands                                    | 
+ -musicCommands                                    | 

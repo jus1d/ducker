@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -51,18 +52,24 @@ namespace jus1dBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
+            client.GuildMemberAdded += async (args, member) =>
+            {
+                await member.Member.SendMessageAsync($"Hello");
+            };
+            
             client.MessageCreated += async (args, msg ) =>
             {
-                Console.WriteLine(msg.Message);
-
                 DiscordMember member = (DiscordMember)msg.Author;
                 
                 if (msg.Message.MentionEveryone)
                 {
-                    if (msg.Message.Author.IsBot)
+                    if (msg.Message.Author.IsBot) // ignore bots
                         return;
                     
-                    if (member.IsOwner)
+                    if (member.IsOwner) // ignore owner
+                        return;
+                    
+                    if (member.Id == 857687574281453598) // ignore itakashi
                         return;
                     
                     await msg.Message.DeleteAsync();
