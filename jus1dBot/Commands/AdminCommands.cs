@@ -114,10 +114,19 @@ namespace jus1dBot
         // -ban
         [Command("ban")]
         [RequirePermissions(Permissions.Administrator)]
-        [Description("")]
-        public async Task Ban(CommandContext msg, DiscordMember user)
+        [Description("banned mentioned user")]
+        public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
         {
             user.Guild.BanMemberAsync(user);
+        }
+        
+        // -test
+        [Command("test")]
+        [RequireRoles(RoleCheckMode.All, "admin")]
+        [Description("test command for devs")]
+        public async Task TestCommand(CommandContext msg)
+        {
+            
         }
     }
 }
