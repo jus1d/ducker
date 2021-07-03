@@ -75,6 +75,17 @@ namespace jus1dBot
                     await msg.Message.DeleteAsync();
                     await msg.Message.Channel.SendMessageAsync($"не тегай");
                 }
+                else if (msg.Message.Content == "а нахуй")
+                {
+                    var Embed = new DiscordEmbedBuilder
+                    {
+                        Title = "А я ебу?",
+                        Description = "не ебу.",
+                        Color = DiscordColor.Azure
+                    };
+            
+                    msg.Channel.SendMessageAsync(Embed);
+                }
             };
 
             var commandsConfig = new CommandsNextConfiguration
