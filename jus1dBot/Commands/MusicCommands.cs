@@ -17,7 +17,7 @@ namespace jus1dBot
     {
         // -join
         [Command("join")]
-        //[RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
         [Description(("Bot joined to your voice channel"))]
         public async Task Join(CommandContext msg)
         {
@@ -60,6 +60,7 @@ namespace jus1dBot
 
         // -quit
         [Command("quit")]
+        [RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg, DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
@@ -86,11 +87,10 @@ namespace jus1dBot
             }
 
             await conn.DisconnectAsync();
-            await msg.Channel.SendMessageAsync($"Left {channel.Mention}!");
         }
-        
+
         [Command("quit")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -119,7 +119,6 @@ namespace jus1dBot
             }
 
             await conn.DisconnectAsync();
-            await msg.Channel.SendMessageAsync($"Left {channel.Mention}!");
         }
         
         // -play url
