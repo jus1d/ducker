@@ -42,3 +42,8 @@
 2021-07-03 16:39:16.005  INFO 10848 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 2333 (http) with context path ''
 2021-07-03 16:39:16.011  INFO 10848 --- [main] lavalink.server.Launcher                 : Started Launcher in 4.801 seconds (JVM running for 6.112)
 2021-07-03 16:39:16.013  INFO 10848 --- [main] lavalink.server.Launcher                 : You can safely ignore the big red warning about illegal reflection. See https://github.com/freyacodes/Lavalink/issues/295
+2021-07-03 19:23:10.371  INFO 10848 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-07-03 19:23:10.376  INFO 10848 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2021-07-03 19:23:10.402  INFO 10848 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 26 ms
+2021-07-03 19:23:10.434  INFO 10848 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:61044
+2021-07-03 19:23:10.518  INFO 10848 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:61044
