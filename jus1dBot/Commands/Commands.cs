@@ -94,15 +94,5 @@ namespace jus1dBot
             int maxPossibleresult = dices * 6;
             
         }
-        
-        
-        
-        // -clearallchannels
-        /*[Command("clearallchannels")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        public async Task ClearAllChannels(CommandContext msg)
-        {
-            msg.Guild.DeleteAllChannelsAsync().ConfigureAwait(false);
-        }*/
     }
 }

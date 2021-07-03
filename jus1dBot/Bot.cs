@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
@@ -49,8 +52,33 @@ namespace jus1dBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
-            // client.GuildMemberAdded += MemberAdded();
-            // client.MessageCreated += MessageCreated();
+            client.GuildMemberAdded += async (args, member) =>
+            {
+                Thread.Sleep(1000);
+                await member.Member.SendMessageAsync($"Hello");
+            };
+            
+            client.MessageCreated += async (args, msg ) =>
+            {
+                Console.WriteLine(msg.Message);
+
+                DiscordMember member = (DiscordMember)msg.Author;
+                
+                if (msg.Message.MentionEveryone)
+                {
+                    if (msg.Message.Author.IsBot) // ignore bots
+                        return;
+                    
+                    if (member.IsOwner) // ignore owner
+                        return;
+                    
+                    if (member.Id == 857687574281453598) // ignore itakashi
+                        return;
+                    
+                    await msg.Message.DeleteAsync();
+                    await msg.Message.Channel.SendMessageAsync($"не тегай");
+                }
+            };
 
             var commandsConfig = new CommandsNextConfiguration
             {
@@ -93,16 +121,6 @@ namespace jus1dBot
             };
             client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
-        }
-
-        private async Task MessageCreated(DiscordMessage msg)
-        {
-            
-        }
-        
-        private async Task MemberAdded(DiscordMessage msg)
-        {
-            
         }
     }
 }

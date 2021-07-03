@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
@@ -11,7 +12,7 @@ namespace jus1dBot
         // pinging
         [Command("ping")]
         [Description("returns pong")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
         public async Task Ping(CommandContext msg)
         {
             await msg.Channel.SendMessageAsync("pong");
@@ -19,7 +20,7 @@ namespace jus1dBot
         
         // -userinfo
         [Command("userinfo")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
         [Description("Bot will send you information about tagged user, or you")]
         public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
         {
@@ -57,7 +58,7 @@ namespace jus1dBot
         
         // -useravatar
         [Command("useravatar")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
         [Description("Bot will send you URL of tagged user's avatar")]
         public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user)
         {
@@ -66,7 +67,7 @@ namespace jus1dBot
         
         // -voicemute
         [Command("voicemute")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
         [Description("Mute(voice) tagged user")]
         public async Task VoiceMute(CommandContext msg, [Description("User, for mute")] DiscordMember user = null)
         {
@@ -89,7 +90,7 @@ namespace jus1dBot
         
         // -voiceunmute
         [Command("voiceunmute")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
+        [RequirePermissions(Permissions.Administrator)]
         [Description("Unmute(voice) tagged user")]
         public async Task VoiceUnmute(CommandContext msg, [Description("User, for unmute")] DiscordMember user = null)
         {
@@ -108,6 +109,24 @@ namespace jus1dBot
             }
             
             user.SetMuteAsync(false);
+        }
+        
+        // -ban
+        [Command("ban")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("banned mentioned user")]
+        public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
+        {
+            user.Guild.BanMemberAsync(user);
+        }
+        
+        // -test
+        [Command("test")]
+        [RequireRoles(RoleCheckMode.All, "admin")]
+        [Description("test command for devs")]
+        public async Task TestCommand(CommandContext msg)
+        {
+            
         }
     }
 }
