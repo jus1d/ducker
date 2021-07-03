@@ -17,10 +17,9 @@ namespace jus1dBot
     {
         private string MusicChannelName = "🎶music";
         
+        
         // -join
-        [Command("join")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description(("bot joined to your voice channel"))]
+        [Command("join"), Description("bot joined to your voice channel"), RequirePermissions(Permissions.Administrator)]
         public async Task Join(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -43,10 +42,9 @@ namespace jus1dBot
             await node.ConnectAsync(channel);
         }
         
+        
         // -join channel
-        [Command("join")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        [Description("bot joined to tagged voice channel")]
+        [Command("join"), Description("bot joined to tagged voice channel"), RequirePermissions(Permissions.Administrator)]
         public async Task Join(CommandContext msg, [Description("voice channel")] DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
@@ -61,10 +59,9 @@ namespace jus1dBot
             await node.ConnectAsync(channel);
         }
 
+        
         // -quit
-        [Command("quit")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("bot quit from your channel")]
+        [Command("quit"), Description("bot quit from your channel"), RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -95,10 +92,9 @@ namespace jus1dBot
             await conn.DisconnectAsync();
         }
         
+        
         // -quit channel
-        [Command("quit")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("bot quit from tagged channel")]
+        [Command("quit"), Description("bot quit from tagged channel"), RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg, [Description("voice channel to quit")] DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
@@ -127,9 +123,9 @@ namespace jus1dBot
             await conn.DisconnectAsync();
         }
         
+        
         // -play url
-        [Command("play")]
-        [Description("bot joined to your voice, and playing video or track by your search query")]
+        [Command("play"), Description("bot joined to your voice, and playing video or track by your search query")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -165,9 +161,9 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
+        
         // -play search
-        [Command("play")]
-        [Description("bot joined to your voice and playing video by your search query")]
+        [Command("play"), Description("bot joined to your voice and playing video by your search query")]
         public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -215,9 +211,9 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
+        
         // -play (resume)
-        [Command("play")]
-        [Description("resume playing music")]
+        [Command("play"), Description("resume playing music")]
         public async Task Play(CommandContext msg)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -248,9 +244,9 @@ namespace jus1dBot
             await conn.ResumeAsync();
         }
         
+        
         // -pause
-        [Command("pause")]
-        [Description("pause playing music")]
+        [Command("pause"), Description("pause playing music")]
         public async Task Pause(CommandContext msg)
         {
             if (msg.Channel.Name != MusicChannelName)
@@ -281,9 +277,9 @@ namespace jus1dBot
             await conn.PauseAsync();
         }
 
+        
         // -stop
-        [Command("stop")]
-        [Description("permanently stop bot playing and bot quit")]
+        [Command("stop"), Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
             if (msg.Channel.Name != MusicChannelName)

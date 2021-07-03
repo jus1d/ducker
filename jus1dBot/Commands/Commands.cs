@@ -14,8 +14,7 @@ namespace jus1dBot
     public partial class Commands : BaseCommandModule
     {
         // -useravatar
-        [Command("useravatar")]
-        [Description("Bot will send you URL of tagged user's avatar")]
+        [Command("useravatar"), Description("Bot will send you URL of tagged user's avatar")]
         public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user)
         {
             var Embed = new DiscordEmbedBuilder
@@ -29,8 +28,7 @@ namespace jus1dBot
         }
         
         // -invitelink
-        [Command("invitelink")]
-        [Description("Send you bot's invite link")]
+        [Command("invitelink"), Description("Send you bot's invite link")]
         public async Task InviteLink(CommandContext msg)
         {
             var Embed = new DiscordEmbedBuilder
@@ -44,8 +42,7 @@ namespace jus1dBot
         }
 
         // -writeme <text>
-        [Command("writeme")]
-        [Description("Bot will type to you your text")]
+        [Command("writeme"), Description("Bot will type to you your text")]
         public async Task WriteMe(CommandContext msg, [Description("your text")] params string[] text)
         {
             string textForSend = "";
@@ -58,8 +55,7 @@ namespace jus1dBot
         }
         
         // -random <min> <max>
-        [Command("random")]
-        [Description("Send you randon value in your tange")]
+        [Command("random"), Description("Send you randon value in your tange")]
         public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")]int maxValue)
         {
             var rnd = new Random();
