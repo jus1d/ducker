@@ -15,7 +15,13 @@ namespace jus1dBot
         [RequirePermissions(Permissions.Administrator)]
         public async Task Ping(CommandContext msg)
         {
-            await msg.Channel.SendMessageAsync($"pong, ping: {msg.Client.Ping}");
+            var pingEmbed = new DiscordEmbedBuilder
+            {
+                Description = msg.Client.Ping.ToString() + "ms",
+                Color = DiscordColor.Azure
+            };
+
+            await msg.Channel.SendMessageAsync(pingEmbed);
         }
         
         // -userinfo
