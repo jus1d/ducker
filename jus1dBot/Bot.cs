@@ -60,10 +60,13 @@ namespace jus1dBot
                 
                 if (msg.Message.MentionEveryone)
                 {
-                    if (msg.Message.Author.IsBot)
+                    if (msg.Message.Author.IsBot) // ignore bots
                         return;
                     
-                    if (member.IsOwner)
+                    if (member.IsOwner) // ignore owner
+                        return;
+                    
+                    if (member.Id == 857687574281453598) // ignore itakashi
                         return;
                     
                     await msg.Message.DeleteAsync();
