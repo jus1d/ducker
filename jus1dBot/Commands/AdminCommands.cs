@@ -117,11 +117,6 @@ namespace jus1dBot
         [Command("kick"), Description("kick mentioned user"), RequirePermissions(Permissions.Administrator)]
         public async Task Kick(CommandContext msg, DiscordMember user)
         {
-            /*string reason = "";
-            for (int i = 0; i < getReason.Length; i++)
-            {
-                reason = reason + getReason[i] + " ";
-            }*/
             user.RemoveAsync();
         }
         
