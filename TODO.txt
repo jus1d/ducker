@@ -1,5 +1,5 @@
 commands to release:
- # anti @everyone tag                              | 1/2 done (stay require admin perms)
+ # anti @everyone tag                              | 1/2 done (stay require admin perms) (tag allowed owner & takashi yet)
  # welcome message                                 | IMPORTANT ?
  -command for easy oinging bot                     | done
  -channelid                                        | done
@@ -7,7 +7,7 @@ commands to release:
  -writeme                                          | done (hz zach)
  -userinfo                                         | done
  -clear                                            | ?
- -mute                                             | 1/2 done (stay role-mute)
+ -mute                                             | 1/2 done (stay role-mute) (voice mute released)
  -help                                             | auto
  -help <command>                                   | auto
  -avatarurl <user>                                 | done
