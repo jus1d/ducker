@@ -113,6 +113,19 @@ namespace jus1dBot
         }
         
         
+        // -kick 
+        [Command("kick"), Description("kick mentioned user"), RequirePermissions(Permissions.Administrator)]
+        public async Task Kick(CommandContext msg, DiscordMember user, params string[] getReason)
+        {
+            string reason = "";
+            for (int i = 0; i < getReason.Length; i++)
+            {
+                reason = reason + getReason[i] + " ";
+            }
+            user.RemoveAsync(reason);
+        }
+        
+        
         // -channelid
         [Command("channelid"), Description("Send you tagged (or bot-commands) channel ID"), RequirePermissions(Permissions.Administrator)]
         public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
