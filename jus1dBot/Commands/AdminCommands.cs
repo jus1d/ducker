@@ -117,10 +117,18 @@ namespace jus1dBot
         [Command("kick"), Description("kick mentioned user"), RequirePermissions(Permissions.Administrator)]
         public async Task Kick(CommandContext msg, DiscordMember user)
         {
-            user.RemoveAsync();
+            await user.RemoveAsync();
         }
         
         
+        // -mute
+        [Command("mute"), Description("give mute role"), RequirePermissions(Permissions.Administrator)]
+        public async Task Mute(CommandContext msg, [Description("user to mute")] DiscordMember user, [Description("role")] DiscordRole role)
+        {
+            user.GrantRoleAsync(role);
+        }
+
+
         // -channelid
         [Command("channelid"), Description("Send you tagged (or bot-commands) channel ID"), RequirePermissions(Permissions.Administrator)]
         public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
