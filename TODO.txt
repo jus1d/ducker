@@ -23,7 +23,11 @@ commands to release:
 
  ==============================================================================================================
 
- TO FIX, FINALIZE:
- -commands                                         | 
- -adminCommands                                    | 
+ TO FIX, FINALIZE(add embeds if commands used incorrect):
+ -commands:
+    -useravatar     | done
+    -invitelink     | done
+    -random         | done
+ -adminCommands:
+    -
  -musicCommands                                    | 
