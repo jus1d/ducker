@@ -15,17 +15,30 @@ namespace jus1dBot
     {
         // -useravatar
         [Command("useravatar"), Description("Bot will send you URL of tagged user's avatar")]
-        public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user)
+        public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
         {
-            var Embed = new DiscordEmbedBuilder
+            if (user == null)
             {
-                Title = "User avatar",
-                Description = $"{user.Mention}'s avatar: {user.AvatarUrl}",
-                Color = DiscordColor.Azure
-            };
-            
-            await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = "User avatar",
+                    Description = "-useravatar command template: -useravatar <@member>\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Azure
+                };
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
+            }
+            else
+            {
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = "User avatar",
+                    Description = $"{user.Mention}'s avatar: {user.AvatarUrl}\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Azure
+                };
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
+            }
         }
+        
         
         // -invitelink
         [Command("invitelink"), Description("Send you bot's invite link")]
@@ -34,25 +47,13 @@ namespace jus1dBot
             var Embed = new DiscordEmbedBuilder
             {
                 Title = "Invite Link",
-                Description = $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot \n [for {msg.Member.Mention}]",
+                Description = $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Azure
             };
             
             msg.Channel.SendMessageAsync(Embed);
         }
-
-        // -writeme <text>
-        [Command("writeme"), Description("Bot will type to you your text")]
-        public async Task WriteMe(CommandContext msg, [Description("your text")] params string[] text)
-        {
-            string textForSend = "";
-            
-            for (int i = 0; i < text.Length; i++)
-            {
-                textForSend = textForSend + " " + text[i];
-            }
-            await msg.Member.SendMessageAsync(textForSend);
-        }
+        
         
         // -random <min> <max>
         [Command("random"), Description("Send you randon value in your tange")]
