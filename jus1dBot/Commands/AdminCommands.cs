@@ -191,5 +191,14 @@ namespace jus1dBot
                 channel.CloneAsync();
             }
         }
+        
+        
+        // -clear
+        [Command("clear"), Description("delete messages from current channel"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Clear(CommandContext msg, ulong amount)
+        {
+            msg.TriggerTypingAsync();
+        }
     }
 }
