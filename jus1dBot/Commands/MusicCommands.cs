@@ -131,7 +131,7 @@ namespace jus1dBot
             if (msg.Channel.Name != MusicChannelName)
                 return;
             
-            Join(msg);
+            await Join(msg);
             Thread.Sleep(1000);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -169,7 +169,7 @@ namespace jus1dBot
             if (msg.Channel.Name != MusicChannelName)
                 return;
             
-            Join(msg);
+            await Join(msg);
             Thread.Sleep(1000);
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
