@@ -46,29 +46,29 @@ namespace jus1dBot
         [Command("invitelink"), Description("Send you bot's invite link")]
         public async Task InviteLink(CommandContext msg)
         {
-            var Embed = new DiscordEmbedBuilder
+            var embed = new DiscordEmbedBuilder
             {
                 Title = "Invite Link",
                 Description = $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Azure
             };
             
-            msg.Channel.SendMessageAsync(Embed);
+            await msg.Channel.SendMessageAsync(embed);
         }
         
         
         // -random <min> <max>
-        [Command("random"), Description("Send you randon value in your tange")]
+        [Command("random"), Description("Send you random value in your range")]
         public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")]int maxValue)
         {
             var rnd = new Random();
-            var Embed = new DiscordEmbedBuilder
+            var embed = new DiscordEmbedBuilder
             {
                 Title = "Random number",
                 Description = $"Random number: **{rnd.Next(minValue, maxValue + 1)}** [for {msg.Member.Mention}]",
                 Color = DiscordColor.Azure
             };
-            await msg.Channel.SendMessageAsync(Embed);
+            await msg.Channel.SendMessageAsync(embed);
         }
     }
 }

@@ -74,11 +74,11 @@ namespace jus1dBot
                 
                 };
 
-                msg.Channel.SendMessageAsync(templateEmbed);
+                await msg.Channel.SendMessageAsync(templateEmbed);
                 return;
             }
             
-            user.SetMuteAsync(true);
+            await user.SetMuteAsync(true);
         }
         
         
@@ -96,11 +96,11 @@ namespace jus1dBot
                 
                 };
 
-                msg.Channel.SendMessageAsync(templateEmbed);
+                await msg.Channel.SendMessageAsync(templateEmbed);
                 return;
             }
             
-            user.SetMuteAsync(false);
+            await user.SetMuteAsync(false);
         }
         
         
@@ -108,7 +108,7 @@ namespace jus1dBot
         [Command("ban"), Description("banned mentioned user"), RequirePermissions(Permissions.Administrator)]
         public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
         {
-            user.Guild.BanMemberAsync(user);
+            await user.Guild.BanMemberAsync(user);
             
         }
         
@@ -125,7 +125,7 @@ namespace jus1dBot
         [Command("mute"), Description("give mute role"), RequirePermissions(Permissions.Administrator)]
         public async Task Mute(CommandContext msg, [Description("user to mute")] DiscordMember user, [Description("role")] DiscordRole role)
         {
-            user.GrantRoleAsync(role);
+            await user.GrantRoleAsync(role);
         }
 
 
@@ -135,25 +135,25 @@ namespace jus1dBot
         {
             if (channel == null)
             {
-                var Embed = new DiscordEmbedBuilder
+                var embed = new DiscordEmbedBuilder
                 {
                     Title = "Channel ID",
                     Description = $"{msg.Channel.Mention} channel ID: {msg.Channel.Id}",
                     Color = DiscordColor.Azure
                 };
                 
-                await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
             }
             else
             {
-                var Embed = new DiscordEmbedBuilder
+                var embed = new DiscordEmbedBuilder
                 {
                     Title = "Channel ID",
                     Description = $"{channel.Mention} channel ID: {channel.Id}",
                     Color = DiscordColor.Azure
                 };
                 
-                await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
             }
         }
         
@@ -184,21 +184,12 @@ namespace jus1dBot
         {
             if (channel == null)
             {
-                msg.Channel.CloneAsync();
+                await msg.Channel.CloneAsync();
             }
             else
             {
-                channel.CloneAsync();
+                await channel.CloneAsync();
             }
-        }
-        
-        
-        // -clear
-        [Command("clear"), Description("delete messages from current channel"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task Clear(CommandContext msg, ulong amount)
-        {
-            msg.TriggerTypingAsync();
         }
     }
 }
