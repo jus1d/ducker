@@ -55,8 +55,7 @@ namespace jus1dBot
             });
             client.GuildMemberAdded += async (args, member) =>
             {
-                Thread.Sleep(1000);
-                member.Member.SendMessageAsync($"Hello on {member.Guild} server! Enjoy");
+                await member.Guild.CurrentMember.SendMessageAsync($"hi");
             };
             
             client.MessageCreated += async (args, msg ) =>
@@ -75,18 +74,14 @@ namespace jus1dBot
                         return;
                     
                     await msg.Message.DeleteAsync();
-                    await msg.Message.Channel.SendMessageAsync($"не тегай");
-                }
-                else if (msg.Message.Content == "а нахуй")
-                {
-                    var Embed = new DiscordEmbedBuilder
+                    var embed = new DiscordEmbedBuilder
                     {
-                        Title = "А я ебу?",
-                        Description = "не ебу.",
-                        Color = DiscordColor.Azure
+                        Color = DiscordColor.Azure,
+                        Title = "Anti tag patrol",
+                        Description = $"don't tag everyone\n[{msg.Author.Mention}]"
                     };
-            
-                    msg.Channel.SendMessageAsync(Embed);
+                    
+                    await msg.Message.Channel.SendMessageAsync(embed);
                 }
             };
 
