@@ -53,19 +53,19 @@ namespace jus1dBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
-            client.GuildMemberAdded += async (client, member) =>
+            client.GuildMemberAdded += async (args, member) =>
             {
                 Console.WriteLine($"added");
                 await member.Member.SendMessageAsync($"123");
             };
 
-            client.GuildMemberRemoved += async (client, member) =>
+            client.GuildMemberRemoved += async (args, member) =>
             {
                 Console.WriteLine($"removed");
                 await member.Member.SendMessageAsync($"321");
             };
             
-            client.MessageCreated += async (client, msg ) =>
+            client.MessageCreated += async (args, msg ) =>
             {
                 if (msg.Author.IsBot)
                     return;
