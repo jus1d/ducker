@@ -104,12 +104,19 @@ namespace jus1dBot
         }
         
         
+        // -mute
+        [Command("mute"), Description("grant mute role to mentioned user")]
+        public async Task Mute(CommandContext msg, DiscordMember member)
+        {
+            await member.GrantRoleAsync(await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.Gray));
+        }
+        
+        
         // -ban
         [Command("ban"), Description("banned mentioned user"), RequirePermissions(Permissions.Administrator)]
         public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
         {
             await user.Guild.BanMemberAsync(user);
-            
         }
         
         
@@ -118,14 +125,6 @@ namespace jus1dBot
         public async Task Kick(CommandContext msg, DiscordMember user)
         {
             await user.RemoveAsync();
-        }
-        
-        
-        // -mute
-        [Command("mute"), Description("give mute role"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, [Description("user to mute")] DiscordMember user, [Description("role")] DiscordRole role)
-        {
-            await user.GrantRoleAsync(role);
         }
 
 
