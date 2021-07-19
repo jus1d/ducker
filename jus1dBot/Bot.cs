@@ -53,14 +53,24 @@ namespace jus1dBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
-            client.GuildMemberAdded += async (args, member) =>
+            client.GuildMemberAdded += async (client, member) =>
             {
-                await member.Guild.CurrentMember.SendMessageAsync($"hi");
+                Console.WriteLine($"added");
+                await member.Member.SendMessageAsync($"123");
+            };
+
+            client.GuildMemberRemoved += async (client, member) =>
+            {
+                Console.WriteLine($"removed");
+                await member.Member.SendMessageAsync($"321");
             };
             
-            client.MessageCreated += async (args, msg ) =>
+            client.MessageCreated += async (client, msg ) =>
             {
-                DiscordMember member = (DiscordMember)msg.Author;
+                if (msg.Author.IsBot)
+                    return;
+
+                DiscordMember member = (DiscordMember)msg.Author; // mows
                 
                 if (msg.Message.MentionEveryone)
                 {
