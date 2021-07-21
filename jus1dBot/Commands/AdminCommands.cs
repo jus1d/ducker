@@ -29,19 +29,17 @@ namespace jus1dBot
         {
             if (user == null)
             {
-                var userSended = msg.User;
-            
                 string userCreatedDate = "";
             
-                for (int i = 0; i < userSended.CreationTimestamp.ToString().Length - 7; i++)
+                for (int i = 0; i < msg.User.CreationTimestamp.ToString().Length - 7; i++)
                 {
-                    userCreatedDate = userCreatedDate + userSended.CreationTimestamp.ToString()[i];
+                    userCreatedDate = userCreatedDate + msg.User.CreationTimestamp.ToString()[i];
                 }
 
-                await msg.Channel.SendMessageAsync($"{userSended.Mention}'s Info:\n" +
-                                                   $"User ID: {userSended.Id}\n" +
+                await msg.Channel.SendMessageAsync($"{msg.User.Mention}'s Info:\n" +
+                                                   $"User ID: {msg.User.Id}\n" +
                                                    $"Date account created: {userCreatedDate}\n" +
-                                                   $"User's avatar URL: {userSended.AvatarUrl}");
+                                                   $"User's avatar URL: {msg.User.AvatarUrl}");
             }
             else
             {
