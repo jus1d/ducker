@@ -27,33 +27,47 @@ namespace jus1dBot
         [Command("userinfo"), Description("Bot will send you information about tagged user, or you"), RequirePermissions(Permissions.Administrator)]
         public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
         {
+            string userCreatedDate = "";
+            
             if (user == null)
             {
-                string userCreatedDate = "";
-            
                 for (int i = 0; i < msg.User.CreationTimestamp.ToString().Length - 7; i++)
                 {
                     userCreatedDate = userCreatedDate + msg.User.CreationTimestamp.ToString()[i];
                 }
 
-                await msg.Channel.SendMessageAsync($"{msg.User.Mention}'s Info:\n" +
-                                                   $"User ID: {msg.User.Id}\n" +
-                                                   $"Date account created: {userCreatedDate}\n" +
-                                                   $"User's avatar URL: {msg.User.AvatarUrl}");
+                var embed = new DiscordEmbedBuilder
+                {
+                    Description = $"**{msg.User.Mention}'s information**\n" +
+                                  $"\n" +
+                                  $"User ID: {msg.User.Id}\n" +
+                                  $"Date account created: {userCreatedDate}\n" +
+                                  $"User avatar : {msg.User.AvatarUrl}\n" +
+                                  $"[for {msg.User.Mention}]",
+                    Color = DiscordColor.Azure
+                };
+
+                await msg.Channel.SendMessageAsync(embed);
             }
             else
             {
-                string userCreatedDate = "";
-            
                 for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
                 {
                     userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
                 }
+
+                var embed = new DiscordEmbedBuilder
+                {
+                    Description = $"**{user.Mention}'s information**\n" +
+                                  $"\n" +
+                                  $"User ID: {user.Id}\n" +
+                                  $"Date account created: {userCreatedDate}\n" +
+                                  $"User avatar URL: {user.AvatarUrl}\n" +
+                                  $"[for {msg.User.Mention}]",
+                    Color = DiscordColor.Azure
+                };
                 
-                await msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                                   $"User ID: {user.Id}\n" +
-                                                   $"Date account created: {userCreatedDate}\n" +
-                                                   $"User's avatar URL: {user.AvatarUrl}");
+                await msg.Channel.SendMessageAsync(embed);
             }
         }
 
