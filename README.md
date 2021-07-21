@@ -4,3 +4,4 @@
 ## INFO
  To use this bot, you need invite him to your server (link upper). Write -help, and bot will send you information about commands.
 > This bot is under development, it is intended for use in particular by server administrators, to put things in order on the server
+shields.io/github/repo-size/:user/:repo
