@@ -1,5 +1,6 @@
 ![logo](assets/bot_logo_min.png)
-[](shields.io/github/repo-size/:user/:repo)
+[321](shields.io/github/repo-size/:user/:repo)
+[123](https://shields.io/github/repo-size/:jus1d/:jus1dBot)
 # jus1d's Discord Bot
 ### Invite Link [(clickable)](https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot)
 ## INFO
