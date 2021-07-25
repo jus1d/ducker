@@ -21,13 +21,13 @@ namespace jus1dBot
         {
             if (user == null)
             {
-                var embed = new DiscordEmbedBuilder
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** -useravatar <@member>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed).ConfigureAwait(false);
             }
             else
             {
@@ -59,7 +59,7 @@ namespace jus1dBot
         
         // -random <min> <max>
         [Command("random"), Description("Send you random value in your range")]
-        public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")]int maxValue)
+        public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")] int maxValue)
         {
             var rnd = new Random();
             var embed = new DiscordEmbedBuilder
