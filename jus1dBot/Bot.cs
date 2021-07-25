@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
@@ -14,6 +15,7 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using Microsoft.Extensions.Logging;
+using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 
 namespace jus1dBot
@@ -47,19 +49,28 @@ namespace jus1dBot
             client = new DiscordClient(config);
 
             client.Ready += OnClientReady;
-            client.UpdateStatusAsync();
             client.UseInteractivity(new InteractivityConfiguration
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
             client.GuildMemberAdded += async (args, member) =>
             {
-                await member.Member.SendMessageAsync($"Hello");
+                Console.WriteLine($"added");
+                await member.Member.SendMessageAsync($"123");
+            };
+
+            client.GuildMemberRemoved += async (args, member) =>
+            {
+                Console.WriteLine($"removed");
+                await member.Member.SendMessageAsync($"321");
             };
             
             client.MessageCreated += async (args, msg ) =>
             {
-                DiscordMember member = (DiscordMember)msg.Author;
+                if (msg.Author.IsBot)
+                    return;
+
+                DiscordMember member = (DiscordMember)msg.Author; // mows
                 
                 if (msg.Message.MentionEveryone)
                 {
@@ -73,7 +84,14 @@ namespace jus1dBot
                         return;
                     
                     await msg.Message.DeleteAsync();
-                    await msg.Message.Channel.SendMessageAsync($"не тегай");
+                    var embed = new DiscordEmbedBuilder
+                    {
+                        Color = DiscordColor.Azure,
+                        Title = "Anti tag patrol",
+                        Description = $"don't tag everyone\n[{msg.Author.Mention}]"
+                    };
+                    
+                    await msg.Message.Channel.SendMessageAsync(embed);
                 }
             };
 
