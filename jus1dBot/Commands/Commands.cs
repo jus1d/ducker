@@ -23,9 +23,9 @@ namespace jus1dBot
             {
                 var embed = new DiscordEmbedBuilder
                 {
-                    Title = "User avatar",
-                    Description = "-useravatar command template: -useravatar <@member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Azure
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -useravatar <@member>\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Red
                 };
                 await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
             }
