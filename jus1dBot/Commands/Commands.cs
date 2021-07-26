@@ -24,7 +24,7 @@ namespace jus1dBot
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** -useravatar <@member>\n [for {msg.Member.Mention}]",
+                    Description = $"**Usage:** -useravatar <member>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed).ConfigureAwait(false);
