@@ -230,7 +230,7 @@ namespace jus1dBot
         }
 
         
-        /*// -stop
+        // -stop
         [Command("stop"), Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
@@ -238,7 +238,7 @@ namespace jus1dBot
                 return;
 
             await Quit(msg, msg.Member.VoiceState.Channel);
-        }*/
+        }
 
         [Command("stop"), Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
