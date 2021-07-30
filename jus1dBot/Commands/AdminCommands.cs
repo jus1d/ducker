@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -139,40 +140,8 @@ namespace jus1dBot
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
-        
-        
-        // -mute
-        [Command("mute"), Description("grant mute role to mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, DiscordMember member = null)
-        {
-            if (member == null)
-            {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
-            }
-            
-            await member.GrantRoleAsync(await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.Gray));
-        }
 
-        [Command("mute"), Description("grant mute role to mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-        
-        
+
         // -ban
         [Command("ban"), Description("banned mentioned user"), RequirePermissions(Permissions.Administrator)]
         public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user = null)
@@ -301,6 +270,38 @@ namespace jus1dBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** -clone <channel>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+        
+        
+        // -mute
+        [Command("mute"), Description("grant mute role to mentioned user"), RequirePermissions(Permissions.Administrator)]
+        public async Task Mute(CommandContext msg, DiscordMember member = null)
+        {
+            if (member == null)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Red
+                };
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                return;
+            }
+            
+            await member.GrantRoleAsync(await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.Gray));
+        }
+
+        [Command("mute"), Description("grant mute role to mentioned user"), RequirePermissions(Permissions.Administrator)]
+        public async Task Mute(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
