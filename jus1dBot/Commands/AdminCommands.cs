@@ -43,10 +43,10 @@ namespace jus1dBot
             string userJoinedDate = "";
             
             for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
-                {
-                    userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
-                    userJoinedDate = userJoinedDate + user.JoinedAt.ToString()[i];
-                }
+            {
+                userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
+                userJoinedDate = userJoinedDate + user.JoinedAt.ToString()[i];
+            }
 
             var embed = new DiscordEmbedBuilder 
             {
@@ -238,7 +238,7 @@ namespace jus1dBot
 
         // -channelid
         [Command("channelid"), Description("Send you tagged (or bot-commands) channel ID"), RequirePermissions(Permissions.Administrator)]
-        public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
+        public async Task ChannelId(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
         {
             if (channel == null)
             {
@@ -263,7 +263,7 @@ namespace jus1dBot
 
         
         [Command("channelid"), Description("Send you tagged (or bot-commands) channel ID"), RequirePermissions(Permissions.Administrator)]
-        public async Task ChannelID(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
+        public async Task ChannelId(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
