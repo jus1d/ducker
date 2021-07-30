@@ -5,14 +5,4 @@ jus1dBot/bin/Debug/net5.0/config.json
 jus1dBot.sln.DotSettings.user
 .idea/
 .vs/
-jus1dBot/bin/Release/
-jus1dBot/bin/Debug/net5.0/logs/
-jus1dBot/bin/Debug/net5.0/ref/
-*.yml
-*.dll
-*.json
-*.exe
-*.pdb
-
-
-jus1dBot/obj/
+jus1dBot/bin/
