@@ -226,11 +226,11 @@ namespace jus1dBot
                 Description = "**Usage:** -pause",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
 
         
-        // -stop
+        /*// -stop
         [Command("stop"), Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
@@ -238,7 +238,7 @@ namespace jus1dBot
                 return;
 
             await Quit(msg, msg.Member.VoiceState.Channel);
-        }
+        }*/
 
         [Command("stop"), Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
@@ -252,7 +252,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -stop [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
     }
 }

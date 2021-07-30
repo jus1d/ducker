@@ -72,7 +72,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -userinfo <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
         
@@ -104,7 +104,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -voicemute <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
         
@@ -137,7 +137,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -voiceunmute <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
         
@@ -153,7 +153,7 @@ namespace jus1dBot
                     Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
                 return;
             }
             await member.GrantRoleAsync(await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.Gray));
@@ -168,7 +168,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
         
@@ -184,7 +184,7 @@ namespace jus1dBot
                     Description = $"**Usage:** -ban <member>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
                 return;
             }
             await user.Guild.BanMemberAsync(user);
@@ -199,7 +199,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -ban <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
         
@@ -215,7 +215,7 @@ namespace jus1dBot
                     Description = $"**Usage:** -kick <member>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
                 return;
             }
             
@@ -231,7 +231,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -kick <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             return;
         }
         
@@ -287,7 +287,7 @@ namespace jus1dBot
                     Description = $"**Usage:** -clone <channel>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
                 return;
             }
             await channel.CloneAsync();
@@ -302,7 +302,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -clone <channel>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
     }
 }

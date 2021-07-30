@@ -50,7 +50,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -useravatar <member>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandsEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandsEmbed);
         }
         
         
@@ -77,7 +77,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -invitelink\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
         
@@ -94,7 +94,7 @@ namespace jus1dBot
                     Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
                 return;
             }
             var embed = new DiscordEmbedBuilder
@@ -115,7 +115,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
 
         [Command("random"), Description("Send you random value in your range")]
@@ -127,7 +127,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
         
