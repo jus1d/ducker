@@ -156,6 +156,7 @@ namespace jus1dBot
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
                 return;
             }
+            
             await member.GrantRoleAsync(await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.Gray));
         }
 
