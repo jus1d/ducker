@@ -274,6 +274,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -stop [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
+            
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
     }
