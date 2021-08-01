@@ -11,7 +11,7 @@ namespace jus1dBot
     public partial class Commands : BaseCommandModule
     {
         // pinging
-        [Command("ping"), Description("returns pong"), RequirePermissions(Permissions.Administrator)]
+        [Command("ping"), Description("Returns client's ping"), RequirePermissions(Permissions.Administrator)]
         public async Task Ping(CommandContext msg)
         {
             var pingEmbed = new DiscordEmbedBuilder
@@ -25,8 +25,8 @@ namespace jus1dBot
         
         
         // -userinfo
-        [Command("userinfo"), Description("Bot will send you information about tagged user, or you"), RequirePermissions(Permissions.Administrator)]
-        public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
+        [Command("userinfo"), Description("Bot will send you information about tagged user"), RequirePermissions(Permissions.Administrator)]
+        public async Task UserInfo(CommandContext msg, [Description("User, whose information will send bot")] DiscordMember user = null)
         {
             if (user == null)
             {
@@ -64,7 +64,7 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync(embed);
         }
 
-        [Command("userinfo"), Description("Bot will send you information about tagged user, or you"), RequirePermissions(Permissions.Administrator)]
+        [Command("userinfo"), Description("Bot will send you information about tagged user"), RequirePermissions(Permissions.Administrator)]
         public async Task UserInfo(CommandContext msg, params string[] text)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -143,8 +143,8 @@ namespace jus1dBot
 
 
         // -ban
-        [Command("ban"), Description("banned mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user = null)
+        [Command("ban"), Description("Banned mentioned user"), RequirePermissions(Permissions.Administrator)]
+        public async Task Ban(CommandContext msg, [Description("User, for ban")] DiscordMember user = null)
         {
             if (user == null)
             {
@@ -160,7 +160,7 @@ namespace jus1dBot
             await user.Guild.BanMemberAsync(user);
         }
 
-        [Command("ban"), Description("banned mentioned user"), RequirePermissions(Permissions.Administrator)]
+        [Command("ban"), Description("Banned mentioned user"), RequirePermissions(Permissions.Administrator)]
         public async Task Ban(CommandContext msg, params string[] text)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -174,8 +174,8 @@ namespace jus1dBot
         
         
         // -kick 
-        [Command("kick"), Description("kick mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Kick(CommandContext msg, DiscordMember user = null)
+        [Command("kick"), Description("Kick mentioned user"), RequirePermissions(Permissions.Administrator)]
+        public async Task Kick(CommandContext msg, [Description("Member:")] DiscordMember user = null)
         {
             if (user == null)
             {
@@ -192,7 +192,7 @@ namespace jus1dBot
             await user.RemoveAsync();
         }
 
-        [Command("kick"), Description("kick mentioned user"), RequirePermissions(Permissions.Administrator)]
+        [Command("kick"), Description("Kick mentioned user"), RequirePermissions(Permissions.Administrator)]
         public async Task Kick(CommandContext msg, params string[] text)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
