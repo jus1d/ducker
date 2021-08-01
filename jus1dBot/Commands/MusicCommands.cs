@@ -231,14 +231,36 @@ namespace jus1dBot
 
         
         // -stop
-        /*[Command("stop"), Description("permanently stop bot playing and bot quit")]
+        [Command("stop"), Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
-            if (msg.Channel.Name != MusicChannelName)
+            DiscordChannel channel = msg.Member.VoiceState.Channel;
+            
+            var lava = msg.Client.GetLavalink();
+            if (!lava.ConnectedNodes.Any())
+            {
+                await msg.Channel.SendMessageAsync("Connection is not established");
                 return;
+            }
 
-            await Quit(msg, msg.Member.VoiceState.Channel);
-        }*/
+            var node = lava.ConnectedNodes.Values.First();
+
+            if (channel.Type != ChannelType.Voice)
+            {
+                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
+                return;
+            }
+
+            var conn = node.GetGuildConnection(channel.Guild);
+
+            if (conn == null)
+            {
+                await msg.Channel.SendMessageAsync("I'm is not connected.");
+                return;
+            }
+
+            await conn.DisconnectAsync();
+        }
 
         [Command("stop"), Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
