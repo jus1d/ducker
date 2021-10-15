@@ -306,5 +306,55 @@ namespace jus1dBot
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
+        
+        
+        // -clear
+        [Command("clear"), Description("delete n messages"), RequirePermissions(Permissions.Administrator)]
+        public async Task Clear(CommandContext msg, int amount)
+        {
+            if (amount > 100)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -clear <amount> (amount must be less than 100)\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Red
+                };
+                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            }
+            else
+            {
+                msg.Channel.DeleteMessagesAsync(await msg.Channel.GetMessagesAsync(amount + 1));
+
+                string messageOrMessages;
+                if (amount.ToString()[amount.ToString().Length - 1] == '1' && amount != 11)
+                {
+                    messageOrMessages = "message";
+                }
+                else
+                {
+                    messageOrMessages = "messages";
+                }
+            
+                var deletedMessagesReport = new DiscordEmbedBuilder
+                {
+                    Title = $"Deleted messages report", 
+                    Description = $"I have deleted {amount} {messageOrMessages}",
+                    Color = DiscordColor.Azure
+                };
+                var message = msg.Channel.SendMessageAsync(deletedMessagesReport);
+            }
+        }
+
+        public async Task Clear(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -clear <amount>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
     }
 }
