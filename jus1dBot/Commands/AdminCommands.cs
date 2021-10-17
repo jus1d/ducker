@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -342,7 +343,10 @@ namespace jus1dBot
                     Description = $"I have deleted {amount} {messageOrMessages}",
                     Color = DiscordColor.Azure
                 };
-                var message = msg.Channel.SendMessageAsync(deletedMessagesReport);
+
+                DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
+                Thread.Sleep(1500);
+                msg.Channel.DeleteMessageAsync(message);
             }
         }
 
