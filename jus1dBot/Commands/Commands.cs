@@ -21,13 +21,13 @@ namespace jus1dBot
         {
             if (user == null)
             {
-                var embed = new DiscordEmbedBuilder
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** -useravatar <@member>\n [for {msg.Member.Mention}]",
+                    Description = $"**Usage:** -useravatar <member>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed).ConfigureAwait(false);
             }
             else
             {
@@ -39,6 +39,18 @@ namespace jus1dBot
                 };
                 await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
             }
+        }
+        
+        [Command("useravatar"), Description("Bot will send you URL of tagged user's avatar")]
+        public async Task UserAvatar(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandsEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -useravatar <member>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandsEmbed);
         }
         
         
@@ -55,13 +67,36 @@ namespace jus1dBot
             
             await msg.Channel.SendMessageAsync(embed);
         }
+
+        [Command("invitelink"), Description("Send you bot's invite link")]
+        public async Task InviteLink(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -invitelink\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
         
         
         // -random <min> <max>
         [Command("random"), Description("Send you random value in your range")]
-        public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")]int maxValue)
+        public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")] int maxValue)
         {
             var rnd = new Random();
+            if (minValue > maxValue)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Red
+                };
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                return;
+            }
             var embed = new DiscordEmbedBuilder
             {
                 Title = "Random number",
@@ -70,9 +105,33 @@ namespace jus1dBot
             };
             await msg.Channel.SendMessageAsync(embed);
         }
+
+        [Command("random"), Description("Send you random value in your range")]
+        public async Task Random(CommandContext msg)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+
+        [Command("random"), Description("Send you random value in your range")]
+        public async Task Random(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
         
         
-        // -bj
+        /*// -bj
         [Command("bj"), Description("play blackjack with bot")]
         public async Task Blackjack(CommandContext msg)
         {
@@ -80,6 +139,6 @@ namespace jus1dBot
             {
                 
             };
-        }
+        }*/
     }
 }
