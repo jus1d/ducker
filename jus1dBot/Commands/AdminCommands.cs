@@ -321,11 +321,11 @@ namespace jus1dBot
                     Description = $"**Usage:** -clear <amount> (amount must be less than 100)\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
             else
             {
-                msg.Channel.DeleteMessagesAsync(await msg.Channel.GetMessagesAsync(amount + 1));
+                await msg.Channel.DeleteMessagesAsync(await msg.Channel.GetMessagesAsync(amount + 1));
 
                 string messageOrMessages;
                 if (amount.ToString()[amount.ToString().Length - 1] == '1' && amount != 11)
@@ -346,7 +346,7 @@ namespace jus1dBot
 
                 DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
                 Thread.Sleep(1500);
-                msg.Channel.DeleteMessageAsync(message);
+                await msg.Channel.DeleteMessageAsync(message);
             }
         }
 
@@ -358,7 +358,7 @@ namespace jus1dBot
                 Description = $"**Usage:** -clear <amount>\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
     }
 }
