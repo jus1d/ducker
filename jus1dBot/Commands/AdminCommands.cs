@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Net.Models;
 
 namespace jus1dBot
 {
@@ -386,6 +388,7 @@ namespace jus1dBot
                 Color = DiscordColor.Azure
             };
             await msg.Channel.SendMessageAsync(rulesEmbed);
+            await msg.Channel.DeleteMessageAsync(msg.Message);
         }
     }
 }
