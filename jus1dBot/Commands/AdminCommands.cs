@@ -78,11 +78,11 @@ namespace jus1dBot
                 
                 };
 
-                msg.Channel.SendMessageAsync(templateEmbed);
+                await msg.Channel.SendMessageAsync(templateEmbed);
                 return;
             }
             
-            user.SetMuteAsync(true);
+            await user.SetMuteAsync(true);
         }
         
         // -voiceunmute
@@ -101,11 +101,11 @@ namespace jus1dBot
                 
                 };
 
-                msg.Channel.SendMessageAsync(templateEmbed);
+                await msg.Channel.SendMessageAsync(templateEmbed);
                 return;
             }
             
-            user.SetMuteAsync(false);
+            await user.SetMuteAsync(false);
         }
         
         // -ban
@@ -114,7 +114,7 @@ namespace jus1dBot
         [Description("banned mentioned user")]
         public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
         {
-            user.Guild.BanMemberAsync(user);
+            await user.Guild.BanMemberAsync(user);
             
         }
         
@@ -126,25 +126,25 @@ namespace jus1dBot
         {
             if (channel == null)
             {
-                var Embed = new DiscordEmbedBuilder
+                var embed = new DiscordEmbedBuilder
                 {
                     Title = "Channel ID",
                     Description = $"{msg.Channel.Mention} channel ID: {msg.Channel.Id}",
                     Color = DiscordColor.Azure
                 };
                 
-                await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
             }
             else
             {
-                var Embed = new DiscordEmbedBuilder
+                var embed = new DiscordEmbedBuilder
                 {
                     Title = "Channel ID",
                     Description = $"{channel.Mention} channel ID: {channel.Id}",
                     Color = DiscordColor.Azure
                 };
                 
-                await msg.Channel.SendMessageAsync(Embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
             }
         }
         
@@ -176,7 +176,7 @@ namespace jus1dBot
         [Description("test command for devs")]
         public async Task TestCommand(CommandContext msg)
         {
-            msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":kissing_heart:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":kissing_heart:"));
         }
     }
 }
