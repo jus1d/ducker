@@ -349,8 +349,21 @@ namespace jus1dBot
                 await msg.Channel.DeleteMessageAsync(message);
             }
         }
-
+        
+        [Command("clear"), Description("delete n messages"), RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -clear <amount>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+        
+        [Command("clear"), Description("delete n messages"), RequirePermissions(Permissions.Administrator)]
+        public async Task Clear(CommandContext msg,  string text = null)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
