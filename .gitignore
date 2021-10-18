@@ -1,11 +1,9 @@
-<<<<<<< HEAD
-=======
 # bot config
 jus1dBot/bin/Debug/net5.0/config.json
 
 # temporary files, compilation files, IDEs files and other
 jus1dBot.sln.DotSettings.user
->>>>>>> 411c41c4a25222461a621ef4006226dbacdc4736
 .idea/
+.vs/
 jus1dBot/bin/
 jus1dBot/obj
