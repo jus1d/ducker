@@ -310,7 +310,7 @@ namespace jus1dBot
         
         
         // -clear
-        [Command("clear"), Description("delete n messages"), RequirePermissions(Permissions.Administrator)]
+        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, int amount)
         {
             if (amount > 100)
@@ -350,7 +350,7 @@ namespace jus1dBot
             }
         }
         
-        [Command("clear"), Description("delete n messages"), RequirePermissions(Permissions.Administrator)]
+        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, params string[] text)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -362,7 +362,7 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
-        [Command("clear"), Description("delete n messages"), RequirePermissions(Permissions.Administrator)]
+        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg,  string text = null)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -372,6 +372,20 @@ namespace jus1dBot
                 Color = DiscordColor.Red
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+        
+        
+        // -rules (command off)
+        // [Command("rules"), Description("send rules to channel"), RequirePermissions(Permissions.Administrator)]
+        public async Task Rules(CommandContext msg)
+        {
+            var rulesEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Server rules",
+                Description = "",
+                Color = DiscordColor.Azure
+            };
+            await msg.Channel.SendMessageAsync(rulesEmbed);
         }
     }
 }
