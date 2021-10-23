@@ -15,8 +15,8 @@ namespace jus1dBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // define music channel name
-        private string MusicChannelName = "🎶music";
+        // define music channel id
+        private ulong MusicChannelID = 816659808627195915;
         
         
         // -join
@@ -65,7 +65,7 @@ namespace jus1dBot
         [Command("play"), Description("bot joined to your voice, and playing video or track by your search query")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
-            if (msg.Channel.Name != MusicChannelName)
+            if (msg.Channel.Id != MusicChannelID)
                 return;
             
             await Join(msg);
@@ -103,7 +103,7 @@ namespace jus1dBot
         [Command("play"), Description("bot joined to your voice and playing video by your search query")]
         public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
-            if (msg.Channel.Name != MusicChannelName)
+            if (msg.Channel.Id != MusicChannelID)
                 return;
             
             await Join(msg);
@@ -153,7 +153,7 @@ namespace jus1dBot
         [Command("play"), Description("resume playing music")]
         public async Task Play(CommandContext msg)
         {
-            if (msg.Channel.Name != MusicChannelName)
+            if (msg.Channel.Id != MusicChannelID)
                 return;
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -186,7 +186,7 @@ namespace jus1dBot
         [Command("pause"), Description("pause playing music")]
         public async Task Pause(CommandContext msg)
         {
-            if (msg.Channel.Name != MusicChannelName)
+            if (msg.Channel.Id != MusicChannelID)
                 return;
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -217,7 +217,7 @@ namespace jus1dBot
         [Command("pause"), Description("pause playing music")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Name != MusicChannelName)
+            if (msg.Channel.Id != MusicChannelID)
                 return;
 
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -265,7 +265,7 @@ namespace jus1dBot
         [Command("stop"), Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Name != MusicChannelName)
+            if (msg.Channel.Id != MusicChannelID)
                 return;
 
             var incorrectCommandEmbed = new DiscordEmbedBuilder
