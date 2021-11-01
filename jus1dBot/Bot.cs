@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -14,9 +15,11 @@ using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
+using DSharpPlus.Net.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using DSharpPlus.SlashCommands;
 
 namespace jus1dBot
 {
@@ -63,23 +66,16 @@ namespace jus1dBot
                 
                 if (msg.Message.MentionEveryone)
                 {
-                    if (msg.Message.Author.IsBot) // ignore bots
-                        return;
-                    
-                    if (member.IsOwner) // ignore owner
-                        return;
-                    
-                    if (member.Id == 857687574281453598) // ignore itakashi
+                    if (member.Guild.Permissions == Permissions.Administrator) // ignore owner
                         return;
                     
                     await msg.Message.DeleteAsync();
                     var embed = new DiscordEmbedBuilder
                     {
                         Color = DiscordColor.Azure,
-                        Title = "Anti tag patrol",
+                        Title = "Anti @everyone tag",
                         Description = $"don't tag everyone\n[{msg.Author.Mention}]"
                     };
-                    
                     await msg.Message.Channel.SendMessageAsync(embed);
                 }
             };
@@ -106,11 +102,9 @@ namespace jus1dBot
             };
             
             var lavalink = client.UseLavalink();
-
-
+            
             commands = client.UseCommandsNext(commandsConfig);
             commands.RegisterCommands<Commands>();
-
             await client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             await Task.Delay(-1);

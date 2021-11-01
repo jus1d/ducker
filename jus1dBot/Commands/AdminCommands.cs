@@ -396,13 +396,7 @@ namespace jus1dBot
         [Command("c"), RequirePermissions(Permissions.Administrator)]
         public async Task C(CommandContext msg)
         {
-            var embedC = new DiscordEmbedBuilder
-            {
-                Title = "title",
-                Description = "descr",
-                Timestamp = new DateTimeOffset(DateTime.Now)
-            };
-            msg.Channel.SendMessageAsync(embedC);
+            
         }
     }
 }
