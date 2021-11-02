@@ -2,7 +2,6 @@
 jus1dBot/bin/Debug/net5.0/config.json
 
 # temporary files, compilation files, IDEs files and other
-jus1dBot.sln.DotSettings.user
 .idea/
 jus1dBot/bin/
 jus1dBot/obj/

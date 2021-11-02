@@ -14,7 +14,9 @@ namespace jus1dBot
     public partial class Commands : BaseCommandModule
     {
         // pinging
-        [Command("ping"), Description("Returns client's ping"), RequirePermissions(Permissions.Administrator)]
+        [Command("ping")]
+        [Description("returns pong")]
+        [RequirePermissions(Permissions.Administrator)]
         public async Task Ping(CommandContext msg)
         {
             var pingEmbed = new DiscordEmbedBuilder
@@ -26,286 +28,147 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync(pingEmbed);
         }
         
-        
         // -userinfo
-        [Command("userinfo"), Description("Bot will send you information about tagged user"), RequirePermissions(Permissions.Administrator)]
-        public async Task UserInfo(CommandContext msg, [Description("User, whose information will send bot")] DiscordMember user = null)
+        [Command("userinfo")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("Bot will send you information about tagged user, or you")]
+        public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
         {
             if (user == null)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                var userSended = msg.User;
+            
+                string userCreatedDate = "";
+            
+                for (int i = 0; i < userSended.CreationTimestamp.ToString().Length - 7; i++)
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -userinfo <member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
-            }
-            
-            string userCreatedDate = "";
-            string userJoinedDate = "";
-            
-            for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
-            {
-                userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
-                userJoinedDate = userJoinedDate + user.JoinedAt.ToString()[i];
-            }
+                    userCreatedDate = userCreatedDate + userSended.CreationTimestamp.ToString()[i];
+                }
 
-            var embed = new DiscordEmbedBuilder 
+                await msg.Channel.SendMessageAsync($"{userSended.Mention}'s Info:\n" +
+                                                   $"User ID: {userSended.Id}\n" +
+                                                   $"Date account created: {userCreatedDate}\n" +
+                                                   $"User's avatar URL: {userSended.AvatarUrl}");
+            }
+            else
             {
-                Description = $"**{user.Mention}'s information**\n" +
-                              $"\n" + 
-                              $"User ID: {user.Id}\n" + 
-                              $"Date account created: {userCreatedDate}\n" +
-                              $"Date joined to server: {userJoinedDate}\n" + 
-                              $"User avatar URL: {user.AvatarUrl}\n" + 
-                              $"[for {msg.User.Mention}]",
-                Color = DiscordColor.Azure
-            };
+                string userCreatedDate = "";
             
-            await msg.Channel.SendMessageAsync(embed);
+                for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
+                {
+                    userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
+                }
+                
+                await msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
+                                                   $"User ID: {user.Id}\n" +
+                                                   $"Date account created: {userCreatedDate}\n" +
+                                                   $"User's avatar URL: {user.AvatarUrl}");
+            }
         }
 
-        [Command("userinfo"), Description("Bot will send you information about tagged user"), RequirePermissions(Permissions.Administrator)]
-        public async Task UserInfo(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -userinfo <member>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-        
-        
         // -voicemute
-        [Command("voicemute"), Description("Mute(voice) tagged user"), RequirePermissions(Permissions.Administrator)]
+        [Command("voicemute")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("Mute(voice) tagged user")]
         public async Task VoiceMute(CommandContext msg, [Description("User, for mute")] DiscordMember user = null)
         {
             if (user == null)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                var templateEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -voicemute <member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Title = "Template -voicemute:",
+                    Description = "-voicemute <user>\n",
+                    Color = DiscordColor.Azure
+                
                 };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+
+                await msg.Channel.SendMessageAsync(templateEmbed);
                 return;
             }
             
             await user.SetMuteAsync(true);
         }
-
-        [Command("voicemute"), Description("Mute(voice) tagged user"), RequirePermissions(Permissions.Administrator)]
-        public async Task VoiceMute(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -voicemute <member>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-        
         
         // -voiceunmute
-        [Command("voiceunmute"), Description("Unmute(voice) tagged user"), RequirePermissions(Permissions.Administrator)]
+        [Command("voiceunmute")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("Unmute(voice) tagged user")]
         public async Task VoiceUnmute(CommandContext msg, [Description("User, for unmute")] DiscordMember user = null)
         {
             if (user == null)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                var templateEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -voiceunmute <member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Title = "Template -voiceunmute:",
+                    Description = "-voiceunmute <user>\n",
+                    Color = DiscordColor.Azure
                 
                 };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+
+                await msg.Channel.SendMessageAsync(templateEmbed);
                 return;
             }
             
             await user.SetMuteAsync(false);
         }
-
-        [Command("voiceunmute"), Description("Unmute(voice) tagged user"), RequirePermissions(Permissions.Administrator)]
-        public async Task VoiceUnmute(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -voiceunmute <member>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-
-
+        
         // -ban
-        [Command("ban"), Description("Banned mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Ban(CommandContext msg, [Description("User, for ban")] DiscordMember user = null)
+        [Command("ban")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("banned mentioned user")]
+        public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
         {
-            if (user == null)
-            {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -ban <member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
-            }
             await user.Guild.BanMemberAsync(user);
-        }
-
-        [Command("ban"), Description("Banned mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Ban(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -ban <member>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-        
-        
-        // -kick 
-        [Command("kick"), Description("Kick mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Kick(CommandContext msg, [Description("Member:")] DiscordMember user = null)
-        {
-            if (user == null)
-            {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -kick <member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
-            }
             
-            await user.RemoveAsync();
-        }
-
-        [Command("kick"), Description("Kick mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Kick(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -kick <member>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-            return;
         }
         
-
         // -channelid
-        [Command("channelid"), Description("Send you tagged (or bot-commands) channel ID"), RequirePermissions(Permissions.Administrator)]
-        public async Task ChannelId(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
+        [Command("channelid")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("Send you tagged (or bot-commands) channel ID")]
+        public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
         {
             if (channel == null)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                var embed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -channelid <channel>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Title = "Channel ID",
+                    Description = $"{msg.Channel.Mention} channel ID: {msg.Channel.Id}",
+                    Color = DiscordColor.Azure
                 };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed).ConfigureAwait(false);
-                return;
+                
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
             }
-            
-            var embed = new DiscordEmbedBuilder 
+            else
             {
-                Title = "Channel ID", 
-                Description = $"{channel.Mention} channel ID: {channel.Id}", 
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = "Channel ID",
+                    Description = $"{channel.Mention} channel ID: {channel.Id}",
+                    Color = DiscordColor.Azure
+                };
+                
+                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
+            }
+        }
+        
+        // -channelid <text>
+        [Command("channelid")]
+        [RequirePermissions(Permissions.Administrator)]
+        [Description("Send you tagged (or bot-commands) channel ID")]
+        
+        public async Task ChannelID(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
+        {
+            if(msg.Channel.Name != "bot-commands")
+                return;
+
+            var templateEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Template -channelid:",
+                Description = "-channelid <channel>\n" +
+                              "for voice channels with emoji - use template: **-channelid <#id>**",
                 Color = DiscordColor.Azure
-            };
-            await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
-        }
-
-        
-        [Command("channelid"), Description("Send you tagged (or bot-commands) channel ID"), RequirePermissions(Permissions.Administrator)]
-        public async Task ChannelId(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -channelid <channel>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed).ConfigureAwait(false);
-        }
-        
-        
-        // -clone
-        [Command("clone"), Description("clone channel"), RequirePermissions(Permissions.Administrator)]
-        public async Task Clone(CommandContext msg, [Description("channel to clone")] DiscordChannel channel = null)
-        {
-            if (channel == null)
-            {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -clone <channel>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
-            }
-            await channel.CloneAsync();
-        }
-
-        [Command("clone"), Description("clone channel"), RequirePermissions(Permissions.Administrator)]
-        public async Task Clone(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -clone <channel>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-        
-        
-        // -mute
-        [Command("mute"), Description("grant mute role to mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, DiscordMember member = null)
-        {
-            if (member == null)
-            {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
-            }
-            
-            await member.GrantRoleAsync(await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.Gray));
-        }
-
-        [Command("mute"), Description("grant mute role to mentioned user"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, params string[] text)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -mute <member>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
