@@ -1,9 +1,13 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Net.Models;
 
 namespace jus1dBot
 {
@@ -166,17 +170,88 @@ namespace jus1dBot
                 Color = DiscordColor.Azure
                 
             };
-            
-            await msg.Channel.SendMessageAsync(templateEmbed).ConfigureAwait(false);
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
-        // -test
-        [Command("test")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        [Description("test command for devs")]
-        public async Task TestCommand(CommandContext msg)
+        
+        // -clear
+        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
+        public async Task Clear(CommandContext msg, int amount)
         {
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":kissing_heart:"));
+            if (amount > 100)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -clear <amount> (amount must be less than 100)\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Red
+                };
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            }
+            else
+            {
+                await msg.Channel.DeleteMessagesAsync(await msg.Channel.GetMessagesAsync(amount + 1));
+
+                string messageOrMessages;
+                if (amount.ToString()[amount.ToString().Length - 1] == '1' && amount != 11)
+                {
+                    messageOrMessages = "message";
+                }
+                else
+                {
+                    messageOrMessages = "messages";
+                }
+            
+                var deletedMessagesReport = new DiscordEmbedBuilder
+                {
+                    Title = $"Deleted messages report", 
+                    Description = $"I have deleted {amount} {messageOrMessages}",
+                    Color = DiscordColor.Azure
+                };
+
+                DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
+                Thread.Sleep(1500);
+                await msg.Channel.DeleteMessageAsync(message);
+            }
+        }
+        
+        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
+        public async Task Clear(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -clear <amount>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+        
+        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
+        public async Task Clear(CommandContext msg,  string text = null)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -clear <amount>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+        
+        
+        // -rules (command off)
+        // [Command("rules"), Description("send rules to channel"), RequirePermissions(Permissions.Administrator)]
+        public async Task Rules(CommandContext msg)
+        {
+            var rulesEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Server rules",
+                Description = "",
+                Color = DiscordColor.Azure
+            };
+            await msg.Channel.SendMessageAsync(rulesEmbed);
+            await msg.Channel.DeleteMessageAsync(msg.Message);
         }
     }
 }
