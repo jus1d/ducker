@@ -129,16 +129,5 @@ namespace jus1dBot
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
-        
-        
-        /*// -bj
-        [Command("bj"), Description("play blackjack with bot")]
-        public async Task Blackjack(CommandContext msg)
-        {
-            var bjEmbed = new DiscordEmbedBuilder
-            {
-                
-            };
-        }*/
     }
 }

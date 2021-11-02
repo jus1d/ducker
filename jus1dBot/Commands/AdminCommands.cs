@@ -390,13 +390,5 @@ namespace jus1dBot
             await msg.Channel.SendMessageAsync(rulesEmbed);
             await msg.Channel.DeleteMessageAsync(msg.Message);
         }
-        
-        
-        // -c
-        [Command("c"), RequirePermissions(Permissions.Administrator)]
-        public async Task C(CommandContext msg)
-        {
-            
-        }
     }
 }
