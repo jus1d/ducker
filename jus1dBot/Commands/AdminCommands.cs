@@ -310,7 +310,7 @@ namespace jus1dBot
         [Command("test"), RequirePermissions(Permissions.Administrator)]
         public async Task Test(CommandContext msg, params string[] text)
         {
-            
+            msg.Channel.SendMessageAsync("test");
         }
     }
 }
