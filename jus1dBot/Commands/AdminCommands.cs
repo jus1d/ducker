@@ -162,7 +162,7 @@ namespace jus1dBot
             if(msg.Channel.Name != "bot-commands")
                 return;
 
-            var templateEmbed = new DiscordEmbedBuilder
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = "Template -channelid:",
                 Description = "-channelid <channel>\n" +
@@ -252,6 +252,65 @@ namespace jus1dBot
             };
             await msg.Channel.SendMessageAsync(rulesEmbed);
             await msg.Channel.DeleteMessageAsync(msg.Message);
+        }
+        
+        
+        // -embed 
+        [Command("embed"),
+         Description("send embed to current discord channel with your title, description & photos (may be)"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Embed(CommandContext msg, params string[] embedConfig)
+        {
+            try
+            {
+                Console.WriteLine(embedConfig[3]); // catch exeption by appeal to some array element
+            }
+            catch (Exception e)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -embed -t <embed's title> -d <embed's description>\n [for {msg.Member.Mention}]",
+                    Color = DiscordColor.Red
+                };
+                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            }
+            
+            string embedTitle = "";
+            string embedDescription = "";
+            
+            for (int i = 0; i < embedConfig.Length; i++)
+            {
+                if (embedConfig[i] == "-t")
+                {
+                    for (int j = i + 1;  embedConfig[j] != "-d"; j++)
+                    {
+                        embedTitle += embedConfig[j] + " ";
+                    }
+                }
+                else if (embedConfig[i] == "-d")
+                {
+                    for (int j = i + 1; j < embedConfig.Length; j++)
+                    {
+                        embedDescription += embedConfig[j] + " ";
+                    }
+                }
+            }
+            var userCreatedEmbed = new DiscordEmbedBuilder
+            {
+                Title = embedTitle,
+                Description = embedDescription,
+                Color = DiscordColor.Azure
+            };
+            msg.Channel.SendMessageAsync(userCreatedEmbed);
+        }
+        
+        
+        // -test
+        [Command("test"), RequirePermissions(Permissions.Administrator)]
+        public async Task Test(CommandContext msg, params string[] text)
+        {
+            
         }
     }
 }
