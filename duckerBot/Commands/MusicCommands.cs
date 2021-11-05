@@ -15,13 +15,10 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // define music channel id
-        private ulong MusicChannelID = 816659808627195915;
-        
         // -join
-        [Command("join")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description(("bot joined to your voice channel"))]
+        [Command("join"),
+         Description(("bot joined to your voice channel")),
+         RequirePermissions(Permissions.Administrator)]
         public async Task Join(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -45,9 +42,9 @@ namespace duckerBot
         }
         
         // -join channel
-        [Command("join")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        [Description("bot joined to tagged voice channel")]
+        [Command("join"),
+         Description("bot joined to tagged voice channel"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task Join(CommandContext msg, [Description("voice channel")] DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
@@ -63,9 +60,9 @@ namespace duckerBot
         }
 
         // -quit
-        [Command("quit")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("bot quit from your channel")]
+        [Command("quit"),
+         Description("bot quit from your channel"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -97,9 +94,9 @@ namespace duckerBot
         }
         
         // -quit channel
-        [Command("quit")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("bot quit from tagged channel")]
+        [Command("quit"),
+         Description("bot quit from tagged channel"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg, [Description("voice channel to quit")] DiscordChannel channel)
         {
             var lava = msg.Client.GetLavalink();
@@ -133,10 +130,7 @@ namespace duckerBot
         [Description("bot joined to your voice, and playing video or track by your search query")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
-            if (msg.Channel.Id != MusicChannelID)
-                return;
-            
-            Join(msg);
+            await Join(msg);
             Thread.Sleep(1000);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -171,10 +165,7 @@ namespace duckerBot
         [Description("bot joined to your voice and playing video by your search query")]
         public async Task Play(CommandContext msg, [Description("search query")] string search)
         {
-            if (msg.Channel.Id != MusicChannelID)
-                return;
-            
-            Join(msg);
+            await Join(msg);
             Thread.Sleep(1000);
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -221,9 +212,6 @@ namespace duckerBot
         [Description("resume playing music")]
         public async Task Play(CommandContext msg)
         {
-            if (msg.Channel.Id != MusicChannelID)
-                return;
-            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
@@ -254,9 +242,6 @@ namespace duckerBot
         [Description("pause playing music")]
         public async Task Pause(CommandContext msg)
         {
-            if (msg.Channel.Id != MusicChannelID)
-                return;
-            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
@@ -285,9 +270,6 @@ namespace duckerBot
         [Command("pause"), Description("pause playing music")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != MusicChannelID)
-                return;
-
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = "Missing argument",
@@ -334,9 +316,6 @@ namespace duckerBot
         [Command("stop"), Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != MusicChannelID)
-                return;
-            
             DiscordChannel channel = msg.Member.VoiceState.Channel;
             await Quit(msg, channel);
         }
