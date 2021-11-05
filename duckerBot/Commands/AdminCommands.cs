@@ -120,7 +120,9 @@ namespace duckerBot
 
 
         // -clear
-        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
+        [Command("clear"), 
+         Description("delete messages"), 
+         RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, int amount)
         {
             if (amount > 100)
@@ -160,7 +162,9 @@ namespace duckerBot
             }
         }
         
-        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
+        [Command("clear"), 
+         Description("delete messages"), 
+         RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, params string[] text)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -172,7 +176,9 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
-        [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
+        [Command("clear"), 
+         Description("delete messages"), 
+         RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg,  string text = null)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
