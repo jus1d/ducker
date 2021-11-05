@@ -70,52 +70,7 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectUserInfoCommandEmbed);
         }
-
-        // -voicemute
-        [Command("voicemute")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("Mute(voice) tagged user")]
-        public async Task VoiceMute(CommandContext msg, [Description("User, for mute")] DiscordMember user = null)
-        {
-            if (user == null)
-            {
-                var templateEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "Template -voicemute:",
-                    Description = "-voicemute <user>\n",
-                    Color = DiscordColor.Azure
-                
-                };
-
-                await msg.Channel.SendMessageAsync(templateEmbed);
-                return;
-            }
-            
-            await user.SetMuteAsync(true);
-        }
         
-        // -voiceunmute
-        [Command("voiceunmute")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("Unmute(voice) tagged user")]
-        public async Task VoiceUnmute(CommandContext msg, [Description("User, for unmute")] DiscordMember user = null)
-        {
-            if (user == null)
-            {
-                var templateEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "Template -voiceunmute:",
-                    Description = "-voiceunmute <user>\n",
-                    Color = DiscordColor.Azure
-                
-                };
-
-                await msg.Channel.SendMessageAsync(templateEmbed);
-                return;
-            }
-            
-            await user.SetMuteAsync(false);
-        }
         
         // -ban
         [Command("ban")]
