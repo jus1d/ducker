@@ -15,119 +15,123 @@ namespace jus1dBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // -useravatar
-        [Command("useravatar"), Description("Bot will send you URL of tagged user's avatar")]
-        public async Task UserAvatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
+        // -avatar
+        [Command("avatar"), 
+         Description("bot will send you URL of tagged user's avatar")]
+        public async Task Avatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
         {
             if (user == null)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** -useravatar <member>\n [for {msg.Member.Mention}]",
+                    Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
             }
             else
             {
-                var embed = new DiscordEmbedBuilder
+                var userAvatarEmbed = new DiscordEmbedBuilder
                 {
-                    Title = "User avatar",
-                    Description = $"{user.Mention}'s avatar: {user.AvatarUrl}\n [for {msg.Member.Mention}]",
+                    Title = "User's avatar",
+                    Description = $"**{user.Mention}'s avatar**\n [for {msg.Member.Mention}]",
+                    ImageUrl = user.AvatarUrl,
+                    Url = user.AvatarUrl,
                     Color = DiscordColor.Azure
                 };
-                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(userAvatarEmbed);
             }
         }
         
-        [Command("useravatar"), Description("Bot will send you URL of tagged user's avatar")]
-        public async Task UserAvatar(CommandContext msg, params string[] text)
+        [Command("avatar"), Description("bot will send you URL of tagged user's avatar")]
+        public async Task Avatar(CommandContext msg, params string[] text)
         {
-            var incorrectCommandsEmbed = new DiscordEmbedBuilder
+            var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -useravatar <member>\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            await msg.Channel.SendMessageAsync(incorrectCommandsEmbed);
+            await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
         }
         
         
         // -invitelink
-        [Command("invitelink"), Description("Send you bot's invite link")]
+        [Command("invitelink"), Description("send you bot's invite link")]
         public async Task InviteLink(CommandContext msg)
         {
-            var embed = new DiscordEmbedBuilder
+            var inviteLinkEmbed = new DiscordEmbedBuilder
             {
                 Title = "Invite Link",
-                Description = $"https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot\n [for {msg.Member.Mention}]",
+                Description = $"[for {msg.Member.Mention}]",
+                Url = "https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot",
                 Color = DiscordColor.Azure
             };
             
-            await msg.Channel.SendMessageAsync(embed);
+            await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
 
-        [Command("invitelink"), Description("Send you bot's invite link")]
+        [Command("invitelink"), Description("send you bot's invite link")]
         public async Task InviteLink(CommandContext msg, params string[] text)
         {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -invitelink\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-invitelink```\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectInviteLinkCommandEmbed);
         }
         
         
         // -random <min> <max>
-        [Command("random"), Description("Send you random value in your range")]
-        public async Task Random(CommandContext msg, [Description("minimal value")] int minValue, [Description("maximum value")] int maxValue)
+        [Command("random"), Description("send you random value in your range")]
+        public async Task Random(CommandContext msg, [Description("min value")] int minValue, [Description("max value")] int maxValue)
         {
             var rnd = new Random();
             if (minValue > maxValue)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
+                    Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
                 return;
             }
-            var embed = new DiscordEmbedBuilder
+            var randomEmbed = new DiscordEmbedBuilder
             {
                 Title = "Random number",
-                Description = $"Random number: **{rnd.Next(minValue, maxValue + 1)}** [for {msg.Member.Mention}]",
+                Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**\n\n[for {msg.Member.Mention}]",
                 Color = DiscordColor.Azure
             };
-            await msg.Channel.SendMessageAsync(embed);
+            await msg.Channel.SendMessageAsync(randomEmbed);
         }
 
-        [Command("random"), Description("Send you random value in your range")]
+        [Command("random"), Description("send you random value in your range")]
         public async Task Random(CommandContext msg)
         {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
 
-        [Command("random"), Description("Send you random value in your range")]
+        [Command("random"), Description("send you random value in your range")]
         public async Task Random(CommandContext msg, params string[] text)
         {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -random <minimal value> <maximal value>\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
     }
 }
