@@ -240,21 +240,6 @@ namespace jus1dBot
         }
         
         
-        // -rules (command off)
-        // [Command("rules"), Description("send rules to channel"), RequirePermissions(Permissions.Administrator)]
-        public async Task Rules(CommandContext msg)
-        {
-            var rulesEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Server rules",
-                Description = "",
-                Color = DiscordColor.Azure
-            };
-            await msg.Channel.SendMessageAsync(rulesEmbed);
-            await msg.Channel.DeleteMessageAsync(msg.Message);
-        }
-        
-        
         // -embed 
         [Command("embed"),
          Description("send embed to current discord channel with your title, description & photos (may be)"),
