@@ -261,45 +261,63 @@ namespace jus1dBot
          RequirePermissions(Permissions.Administrator)]
         public async Task Embed(CommandContext msg, params string[] embedConfig)
         {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -embed -t <embed's title> -d <embed's description> -image <embed's image> -titlelink <link for embed's title>\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            
             try
             {
-                Console.WriteLine(embedConfig[3]); // catch exeption by appeal to some array element
+                Console.WriteLine(embedConfig[0]); // catch exeption by appeal to some array element
             }
             catch (Exception e)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -embed -t <embed's title> -d <embed's description>\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
-                };
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
-            
+
+            if (embedConfig[0] == "-titlelink" && embedConfig.Length == 2)
+            {
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            }
+
             string embedTitle = "";
             string embedDescription = "";
-            
+            string embedTitleLink = "";
+            string embedImageLink = "";
+
             for (int i = 0; i < embedConfig.Length; i++)
             {
                 if (embedConfig[i] == "-t")
                 {
-                    for (int j = i + 1; embedConfig[j] != "-d"; j++)
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-d" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink"; j++)
                     {
                         embedTitle += embedConfig[j] + " ";
                     }
                 }
                 else if (embedConfig[i] == "-d")
                 {
-                    for (int j = i + 1; j < embedConfig.Length; j++)
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-t" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink"; j++)
                     {
                         embedDescription += embedConfig[j] + " ";
                     }
+                }
+                else if (embedConfig[i] == "-image")
+                {
+                    embedImageLink = embedConfig[i + 1];
+                }
+                else if (embedConfig[i] == "-titlelink")
+                {
+                    embedTitleLink = embedConfig[i + 1];
                 }
             }
             var userCreatedEmbed = new DiscordEmbedBuilder
             {
                 Title = embedTitle,
                 Description = embedDescription,
+                ImageUrl = embedImageLink,
+                Url = embedTitleLink,
                 Color = DiscordColor.Azure
             };
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
@@ -310,7 +328,7 @@ namespace jus1dBot
         [Command("t"), RequirePermissions(Permissions.Administrator)]
         public async Task Test(CommandContext msg, params string[] text)
         {
-            await msg.Channel.SendMessageAsync(text[0][0].ToString() + text[0][1].ToString());
+            await msg.Channel.SendMessageAsync("");
         }
     }
 }
