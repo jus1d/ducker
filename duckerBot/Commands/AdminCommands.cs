@@ -73,31 +73,67 @@ namespace duckerBot
         
         
         // -ban
-        [Command("ban")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("banned mentioned user")]
-        public async Task Ban(CommandContext msg, [Description("user")] DiscordMember user)
+        [Command("ban"),
+         RequirePermissions(Permissions.Administrator),
+         Description("ban mentioned user")]
+        public async Task Ban(CommandContext msg, DiscordMember user = null)
         {
-            await user.Guild.BanMemberAsync(user);
-            
+            if (user == null)
+            {
+                var incorrectBanCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -ban <member>\n [for {msg.Member.Mention}]",
+                    Color = incorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
+            }
+            else
+            {
+                var banCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "User banned",
+                    Description = $":)\n[for {msg.Member.Mention}]",
+                    ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
+                    Color = mainEmbedColor
+                };
+                await user.Guild.BanMemberAsync(user);
+                DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
+                Thread.Sleep(3000);
+                await msg.Channel.DeleteMessageAsync(message);
+            }
+        }
+
+        [Command("ban"),
+         RequirePermissions(Permissions.Administrator),
+         Description("ban mentioned user")]
+        public async Task Ban(CommandContext msg, params string[] text)
+        {
+            var incorrectBanCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -ban <member>\n [for {msg.Member.Mention}]",
+                Color = incorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
         }
         
         // -channelid
-        [Command("channelid")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("Send you tagged (or bot-commands) channel ID")]
-        public async Task ChannelID(CommandContext msg, [Description(" optional channel (for voice channels with emoji - use template: **-channelid <#id>**)")] DiscordChannel channel = null)
+        [Command("channelid"), 
+         RequirePermissions(Permissions.Administrator), 
+         Description("Send you tagged (or bot-commands) channel ID")]
+        public async Task ChannelId(CommandContext msg, DiscordChannel channel = null)
         {
             if (channel == null)
             {
-                var embed = new DiscordEmbedBuilder
+                var channelIdEmbed = new DiscordEmbedBuilder
                 {
                     Title = "Channel ID",
                     Description = $"{msg.Channel.Mention} channel ID: {msg.Channel.Id}",
-                    Color = DiscordColor.Azure
+                    Color = mainEmbedColor
                 };
                 
-                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
+                await msg.Channel.SendMessageAsync(channelIdEmbed);
             }
             else
             {
@@ -112,7 +148,7 @@ namespace duckerBot
             }
         }
         
-        // -channelid <text>
+        // -channelid
         [Command("channelid")]
         [RequirePermissions(Permissions.Administrator)]
         [Description("Send you tagged (or bot-commands) channel ID")]
@@ -170,7 +206,7 @@ namespace duckerBot
                 };
 
                 DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
-                Thread.Sleep(1500);
+                Thread.Sleep(3000);
                 await msg.Channel.DeleteMessageAsync(message);
             }
         }
@@ -271,9 +307,18 @@ namespace duckerBot
         
         // -t
         [Command("t"), RequirePermissions(Permissions.Administrator)]
-        public async Task Test(CommandContext msg, DiscordMember user)
+        public async Task Test(CommandContext msg)
         {
-            
+            var banCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = "User banned",
+                Description = $":)\n[for {msg.Member.Mention}]",
+                ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
+                Color = mainEmbedColor
+            };
+            DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
+            Thread.Sleep(2000);
+            await msg.Channel.DeleteMessageAsync(message);
         }
     }
 }
