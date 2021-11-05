@@ -13,21 +13,6 @@ namespace jus1dBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // pinging
-        [Command("ping")]
-        [Description("returns pong")]
-        [RequirePermissions(Permissions.Administrator)]
-        public async Task Ping(CommandContext msg)
-        {
-            var pingEmbed = new DiscordEmbedBuilder
-            {
-                Description = msg.Client.Ping.ToString() + "ms",
-                Color = DiscordColor.Azure
-            };
-
-            await msg.Channel.SendMessageAsync(pingEmbed);
-        }
-        
         // -userinfo
         [Command("userinfo")]
         [RequirePermissions(Permissions.Administrator)]
