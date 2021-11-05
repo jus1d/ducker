@@ -264,7 +264,7 @@ namespace jus1dBot
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -embed -t <embed's title> -d <embed's description> -image <embed's image> -titlelink <link for embed's title>\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-embed -t <embed's title> -d <embed's description> \n-image <embed's image> -titlelink <link for embed's title>```\n [for {msg.Member.Mention}]",
                 Color = DiscordColor.Red
             };
             
