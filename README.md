@@ -1,4 +1,4 @@
-# jus1d's Discord Bot
+# ducker Discord Bot
 ### Invite Link (unavailable now)
 ## INFO
  To use this bot, you need invite him to your server (link upper). Write -help, and bot will send you information about commands.
