@@ -29,7 +29,6 @@ namespace duckerBot
                 {
                     userCreatedDate = userCreatedDate + userSended.CreationTimestamp.ToString()[i];
                 }
-
                 await msg.Channel.SendMessageAsync($"{userSended.Mention}'s Info:\n" +
                                                    $"User ID: {userSended.Id}\n" +
                                                    $"Date account created: {userCreatedDate}\n" +
