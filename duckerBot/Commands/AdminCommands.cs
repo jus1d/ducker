@@ -13,41 +13,62 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
+        private DiscordColor mainEmbedColor = DiscordColor.Azure;
+        private DiscordColor incorrectEmbedColor = DiscordColor.Red;
+        
         // -userinfo
-        [Command("userinfo")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("Bot will send you information about tagged user, or you")]
+        [Command("userinfo"), 
+         RequirePermissions(Permissions.Administrator), 
+         Description("bot will send you information about tagged user, or you")]
         public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
         {
+            string userCreatedDate = "";
             if (user == null)
             {
-                var userSended = msg.User;
-            
-                string userCreatedDate = "";
-            
-                for (int i = 0; i < userSended.CreationTimestamp.ToString().Length - 7; i++)
+                for (int i = 0; i < msg.User.CreationTimestamp.ToString().Length - 7; i++)
                 {
-                    userCreatedDate = userCreatedDate + userSended.CreationTimestamp.ToString()[i];
+                    userCreatedDate = userCreatedDate + msg.User.CreationTimestamp.ToString()[i];
                 }
-                await msg.Channel.SendMessageAsync($"{userSended.Mention}'s Info:\n" +
-                                                   $"User ID: {userSended.Id}\n" +
-                                                   $"Date account created: {userCreatedDate}\n" +
-                                                   $"User's avatar URL: {userSended.AvatarUrl}");
+                
+                var userInfoEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"{msg.User.Username}'s information",
+                    Description = $"User ID: {msg.User.Id}\nDate account created: {userCreatedDate}\nUser's avatar:",
+                    ImageUrl = msg.User.AvatarUrl,
+                    Color = mainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
             else
             {
-                string userCreatedDate = "";
-            
                 for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
                 {
                     userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
                 }
                 
-                await msg.Channel.SendMessageAsync($"{user.Mention}'s Info:\n" +
-                                                   $"User ID: {user.Id}\n" +
-                                                   $"Date account created: {userCreatedDate}\n" +
-                                                   $"User's avatar URL: {user.AvatarUrl}");
+                var userInfoEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"{msg.User.Username}'s information",
+                    Description = $"User ID: {msg.User.Id}\nDate account created: {userCreatedDate}\nUser's avatar:",
+                    ImageUrl = msg.User.AvatarUrl,
+                    Color = mainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
+        }
+
+        [Command("userinfo"), 
+         Description("Bot will send you information about tagged user, or you"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task UserInfo(CommandContext msg, params string[] text)
+        {
+            var incorrectUserInfoCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** ```-userinfo <user>(optional)```\n [for {msg.Member.Mention}]",
+                Color = incorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectUserInfoCommandEmbed);
         }
 
         // -voicemute
@@ -295,9 +316,9 @@ namespace duckerBot
         
         // -t
         [Command("t"), RequirePermissions(Permissions.Administrator)]
-        public async Task Test(CommandContext msg, params string[] text)
+        public async Task Test(CommandContext msg, DiscordMember user)
         {
-            await msg.Channel.SendMessageAsync("");
+            
         }
     }
 }
