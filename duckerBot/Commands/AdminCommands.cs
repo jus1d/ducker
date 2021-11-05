@@ -9,7 +9,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Net.Models;
 
-namespace jus1dBot
+namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {

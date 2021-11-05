@@ -11,7 +11,7 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Interactivity.Extensions;
 using Microsoft.VisualBasic;
 
-namespace jus1dBot
+namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {

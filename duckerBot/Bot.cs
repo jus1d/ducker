@@ -21,7 +21,7 @@ using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 using DSharpPlus.SlashCommands;
 
-namespace jus1dBot
+namespace duckerBot
 {
     public class Bot
     {

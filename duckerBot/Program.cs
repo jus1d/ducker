@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reflection;
 
-namespace jus1dBot
+namespace duckerBot
 {
     class Program
     {   
