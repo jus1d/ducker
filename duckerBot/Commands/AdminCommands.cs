@@ -9,7 +9,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Net.Models;
 
-namespace jus1dBot
+namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
@@ -29,7 +29,6 @@ namespace jus1dBot
                 {
                     userCreatedDate = userCreatedDate + userSended.CreationTimestamp.ToString()[i];
                 }
-
                 await msg.Channel.SendMessageAsync($"{userSended.Mention}'s Info:\n" +
                                                    $"User ID: {userSended.Id}\n" +
                                                    $"Date account created: {userCreatedDate}\n" +

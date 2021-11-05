@@ -1,7 +1,7 @@
 ﻿using DSharpPlus.CommandsNext.Attributes;
 using Newtonsoft.Json;
 
-namespace jus1dBot
+namespace duckerBot
 {
     public class ConfigJson
     {
