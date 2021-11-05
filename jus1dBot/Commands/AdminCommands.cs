@@ -273,7 +273,7 @@ namespace jus1dBot
                     Description = $"**Usage:** -embed -t <embed's title> -d <embed's description>\n [for {msg.Member.Mention}]",
                     Color = DiscordColor.Red
                 };
-                msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
             
             string embedTitle = "";
@@ -283,7 +283,7 @@ namespace jus1dBot
             {
                 if (embedConfig[i] == "-t")
                 {
-                    for (int j = i + 1;  embedConfig[j] != "-d"; j++)
+                    for (int j = i + 1; embedConfig[j] != "-d"; j++)
                     {
                         embedTitle += embedConfig[j] + " ";
                     }
@@ -302,15 +302,15 @@ namespace jus1dBot
                 Description = embedDescription,
                 Color = DiscordColor.Azure
             };
-            msg.Channel.SendMessageAsync(userCreatedEmbed);
+            await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
         
         
-        // -test
-        [Command("test"), RequirePermissions(Permissions.Administrator)]
+        // -t
+        [Command("t"), RequirePermissions(Permissions.Administrator)]
         public async Task Test(CommandContext msg, params string[] text)
         {
-            msg.Channel.SendMessageAsync("test");
+            await msg.Channel.SendMessageAsync(text[0][0].ToString() + text[0][1].ToString());
         }
     }
 }
