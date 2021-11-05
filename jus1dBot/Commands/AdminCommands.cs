@@ -13,21 +13,6 @@ namespace jus1dBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // pinging
-        [Command("ping")]
-        [Description("returns pong")]
-        [RequirePermissions(Permissions.Administrator)]
-        public async Task Ping(CommandContext msg)
-        {
-            var pingEmbed = new DiscordEmbedBuilder
-            {
-                Description = msg.Client.Ping.ToString() + "ms",
-                Color = DiscordColor.Azure
-            };
-
-            await msg.Channel.SendMessageAsync(pingEmbed);
-        }
-        
         // -userinfo
         [Command("userinfo")]
         [RequirePermissions(Permissions.Administrator)]
@@ -162,7 +147,7 @@ namespace jus1dBot
             if(msg.Channel.Name != "bot-commands")
                 return;
 
-            var templateEmbed = new DiscordEmbedBuilder
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = "Template -channelid:",
                 Description = "-channelid <channel>\n" +
@@ -240,18 +225,80 @@ namespace jus1dBot
         }
         
         
-        // -rules (command off)
-        // [Command("rules"), Description("send rules to channel"), RequirePermissions(Permissions.Administrator)]
-        public async Task Rules(CommandContext msg)
+        // -embed 
+        [Command("embed"),
+         Description("send embed to current discord channel with your title, description & photos (may be)"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Embed(CommandContext msg, params string[] embedConfig)
         {
-            var rulesEmbed = new DiscordEmbedBuilder
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = "Server rules",
-                Description = "",
+                Title = $"Missing argument",
+                Description = $"**Usage:** ```-embed -t <embed's title> -d <embed's description> \n-image <embed's image> -titlelink <link for embed's title>```\n [for {msg.Member.Mention}]",
+                Color = DiscordColor.Red
+            };
+            
+            try
+            {
+                Console.WriteLine(embedConfig[0]); // catch exeption by appeal to some array element
+            }
+            catch (Exception e)
+            {
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            }
+
+            if (embedConfig[0] == "-titlelink" && embedConfig.Length == 2)
+            {
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            }
+
+            string embedTitle = "";
+            string embedDescription = "";
+            string embedTitleLink = "";
+            string embedImageLink = "";
+
+            for (int i = 0; i < embedConfig.Length; i++)
+            {
+                if (embedConfig[i] == "-t")
+                {
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-d" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink"; j++)
+                    {
+                        embedTitle += embedConfig[j] + " ";
+                    }
+                }
+                else if (embedConfig[i] == "-d")
+                {
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-t" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink"; j++)
+                    {
+                        embedDescription += embedConfig[j] + " ";
+                    }
+                }
+                else if (embedConfig[i] == "-image")
+                {
+                    embedImageLink = embedConfig[i + 1];
+                }
+                else if (embedConfig[i] == "-titlelink")
+                {
+                    embedTitleLink = embedConfig[i + 1];
+                }
+            }
+            var userCreatedEmbed = new DiscordEmbedBuilder
+            {
+                Title = embedTitle,
+                Description = embedDescription,
+                ImageUrl = embedImageLink,
+                Url = embedTitleLink,
                 Color = DiscordColor.Azure
             };
-            await msg.Channel.SendMessageAsync(rulesEmbed);
-            await msg.Channel.DeleteMessageAsync(msg.Message);
+            await msg.Channel.SendMessageAsync(userCreatedEmbed);
+        }
+        
+        
+        // -t
+        [Command("t"), RequirePermissions(Permissions.Administrator)]
+        public async Task Test(CommandContext msg, params string[] text)
+        {
+            await msg.Channel.SendMessageAsync("");
         }
     }
 }
