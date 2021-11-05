@@ -65,7 +65,7 @@ namespace duckerBot
             {
                 Title = "Invite Link",
                 Description = $"[for {msg.Member.Mention}]",
-                Url = "https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot",
+                Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
                 Color = DiscordColor.Azure
             };
             
