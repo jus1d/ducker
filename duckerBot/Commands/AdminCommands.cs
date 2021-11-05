@@ -117,59 +117,8 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
         }
-        
-        // -channelid
-        [Command("channelid"), 
-         RequirePermissions(Permissions.Administrator), 
-         Description("Send you tagged (or bot-commands) channel ID")]
-        public async Task ChannelId(CommandContext msg, DiscordChannel channel = null)
-        {
-            if (channel == null)
-            {
-                var channelIdEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "Channel ID",
-                    Description = $"{msg.Channel.Mention} channel ID: {msg.Channel.Id}",
-                    Color = mainEmbedColor
-                };
-                
-                await msg.Channel.SendMessageAsync(channelIdEmbed);
-            }
-            else
-            {
-                var embed = new DiscordEmbedBuilder
-                {
-                    Title = "Channel ID",
-                    Description = $"{channel.Mention} channel ID: {channel.Id}",
-                    Color = DiscordColor.Azure
-                };
-                
-                await msg.Channel.SendMessageAsync(embed).ConfigureAwait(false);
-            }
-        }
-        
-        // -channelid
-        [Command("channelid")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("Send you tagged (or bot-commands) channel ID")]
-        
-        public async Task ChannelID(CommandContext msg, [Description("if you misuse the command")] params string[] parametres)
-        {
-            if(msg.Channel.Name != "bot-commands")
-                return;
 
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Template -channelid:",
-                Description = "-channelid <channel>\n" +
-                              "for voice channels with emoji - use template: **-channelid <#id>**",
-                Color = DiscordColor.Azure
-                
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-        
-        
+
         // -clear
         [Command("clear"), Description("delete messages"), RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, int amount)
