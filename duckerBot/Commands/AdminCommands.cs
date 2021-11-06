@@ -9,12 +9,13 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Net.Models;
+using DSharpPlus.SlashCommands.Attributes;
 
 namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        private DiscordColor mainEmbedColor = DiscordColor.Azure;
+        private DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
         private DiscordColor incorrectEmbedColor = DiscordColor.Red;
         
         
@@ -202,7 +203,7 @@ namespace duckerBot
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-embed -t <embed's title> -d <embed's description> \n-image <embed's image> -titlelink <link for embed's title>```\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-embed <embed config>```\n```config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -del```\n [for {msg.Member.Mention}]",
                 Color = incorrectEmbedColor
             };
             
@@ -229,14 +230,14 @@ namespace duckerBot
             {
                 if (embedConfig[i] == "-t")
                 {
-                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-d" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink"; j++)
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-d" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink" && embedConfig[j] != "-del"; j++)
                     {
                         embedTitle += embedConfig[j] + " ";
                     }
                 }
                 else if (embedConfig[i] == "-d")
                 {
-                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-t" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink"; j++)
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-t" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink" && embedConfig[j] != "-del"; j++)
                     {
                         embedDescription += embedConfig[j] + " ";
                     }
@@ -248,6 +249,10 @@ namespace duckerBot
                 else if (embedConfig[i] == "-titlelink")
                 {
                     embedTitleLink = embedConfig[i + 1];
+                }
+                else if (embedConfig[i] == "-del")
+                {
+                    await msg.Message.DeleteAsync();
                 }
             }
             var userCreatedEmbed = new DiscordEmbedBuilder
@@ -266,13 +271,7 @@ namespace duckerBot
         [Command("t"), RequirePermissions(Permissions.Administrator)]
         public async Task Test(CommandContext msg)
         {
-            var tEmbed = new DiscordEmbedBuilder
-            {
-                Title = "title",
-                Description = "description",
-                Color = mainEmbedColor
-            };
-            await msg.Channel.SendMessageAsync(tEmbed);
+            await msg.Message.DeleteAsync();
         }
     }
 }

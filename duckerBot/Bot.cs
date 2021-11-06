@@ -72,9 +72,9 @@ namespace duckerBot
                     await msg.Message.DeleteAsync();
                     var embed = new DiscordEmbedBuilder
                     {
-                        Color = DiscordColor.Azure,
                         Title = "Anti @everyone tag",
-                        Description = $"don't tag everyone\n[{msg.Author.Mention}]"
+                        Description = $"don't tag everyone\n[{msg.Author.Mention}]",
+                        Color = DiscordColor.Azure
                     };
                     await msg.Message.Channel.SendMessageAsync(embed);
                 }
@@ -83,7 +83,7 @@ namespace duckerBot
             var commandsConfig = new CommandsNextConfiguration
             {
                 StringPrefixes = new string[] { configJson.Prefix },
-                EnableDms = false,
+                EnableDms = true,
                 EnableMentionPrefix = true,
                 DmHelp = true
             };
@@ -115,7 +115,7 @@ namespace duckerBot
             var activity = new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
-                Name = "with ducks | -help",
+                Name = "with ducks | -help"
             };
             client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
