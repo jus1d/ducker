@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace duckerBot
     {
         private DiscordColor mainEmbedColor = DiscordColor.Azure;
         private DiscordColor incorrectEmbedColor = DiscordColor.Red;
+        
         
         // -userinfo
         [Command("userinfo"), 
