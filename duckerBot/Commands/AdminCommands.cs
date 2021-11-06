@@ -131,7 +131,7 @@ namespace duckerBot
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** -clear <amount> (amount must be less than 100)\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Color = incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
@@ -153,7 +153,7 @@ namespace duckerBot
                 {
                     Title = $"Deleted messages report", 
                     Description = $"I have deleted {amount} {messageOrMessages}",
-                    Color = DiscordColor.Azure
+                    Color = mainEmbedColor
                 };
 
                 DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
@@ -171,7 +171,7 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** -clear <amount>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
@@ -185,7 +185,7 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** -clear <amount>\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
@@ -201,7 +201,7 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** ```-embed -t <embed's title> -d <embed's description> \n-image <embed's image> -titlelink <link for embed's title>```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
             
             try
@@ -254,7 +254,7 @@ namespace duckerBot
                 Description = embedDescription,
                 ImageUrl = embedImageLink,
                 Url = embedTitleLink,
-                Color = DiscordColor.Azure
+                Color = mainEmbedColor
             };
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
@@ -264,16 +264,13 @@ namespace duckerBot
         [Command("t"), RequirePermissions(Permissions.Administrator)]
         public async Task Test(CommandContext msg)
         {
-            var banCommandEmbed = new DiscordEmbedBuilder
+            var tEmbed = new DiscordEmbedBuilder
             {
-                Title = "User banned",
-                Description = $":)\n[for {msg.Member.Mention}]",
-                ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
+                Title = "title",
+                Description = "description",
                 Color = mainEmbedColor
             };
-            DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
-            Thread.Sleep(2000);
-            await msg.Channel.DeleteMessageAsync(message);
+            await msg.Channel.SendMessageAsync(tEmbed);
         }
     }
 }

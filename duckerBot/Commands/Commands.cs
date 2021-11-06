@@ -26,7 +26,7 @@ namespace duckerBot
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Color = incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
             }
@@ -38,7 +38,7 @@ namespace duckerBot
                     Description = $"**{user.Mention}'s avatar**\n [for {msg.Member.Mention}]",
                     ImageUrl = user.AvatarUrl,
                     Url = user.AvatarUrl,
-                    Color = DiscordColor.Azure
+                    Color = mainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(userAvatarEmbed);
             }
@@ -51,7 +51,7 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
         }
@@ -66,7 +66,7 @@ namespace duckerBot
                 Title = "Invite Link",
                 Description = $"[for {msg.Member.Mention}]",
                 Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
-                Color = DiscordColor.Azure
+                Color = mainEmbedColor
             };
             
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
@@ -79,7 +79,7 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** ```-invitelink```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectInviteLinkCommandEmbed);
         }
@@ -96,7 +96,7 @@ namespace duckerBot
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Color = incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
                 return;
@@ -105,7 +105,7 @@ namespace duckerBot
             {
                 Title = "Random number",
                 Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**\n\n[for {msg.Member.Mention}]",
-                Color = DiscordColor.Azure
+                Color = mainEmbedColor
             };
             await msg.Channel.SendMessageAsync(randomEmbed);
         }
@@ -117,7 +117,7 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
@@ -129,7 +129,7 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }

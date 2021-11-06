@@ -82,15 +82,15 @@ namespace duckerBot
                 return;
             }
 
-            var conn = node.GetGuildConnection(channel.Guild);
+            var connection = node.GetGuildConnection(channel.Guild);
 
-            if (conn == null)
+            if (connection == null)
             {
                 await msg.Channel.SendMessageAsync("I'm is not connected.");
                 return;
             }
 
-            await conn.DisconnectAsync();
+            await connection.DisconnectAsync();
         }
         
         // -quit channel
@@ -114,15 +114,15 @@ namespace duckerBot
                 return;
             }
 
-            var conn = node.GetGuildConnection(channel.Guild);
+            var connection = node.GetGuildConnection(channel.Guild);
 
-            if (conn == null)
+            if (connection == null)
             {
                 await msg.Channel.SendMessageAsync("I'm is not connected.");
                 return;
             }
 
-            await conn.DisconnectAsync();
+            await connection.DisconnectAsync();
         }
         
         // -play url
@@ -140,21 +140,21 @@ namespace duckerBot
             }
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            if (conn == null)
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection == null)
             {
                 await msg.Channel.SendMessageAsync("ya is not connected.");
                 return;
             }
             var loadResult = await node.Rest.GetTracksAsync(url);
             var track = loadResult.Tracks.First();
-            await conn.PlayAsync(track);
+            await connection.PlayAsync(track);
             
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
                 Description = track.Title + $"\nURL: {url} \n[ordered by {msg.Member.Mention}]",
-                Color = DiscordColor.Azure
+                Color = mainEmbedColor
             };
             
             await msg.Channel.SendMessageAsync(playEmbed);
@@ -176,9 +176,9 @@ namespace duckerBot
 
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
 
-            if (conn == null)
+            if (connection == null)
             {
                 await msg.Channel.SendMessageAsync("ya is not connected.");
                 return;
@@ -195,21 +195,21 @@ namespace duckerBot
 
             var track = loadResult.Tracks.First();
 
-            await conn.PlayAsync(track);
+            await connection.PlayAsync(track);
             
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
                 Description = track.Title + $"\nURL: {track.Uri} \n[ordered by {msg.Member.Mention}]",
-                Color = DiscordColor.Azure
+                Color = mainEmbedColor
             };
 
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
         // -play (resume)
-        [Command("play")]
-        [Description("resume playing music")]
+        [Command("play"), 
+         Description("resume playing music")]
         public async Task Play(CommandContext msg)
         {
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -220,26 +220,20 @@ namespace duckerBot
 
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
 
-            if (conn == null)
-            {
-                await msg.Channel.SendMessageAsync("Lavalink is not connected.");
-                return;
-            }
-
-            if (conn.CurrentState.CurrentTrack == null)
+            if (connection.CurrentState.CurrentTrack == null)
             {
                 await msg.Channel.SendMessageAsync("There are no tracks loaded.");
                 return;
             }
 
-            await conn.ResumeAsync();
+            await connection.ResumeAsync();
         }
         
         // -pause
-        [Command("pause")]
-        [Description("pause playing music")]
+        [Command("pause"), 
+         Description("pause playing music")]
         public async Task Pause(CommandContext msg)
         {
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -250,74 +244,61 @@ namespace duckerBot
 
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
 
-            if (conn == null)
+            if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("Lavalink is not connected.");
+                await msg.Channel.SendMessageAsync("Not connected.");
                 return;
             }
 
-            if (conn.CurrentState.CurrentTrack == null)
+            if (connection.CurrentState.CurrentTrack == null)
             {
                 await msg.Channel.SendMessageAsync("There are no tracks loaded.");
                 return;
             }
-
-            await conn.PauseAsync();
+            await connection.PauseAsync();
         }
 
         [Command("pause"), Description("pause playing music")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            var incorrectPauseCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = "Missing argument",
                 Description = "**Usage:** -pause",
-                Color = DiscordColor.Red
+                Color = incorrectEmbedColor
             };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
         }
         
         
         // -stop
-        [Command("stop")]
-        [Description("permanently stop bot playing and bot quit")]
+        [Command("stop"), 
+         Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
-            DiscordChannel channel = msg.Member.VoiceState.Channel;
-            
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
                 await msg.Channel.SendMessageAsync("Connection is not established");
                 return;
             }
-
             var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Channel.Guild);
 
-            if (channel.Type != ChannelType.Voice)
-            {
-                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
-                return;
-            }
-
-            var conn = node.GetGuildConnection(channel.Guild);
-
-            if (conn == null)
+            if (connection == null)
             {
                 await msg.Channel.SendMessageAsync("I'm is not connected.");
                 return;
             }
-
-            await conn.DisconnectAsync();
+            await connection.DisconnectAsync();
         }
 
         [Command("stop"), Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
-            DiscordChannel channel = msg.Member.VoiceState.Channel;
-            await Quit(msg, channel);
+            await Quit(msg, msg.Member.VoiceState.Channel);
         }
     }
 }
