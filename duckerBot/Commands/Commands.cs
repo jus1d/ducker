@@ -25,10 +25,10 @@ namespace duckerBot
                 var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
+                    Description = $"**Usage:** ```-avatar <user>```",
                     Color = incorrectEmbedColor
                 };
-                incorrectAvatarCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                incorrectAvatarCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
             }
             else
@@ -36,12 +36,12 @@ namespace duckerBot
                 var userAvatarEmbed = new DiscordEmbedBuilder
                 {
                     Title = "User's avatar",
-                    Description = $"**{user.Mention}'s avatar**\n [for {msg.Member.Mention}]",
+                    Description = $"**{user.Mention}'s avatar**",
                     ImageUrl = user.AvatarUrl,
                     Url = user.AvatarUrl,
                     Color = mainEmbedColor
                 };
-                userAvatarEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                userAvatarEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(userAvatarEmbed);
             }
         }
@@ -52,10 +52,10 @@ namespace duckerBot
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-avatar <user>```",
                 Color = incorrectEmbedColor
             };
-            incorrectAvatarCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectAvatarCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
         }
         
@@ -71,7 +71,7 @@ namespace duckerBot
                 Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
                 Color = mainEmbedColor
             };
-            inviteLinkEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            inviteLinkEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
 
@@ -81,10 +81,10 @@ namespace duckerBot
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-invitelink```\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-invitelink```",
                 Color = incorrectEmbedColor
             };
-            incorrectInviteLinkCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectInviteLinkCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectInviteLinkCommandEmbed);
         }
         
@@ -99,20 +99,20 @@ namespace duckerBot
                 var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
+                    Description = $"**Usage:** ```-random <min value> <max value>```",
                     Color = incorrectEmbedColor
                 };
-                incorrectRandomCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
                 return;
             }
             var randomEmbed = new DiscordEmbedBuilder
             {
                 Title = "Random number",
-                Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**\n\n[for {msg.Member.Mention}]",
+                Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**",
                 Color = mainEmbedColor
             };
-            randomEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            randomEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(randomEmbed);
         }
 
@@ -122,10 +122,10 @@ namespace duckerBot
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** ```-random <min value> <max value>```",
                 Color = incorrectEmbedColor
             };
-            incorrectRandomCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
 
@@ -138,7 +138,7 @@ namespace duckerBot
                 Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
                 Color = incorrectEmbedColor
             };
-            incorrectRandomCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
     }

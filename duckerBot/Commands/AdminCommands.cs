@@ -40,7 +40,7 @@ namespace duckerBot
                     ImageUrl = msg.User.AvatarUrl,
                     Color = mainEmbedColor
                 };
-                userInfoEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                userInfoEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
             else
@@ -57,7 +57,7 @@ namespace duckerBot
                     ImageUrl = user.AvatarUrl,
                     Color = mainEmbedColor
                 };
-                userInfoEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                userInfoEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
         }
@@ -73,7 +73,7 @@ namespace duckerBot
                 Description = $"**Usage:** ```-userinfo <user>(optional)```",
                 Color = incorrectEmbedColor
             };
-            incorrectUserInfoCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectUserInfoCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectUserInfoCommandEmbed);
         }
         
@@ -92,7 +92,7 @@ namespace duckerBot
                     Description = $"**Usage:** -ban <member>",
                     Color = incorrectEmbedColor
                 };
-                incorrectBanCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                incorrectBanCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
             }
             else
@@ -104,7 +104,7 @@ namespace duckerBot
                     ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
                     Color = mainEmbedColor
                 };
-                banCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                banCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await user.Guild.BanMemberAsync(user);
                 DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
                 Thread.Sleep(3000);
@@ -123,7 +123,7 @@ namespace duckerBot
                 Description = $"**Usage:** -ban <member>",
                 Color = incorrectEmbedColor
             };
-            incorrectBanCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectBanCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
         }
 
@@ -142,7 +142,7 @@ namespace duckerBot
                     Description = $"**Usage:** -clear <amount> (amount must be less than 100)",
                     Color = incorrectEmbedColor
                 };
-                incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
             else
@@ -165,7 +165,7 @@ namespace duckerBot
                     Description = $"I have deleted {amount} {messageOrMessages}",
                     Color = mainEmbedColor
                 };
-                deletedMessagesReport.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+                deletedMessagesReport.WithFooter(msg.User.Username, msg.User.AvatarUrl);
 
                 DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
                 Thread.Sleep(3000);
@@ -184,7 +184,7 @@ namespace duckerBot
                 Description = $"**Usage:** -clear <amount>",
                 Color = incorrectEmbedColor
             };
-            incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
@@ -199,7 +199,7 @@ namespace duckerBot
                 Description = $"**Usage:** -clear <amount>",
                 Color = incorrectEmbedColor
             };
-            incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
@@ -216,7 +216,7 @@ namespace duckerBot
                 Description = $"**Usage:** ```-embed <embed config>```\n```config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -del```",
                 Color = incorrectEmbedColor
             };
-            incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
+            incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             
             try
             {
