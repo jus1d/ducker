@@ -56,7 +56,7 @@ namespace duckerBot
             {
                 Timeout = TimeSpan.FromMinutes(2)
             });
-            
+
             client.MessageCreated += async (args, msg ) =>
             {
                 if (msg.Author.IsBot)

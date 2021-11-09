@@ -269,9 +269,9 @@ namespace duckerBot
         
         // -t
         [Command("t"), RequirePermissions(Permissions.Administrator)]
-        public async Task Test(CommandContext msg)
+        public async Task Test(CommandContext msg, params string[] config)
         {
-            await msg.Message.DeleteAsync();
+            
         }
     }
 }
