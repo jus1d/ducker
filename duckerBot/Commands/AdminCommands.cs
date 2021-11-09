@@ -38,9 +38,9 @@ namespace duckerBot
                     Title = $"{msg.User.Username}'s information",
                     Description = $"User ID: {msg.User.Id}\nDate account created: {userCreatedDate}\nUser's avatar:",
                     ImageUrl = msg.User.AvatarUrl,
+                    Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                     Color = mainEmbedColor
                 };
-                userInfoEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
             else
@@ -55,9 +55,9 @@ namespace duckerBot
                     Title = $"{user.Username}'s information",
                     Description = $"User ID: {user.Id}\nDate account created: {userCreatedDate}\nUser's avatar:",
                     ImageUrl = user.AvatarUrl,
+                    Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                     Color = mainEmbedColor
                 };
-                userInfoEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
         }
@@ -71,9 +71,9 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** ```-userinfo <user>(optional)```",
+                Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                 Color = incorrectEmbedColor
             };
-            incorrectUserInfoCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectUserInfoCommandEmbed);
         }
         
@@ -90,9 +90,9 @@ namespace duckerBot
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** -ban <member>",
+                    Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                     Color = incorrectEmbedColor
                 };
-                incorrectBanCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
             }
             else
@@ -102,9 +102,9 @@ namespace duckerBot
                     Title = "User banned",
                     Description = $":)",
                     ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
+                    Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                     Color = mainEmbedColor
                 };
-                banCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await user.Guild.BanMemberAsync(user);
                 DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
                 Thread.Sleep(3000);
@@ -121,9 +121,9 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** -ban <member>",
+                Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                 Color = incorrectEmbedColor
             };
-            incorrectBanCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
         }
 
@@ -140,9 +140,9 @@ namespace duckerBot
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** -clear <amount> (amount must be less than 100)",
+                    Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                     Color = incorrectEmbedColor
                 };
-                incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
             else
@@ -163,9 +163,9 @@ namespace duckerBot
                 {
                     Title = $"Deleted messages report", 
                     Description = $"I have deleted {amount} {messageOrMessages}",
+                    Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                     Color = mainEmbedColor
                 };
-                deletedMessagesReport.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
 
                 DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
                 Thread.Sleep(3000);
@@ -182,9 +182,9 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** -clear <amount>",
+                Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                 Color = incorrectEmbedColor
             };
-            incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
@@ -197,9 +197,9 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** -clear <amount>",
+                Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                 Color = incorrectEmbedColor
             };
-            incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
         
@@ -214,9 +214,9 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** ```-embed <embed config>```\n```config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -del```",
+                Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                 Color = incorrectEmbedColor
             };
-            incorrectCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             
             try
             {
@@ -272,9 +272,9 @@ namespace duckerBot
                 Description = embedDescription,
                 ImageUrl = embedImageLink,
                 Url = embedTitleLink,
+                Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                 Color = mainEmbedColor
             };
-            userCreatedEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
         
@@ -287,9 +287,9 @@ namespace duckerBot
             {
                 Title = "title here",
                 Description = "description here",
+                Footer = { IconUrl = msg.User.AvatarUrl, Text = " For " + msg.User.Username },
                 Color = DiscordColor.Aquamarine
             };
-            testEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(testEmbed);
         }
     }
