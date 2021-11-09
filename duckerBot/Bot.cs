@@ -76,6 +76,7 @@ namespace duckerBot
                         Description = $"don't tag everyone\n[{msg.Author.Mention}]",
                         Color = DiscordColor.Azure
                     };
+                    embed.WithFooter("For " + msg.Author.Username, msg.Author.AvatarUrl)
                     await msg.Message.Channel.SendMessageAsync(embed);
                 }
             };
