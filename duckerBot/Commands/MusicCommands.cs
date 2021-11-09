@@ -153,7 +153,7 @@ namespace duckerBot
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
-                Description = track.Title + $"\nURL: {url} \n[ordered by {msg.Member.Mention}]",
+                Description = $"[{track.Title}]({url})\n\n[ordered by {msg.Member.Mention}]",
                 Color = mainEmbedColor
             };
             
@@ -163,10 +163,10 @@ namespace duckerBot
         // -play search
         [Command("play")]
         [Description("bot joined to your voice and playing video by your search query")]
-        public async Task Play(CommandContext msg, [Description("search query")] string search)
+        public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
             await Join(msg);
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
@@ -184,12 +184,18 @@ namespace duckerBot
                 return;
             }
 
+            string search = "";
+            for (int i = 0; i < searchInput.Length; i++)
+            {
+                search += searchInput[i] + " ";
+            }
+
             var loadResult = await node.Rest.GetTracksAsync(search);
 
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed 
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
-                await msg.Channel.SendMessageAsync($"Track search failed for {search}.");
+                await msg.Channel.SendMessageAsync($"Track search failed for: {search}");
                 return;
             }
 
@@ -200,7 +206,7 @@ namespace duckerBot
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
-                Description = track.Title + $"\nURL: {track.Uri} \n[ordered by {msg.Member.Mention}]",
+                Description = $"[{track.Title}]({track.Uri})\n\n[ordered by {msg.Member.Mention}]",
                 Color = mainEmbedColor
             };
 
