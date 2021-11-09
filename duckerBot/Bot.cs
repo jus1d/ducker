@@ -73,9 +73,8 @@ namespace duckerBot
                     var embed = new DiscordEmbedBuilder
                     {
                         Title = "Anti @everyone tag",
-                        Description = $"don't tag everyone",
-                        Footer = { IconUrl = msg.Author.AvatarUrl, Text = "For " + msg.Author.Username },
-                        Color = DiscordColor.Red
+                        Description = $"don't tag everyone\n[{msg.Author.Mention}]",
+                        Color = DiscordColor.Azure
                     };
                     await msg.Message.Channel.SendMessageAsync(embed);
                 }
