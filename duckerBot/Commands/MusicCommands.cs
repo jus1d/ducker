@@ -152,7 +152,7 @@ namespace duckerBot
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
-                Description = $"[{track.Title}]({url})\n\n[ordered by {msg.Member.Mention}]",
+                Description = $"[{track.Title}]({url})",
                 Color = mainEmbedColor
             };
             playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
@@ -205,7 +205,7 @@ namespace duckerBot
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
-                Description = $"[{track.Title}]({track.Uri})\n\n[ordered by {msg.Member.Mention}]",
+                Description = $"[{track.Title}]({track.Uri})",
                 Color = mainEmbedColor
             };
             playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
@@ -220,7 +220,12 @@ namespace duckerBot
         {
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                var incorrectMusicCommand = new DiscordEmbedBuilder
+                {
+                    Title = "You are not in a voice channel"
+                };
+                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(incorrectMusicCommand);
                 return;
             }
 
@@ -230,7 +235,11 @@ namespace duckerBot
 
             if (connection.CurrentState.CurrentTrack == null)
             {
-                await msg.Channel.SendMessageAsync("There are no tracks loaded.");
+                var incorrectMusicCommand = new DiscordEmbedBuilder
+                {
+                    Title = "There are no tracks loaded"
+                };
+                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
                 return;
             }
 
