@@ -28,6 +28,7 @@ namespace duckerBot
                     Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
                     Color = incorrectEmbedColor
                 };
+                incorrectAvatarCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
             }
             else
@@ -40,6 +41,7 @@ namespace duckerBot
                     Url = user.AvatarUrl,
                     Color = mainEmbedColor
                 };
+                userAvatarEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(userAvatarEmbed);
             }
         }
@@ -53,6 +55,7 @@ namespace duckerBot
                 Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
                 Color = incorrectEmbedColor
             };
+            incorrectAvatarCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
         }
         
@@ -68,7 +71,7 @@ namespace duckerBot
                 Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
                 Color = mainEmbedColor
             };
-            
+            inviteLinkEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
 
@@ -81,6 +84,7 @@ namespace duckerBot
                 Description = $"**Usage:** ```-invitelink```\n [for {msg.Member.Mention}]",
                 Color = incorrectEmbedColor
             };
+            incorrectInviteLinkCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectInviteLinkCommandEmbed);
         }
         
@@ -98,6 +102,7 @@ namespace duckerBot
                     Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
                     Color = incorrectEmbedColor
                 };
+                incorrectRandomCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
                 return;
             }
@@ -107,6 +112,7 @@ namespace duckerBot
                 Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**\n\n[for {msg.Member.Mention}]",
                 Color = mainEmbedColor
             };
+            randomEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(randomEmbed);
         }
 
@@ -119,6 +125,7 @@ namespace duckerBot
                 Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
                 Color = incorrectEmbedColor
             };
+            incorrectRandomCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
 
@@ -131,6 +138,7 @@ namespace duckerBot
                 Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
                 Color = incorrectEmbedColor
             };
+            incorrectRandomCommandEmbed.WithFooter("For " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
     }
