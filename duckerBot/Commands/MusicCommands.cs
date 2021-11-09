@@ -131,7 +131,6 @@ namespace duckerBot
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
             await Join(msg);
-            Thread.Sleep(1000);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
@@ -156,6 +155,7 @@ namespace duckerBot
                 Description = $"[{track.Title}]({url})\n\n[ordered by {msg.Member.Mention}]",
                 Color = mainEmbedColor
             };
+            playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
             
             await msg.Channel.SendMessageAsync(playEmbed);
         }
@@ -166,7 +166,6 @@ namespace duckerBot
         public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
             await Join(msg);
-            //Thread.Sleep(1000);
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
@@ -209,6 +208,7 @@ namespace duckerBot
                 Description = $"[{track.Title}]({track.Uri})\n\n[ordered by {msg.Member.Mention}]",
                 Color = mainEmbedColor
             };
+            playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
 
             await msg.Channel.SendMessageAsync(playEmbed);
         }
