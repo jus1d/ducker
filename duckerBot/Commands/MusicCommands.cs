@@ -153,7 +153,6 @@ namespace duckerBot
             {
                 Title = "Now playing",
                 Description = $"[{track.Title}]({url})",
-                Footer = { IconUrl = msg.User.AvatarUrl, Text = "Ordered by " + msg.User.Username },
                 Color = mainEmbedColor
             };
             playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
@@ -207,14 +206,14 @@ namespace duckerBot
             {
                 Title = "Now playing",
                 Description = $"[{track.Title}]({track.Uri})",
-                Footer = { IconUrl = msg.User.AvatarUrl, Text = "Ordered by " + msg.User.Username },
                 Color = mainEmbedColor
             };
+            playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
 
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
-        // -play 
+        // -play (resume)
         [Command("play"), 
          Description("resume playing music")]
         public async Task Play(CommandContext msg)
@@ -223,9 +222,9 @@ namespace duckerBot
             {
                 var incorrectMusicCommand = new DiscordEmbedBuilder
                 {
-                    Title = "You are not in a voice channel",
-                    Footer = { IconUrl = msg.User.AvatarUrl, Text = "For " + msg.User.Username }
+                    Title = "You are not in a voice channel"
                 };
+                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectMusicCommand);
                 return;
             }
@@ -238,9 +237,9 @@ namespace duckerBot
             {
                 var incorrectMusicCommand = new DiscordEmbedBuilder
                 {
-                    Title = "There are no tracks loaded",
-                    Footer = { IconUrl = msg.User.AvatarUrl, Text = "For " + msg.User.Username }
+                    Title = "There are no tracks loaded"
                 };
+                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
                 return;
             }
 
@@ -283,7 +282,6 @@ namespace duckerBot
             {
                 Title = "Missing argument",
                 Description = "**Usage:** -pause",
-                Footer = { IconUrl = msg.User.AvatarUrl, Text = "For " + msg.User.Username },
                 Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
