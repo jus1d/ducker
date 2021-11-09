@@ -25,7 +25,7 @@ namespace duckerBot
                 var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** ```-avatar <user>```",
+                    Description = $"**Usage:** `-avatar <user>`",
                     Color = incorrectEmbedColor
                 };
                 incorrectAvatarCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -52,7 +52,7 @@ namespace duckerBot
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-avatar <user>```",
+                Description = $"**Usage:** `-avatar <user>`",
                 Color = incorrectEmbedColor
             };
             incorrectAvatarCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -81,7 +81,7 @@ namespace duckerBot
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-invitelink```",
+                Description = $"**Usage:** `-invitelink`",
                 Color = incorrectEmbedColor
             };
             incorrectInviteLinkCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -99,7 +99,7 @@ namespace duckerBot
                 var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** ```-random <min value> <max value>```",
+                    Description = $"**Usage:** `-random <min value> <max value>`",
                     Color = incorrectEmbedColor
                 };
                 incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -122,7 +122,7 @@ namespace duckerBot
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-random <min value> <max value>```",
+                Description = $"**Usage:** `-random <min value> <max value>`",
                 Color = incorrectEmbedColor
             };
             incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -135,7 +135,7 @@ namespace duckerBot
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** `-random <min value> <max value>`\n [for {msg.Member.Mention}]",
                 Color = incorrectEmbedColor
             };
             incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);

@@ -70,7 +70,7 @@ namespace duckerBot
             var incorrectUserInfoCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-userinfo <user>(optional)```",
+                Description = $"**Usage:** `-userinfo <user>(optional)`",
                 Color = incorrectEmbedColor
             };
             incorrectUserInfoCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -89,7 +89,7 @@ namespace duckerBot
                 var incorrectBanCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** -ban <member>",
+                    Description = $"**Usage:** `-ban <member>`",
                     Color = incorrectEmbedColor
                 };
                 incorrectBanCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -120,7 +120,7 @@ namespace duckerBot
             var incorrectBanCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -ban <member>",
+                Description = $"**Usage:** `-ban <member>`",
                 Color = incorrectEmbedColor
             };
             incorrectBanCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -139,7 +139,7 @@ namespace duckerBot
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** -clear <amount> (amount must be less than 100)",
+                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100)`",
                     Color = incorrectEmbedColor
                 };
                 incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -181,7 +181,7 @@ namespace duckerBot
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -clear <amount>",
+                Description = $"**Usage:** `-clear <amount>`",
                 Color = incorrectEmbedColor
             };
             incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -196,7 +196,7 @@ namespace duckerBot
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** -clear <amount>",
+                Description = $"**Usage:** `-clear <amount>`",
                 Color = incorrectEmbedColor
             };
             incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -213,7 +213,7 @@ namespace duckerBot
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-embed <embed config>```\n```config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -del```",
+                Description = $"**Usage:** `-embed <embed config>`\n\n`config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -del`",
                 Color = incorrectEmbedColor
             };
             incorrectCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
