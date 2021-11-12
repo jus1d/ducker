@@ -15,6 +15,8 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
+        public ulong musicChannelId = 816659808627195915; // only for my own server)
+
         // -join
         [Command("join"),
          Description(("bot joined to your voice channel")),
@@ -130,6 +132,19 @@ namespace duckerBot
         [Description("bot joined to your voice, and playing video or track by your search query")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             await Join(msg);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -165,6 +180,19 @@ namespace duckerBot
         [Description("bot joined to your voice and playing video by your search query")]
         public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             await Join(msg);
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -218,6 +246,19 @@ namespace duckerBot
          Description("resume playing music")]
         public async Task Play(CommandContext msg)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 var incorrectMusicCommand = new DiscordEmbedBuilder
@@ -251,6 +292,19 @@ namespace duckerBot
          Description("pause playing music")]
         public async Task Pause(CommandContext msg)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync("You are not in a voice channel.");
@@ -278,6 +332,19 @@ namespace duckerBot
         [Command("pause"), Description("pause playing music")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             var incorrectPauseCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = "Missing argument",
@@ -293,6 +360,19 @@ namespace duckerBot
          Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
@@ -313,6 +393,19 @@ namespace duckerBot
         [Command("stop"), Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             await Quit(msg, msg.Member.VoiceState.Channel);
         }
     }

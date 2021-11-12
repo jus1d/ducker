@@ -17,6 +17,7 @@ namespace duckerBot
     {
         private DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
         private DiscordColor incorrectEmbedColor = DiscordColor.Red;
+        private DiscordColor warningColor = DiscordColor.Orange;
         
         
         // -userinfo
@@ -241,14 +242,14 @@ namespace duckerBot
             {
                 if (embedConfig[i] == "-t")
                 {
-                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-d" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink" && embedConfig[j] != "-del"; j++)
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-d" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink" && embedConfig[j] != "-del" && embedConfig[j] != "-color"; j++)
                     {
                         embedTitle += embedConfig[j] + " ";
                     }
                 }
                 else if (embedConfig[i] == "-d")
                 {
-                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-t" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink" && embedConfig[j] != "-del"; j++)
+                    for (int j = i + 1; j < embedConfig.Length && embedConfig[j] != "-t" && embedConfig[j] != "-image" && embedConfig[j] != "-titlelink" && embedConfig[j] != "-del" && embedConfig[j] != "-color"; j++)
                     {
                         embedDescription += embedConfig[j] + " ";
                     }
@@ -265,6 +266,43 @@ namespace duckerBot
                 {
                     await msg.Message.DeleteAsync();
                 }
+                else if (embedConfig[i] == "-color")
+                {
+                    try
+                    {
+                        switch (embedConfig[i + 1])
+                        {
+                            case "red":
+                                mainEmbedColor = DiscordColor.Red;
+                                break;
+                            case "green":
+                                mainEmbedColor = DiscordColor.Green;
+                                break;
+                            case "blue":
+                                mainEmbedColor = DiscordColor.Azure;
+                                break;
+                            case "black":
+                                mainEmbedColor = DiscordColor.Black;
+                                break;
+                            case "white":
+                                mainEmbedColor = DiscordColor.White;
+                                break;
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        var incorrectColorFlag = new DiscordEmbedBuilder
+                        {
+                            Title = $"Missing argument",
+                            Description = $"Incorrect `-color` flag\n" +
+                                          $"**Usage:** `-color <color>`",
+                            Color = incorrectEmbedColor
+                        };
+                        incorrectColorFlag.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                        msg.Channel.SendMessageAsync(incorrectColorFlag);
+                        throw;
+                    }
+                }
             }
             var userCreatedEmbed = new DiscordEmbedBuilder
             {
@@ -276,21 +314,6 @@ namespace duckerBot
             };
             userCreatedEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
-        }
-        
-        
-        // -t
-        [Command("t"), RequirePermissions(Permissions.Administrator)]
-        public async Task Test(CommandContext msg)
-        {
-            var testEmbed = new DiscordEmbedBuilder
-            {
-                Title = "title here",
-                Description = "description here",
-                Color = DiscordColor.Aquamarine
-            };
-            testEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-            await msg.Channel.SendMessageAsync(testEmbed);
         }
     }
 }
