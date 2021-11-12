@@ -398,7 +398,13 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await msg.Channel.SendMessageAsync("Connection is not established");
+                var noTracksLoaded = new DiscordEmbedBuilder
+                {
+                    Description = "Connection is not established",
+                    Color = warningColor
+                };
+                noTracksLoaded.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
             var node = lava.ConnectedNodes.Values.First();
@@ -406,7 +412,13 @@ namespace duckerBot
 
             if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("I'm is not connected.");
+                var noTracksLoaded = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected.",
+                    Color = warningColor
+                };
+                noTracksLoaded.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
             await connection.DisconnectAsync();
