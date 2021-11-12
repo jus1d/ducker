@@ -21,14 +21,23 @@ namespace duckerBot
         [Command("join"),
          Description(("bot joined to your voice channel")),
          RequirePermissions(Permissions.Administrator)]
-        public async Task Join(CommandContext msg)
+        public async Task Join(CommandContext msg, DiscordChannel channel = null)
         {
-            DiscordChannel channel = msg.Member.VoiceState.Channel;
+            if (channel == null)
+            { 
+                channel = msg.Member.VoiceState.Channel;
+            }
             
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await msg.Channel.SendMessageAsync("Connection is not established");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Connection is not established",
+                    Color = warningColor
+                };
+                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
             
@@ -36,30 +45,19 @@ namespace duckerBot
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                var noInVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Color = warningColor
+                };
+                noInVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noInVoice);
                 return;
             }
             
             await node.ConnectAsync(channel);
         }
         
-        // -join channel
-        [Command("join"),
-         Description("bot joined to tagged voice channel"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task Join(CommandContext msg, [Description("voice channel")] DiscordChannel channel)
-        {
-            var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-            {
-                await msg.Channel.SendMessageAsync("Connection is not established");
-                return;
-            }
-            
-            var node = lava.ConnectedNodes.Values.First();
-
-            await node.ConnectAsync(channel);
-        }
 
         // -quit
         [Command("quit"),
@@ -72,60 +70,42 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await msg.Channel.SendMessageAsync("Connection is not established");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Connection is not established",
+                    Color = warningColor
+                };
+                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
-
             var node = lava.ConnectedNodes.Values.First();
-
             if (channel.Type != ChannelType.Voice)
             {
-                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
+                var invalidChannel = new DiscordEmbedBuilder
+                {
+                    Description = "Not a valid voice channel",
+                    Color = warningColor
+                };
+                invalidChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(invalidChannel);
                 return;
             }
-
             var connection = node.GetGuildConnection(channel.Guild);
-
             if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("I'm is not connected.");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected",
+                    Color = warningColor
+                };
+                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
-
             await connection.DisconnectAsync();
         }
         
-        // -quit channel
-        [Command("quit"),
-         Description("bot quit from tagged channel"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(CommandContext msg, [Description("voice channel to quit")] DiscordChannel channel)
-        {
-            var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-            {
-                await msg.Channel.SendMessageAsync("Connection is not established");
-                return;
-            }
-
-            var node = lava.ConnectedNodes.Values.First();
-
-            if (channel.Type != ChannelType.Voice)
-            {
-                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
-                return;
-            }
-
-            var connection = node.GetGuildConnection(channel.Guild);
-
-            if (connection == null)
-            {
-                await msg.Channel.SendMessageAsync("I'm is not connected.");
-                return;
-            }
-
-            await connection.DisconnectAsync();
-        }
         
         // -play url
         [Command("play")]
@@ -157,7 +137,13 @@ namespace duckerBot
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("ya is not connected.");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected",
+                    Color = warningColor
+                };
+                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
             var loadResult = await node.Rest.GetTracksAsync(url);
@@ -171,7 +157,6 @@ namespace duckerBot
                 Color = mainEmbedColor
             };
             playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
-            
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
@@ -197,7 +182,13 @@ namespace duckerBot
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                var noVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Color = warningColor
+                };
+                noVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
 
@@ -207,7 +198,13 @@ namespace duckerBot
 
             if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("ya is not connected.");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected",
+                    Color = warningColor
+                };
+                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
 
@@ -222,7 +219,13 @@ namespace duckerBot
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed 
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
-                await msg.Channel.SendMessageAsync($"Track search failed for: {search}");
+                var searchFaled = new DiscordEmbedBuilder
+                {
+                    Description = $"Track search failed for: {search}",
+                    Color = mainEmbedColor
+                };
+                searchFaled.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(searchFaled);
                 return;
             }
 
@@ -307,7 +310,13 @@ namespace duckerBot
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                var noVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Color = warningColor
+                };
+                noVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
 
@@ -317,19 +326,32 @@ namespace duckerBot
 
             if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("Not connected.");
+                var noVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Color = warningColor
+                };
+                noVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
 
             if (connection.CurrentState.CurrentTrack == null)
             {
-                await msg.Channel.SendMessageAsync("There are no tracks loaded.");
+                var noTracksLoaded = new DiscordEmbedBuilder
+                {
+                    Description = "There are no tracks loaded",
+                    Color = warningColor
+                };
+                noTracksLoaded.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
             await connection.PauseAsync();
         }
 
-        [Command("pause"), Description("pause playing music")]
+        [Command("pause"), 
+         Description("pause playing music")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -390,7 +412,8 @@ namespace duckerBot
             await connection.DisconnectAsync();
         }
 
-        [Command("stop"), Description("stop music, and kicks bof from voice channel")]
+        [Command("stop"), 
+         Description("stop music, and kicks bof from voice channel")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -405,8 +428,7 @@ namespace duckerBot
                 msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
-
-            await Quit(msg, msg.Member.VoiceState.Channel);
+            await Quit(msg);
         }
     }
 }
