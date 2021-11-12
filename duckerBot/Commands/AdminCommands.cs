@@ -287,6 +287,16 @@ namespace duckerBot
                             case "white":
                                 mainEmbedColor = DiscordColor.White;
                                 break;
+                            default:
+                                var incorrectColorFlag = new DiscordEmbedBuilder
+                                {
+                                    Title = "Missing argument",
+                                    Description = "Incorrect -color flag usage\n**Usage:** `-color <color>`\nPossible colors now: `red, green, blue, white, black`",
+                                    Color = incorrectEmbedColor
+                                };
+                                incorrectColorFlag.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                                msg.Channel.SendMessageAsync(incorrectColorFlag);
+                                return;
                         }
                     }
                     catch (Exception e)
