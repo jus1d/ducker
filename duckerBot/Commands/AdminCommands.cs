@@ -325,5 +325,20 @@ namespace duckerBot
             userCreatedEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
+
+        [Command("t")]
+        public async Task T(CommandContext msg)
+        {
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = "title",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl, 
+                    Text = msg.User.Username + "#" + msg.User.Discriminator
+                }
+            };
+            msg.Channel.SendMessageAsync(embed);
+        } 
     }
 }

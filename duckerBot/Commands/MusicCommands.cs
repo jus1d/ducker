@@ -107,6 +107,55 @@ namespace duckerBot
         }
         
         
+        // -play (resume)
+        [Command("play"), 
+         Description("resume playing music")]
+        public async Task Play(CommandContext msg)
+        {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Color = warningColor
+                };
+                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                var incorrectMusicCommand = new DiscordEmbedBuilder
+                {
+                    Title = "You are not in a voice channel"
+                };
+                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
+                await msg.Channel.SendMessageAsync(incorrectMusicCommand);
+                return;
+            }
+
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+
+            if (connection.CurrentState.CurrentTrack == null)
+            {
+                var incorrectMusicCommand = new DiscordEmbedBuilder
+                {
+                    Title = "There are no tracks loaded"
+                };
+                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
+                msg.Channel.SendMessageAsync(incorrectMusicCommand);
+                return;
+            }
+            await connection.ResumeAsync();
+            var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
+            msg.Message.CreateReactionAsync(emoji);
+        }
+        
+        
         // -play url
         [Command("play")]
         [Description("bot joined to your voice, and playing video or track by your search query")]
@@ -244,51 +293,6 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
-        // -play (resume)
-        [Command("play"), 
-         Description("resume playing music")]
-        public async Task Play(CommandContext msg)
-        {
-            if (msg.Channel.Id != musicChannelId)
-            {
-                var incorrectChannel = new DiscordEmbedBuilder
-                {
-                    Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
-                    Color = warningColor
-                };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
-                return;
-            }
-
-            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
-            {
-                var incorrectMusicCommand = new DiscordEmbedBuilder
-                {
-                    Title = "You are not in a voice channel"
-                };
-                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
-                await msg.Channel.SendMessageAsync(incorrectMusicCommand);
-                return;
-            }
-
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-
-            if (connection.CurrentState.CurrentTrack == null)
-            {
-                var incorrectMusicCommand = new DiscordEmbedBuilder
-                {
-                    Title = "There are no tracks loaded"
-                };
-                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
-                return;
-            }
-
-            await connection.ResumeAsync();
-        }
         
         // -pause
         [Command("pause"), 
@@ -348,6 +352,8 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
+            var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
+            msg.Message.CreateReactionAsync(emoji);
         }
 
         [Command("pause"), 
@@ -374,6 +380,8 @@ namespace duckerBot
                 Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
+            var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
+            msg.Message.CreateReactionAsync(emoji);
         }
         
         
