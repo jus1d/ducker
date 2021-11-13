@@ -57,31 +57,8 @@ namespace duckerBot
                 Timeout = TimeSpan.FromMinutes(2)
             });
 
-            client.MessageCreated += async (args, msg ) =>
-            {
-                if (msg.Author.IsBot)
-                    return;
-
-                DiscordMember member = (DiscordMember)msg.Author; // mows
-                
-                if (msg.Message.MentionEveryone)
-                {
-                    if (member.Guild.Permissions == Permissions.Administrator) // ignore owner
-                        return;
-                    
-                    await msg.Message.DeleteAsync();
-                    var embed = new DiscordEmbedBuilder
-                    {
-                        Title = "Anti @everyone tag",
-                        Description = $"don't tag everyone\n[{msg.Author.Mention}]",
-                        Color = DiscordColor.Azure
-                    };
-                    embed.WithFooter("For " + msg.Author.Username, msg.Author.AvatarUrl);
-                    await msg.Message.Channel.SendMessageAsync(embed);
-                }
-            };
-
-            client.GuildMemberAdded += OnMemberAdded;
+            client.MessageCreated += EventHandler.OnMessageCreated;
+            client.GuildMemberAdded += EventHandler.OnMemberAdded;
 
             var commandsConfig = new CommandsNextConfiguration
             {
@@ -122,21 +99,6 @@ namespace duckerBot
             };
             client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
-        }
-
-        internal async Task OnMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
-        {
-            DiscordChannel channel = await client.GetChannelAsync(787190218221944862);
-            if (channel?.Guild.Id == e.Guild.Id)
-            {
-                await channel.AddOverwriteAsync(e.Member, Permissions.AccessChannels, Permissions.None);
-                DiscordEmbed message = new DiscordEmbedBuilder
-                {
-                    Description = "User '" + e.Member.Username + "#" + e.Member.Discriminator + "' has left the server.",
-                    Color = DiscordColor.Green
-                };
-                await channel.SendMessageAsync(message);
-            }
         }
     }
 }
