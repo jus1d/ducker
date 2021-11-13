@@ -81,6 +81,8 @@ namespace duckerBot
                 }
             };
 
+            client.GuildMemberAdded += OnMemberAdded;
+
             var commandsConfig = new CommandsNextConfiguration
             {
                 StringPrefixes = new string[] { configJson.Prefix },
@@ -120,6 +122,21 @@ namespace duckerBot
             };
             client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
+        }
+
+        internal async Task OnMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
+        {
+            DiscordChannel channel = await client.GetChannelAsync(787190218221944862);
+            if (channel?.Guild.Id == e.Guild.Id)
+            {
+                await channel.AddOverwriteAsync(e.Member, Permissions.AccessChannels, Permissions.None);
+                DiscordEmbed message = new DiscordEmbedBuilder
+                {
+                    Description = "User '" + e.Member.Username + "#" + e.Member.Discriminator + "' has left the server.",
+                    Color = DiscordColor.Green
+                };
+                await channel.SendMessageAsync(message);
+            }
         }
     }
 }
