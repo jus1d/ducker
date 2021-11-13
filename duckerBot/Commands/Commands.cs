@@ -15,6 +15,98 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
+        // -help
+        [Command("help")]
+        public async Task Help(CommandContext msg, string command = null)
+        {
+            if (command == null)
+            {
+                var helpMessageEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Help",
+                    Description = "List of all server commands.\n" +
+                                  "Prefix for tgis server: '-'\n" +
+                                  "Use `-help <command>` to see certain command description\n\n" +
+                                  "**Commands**\n" +
+                                  "`avatar`, `invitelink`, `random`, `play`, `pause`, `stop`\n" +
+                                  "**Admin Commands**\n" +
+                                  "`ban`, `kick`, `clear`, `embed`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = mainEmbedColor
+                };
+                msg.Channel.SendMessageAsync(helpMessageEmbed);
+            }
+            else
+            {
+                string helpEmbedDescription = "";
+                string helpEmbedCommandUsage = "";
+                switch (command)
+                {
+                    case "avatar":
+                        helpEmbedDescription = "Sends you embed with users avatar";
+                        helpEmbedCommandUsage = "-avatar <user>";
+                        break;
+                    case "invitelink":
+                        helpEmbedDescription = "Sends you invite link for this bot";
+                        helpEmbedCommandUsage = "-invitelink";
+                        break;
+                    case "random":
+                        helpEmbedDescription = "Sends you random value in your range from min to max value";
+                        helpEmbedCommandUsage = "-random <min> <max>";
+                        break;
+                    case "play":
+                        helpEmbedDescription = "Starts playing music from youtube by link or search request";
+                        helpEmbedCommandUsage = "-play <link to youtube video> or <search>";
+                        break;
+                    case "pause":
+                        helpEmbedDescription = "Pause now playing music (can use `-play` command to resume playing)";
+                        helpEmbedCommandUsage = "-pause";
+                        break;
+                    case "stop":
+                        helpEmbedDescription = "Permanently stop now playing music (can't use `-play` command to resume playing)";
+                        helpEmbedCommandUsage = "-stop";
+                        break;
+                    case "ban":
+                        helpEmbedDescription = "Ban mentioned user in current server";
+                        helpEmbedCommandUsage = "-ban <user>";
+                        break;
+                    case "kick":
+                        helpEmbedDescription = "Kick mentioned user from current server";
+                        helpEmbedCommandUsage = "-kick <user>";
+                        break;
+                    case "clear":
+                        helpEmbedDescription = "Clear certain number of messages in current channel";
+                        helpEmbedCommandUsage = "-clear <amount> (amount must be less than 100)";
+                        break;
+                    case "embed":
+                        helpEmbedDescription = "Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use `-del` flag, message with config will be deleted)";
+                        helpEmbedCommandUsage = "-embed -t <title> -d <description> -image <image URL> -titlelink <title URL> -del";
+                        break;
+                    default:
+                        helpEmbedDescription = "You try to use `-help <command>` with unknown command";
+                        helpEmbedCommandUsage = "-help <command>";
+                        break;
+                }
+                var avatarHelpEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Help",
+                    Description = $"**Description:** {helpEmbedDescription}\n**Usage:** `{helpEmbedCommandUsage}`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = mainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(avatarHelpEmbed);
+            }
+        }
+        
+        
         // -avatar
         [Command("avatar"), 
          Description("bot will send you URL of tagged user's avatar")]

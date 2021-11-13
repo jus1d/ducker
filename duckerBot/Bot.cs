@@ -12,6 +12,7 @@ using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
@@ -26,9 +27,7 @@ namespace duckerBot
     public class Bot
     {
         public DiscordClient client { get; private set; }
-        
         public InteractivityExtension interactivity { get; private set; }
-        
         public CommandsNextExtension commands { get; private set; }
         
         public async Task RunAsync()
@@ -54,7 +53,8 @@ namespace duckerBot
             client.Ready += OnClientReady;
             client.UseInteractivity(new InteractivityConfiguration
             {
-                Timeout = TimeSpan.FromMinutes(2)
+                PollBehaviour = PollBehaviour.DeleteEmojis,
+                Timeout = TimeSpan.FromSeconds(10)
             });
 
             client.MessageCreated += EventHandler.OnMessageCreated;
@@ -65,7 +65,7 @@ namespace duckerBot
                 StringPrefixes = new string[] { configJson.Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
-                DmHelp = true
+                EnableDefaultHelp = false
             };
             
             var endpoint = new ConnectionEndpoint

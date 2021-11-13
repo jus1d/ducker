@@ -8,6 +8,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Net.Models;
 using DSharpPlus.SlashCommands.Attributes;
 
@@ -326,19 +327,13 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
 
-        [Command("t")]
+        [Command("t"), 
+         RequirePermissions(Permissions.Administrator)]
         public async Task T(CommandContext msg)
         {
-            var embed = new DiscordEmbedBuilder
-            {
-                Title = "title",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl, 
-                    Text = msg.User.Username + "#" + msg.User.Discriminator
-                }
-            };
-            msg.Channel.SendMessageAsync(embed);
+            var interactivity = msg.Client.GetInteractivity();
+
+            await interactivity.WaitForReactionAsync(msg.Message, msg.User);
         } 
     }
 }
