@@ -15,21 +15,32 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // define music channel id
-        private ulong MusicChannelID = 816659808627195915;
-        
+        public static ulong musicChannelId = 816659808627195915;
+
         // -join
-        [Command("join")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description(("bot joined to your voice channel"))]
-        public async Task Join(CommandContext msg)
+        [Command("join"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Join(CommandContext msg, DiscordChannel channel = null)
         {
-            DiscordChannel channel = msg.Member.VoiceState.Channel;
+            if (channel == null)
+            { 
+                channel = msg.Member.VoiceState.Channel;
+            }
             
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await msg.Channel.SendMessageAsync("Connection is not established");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Connection is not established",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
             
@@ -37,35 +48,27 @@ namespace duckerBot
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                var noInVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noInVoice);
                 return;
             }
             
             await node.ConnectAsync(channel);
         }
         
-        // -join channel
-        [Command("join")]
-        [RequireRoles(RoleCheckMode.All, "admin")]
-        [Description("bot joined to tagged voice channel")]
-        public async Task Join(CommandContext msg, [Description("voice channel")] DiscordChannel channel)
-        {
-            var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-            {
-                await msg.Channel.SendMessageAsync("Connection is not established");
-                return;
-            }
-            
-            var node = lava.ConnectedNodes.Values.First();
-
-            await node.ConnectAsync(channel);
-        }
 
         // -quit
-        [Command("quit")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("bot quit from your channel")]
+        [Command("quit"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
             DiscordChannel channel = msg.Member.VoiceState.Channel;
@@ -73,71 +76,137 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await msg.Channel.SendMessageAsync("Connection is not established");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Connection is not established",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
-
             var node = lava.ConnectedNodes.Values.First();
-
             if (channel.Type != ChannelType.Voice)
             {
-                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
+                var invalidChannel = new DiscordEmbedBuilder
+                {
+                    Description = "Not a valid voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(invalidChannel);
                 return;
             }
-
-            var conn = node.GetGuildConnection(channel.Guild);
-
-            if (conn == null)
+            var connection = node.GetGuildConnection(channel.Guild);
+            if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("I'm is not connected.");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
-
-            await conn.DisconnectAsync();
+            await connection.DisconnectAsync();
         }
         
-        // -quit channel
-        [Command("quit")]
-        [RequirePermissions(Permissions.Administrator)]
-        [Description("bot quit from tagged channel")]
-        public async Task Quit(CommandContext msg, [Description("voice channel to quit")] DiscordChannel channel)
+        
+        // -play (resume)
+        [Command("play")]
+        public static async Task PlayResume(CommandContext msg)
         {
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                var incorrectMusicCommand = new DiscordEmbedBuilder
+                {
+                    Title = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Ordered by " + msg.User.Username
+                },
+                };
+                await msg.Channel.SendMessageAsync(incorrectMusicCommand);
+                return;
+            }
+
             var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-            {
-                await msg.Channel.SendMessageAsync("Connection is not established");
-                return;
-            }
-
             var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
 
-            if (channel.Type != ChannelType.Voice)
+            if (connection.CurrentState.CurrentTrack == null)
             {
-                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
+                var incorrectMusicCommand = new DiscordEmbedBuilder
+                {
+                    Title = "There are no tracks loaded",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = "Ordered by " + msg.User.Username
+                    },
+                };
+                await msg.Channel.SendMessageAsync(incorrectMusicCommand);
                 return;
             }
-
-            var conn = node.GetGuildConnection(channel.Guild);
-
-            if (conn == null)
-            {
-                await msg.Channel.SendMessageAsync("I'm is not connected.");
-                return;
-            }
-
-            await conn.DisconnectAsync();
+            await connection.ResumeAsync();
+            var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
+            await msg.Message.CreateReactionAsync(emoji);
         }
+        
         
         // -play url
         [Command("play")]
-        [Description("bot joined to your voice, and playing video or track by your search query")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
-            if (msg.Channel.Id != MusicChannelID)
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
-            
-            Join(msg);
-            Thread.Sleep(1000);
+            }
+
+            await Join(msg);
             
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
@@ -146,51 +215,103 @@ namespace duckerBot
             }
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            if (conn == null)
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("ya is not connected.");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
             var loadResult = await node.Rest.GetTracksAsync(url);
             var track = loadResult.Tracks.First();
-            await conn.PlayAsync(track);
+            await connection.PlayAsync(track);
             
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
-                Description = track.Title + $"\nURL: {url} \n[ordered by {msg.Member.Mention}]",
-                Color = DiscordColor.Azure
+                Description = $"[{track.Title}]({url})",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Ordered by " + msg.User.Username
+                },
+                Color = mainEmbedColor
             };
-            
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
         // -play search
         [Command("play")]
-        [Description("bot joined to your voice and playing video by your search query")]
-        public async Task Play(CommandContext msg, [Description("search query")] string search)
+        public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
-            if (msg.Channel.Id != MusicChannelID)
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
-            
-            Join(msg);
-            Thread.Sleep(1000);
+            }
+
+            await Join(msg);
 
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                var noVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
 
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
 
-            if (conn == null)
+            if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("ya is not connected.");
+                var noConnectionEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
+            }
+
+            string search = "";
+            for (int i = 0; i < searchInput.Length; i++)
+            {
+                search += searchInput[i] + " ";
             }
 
             var loadResult = await node.Rest.GetTracksAsync(search);
@@ -198,147 +319,234 @@ namespace duckerBot
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed 
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
             {
-                await msg.Channel.SendMessageAsync($"Track search failed for {search}.");
+                var searchFaled = new DiscordEmbedBuilder
+                {
+                    Description = $"Track search failed for: {search}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = mainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(searchFaled);
                 return;
             }
 
             var track = loadResult.Tracks.First();
 
-            await conn.PlayAsync(track);
+            await connection.PlayAsync(track);
             
             var playEmbed = new DiscordEmbedBuilder
             {
                 Title = "Now playing",
-                Description = track.Title + $"\nURL: {track.Uri} \n[ordered by {msg.Member.Mention}]",
-                Color = DiscordColor.Azure
+                Description = $"[{track.Title}]({track.Uri})",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Ordered by " + msg.User.Username
+                },
+                Color = mainEmbedColor
             };
-
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
-        // -play (resume)
-        [Command("play")]
-        [Description("resume playing music")]
-        public async Task Play(CommandContext msg)
-        {
-            if (msg.Channel.Id != MusicChannelID)
-                return;
-            
-            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
-            {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
-                return;
-            }
-
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-
-            if (conn == null)
-            {
-                await msg.Channel.SendMessageAsync("Lavalink is not connected.");
-                return;
-            }
-
-            if (conn.CurrentState.CurrentTrack == null)
-            {
-                await msg.Channel.SendMessageAsync("There are no tracks loaded.");
-                return;
-            }
-
-            await conn.ResumeAsync();
-        }
         
         // -pause
         [Command("pause")]
-        [Description("pause playing music")]
         public async Task Pause(CommandContext msg)
         {
-            if (msg.Channel.Id != MusicChannelID)
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
-            
+            }
+
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync("You are not in a voice channel.");
+                var noVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
 
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
-            var conn = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
 
-            if (conn == null)
+            if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("Lavalink is not connected.");
+                var noVoice = new DiscordEmbedBuilder
+                {
+                    Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
 
-            if (conn.CurrentState.CurrentTrack == null)
+            if (connection.CurrentState.CurrentTrack == null)
             {
-                await msg.Channel.SendMessageAsync("There are no tracks loaded.");
+                var noTracksLoaded = new DiscordEmbedBuilder
+                {
+                    Description = "There are no tracks loaded",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
-
-            await conn.PauseAsync();
+            await connection.PauseAsync();
+            var emoji = DiscordEmoji.FromName(msg.Client, ":arrow_forward:");
+            await msg.Message.CreateReactionAsync(emoji);
+            var interactivity = msg.Client.GetInteractivity();
+            await interactivity.WaitForReactionAsync(msg.Message, msg.User);
+            await connection.ResumeAsync();
         }
 
-        [Command("pause"), Description("pause playing music")]
+        [Command("pause")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != MusicChannelID)
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
+            }
 
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            var incorrectPauseCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = "Missing argument",
                 Description = "**Usage:** -pause",
-                Color = DiscordColor.Red
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = incorrectEmbedColor
             };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
+            var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
+            await msg.Message.CreateReactionAsync(emoji);
         }
         
         
         // -stop
         [Command("stop")]
-        [Description("permanently stop bot playing and bot quit")]
         public async Task Stop(CommandContext msg)
         {
-            DiscordChannel channel = msg.Member.VoiceState.Channel;
-            
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
-                await msg.Channel.SendMessageAsync("Connection is not established");
+                var noTracksLoaded = new DiscordEmbedBuilder
+                {
+                    Description = "Connection is not established",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
-
             var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Channel.Guild);
 
-            if (channel.Type != ChannelType.Voice)
+            if (connection == null)
             {
-                await msg.Channel.SendMessageAsync("Not a valid voice channel.");
+                var noTracksLoaded = new DiscordEmbedBuilder
+                {
+                    Description = "I'm is not connected.",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
-
-            var conn = node.GetGuildConnection(channel.Guild);
-
-            if (conn == null)
-            {
-                await msg.Channel.SendMessageAsync("I'm is not connected.");
-                return;
-            }
-
-            await conn.DisconnectAsync();
+            await connection.DisconnectAsync();
         }
 
-        [Command("stop"), Description("stop music, and kicks bof from voice channel")]
+        [Command("stop")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != MusicChannelID)
+            if (msg.Channel.Id != musicChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = warningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
-            
-            DiscordChannel channel = msg.Member.VoiceState.Channel;
-            await Quit(msg, channel);
+            }
+            await Quit(msg);
         }
     }
 }

@@ -12,6 +12,7 @@ using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
+using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
@@ -25,11 +26,9 @@ namespace duckerBot
 {
     public class Bot
     {
-        public DiscordClient client { get; private set; }
-        
-        public InteractivityExtension interactivity { get; private set; }
-        
-        public CommandsNextExtension commands { get; private set; }
+        public DiscordClient Client { get; private set; }
+        public InteractivityExtension Interactivity { get; private set; }
+        public CommandsNextExtension Commands { get; private set; }
         
         public async Task RunAsync()
         {
@@ -49,43 +48,24 @@ namespace duckerBot
                 MinimumLogLevel = LogLevel.Debug
             };
             
-            client = new DiscordClient(config);
+            Client = new DiscordClient(config);
 
-            client.Ready += OnClientReady;
-            client.UseInteractivity(new InteractivityConfiguration
+            Client.Ready += OnClientReady;
+            Client.UseInteractivity(new InteractivityConfiguration
             {
-                Timeout = TimeSpan.FromMinutes(2)
+                PollBehaviour = PollBehaviour.DeleteEmojis,
+                Timeout = TimeSpan.FromMinutes(3)
             });
-            
-            client.MessageCreated += async (args, msg ) =>
-            {
-                if (msg.Author.IsBot)
-                    return;
 
-                DiscordMember member = (DiscordMember)msg.Author; // mows
-                
-                if (msg.Message.MentionEveryone)
-                {
-                    if (member.Guild.Permissions == Permissions.Administrator) // ignore owner
-                        return;
-                    
-                    await msg.Message.DeleteAsync();
-                    var embed = new DiscordEmbedBuilder
-                    {
-                        Color = DiscordColor.Azure,
-                        Title = "Anti @everyone tag",
-                        Description = $"don't tag everyone\n[{msg.Author.Mention}]"
-                    };
-                    await msg.Message.Channel.SendMessageAsync(embed);
-                }
-            };
+            Client.MessageCreated += EventHandler.OnMessageCreated;
+            Client.GuildMemberAdded += EventHandler.OnMemberAdded;
 
             var commandsConfig = new CommandsNextConfiguration
             {
                 StringPrefixes = new string[] { configJson.Prefix },
-                EnableDms = false,
+                EnableDms = true,
                 EnableMentionPrefix = true,
-                DmHelp = true
+                EnableDefaultHelp = false
             };
             
             var endpoint = new ConnectionEndpoint
@@ -101,11 +81,11 @@ namespace duckerBot
                 SocketEndpoint = endpoint
             };
             
-            var lavalink = client.UseLavalink();
+            var lavalink = Client.UseLavalink();
             
-            commands = client.UseCommandsNext(commandsConfig);
-            commands.RegisterCommands<Commands>();
-            await client.ConnectAsync();
+            Commands = Client.UseCommandsNext(commandsConfig);
+            Commands.RegisterCommands<Commands>();
+            await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             await Task.Delay(-1);
         }
@@ -115,9 +95,9 @@ namespace duckerBot
             var activity = new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
-                Name = "with ducks | -help",
+                Name = "with ducks | -help"
             };
-            client.UpdateStatusAsync(activity);
+            Client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
         }
     }

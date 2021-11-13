@@ -15,9 +15,121 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
+        // -help
+        [Command("help")]
+        public async Task Help(CommandContext msg, string command = null)
+        {
+            if (command == null)
+            {
+                var helpMessageEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Help",
+                    Description = "List of all server commands.\n" +
+                                  "Prefix for this server: '-'\n" +
+                                  "Use `-help <command>` to see certain command description\n\n" +
+                                  "**Commands**\n" +
+                                  "`avatar`, `invitelink`, `random`, `play`, `pause`, `stop`\n" +
+                                  "**Admin Commands**\n" +
+                                  "`ban`, `kick`, `clear`, `embed`, `poll`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = mainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(helpMessageEmbed);
+            }
+            else
+            {
+                string helpEmbedDescription = "";
+                string helpEmbedCommandUsage = "";
+                switch (command)
+                {
+                    case "avatar":
+                        helpEmbedDescription = "Sends you embed with users avatar";
+                        helpEmbedCommandUsage = "-avatar <user>";
+                        break;
+                    case "invitelink":
+                        helpEmbedDescription = "Sends you invite link for this bot";
+                        helpEmbedCommandUsage = "-invitelink";
+                        break;
+                    case "random":
+                        helpEmbedDescription = "Sends you random value in your range from min to max value";
+                        helpEmbedCommandUsage = "-random <min> <max>";
+                        break;
+                    case "play":
+                        helpEmbedDescription = "Starts playing music from youtube by link or search request";
+                        helpEmbedCommandUsage = "-play <link to youtube video> or <search>";
+                        break;
+                    case "pause":
+                        helpEmbedDescription = "Pause now playing music (can use `-play` command to resume playing)";
+                        helpEmbedCommandUsage = "-pause";
+                        break;
+                    case "stop":
+                        helpEmbedDescription = "Permanently stop now playing music (can't use `-play` command to resume playing)";
+                        helpEmbedCommandUsage = "-stop";
+                        break;
+                    case "ban":
+                        helpEmbedDescription = "Ban mentioned user in current server";
+                        helpEmbedCommandUsage = "-ban <user>";
+                        break;
+                    case "kick":
+                        helpEmbedDescription = "Kick mentioned user from current server";
+                        helpEmbedCommandUsage = "-kick <user>";
+                        break;
+                    case "clear":
+                        helpEmbedDescription = "Clear certain number of messages in current channel";
+                        helpEmbedCommandUsage = "-clear <amount> (amount must be less than 100)";
+                        break;
+                    case "embed":
+                        helpEmbedDescription = "Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use `-del` flag, message with config will be deleted)";
+                        helpEmbedCommandUsage = "-embed -t <title> -d <description> -image <image URL> -titlelink <title URL> -del";
+                        break;
+                    case "poll":
+                        helpEmbedDescription = "Creates embed with poll with your description in current channel, and create on this message :white_check_mark: and :x:";
+                        helpEmbedCommandUsage = "-poll <poll description>";
+                        break;
+                    default:
+                        helpEmbedDescription = "You try to use `-help <command>` with unknown command";
+                        helpEmbedCommandUsage = "-help <command>";
+                        break;
+                }
+                var avatarHelpEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Help",
+                    Description = $"**Description:** {helpEmbedDescription}\n**Usage:** `{helpEmbedCommandUsage}`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = mainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(avatarHelpEmbed);
+            }
+        }
+
+        [Command("help")]
+        public async Task Help(CommandContext msg, params string[] text)
+        {
+            var incorrectHelpEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Help",
+                Description = "**Description:** You try to use `-help <command>` with unknown command\n**Usage:** `-help <command>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = mainEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectHelpEmbed);
+        }
+        
+        
         // -avatar
-        [Command("avatar"), 
-         Description("bot will send you URL of tagged user's avatar")]
+        [Command("avatar")]
         public async Task Avatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
         {
             if (user == null)
@@ -25,8 +137,13 @@ namespace duckerBot
                 var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Description = $"**Usage:** `-avatar <user>`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
             }
@@ -35,58 +152,77 @@ namespace duckerBot
                 var userAvatarEmbed = new DiscordEmbedBuilder
                 {
                     Title = "User's avatar",
-                    Description = $"**{user.Mention}'s avatar**\n [for {msg.Member.Mention}]",
+                    Description = $"**{user.Mention}'s avatar**",
                     ImageUrl = user.AvatarUrl,
                     Url = user.AvatarUrl,
-                    Color = DiscordColor.Azure
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = mainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(userAvatarEmbed);
             }
         }
         
-        [Command("avatar"), Description("bot will send you URL of tagged user's avatar")]
+        [Command("avatar")]
         public async Task Avatar(CommandContext msg, params string[] text)
         {
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-avatar <user>```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Description = $"**Usage:** `-avatar <user>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
         }
         
         
         // -invitelink
-        [Command("invitelink"), Description("send you bot's invite link")]
+        [Command("invitelink")]
         public async Task InviteLink(CommandContext msg)
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
             {
                 Title = "Invite Link",
                 Description = $"[for {msg.Member.Mention}]",
-                Url = "https://discord.com/api/oauth2/authorize?client_id=849009875031687208&permissions=8&scope=bot",
-                Color = DiscordColor.Azure
+                Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = mainEmbedColor
             };
-            
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
 
-        [Command("invitelink"), Description("send you bot's invite link")]
+        [Command("invitelink")]
         public async Task InviteLink(CommandContext msg, params string[] text)
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-invitelink```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Description = $"**Usage:** `-invitelink`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectInviteLinkCommandEmbed);
         }
         
         
         // -random <min> <max>
-        [Command("random"), Description("send you random value in your range")]
+        [Command("random")]
         public async Task Random(CommandContext msg, [Description("min value")] int minValue, [Description("max value")] int maxValue)
         {
             var rnd = new Random();
@@ -95,8 +231,13 @@ namespace duckerBot
                 var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
-                    Color = DiscordColor.Red
+                    Description = $"**Usage:** `-random <min value> <max value>`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
                 return;
@@ -104,32 +245,47 @@ namespace duckerBot
             var randomEmbed = new DiscordEmbedBuilder
             {
                 Title = "Random number",
-                Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**\n\n[for {msg.Member.Mention}]",
-                Color = DiscordColor.Azure
+                Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = mainEmbedColor
             };
             await msg.Channel.SendMessageAsync(randomEmbed);
         }
 
-        [Command("random"), Description("send you random value in your range")]
+        [Command("random")]
         public async Task Random(CommandContext msg)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Description = $"**Usage:** `-random <min value> <max value>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
 
-        [Command("random"), Description("send you random value in your range")]
+        [Command("random")]
         public async Task Random(CommandContext msg, params string[] text)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** ```-random <min value> <max value>```\n [for {msg.Member.Mention}]",
-                Color = DiscordColor.Red
+                Description = $"**Usage:** `-random <min value> <max value>`\n [for {msg.Member.Mention}]",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
