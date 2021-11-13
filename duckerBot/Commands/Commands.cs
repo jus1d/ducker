@@ -106,6 +106,7 @@ namespace duckerBot
             }
         }
 
+        [Command("help")]
         public async Task Help(CommandContext msg, params string[] text)
         {
             var incorrectHelpEmbed = new DiscordEmbedBuilder
@@ -124,8 +125,7 @@ namespace duckerBot
         
         
         // -avatar
-        [Command("avatar"), 
-         Description("bot will send you URL of tagged user's avatar")]
+        [Command("avatar")]
         public async Task Avatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
         {
             if (user == null)
@@ -134,9 +134,13 @@ namespace duckerBot
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** `-avatar <user>`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = incorrectEmbedColor
                 };
-                incorrectAvatarCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
             }
             else
@@ -147,29 +151,37 @@ namespace duckerBot
                     Description = $"**{user.Mention}'s avatar**",
                     ImageUrl = user.AvatarUrl,
                     Url = user.AvatarUrl,
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = mainEmbedColor
                 };
-                userAvatarEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(userAvatarEmbed);
             }
         }
         
-        [Command("avatar"), Description("bot will send you URL of tagged user's avatar")]
+        [Command("avatar")]
         public async Task Avatar(CommandContext msg, params string[] text)
         {
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-avatar <user>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
                 Color = incorrectEmbedColor
             };
-            incorrectAvatarCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
         }
         
         
         // -invitelink
-        [Command("invitelink"), Description("send you bot's invite link")]
+        [Command("invitelink")]
         public async Task InviteLink(CommandContext msg)
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
@@ -177,28 +189,36 @@ namespace duckerBot
                 Title = "Invite Link",
                 Description = $"[for {msg.Member.Mention}]",
                 Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
                 Color = mainEmbedColor
             };
-            inviteLinkEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
 
-        [Command("invitelink"), Description("send you bot's invite link")]
+        [Command("invitelink")]
         public async Task InviteLink(CommandContext msg, params string[] text)
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-invitelink`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
                 Color = incorrectEmbedColor
             };
-            incorrectInviteLinkCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectInviteLinkCommandEmbed);
         }
         
         
         // -random <min> <max>
-        [Command("random"), Description("send you random value in your range")]
+        [Command("random")]
         public async Task Random(CommandContext msg, [Description("min value")] int minValue, [Description("max value")] int maxValue)
         {
             var rnd = new Random();
@@ -208,9 +228,13 @@ namespace duckerBot
                 {
                     Title = $"Missing argument",
                     Description = $"**Usage:** `-random <min value> <max value>`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = incorrectEmbedColor
                 };
-                incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
                 return;
             }
@@ -218,35 +242,47 @@ namespace duckerBot
             {
                 Title = "Random number",
                 Description = $"Your random number is: **{rnd.Next(minValue, maxValue + 1)}**",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
                 Color = mainEmbedColor
             };
-            randomEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(randomEmbed);
         }
 
-        [Command("random"), Description("send you random value in your range")]
+        [Command("random")]
         public async Task Random(CommandContext msg)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-random <min value> <max value>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
                 Color = incorrectEmbedColor
             };
-            incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
 
-        [Command("random"), Description("send you random value in your range")]
+        [Command("random")]
         public async Task Random(CommandContext msg, params string[] text)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-random <min value> <max value>`\n [for {msg.Member.Mention}]",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
                 Color = incorrectEmbedColor
             };
-            incorrectRandomCommandEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
     }
