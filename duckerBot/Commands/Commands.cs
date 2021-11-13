@@ -17,7 +17,7 @@ namespace duckerBot
     {
         // -help
         [Command("help")]
-        public async Task Help(CommandContext msg, string command)
+        public async Task Help(CommandContext msg, string command = null)
         {
             if (command == null)
             {
@@ -30,7 +30,7 @@ namespace duckerBot
                                   "**Commands**\n" +
                                   "`avatar`, `invitelink`, `random`, `play`, `pause`, `stop`\n" +
                                   "**Admin Commands**\n" +
-                                  "`ban`, `kick`, `clear`, `embed`",
+                                  "`ban`, `kick`, `clear`, `embed`, `poll`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -85,6 +85,10 @@ namespace duckerBot
                     case "embed":
                         helpEmbedDescription = "Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use `-del` flag, message with config will be deleted)";
                         helpEmbedCommandUsage = "-embed -t <title> -d <description> -image <image URL> -titlelink <title URL> -del";
+                        break;
+                    case "poll":
+                        helpEmbedDescription = "Creates embed with poll with your description in current channel, and create on this message :white_check_mark: and :x:";
+                        helpEmbedCommandUsage = "-poll <poll description>";
                         break;
                     default:
                         helpEmbedDescription = "You try to use `-help <command>` with unknown command";
