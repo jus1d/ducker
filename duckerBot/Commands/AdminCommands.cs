@@ -326,6 +326,53 @@ namespace duckerBot
             userCreatedEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
+        
+        
+        // -poll
+        [Command("poll")]
+        public async Task Poll(CommandContext msg, params string[] pollConfig)
+        {
+            try
+            {
+                bool b = pollConfig[0] == "s";
+            }
+            catch (Exception e)
+            {
+                var incorrectPollCommand = new DiscordEmbedBuilder
+                {
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-poll <poll description>`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = incorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectPollCommand);
+                throw;
+            }
+            
+            string pollDescription = "";
+            for (int i = 0; i < pollConfig.Length; i++)
+            {
+                Console.WriteLine(pollConfig[0]);
+            }
+            var pollEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Poll",
+                Description = pollDescription,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = mainEmbedColor
+            };
+            var pollMessage = msg.Channel.SendMessageAsync(pollEmbed);
+            await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
+            await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
+        }
 
         [Command("t"), 
          RequirePermissions(Permissions.Administrator)]
