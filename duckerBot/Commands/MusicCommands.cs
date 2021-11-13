@@ -19,7 +19,6 @@ namespace duckerBot
 
         // -join
         [Command("join"),
-         Description(("bot joined to your voice channel")),
          RequirePermissions(Permissions.Administrator)]
         public async Task Join(CommandContext msg, DiscordChannel channel = null)
         {
@@ -34,9 +33,13 @@ namespace duckerBot
                 var noConnectionEmbed = new DiscordEmbedBuilder
                 {
                     Description = "Connection is not established",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
@@ -48,9 +51,13 @@ namespace duckerBot
                 var noInVoice = new DiscordEmbedBuilder
                 {
                     Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noInVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noInVoice);
                 return;
             }
@@ -61,7 +68,6 @@ namespace duckerBot
 
         // -quit
         [Command("quit"),
-         Description("bot quit from your channel"),
          RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
@@ -73,9 +79,13 @@ namespace duckerBot
                 var noConnectionEmbed = new DiscordEmbedBuilder
                 {
                     Description = "Connection is not established",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
@@ -85,9 +95,13 @@ namespace duckerBot
                 var invalidChannel = new DiscordEmbedBuilder
                 {
                     Description = "Not a valid voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                invalidChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(invalidChannel);
                 return;
             }
@@ -97,9 +111,13 @@ namespace duckerBot
                 var noConnectionEmbed = new DiscordEmbedBuilder
                 {
                     Description = "I'm is not connected",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
@@ -108,8 +126,7 @@ namespace duckerBot
         
         
         // -play (resume)
-        [Command("play"), 
-         Description("resume playing music")]
+        [Command("play")]
         public static async Task PlayResume(CommandContext msg)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -118,9 +135,13 @@ namespace duckerBot
                 {
                     Title = "Incorrect channel for music commands",
                     Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
@@ -129,9 +150,13 @@ namespace duckerBot
             {
                 var incorrectMusicCommand = new DiscordEmbedBuilder
                 {
-                    Title = "You are not in a voice channel"
+                    Title = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Ordered by " + msg.User.Username
+                },
                 };
-                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectMusicCommand);
                 return;
             }
@@ -144,9 +169,13 @@ namespace duckerBot
             {
                 var incorrectMusicCommand = new DiscordEmbedBuilder
                 {
-                    Title = "There are no tracks loaded"
+                    Title = "There are no tracks loaded",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = "Ordered by " + msg.User.Username
+                    },
                 };
-                incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectMusicCommand);
                 return;
             }
@@ -158,7 +187,6 @@ namespace duckerBot
         
         // -play url
         [Command("play")]
-        [Description("bot joined to your voice, and playing video or track by your search query")]
         public async Task Play(CommandContext msg, [Description("URL")] Uri url)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -167,10 +195,14 @@ namespace duckerBot
                 {
                     Title = "Incorrect channel for music commands",
                     Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
 
@@ -189,9 +221,13 @@ namespace duckerBot
                 var noConnectionEmbed = new DiscordEmbedBuilder
                 {
                     Description = "I'm is not connected",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
@@ -203,15 +239,18 @@ namespace duckerBot
             {
                 Title = "Now playing",
                 Description = $"[{track.Title}]({url})",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Ordered by " + msg.User.Username
+                },
                 Color = mainEmbedColor
             };
-            playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
         // -play search
         [Command("play")]
-        [Description("bot joined to your voice and playing video by your search query")]
         public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -220,10 +259,14 @@ namespace duckerBot
                 {
                     Title = "Incorrect channel for music commands",
                     Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
 
@@ -234,9 +277,13 @@ namespace duckerBot
                 var noVoice = new DiscordEmbedBuilder
                 {
                     Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
@@ -250,9 +297,13 @@ namespace duckerBot
                 var noConnectionEmbed = new DiscordEmbedBuilder
                 {
                     Description = "I'm is not connected",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noConnectionEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
@@ -271,9 +322,13 @@ namespace duckerBot
                 var searchFaled = new DiscordEmbedBuilder
                 {
                     Description = $"Track search failed for: {search}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = mainEmbedColor
                 };
-                searchFaled.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(searchFaled);
                 return;
             }
@@ -286,10 +341,13 @@ namespace duckerBot
             {
                 Title = "Now playing",
                 Description = $"[{track.Title}]({track.Uri})",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Ordered by " + msg.User.Username
+                },
                 Color = mainEmbedColor
             };
-            playEmbed.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
-
             await msg.Channel.SendMessageAsync(playEmbed);
         }
         
@@ -304,9 +362,13 @@ namespace duckerBot
                 {
                     Title = "Incorrect channel for music commands",
                     Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
@@ -316,9 +378,13 @@ namespace duckerBot
                 var noVoice = new DiscordEmbedBuilder
                 {
                     Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
@@ -332,9 +398,13 @@ namespace duckerBot
                 var noVoice = new DiscordEmbedBuilder
                 {
                     Description = "You are not in a voice channel",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noVoice.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noVoice);
                 return;
             }
@@ -344,9 +414,13 @@ namespace duckerBot
                 var noTracksLoaded = new DiscordEmbedBuilder
                 {
                     Description = "There are no tracks loaded",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noTracksLoaded.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
@@ -358,8 +432,7 @@ namespace duckerBot
             await connection.ResumeAsync();
         }
 
-        [Command("pause"), 
-         Description("pause playing music")]
+        [Command("pause")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -368,9 +441,13 @@ namespace duckerBot
                 {
                     Title = "Incorrect channel for music commands",
                     Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
@@ -379,6 +456,11 @@ namespace duckerBot
             {
                 Title = "Missing argument",
                 Description = "**Usage:** -pause",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
                 Color = incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
@@ -388,8 +470,7 @@ namespace duckerBot
         
         
         // -stop
-        [Command("stop"), 
-         Description("permanently stop bot playing and bot quit")]
+        [Command("stop")]
         public async Task Stop(CommandContext msg)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -398,9 +479,13 @@ namespace duckerBot
                 {
                     Title = "Incorrect channel for music commands",
                     Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
@@ -411,9 +496,13 @@ namespace duckerBot
                 var noTracksLoaded = new DiscordEmbedBuilder
                 {
                     Description = "Connection is not established",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noTracksLoaded.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
@@ -425,17 +514,20 @@ namespace duckerBot
                 var noTracksLoaded = new DiscordEmbedBuilder
                 {
                     Description = "I'm is not connected.",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                noTracksLoaded.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
             }
             await connection.DisconnectAsync();
         }
 
-        [Command("stop"), 
-         Description("stop music, and kicks bof from voice channel")]
+        [Command("stop")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -444,9 +536,13 @@ namespace duckerBot
                 {
                     Title = "Incorrect channel for music commands",
                     Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = warningColor
                 };
-                incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
