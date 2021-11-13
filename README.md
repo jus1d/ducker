@@ -7,4 +7,16 @@
 ## Commands
 
 | Command | Description |
-|----|----|
+|---|----|
+|Admin commands|
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
