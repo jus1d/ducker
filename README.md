@@ -8,15 +8,14 @@
 
 | Command | Description |
 |---|----|
-|Admin commands|
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
-|||
+|`avatar`|Bot will send embed with users avatar to current channel |
+|`invitelink`| Bot will send invite link for this bot to current channel |
+|`random`||
+|`play`||
+|`pause`||
+|`stop`||
+|`ban`||
+|`kick`||
+|`clear`||
+|`embed`||
+|`poll`||
