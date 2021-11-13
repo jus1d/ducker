@@ -1,7 +1,5 @@
-# ducker Discord Bot
-## Invite Link (unavailable now)
-### INFO
- To use this bot, you need invite him to your server (link upper). Write -help, and bot will send you information about commands.
+# ducker Bot
+## INFO
 > This bot is under development, it is intended for use in particular by server administrators
 
 ## Commands
@@ -9,7 +7,6 @@
 | Command | Description |
 |---|----|
 |`help`| Bot will send help list to current channel |
-|`help <command>` | Bot will send you description & usage of current command | 
 |`avatar`| Bot will send embed with users avatar to current channel |
 |`invitelink`| Bot will send invite link for this bot to current channel |
 |`random`| Bot will send  random value in your range from min to max value to current channel |
