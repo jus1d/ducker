@@ -38,7 +38,7 @@ namespace duckerBot
                     },
                     Color = mainEmbedColor
                 };
-                msg.Channel.SendMessageAsync(helpMessageEmbed);
+                await msg.Channel.SendMessageAsync(helpMessageEmbed);
             }
             else
             {
@@ -119,7 +119,7 @@ namespace duckerBot
                 },
                 Color = mainEmbedColor
             };
-            msg.Channel.SendMessageAsync(incorrectHelpEmbed);
+            await msg.Channel.SendMessageAsync(incorrectHelpEmbed);
         }
         
         

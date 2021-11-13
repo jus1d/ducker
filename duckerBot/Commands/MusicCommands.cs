@@ -15,7 +15,7 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        public ulong musicChannelId = 816659808627195915; // only for my own server)
+        public ulong musicChannelId = 816659808627195915;
 
         // -join
         [Command("join"),
@@ -121,7 +121,7 @@ namespace duckerBot
                     Color = warningColor
                 };
                 incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
 
@@ -147,12 +147,12 @@ namespace duckerBot
                     Title = "There are no tracks loaded"
                 };
                 incorrectMusicCommand.WithFooter("Ordered by " + msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectMusicCommand);
+                await msg.Channel.SendMessageAsync(incorrectMusicCommand);
                 return;
             }
             await connection.ResumeAsync();
             var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
-            msg.Message.CreateReactionAsync(emoji);
+            await msg.Message.CreateReactionAsync(emoji);
         }
         
         
@@ -308,7 +308,7 @@ namespace duckerBot
                     Color = warningColor
                 };
                 incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
 
@@ -352,8 +352,11 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
-            var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
-            msg.Message.CreateReactionAsync(emoji);
+            var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
+            await msg.Message.CreateReactionAsync(emoji);
+            var interactivity = msg.Client.GetInteractivity();
+            await interactivity.WaitForReactionAsync(msg.Message, msg.User);
+            await connection.ResumeAsync();
         }
 
         [Command("pause"), 
@@ -369,7 +372,7 @@ namespace duckerBot
                     Color = warningColor
                 };
                 incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
 
@@ -381,7 +384,7 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
             var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
-            msg.Message.CreateReactionAsync(emoji);
+            await msg.Message.CreateReactionAsync(emoji);
         }
         
         
@@ -399,7 +402,7 @@ namespace duckerBot
                     Color = warningColor
                 };
                 incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
 
@@ -445,7 +448,7 @@ namespace duckerBot
                     Color = warningColor
                 };
                 incorrectChannel.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                msg.Channel.SendMessageAsync(incorrectChannel);
+                await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
             }
             await Quit(msg);

@@ -296,7 +296,7 @@ namespace duckerBot
                                     Color = incorrectEmbedColor
                                 };
                                 incorrectColorFlag.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                                msg.Channel.SendMessageAsync(incorrectColorFlag);
+                                await msg.Channel.SendMessageAsync(incorrectColorFlag);
                                 return;
                         }
                     }
@@ -310,7 +310,7 @@ namespace duckerBot
                             Color = incorrectEmbedColor
                         };
                         incorrectColorFlag.WithFooter(msg.User.Username, msg.User.AvatarUrl);
-                        msg.Channel.SendMessageAsync(incorrectColorFlag);
+                        await msg.Channel.SendMessageAsync(incorrectColorFlag);
                         throw;
                     }
                 }
@@ -332,8 +332,8 @@ namespace duckerBot
         public async Task T(CommandContext msg)
         {
             var interactivity = msg.Client.GetInteractivity();
-
             await interactivity.WaitForReactionAsync(msg.Message, msg.User);
+            await msg.Channel.SendMessageAsync("1");
         } 
     }
 }
