@@ -17,7 +17,7 @@ namespace duckerBot
     {
         // -help
         [Command("help")]
-        public async Task Help(CommandContext msg, string command = null)
+        public async Task Help(CommandContext msg, string command)
         {
             if (command == null)
             {
@@ -25,7 +25,7 @@ namespace duckerBot
                 {
                     Title = "Help",
                     Description = "List of all server commands.\n" +
-                                  "Prefix for tgis server: '-'\n" +
+                                  "Prefix for this server: '-'\n" +
                                   "Use `-help <command>` to see certain command description\n\n" +
                                   "**Commands**\n" +
                                   "`avatar`, `invitelink`, `random`, `play`, `pause`, `stop`\n" +
@@ -104,6 +104,22 @@ namespace duckerBot
                 };
                 await msg.Channel.SendMessageAsync(avatarHelpEmbed);
             }
+        }
+
+        public async Task Help(CommandContext msg, params string[] text)
+        {
+            var incorrectHelpEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Help",
+                Description = "**Description:** You try to use `-help <command>` with unknown command\n**Usage:** `-help <command>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = mainEmbedColor
+            };
+            msg.Channel.SendMessageAsync(incorrectHelpEmbed);
         }
         
         
