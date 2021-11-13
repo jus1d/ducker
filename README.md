@@ -8,7 +8,9 @@
 
 | Command | Description |
 |---|----|
-|`avatar`|Bot will send embed with users avatar to current channel |
+|`help`| Bot will send help list to current channel |
+|`help <command>` | Bot will send you description & usage of current command | 
+|`avatar`| Bot will send embed with users avatar to current channel |
 |`invitelink`| Bot will send invite link for this bot to current channel |
 |`random`| Bot will send  random value in your range from min to max value to current channel |
 |`play`| Starts playing music from youtube by link or search request |
