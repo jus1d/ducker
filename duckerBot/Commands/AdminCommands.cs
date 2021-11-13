@@ -16,15 +16,14 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        private DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
-        private DiscordColor incorrectEmbedColor = DiscordColor.Red;
-        private DiscordColor warningColor = DiscordColor.Orange;
+        public static DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
+        public static DiscordColor incorrectEmbedColor = DiscordColor.Red;
+        public static DiscordColor warningColor = DiscordColor.Orange;
         
         
         // -userinfo
         [Command("userinfo"), 
-         RequirePermissions(Permissions.Administrator), 
-         Description("bot will send you information about tagged user, or you")]
+         RequirePermissions(Permissions.Administrator)]
         public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
         {
             string userCreatedDate = "";
@@ -40,6 +39,11 @@ namespace duckerBot
                     Title = $"{msg.User.Username}'s information",
                     Description = $"User ID: {msg.User.Id}\nDate account created: {userCreatedDate}\nUser's avatar:",
                     ImageUrl = msg.User.AvatarUrl,
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
                     Color = mainEmbedColor
                 };
                 userInfoEmbed.WithFooter(msg.User.Username, msg.User.AvatarUrl);
@@ -372,6 +376,22 @@ namespace duckerBot
             var pollMessage = msg.Channel.SendMessageAsync(pollEmbed);
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
+        }
+
+
+        [Command("dj")]
+        public async Task Dj(CommandContext msg)
+        {
+            var musicEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Music",
+                Color = mainEmbedColor,
+                ImageUrl = "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg"
+            };
+            var message = await msg.Channel.SendMessageAsync(musicEmbed);
+            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":play_pause:"));
+            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":stop_button:"));
+            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
         }
 
         [Command("t"), 

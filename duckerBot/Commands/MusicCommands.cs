@@ -15,7 +15,7 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        public ulong musicChannelId = 816659808627195915;
+        public static ulong musicChannelId = 816659808627195915;
 
         // -join
         [Command("join"),
@@ -110,7 +110,7 @@ namespace duckerBot
         // -play (resume)
         [Command("play"), 
          Description("resume playing music")]
-        public async Task Play(CommandContext msg)
+        public static async Task PlayResume(CommandContext msg)
         {
             if (msg.Channel.Id != musicChannelId)
             {
@@ -295,8 +295,7 @@ namespace duckerBot
         
         
         // -pause
-        [Command("pause"), 
-         Description("pause playing music")]
+        [Command("pause")]
         public async Task Pause(CommandContext msg)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -352,7 +351,7 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
-            var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
+            var emoji = DiscordEmoji.FromName(msg.Client, ":arrow_forward:");
             await msg.Message.CreateReactionAsync(emoji);
             var interactivity = msg.Client.GetInteractivity();
             await interactivity.WaitForReactionAsync(msg.Message, msg.User);
