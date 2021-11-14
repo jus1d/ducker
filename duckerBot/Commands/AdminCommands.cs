@@ -10,7 +10,6 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Net.Models;
-using DSharpPlus.SlashCommands.Attributes;
 
 namespace duckerBot
 {
@@ -431,22 +430,13 @@ namespace duckerBot
             var musicEmbed = new DiscordEmbedBuilder
             {
                 Title = "Music",
-                Color = mainEmbedColor,
-                ImageUrl = "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg"
+                ImageUrl = "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg",
+                Color = mainEmbedColor
             };
             var message = await msg.Channel.SendMessageAsync(musicEmbed);
             await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":play_pause:"));
             await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":stop_button:"));
             await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
         }
-
-        [Command("t"), 
-         RequirePermissions(Permissions.Administrator)]
-        public async Task T(CommandContext msg)
-        {
-            var interactivity = msg.Client.GetInteractivity();
-            await interactivity.WaitForReactionAsync(msg.Message, msg.User);
-            await msg.Channel.SendMessageAsync("1");
-        } 
     }
 }

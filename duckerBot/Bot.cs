@@ -20,7 +20,6 @@ using DSharpPlus.Net.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
-using DSharpPlus.SlashCommands;
 
 namespace duckerBot
 {
