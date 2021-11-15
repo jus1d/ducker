@@ -146,12 +146,12 @@ namespace duckerBot
          RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, int amount)
         {
-            if (amount > 100)
+            if (amount > 100 || amount < 0)
             {
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100)`",
+                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,

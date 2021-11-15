@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
@@ -223,7 +224,7 @@ namespace duckerBot
         
         
         // kick
-        [SlashCommand("kick", "Kicks mentioned user from current server")]
+        [SlashCommand("kick", "Kicks mentioned user from current server"), RequirePermissions(Permissions.Administrator)]
         public async Task Kick(InteractionContext msg, [Option("user", "User for kick")] DiscordUser user, [Option("reason", "Reason for kick this member")] string reason = "")
         {
             try
@@ -251,6 +252,58 @@ namespace duckerBot
             }
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().WithContent($"{user.Mention} kicked"));
+        }
+        
+        
+        // clear
+        [SlashCommand("clear", "Clear amount messages in a current channel"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Clear(InteractionContext msg, [Option("amount", "Amount messages to delete")] long amount)
+        {
+            if (amount > 100 || amount < 0)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.incorrectEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectCommandEmbed));
+            }
+            else
+            {
+                await msg.Channel.DeleteMessagesAsync(await msg.Channel.GetMessagesAsync((int)amount + 1));
+
+                string messageOrMessages;
+                if (amount.ToString()[amount.ToString().Length - 1] == '1' && amount != 11)
+                {
+                    messageOrMessages = "message";
+                }
+                else
+                {
+                    messageOrMessages = "messages";
+                }
+            
+                var deletedMessagesReport = new DiscordEmbedBuilder
+                {
+                    Title = $"Deleted messages report", 
+                    Description = $"I have deleted {amount} {messageOrMessages}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.mainEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport));
+            }
         }
     }
 }
