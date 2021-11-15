@@ -30,6 +30,10 @@ namespace duckerBot
         public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
         
+        public static DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
+        public static DiscordColor incorrectEmbedColor = DiscordColor.Red;
+        public static DiscordColor warningColor = DiscordColor.Orange;
+        
         public async Task RunAsync()
         {
             var json = string.Empty;
@@ -82,7 +86,7 @@ namespace duckerBot
             
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<Commands>();
-            slash.RegisterCommands<SlashCommands>();
+            slash.RegisterCommands<SlashCommands>(696496218934608004);
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             await Task.Delay(-1);

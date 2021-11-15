@@ -16,9 +16,9 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        public static DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
+        /*public static DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
         public static DiscordColor incorrectEmbedColor = DiscordColor.Red;
-        public static DiscordColor warningColor = DiscordColor.Orange;
+        public static DiscordColor warningColor = DiscordColor.Orange;*/
         
         
         // -userinfo
@@ -44,7 +44,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = mainEmbedColor
+                    Color = Bot.mainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
@@ -66,7 +66,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = mainEmbedColor
+                    Color = Bot.mainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(userInfoEmbed);
             }
@@ -85,7 +85,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectUserInfoCommandEmbed);
         }
@@ -108,7 +108,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = incorrectEmbedColor
+                    Color = Bot.incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
             }
@@ -124,7 +124,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = mainEmbedColor
+                    Color = Bot.mainEmbedColor
                 };
                 await user.Guild.BanMemberAsync(user);
                 DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
@@ -147,7 +147,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
         }
@@ -169,7 +169,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = incorrectEmbedColor
+                    Color = Bot.incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
@@ -196,7 +196,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = mainEmbedColor
+                    Color = Bot.mainEmbedColor
                 };
                 DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
                 Thread.Sleep(3000);
@@ -217,7 +217,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
@@ -235,7 +235,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.incorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
@@ -255,7 +255,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.incorrectEmbedColor
             };
             
             try
@@ -312,19 +312,19 @@ namespace duckerBot
                         switch (embedConfig[i + 1])
                         {
                             case "red":
-                                mainEmbedColor = DiscordColor.Red;
+                                Bot.mainEmbedColor = DiscordColor.Red;
                                 break;
                             case "green":
-                                mainEmbedColor = DiscordColor.Green;
+                                Bot.mainEmbedColor = DiscordColor.Green;
                                 break;
                             case "blue":
-                                mainEmbedColor = DiscordColor.Azure;
+                                Bot.mainEmbedColor = DiscordColor.Azure;
                                 break;
                             case "black":
-                                mainEmbedColor = DiscordColor.Black;
+                                Bot.mainEmbedColor = DiscordColor.Black;
                                 break;
                             case "white":
-                                mainEmbedColor = DiscordColor.White;
+                                Bot.mainEmbedColor = DiscordColor.White;
                                 break;
                             default:
                                 var incorrectColorFlag = new DiscordEmbedBuilder
@@ -336,7 +336,7 @@ namespace duckerBot
                                         IconUrl = msg.User.AvatarUrl,
                                         Text = msg.User.Username
                                     },
-                                    Color = incorrectEmbedColor
+                                    Color = Bot.incorrectEmbedColor
                                 };
                                 await msg.Channel.SendMessageAsync(incorrectColorFlag);
                                 return;
@@ -354,7 +354,7 @@ namespace duckerBot
                                 IconUrl = msg.User.AvatarUrl,
                                 Text = msg.User.Username
                             },
-                            Color = incorrectEmbedColor
+                            Color = Bot.incorrectEmbedColor
                         };
                         await msg.Channel.SendMessageAsync(incorrectColorFlag);
                         throw;
@@ -372,7 +372,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = mainEmbedColor
+                Color = Bot.mainEmbedColor
             };
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
@@ -397,7 +397,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = incorrectEmbedColor
+                    Color = Bot.incorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectPollCommand);
                 throw;
@@ -417,7 +417,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = mainEmbedColor
+                Color = Bot.mainEmbedColor
             };
             var pollMessage = msg.Channel.SendMessageAsync(pollEmbed);
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
@@ -432,7 +432,7 @@ namespace duckerBot
             {
                 Title = "Music",
                 ImageUrl = "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg",
-                Color = mainEmbedColor
+                Color = Bot.mainEmbedColor
             };
             var message = await msg.Channel.SendMessageAsync(musicEmbed);
             await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":play_pause:"));
