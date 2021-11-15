@@ -10,6 +10,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Net.Models;
+using DSharpPlus.SlashCommands;
 
 namespace duckerBot
 {
@@ -437,6 +438,13 @@ namespace duckerBot
             await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":play_pause:"));
             await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":stop_button:"));
             await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
+        }
+
+
+        [Command("t")]
+        public async Task T(InteractionContext msg)
+        {
+            
         }
     }
 }

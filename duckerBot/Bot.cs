@@ -17,6 +17,7 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using DSharpPlus.Net.Models;
+using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
@@ -38,7 +39,6 @@ namespace duckerBot
                 json = await sr.ReadToEndAsync().ConfigureAwait(false);
 
             var configJson = JsonConvert.DeserializeObject<ConfigJson>(json);
-            
             var config = new DiscordConfiguration
             {
                 Token = configJson.Token,
@@ -66,24 +66,23 @@ namespace duckerBot
                 EnableMentionPrefix = true,
                 EnableDefaultHelp = false
             };
-            
             var endpoint = new ConnectionEndpoint
             {
                 Hostname = "127.0.0.1",
                 Port = 2333
             };
-            
             var lavalinkConfig = new LavalinkConfiguration
             {
                 Password = "11111111",
                 RestEndpoint = endpoint,
                 SocketEndpoint = endpoint
             };
-            
             var lavalink = Client.UseLavalink();
+            var slash = Client.UseSlashCommands();
             
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<Commands>();
+            slash.RegisterCommands<SlashCommands>();
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             await Task.Delay(-1);
