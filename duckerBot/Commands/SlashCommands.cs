@@ -181,12 +181,16 @@ namespace duckerBot
         
         // ban
         [SlashCommand("ban", "Ban mentioned user in current server"), RequirePermissions(Permissions.Administrator)]
-        public async Task Ban(InteractionContext msg, [Option("user", "User for ban")] DiscordUser user)
+        public async Task Ban(InteractionContext msg, [Option("user", "User for ban")] DiscordUser user, [Option("reason", "Reason for ban this user")] string reason = "") 
         {
             var banEmbed = new DiscordEmbedBuilder();
             try
             {
-                await ((DiscordMember) user).BanAsync();
+                if (reason == "")
+                    await ((DiscordMember) user).BanAsync();
+                else
+                    await ((DiscordMember) user).BanAsync(0, reason);
+                
                 banEmbed = new DiscordEmbedBuilder
                 {
                     Title = "User banned",
@@ -215,6 +219,38 @@ namespace duckerBot
             }
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(banEmbed));
+        }
+        
+        
+        // kick
+        [SlashCommand("kick", "Kicks mentioned user from current server")]
+        public async Task Kick(InteractionContext msg, [Option("user", "User for kick")] DiscordUser user, [Option("reason", "Reason for kick this member")] string reason = "")
+        {
+            try
+            {
+                if (reason == "")
+                    await ((DiscordMember) user).RemoveAsync();
+                else
+                    await ((DiscordMember) user).RemoveAsync(reason);
+            }
+            catch (Exception e)
+            {
+                var incorrectKickEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't kick this member",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.incorrectEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectKickEmbed));
+                throw;
+            }
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().WithContent($"{user.Mention} kicked"));
         }
     }
 }

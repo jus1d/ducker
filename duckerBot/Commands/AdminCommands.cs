@@ -76,6 +76,69 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
         }
+        
+        
+        // -kick 
+        [Command("kick"), 
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Kick(CommandContext msg, DiscordMember user = null)
+        {
+            if (user == null)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -kick <member>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.incorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                return;
+            }
+
+            try
+            {
+                await user.RemoveAsync();
+            }
+            catch (Exception e)
+            {
+                var incorrectKickEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't kick this member",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.incorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectKickEmbed);
+                throw;
+            }
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
+        }
+
+        [Command("kick"),  
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Kick(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -kick <member>",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.incorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
 
 
         // -clear
