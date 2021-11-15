@@ -10,12 +10,12 @@ namespace duckerBot
 {
     public class SlashCommands : ApplicationCommandModule
     {
-        // /help
+        // help
         [SlashCommand("help", "Send help list to current channel")]
         public async Task Help(InteractionContext msg, [Choice("avatar", "avatar")] [Choice("invitelink", "invitelink")] [Choice("random", "random")]
             [Choice("play", "play")] [Choice("pause", "pause")] [Choice("stop", "stop")] [Choice("ban", "ban")] 
             [Choice("kick", "kick")] [Choice("clear", "clear")] [Choice("embed", "embed")] [Choice("poll", "poll")]
-            [Option("Command", "Command for detailed description")] string command = null)
+            [Option("Command", "Command for detailed description")] string command = null) 
         {
             var helpMessageEmbed = new DiscordEmbedBuilder();
             if (command == null)
@@ -108,6 +108,73 @@ namespace duckerBot
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
             }
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
+        }
+        
+        
+        // avatar
+        [SlashCommand("avatar", "Send embed with users avatar to current channel")]
+        public async Task Avatar(InteractionContext msg,
+            [Option("User", "User, whose avatar you need")] DiscordUser user) 
+        {
+            var avatarEmbed = new DiscordEmbedBuilder
+            {
+                Title = "User's avatar",
+                Description = $"**{user.Mention}'s avatar**",
+                ImageUrl = user.AvatarUrl,
+                Url = user.AvatarUrl,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.mainEmbedColor
+            };
+            
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(avatarEmbed));
+        }
+        
+        
+        // invitelink
+        [SlashCommand("invitelink", "Send invite link for this bot to current channel")]
+        public async Task InviteLink(InteractionContext msg)
+        {
+            var inviteLinkEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Invite Link",
+                Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.mainEmbedColor
+            };
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(inviteLinkEmbed));
+        }
+        
+        
+        // random
+        [SlashCommand("random", "Send random value in your range from min to max value to current channel")]
+        public async Task Random(InteractionContext msg, 
+            [Option("min", "Minimal value in your range")] long minValue, 
+            [Option("max", "Maximal value in your range")] long maxValue)
+        {
+            var rnd = new Random();
+            var randomEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Random number",
+                Description = $"Your random number is: **{rnd.Next((int)minValue, (int)maxValue + 1)}**",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.mainEmbedColor
+            };
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(randomEmbed));
         }
     }
 }

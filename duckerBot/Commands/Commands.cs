@@ -191,7 +191,6 @@ namespace duckerBot
             var inviteLinkEmbed = new DiscordEmbedBuilder
             {
                 Title = "Invite Link",
-                Description = $"[for {msg.Member.Mention}]",
                 Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
