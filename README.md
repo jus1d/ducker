@@ -3,7 +3,6 @@
 > This bot is under development, it is intended for use in particular by server administrators
 
 ## Commands
-(* - admin commands)
 
 | Command | Description |
 |---|----|
@@ -19,3 +18,4 @@
 |`clear`| Clear certain number of messages in current channel * |
 |`embed`| Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use -del flag, message with config will be deleted) * |
 |`poll`| Creates embed with poll with your description in current channel, and create on this message :white_check_mark: and :x: * |
+> (* - admin commands)
