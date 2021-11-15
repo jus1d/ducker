@@ -7,7 +7,7 @@ Standart bot prefix is `-`, but you can also use the `/` commands by typing `/` 
 ## Commands
 | Command | Description | Usage |
 |---|----| --- |
-|`help`| Bot will send help list to current channel | `-help / -help <command>` |
+|`help`| Bot will send help list to current channel | `-help / -help` `<command>` |
 |`avatar`| Bot will send embed with users avatar to current channel | `-avatar <user>` |
 |`invitelink`| Bot will send invite link for this bot to current channel | `-invitelink` |
 |`random`| Bot will send  random value in your range from min to max value to current channel | `-random <min> <max>` |
