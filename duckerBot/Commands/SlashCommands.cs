@@ -11,7 +11,7 @@ namespace duckerBot
     public class SlashCommands : ApplicationCommandModule
     {
         [SlashCommand("help", "Send help list to current channel")]
-        public async Task TestCommand(InteractionContext msg, [Option("Command", "Command for detailed description")] string command = null)
+        public async Task Help(InteractionContext msg, [Option("Command", "Command for detailed description")] string command = null)
         {
             await msg.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
             if (command == null)
