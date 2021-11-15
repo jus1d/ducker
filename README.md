@@ -11,7 +11,7 @@ Standart bot prefix is `-`, but you can also use the `/` commands by typing `/` 
 |`avatar`| Bot will send embed with users avatar to current channel | `-avatar <user>` |
 |`invitelink`| Bot will send invite link for this bot to current channel | `-invitelink` |
 |`random`| Bot will send  random value in your range from min to max value to current channel | `-random <min> <max>` |
-|`play`| Starts playing music from youtube by link or search request | `-play <url> / -play <search> / -play (resume)` |
+|`play`| Starts playing music from youtube by link or search request | `-play <url> / <search> / (resume)` |
 |`pause`| Pause now playing music (can use -play command to resume playing) | `-pause` |
 |`stop`| Permanently stop now playing music (can't use -play command to resume playing) | `-stop` |
 |`ban`| Ban mentioned user in current server * | `-ban <user>` |
