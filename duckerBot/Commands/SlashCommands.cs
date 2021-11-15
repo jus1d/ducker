@@ -10,13 +10,17 @@ namespace duckerBot
 {
     public class SlashCommands : ApplicationCommandModule
     {
+        // /help
         [SlashCommand("help", "Send help list to current channel")]
-        public async Task Help(InteractionContext msg, [Option("Command", "Command for detailed description")] string command = null)
+        public async Task Help(InteractionContext msg, [Choice("avatar", "avatar")] [Choice("invitelink", "invitelink")] [Choice("random", "random")]
+            [Choice("play", "play")] [Choice("pause", "pause")] [Choice("stop", "stop")] [Choice("ban", "ban")] 
+            [Choice("kick", "kick")] [Choice("clear", "clear")] [Choice("embed", "embed")] [Choice("poll", "poll")]
+            [Option("Command", "Command for detailed description")] string command = null)
         {
-            await msg.CreateResponseAsync(InteractionResponseType.DeferredChannelMessageWithSource);
+            var helpMessageEmbed = new DiscordEmbedBuilder();
             if (command == null)
             {
-                var helpMessageEmbed = new DiscordEmbedBuilder
+                helpMessageEmbed = new DiscordEmbedBuilder
                 {
                     Title = "Help",
                     Description = "List of all server commands.\n" +
@@ -33,7 +37,7 @@ namespace duckerBot
                     },
                     Color = Bot.mainEmbedColor
                 };
-                await msg.Channel.SendMessageAsync(helpMessageEmbed);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
             }
             else
             {
@@ -90,7 +94,7 @@ namespace duckerBot
                         helpEmbedCommandUsage = "-help <command>";
                         break;
                 }
-                var avatarHelpEmbed = new DiscordEmbedBuilder
+                helpMessageEmbed = new DiscordEmbedBuilder
                 {
                     Title = "Help",
                     Description = $"**Description:** {helpEmbedDescription}\n**Usage:** `{helpEmbedCommandUsage}`",
@@ -101,8 +105,9 @@ namespace duckerBot
                     },
                     Color = Bot.mainEmbedColor
                 };
-                await msg.Channel.SendMessageAsync(avatarHelpEmbed);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
             }
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
         }
     }
 }
