@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.SlashCommands;
@@ -137,7 +138,7 @@ namespace duckerBot
         
         // invitelink
         [SlashCommand("invitelink", "Send invite link for this bot to current channel")]
-        public async Task InviteLink(InteractionContext msg)
+        public async Task InviteLink(InteractionContext msg) 
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
             {
@@ -159,7 +160,7 @@ namespace duckerBot
         [SlashCommand("random", "Send random value in your range from min to max value to current channel")]
         public async Task Random(InteractionContext msg, 
             [Option("min", "Minimal value in your range")] long minValue, 
-            [Option("max", "Maximal value in your range")] long maxValue)
+            [Option("max", "Maximal value in your range")] long maxValue) 
         {
             var rnd = new Random();
             var randomEmbed = new DiscordEmbedBuilder
@@ -175,6 +176,45 @@ namespace duckerBot
             };
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(randomEmbed));
+        }
+        
+        
+        // ban
+        [SlashCommand("ban", "Ban mentioned user in current server"), RequirePermissions(Permissions.Administrator)]
+        public async Task Ban(InteractionContext msg, [Option("user", "User for ban")] DiscordUser user)
+        {
+            var banEmbed = new DiscordEmbedBuilder();
+            try
+            {
+                await ((DiscordMember) user).BanAsync();
+                banEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "User banned",
+                    Description = $"gl, {user.Mention} :)",
+                    ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.mainEmbedColor
+                };
+            }
+            catch (Exception e)
+            {
+                banEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $":x: **You can't ban this user**",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.incorrectEmbedColor
+                };
+            }
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(banEmbed));
         }
     }
 }
