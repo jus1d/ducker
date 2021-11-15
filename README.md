@@ -1,9 +1,10 @@
 # ducker Bot
 ## INFO
-> This bot is under development, it is intended for use in particular by server administrators
+> This bot is under development, it is intended for use in particular by server administrators.
+
+Standart bot prefix is `-`, but you can also use the `/` commands by typing `/` in your input discord line.
 
 ## Commands
-
 | Command | Description |
 |---|----|
 |`help`| Bot will send help list to current channel |
