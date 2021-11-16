@@ -305,5 +305,26 @@ namespace duckerBot
                     new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport));
             }
         }
+        
+        
+        // poll
+        [SlashCommand("poll", "Sends poll embed with reactions"), RequirePermissions(Permissions.Administrator)]
+        public async Task Poll(InteractionContext msg,
+            [Option("description", "Set description to your poll embed")] string pollDescription)
+        {
+            var pollEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Poll",
+                Description = pollDescription,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.mainEmbedColor
+            };
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(pollEmbed));
+        }
     }
 }
