@@ -216,6 +216,7 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            //connection.CurrentState.CurrentTrack
             if (connection == null)
             {
                 var noConnectionEmbed = new DiscordEmbedBuilder
