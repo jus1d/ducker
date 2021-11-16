@@ -326,5 +326,36 @@ namespace duckerBot
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(pollEmbed));
         }
+        
+        
+        // embed
+        [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Embed(InteractionContext msg,
+            [Option("description", "Set description tp your embed")] string description = null,
+            [Option("title", "Set title for your embed")] string title = null,
+            [Option("color", "Set color to your embed")] string colorHexCode = null,
+            [Option("image", "Add image to your embed")] string imageUrl = null,
+            [Option("titleURL", "Set title clickable to your URL")] string titleUrl = null)
+        {
+            var color = new DiscordColor(colorHexCode);
+            
+            var userCreatedEmbed = new DiscordEmbedBuilder
+            {
+                Title = title,
+                Description = description,
+                ImageUrl = imageUrl,
+                Url = titleUrl,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = color
+            };
+            
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(userCreatedEmbed));
+        }
     }
 }
