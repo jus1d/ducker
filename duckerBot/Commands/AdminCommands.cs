@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
+using DiscordColour = DSharpPlus.Entities.DiscordColor;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Net.Models;
 using DSharpPlus.SlashCommands;
@@ -234,10 +236,11 @@ namespace duckerBot
          RequirePermissions(Permissions.Administrator)]
         public async Task Embed(CommandContext msg, params string[] embedConfig)
         {
+            var color = Bot.mainEmbedColor;
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** `-embed <embed config>`\n\n`config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -del`",
+                Description = $"**Usage:** `-embed <embed config>`\n\n`config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -color <#color> -del`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -297,38 +300,7 @@ namespace duckerBot
                 {
                     try
                     {
-                        switch (embedConfig[i + 1])
-                        {
-                            case "red":
-                                Bot.mainEmbedColor = DiscordColor.Red;
-                                break;
-                            case "green":
-                                Bot.mainEmbedColor = DiscordColor.Green;
-                                break;
-                            case "blue":
-                                Bot.mainEmbedColor = DiscordColor.Azure;
-                                break;
-                            case "black":
-                                Bot.mainEmbedColor = DiscordColor.Black;
-                                break;
-                            case "white":
-                                Bot.mainEmbedColor = DiscordColor.White;
-                                break;
-                            default:
-                                var incorrectColorFlag = new DiscordEmbedBuilder
-                                {
-                                    Title = "Missing argument",
-                                    Description = "Incorrect -color flag usage\n**Usage:** `-color <color>`\nPossible colors now: `red, green, blue, white, black`",
-                                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                                    {
-                                        IconUrl = msg.User.AvatarUrl,
-                                        Text = msg.User.Username
-                                    },
-                                    Color = Bot.incorrectEmbedColor
-                                };
-                                await msg.Channel.SendMessageAsync(incorrectColorFlag);
-                                return;
-                        }
+                        color = new DiscordColor(embedConfig[i + 1]);
                     }
                     catch (Exception e)
                     {
@@ -336,7 +308,7 @@ namespace duckerBot
                         {
                             Title = $"Missing argument",
                             Description = $"Incorrect `-color` flag\n" +
-                                          $"**Usage:** `-color <color>`",
+                                          $"**Usage:** `-color <#color> (HEX)`",
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
                                 IconUrl = msg.User.AvatarUrl,
@@ -360,7 +332,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = color
             };
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
@@ -414,9 +386,15 @@ namespace duckerBot
 
 
         [Command("t")]
-        public async Task T(InteractionContext msg)
+        public async Task T(CommandContext msg, string colorCode)
         {
-            
+            var color = new DiscordColor(colorCode);
+            var embed = new DiscordEmbedBuilder
+            {
+                Title = "nu title",
+                Color = color
+            };
+            await msg.Channel.SendMessageAsync(embed);
         }
     }
 }
