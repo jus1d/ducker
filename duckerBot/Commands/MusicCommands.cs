@@ -187,7 +187,7 @@ namespace duckerBot
         
         // -play url
         [Command("play")]
-        public async Task Play(CommandContext msg, [Description("URL")] Uri url)
+        public async Task Play(CommandContext msg, Uri url)
         {
             if (msg.Channel.Id != musicChannelId)
             {

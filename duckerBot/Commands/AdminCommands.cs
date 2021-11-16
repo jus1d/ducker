@@ -413,22 +413,6 @@ namespace duckerBot
         }
 
 
-        [Command("dj")]
-        public async Task Dj(CommandContext msg)
-        {
-            var musicEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Music",
-                ImageUrl = "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg",
-                Color = Bot.mainEmbedColor
-            };
-            var message = await msg.Channel.SendMessageAsync(musicEmbed);
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":play_pause:"));
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":stop_button:"));
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
-        }
-
-
         [Command("t")]
         public async Task T(InteractionContext msg)
         {
