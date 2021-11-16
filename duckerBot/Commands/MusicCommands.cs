@@ -38,7 +38,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
@@ -56,7 +56,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noInVoice);
                 return;
@@ -84,7 +84,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
@@ -100,7 +100,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(invalidChannel);
                 return;
@@ -116,7 +116,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
@@ -140,7 +140,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
@@ -200,7 +200,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
@@ -226,7 +226,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
@@ -244,7 +244,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = "Ordered by " + msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.Channel.SendMessageAsync(playEmbed);
         }
@@ -264,7 +264,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
@@ -282,7 +282,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noVoice);
                 return;
@@ -302,7 +302,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
@@ -327,7 +327,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(searchFaled);
                 return;
@@ -346,7 +346,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = "Ordered by " + msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.Channel.SendMessageAsync(playEmbed);
         }
@@ -367,7 +367,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
@@ -383,7 +383,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noVoice);
                 return;
@@ -403,7 +403,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noVoice);
                 return;
@@ -419,7 +419,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
@@ -446,7 +446,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
@@ -461,7 +461,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
             var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
@@ -484,7 +484,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;
@@ -501,7 +501,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
@@ -519,7 +519,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(noTracksLoaded);
                 return;
@@ -541,7 +541,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.warningColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectChannel);
                 return;

@@ -36,7 +36,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(helpMessageEmbed);
             }
@@ -104,7 +104,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(avatarHelpEmbed);
             }
@@ -122,7 +122,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectHelpEmbed);
         }
@@ -143,7 +143,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
             }
@@ -160,7 +160,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(userAvatarEmbed);
             }
@@ -178,7 +178,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectAvatarCommandEmbed);
         }
@@ -197,7 +197,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
@@ -214,7 +214,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectInviteLinkCommandEmbed);
         }
@@ -236,7 +236,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
                 return;
@@ -250,7 +250,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.Channel.SendMessageAsync(randomEmbed);
         }
@@ -267,7 +267,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
@@ -284,7 +284,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }

@@ -37,7 +37,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
             }
@@ -105,7 +105,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
             }
@@ -129,7 +129,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
@@ -150,7 +150,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(inviteLinkEmbed));
@@ -173,7 +173,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(randomEmbed));
@@ -202,7 +202,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
             }
             catch (Exception e)
@@ -215,7 +215,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
             }
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
@@ -244,7 +244,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().AddEmbed(incorrectKickEmbed));
@@ -271,7 +271,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().AddEmbed(incorrectCommandEmbed));
@@ -299,7 +299,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport));
@@ -321,7 +321,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(pollEmbed));

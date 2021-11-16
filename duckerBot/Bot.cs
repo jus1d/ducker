@@ -30,9 +30,9 @@ namespace duckerBot
         public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
         
-        public static DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
-        public static DiscordColor incorrectEmbedColor = DiscordColor.Red;
-        public static DiscordColor warningColor = DiscordColor.Orange;
+        public static DiscordColor MainEmbedColor = DiscordColor.Aquamarine;
+        public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
+        public static DiscordColor WarningColor = DiscordColor.Orange;
         
         public async Task RunAsync()
         {
