@@ -383,18 +383,45 @@ namespace duckerBot
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
         }
+        
 
-
-        [Command("t")]
-        public async Task T(CommandContext msg, string colorCode)
+        [Command("addreactions")]
+        public async Task AddReaction(CommandContext msg, ulong msgId, params string[] emoji)
         {
-            var color = new DiscordColor(colorCode);
-            var embed = new DiscordEmbedBuilder
+            DiscordMessage message = msg.Channel.GetMessageAsync(msgId).Result;
+            try
             {
-                Title = "nu title",
-                Color = color
-            };
-            await msg.Channel.SendMessageAsync(embed);
+                string s = emoji[0];
+            }
+            catch (Exception e)
+            {
+                var incorrectEmojisEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Enter emojis for set reactions",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectEmojisEmbed);
+                throw;
+            }
+
+            for (int i = 0; i < emoji.Length; i++)
+            {
+                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, emoji[i]));
+            }
+        }
+        
+        [Command("reaction")]
+        public async Task Reaction(CommandContext msg, ulong messageId, DiscordEmoji emoji)
+        {
+            var message = msg.Channel.GetMessageAsync(messageId);
+            await message.Result.CreateReactionAsync(emoji);
+            Thread.Sleep(5000);
+            await msg.Message.DeleteAsync();
         }
     }
 }
