@@ -384,36 +384,6 @@ namespace duckerBot
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
         }
         
-
-        [Command("addreactions")]
-        public async Task AddReaction(CommandContext msg, ulong msgId, params string[] emoji)
-        {
-            DiscordMessage message = msg.Channel.GetMessageAsync(msgId).Result;
-            try
-            {
-                string s = emoji[0];
-            }
-            catch (Exception e)
-            {
-                var incorrectEmojisEmbed = new DiscordEmbedBuilder
-                {
-                    Description = "Enter emojis for set reactions",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectEmojisEmbed);
-                throw;
-            }
-
-            for (int i = 0; i < emoji.Length; i++)
-            {
-                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, emoji[i])); 
-            }
-        }
         
         [Command("reaction")]
         public async Task Reaction(CommandContext msg, ulong messageId, DiscordEmoji emoji)
