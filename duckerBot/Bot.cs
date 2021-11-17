@@ -65,7 +65,7 @@ namespace duckerBot
             Client.MessageReactionAdded += EventHandler.OnReactionAdded;
             Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;
 
-            var commandsConfig = new CommandsNextConfiguration
+            var commandsConfig = new CommandsNextConfiguration 
             {
                 StringPrefixes = new string[] { configJson.Prefix },
                 EnableDms = true,

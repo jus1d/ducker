@@ -411,7 +411,7 @@ namespace duckerBot
 
             for (int i = 0; i < emoji.Length; i++)
             {
-                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, emoji[i]));
+                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, emoji[i])); 
             }
         }
         

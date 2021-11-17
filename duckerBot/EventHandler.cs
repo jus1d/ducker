@@ -76,7 +76,7 @@ namespace duckerBot
             }
         } 
         
-        public static async Task OnReactionRemoved(DiscordClient client, MessageReactionRemoveEventArgs e)
+        public static async Task OnReactionRemoved(DiscordClient client, MessageReactionRemoveEventArgs e) 
         {
             if (e.Message.Id == 910591837411098634)
             {
