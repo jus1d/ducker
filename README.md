@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # ducker 
+=======
+# ducker
+>>>>>>> abef33484076b4c1aeb304d6414663fe4d405266
 ## INFO
 > This bot is under development, it is intended for use in particular by server administrators.
 
