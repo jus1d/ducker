@@ -18,6 +18,6 @@ Standart bot prefix is `-`, but you can also use the `/` commands by typing `/` 
 |`ban`| Ban mentioned user in current server * | `-ban <user>` |
 |`kick`| Kick mentioned user from current server * | `-kick <user>` |
 |`clear`| Clear certain number of messages in current channel * | `-clear <amount>` |
-|`embed`| Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use -del flag, message with config will be deleted) * | `-embed -t <title> -d` `<description> ...` |
+|`embed`| Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use -del flag, message with config will be deleted) * | `-embed <config>` |
 |`poll`| Creates embed with poll with your description in current channel, and create on this message :white_check_mark: and :x: * | `-poll <poll` `description>` |
 > (* - admin commands)
