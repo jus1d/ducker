@@ -1,4 +1,4 @@
-# ducker Bot
+# ducker
 ## INFO
 > This bot is under development, it is intended for use in particular by server administrators.
 
