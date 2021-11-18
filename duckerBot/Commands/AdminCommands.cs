@@ -7,90 +7,17 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
+using DiscordColour = DSharpPlus.Entities.DiscordColor;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Net.Models;
-using DSharpPlus.SlashCommands.Attributes;
+using DSharpPlus.SlashCommands;
 
 namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        public static DiscordColor mainEmbedColor = DiscordColor.Aquamarine;
-        public static DiscordColor incorrectEmbedColor = DiscordColor.Red;
-        public static DiscordColor warningColor = DiscordColor.Orange;
-        
-        
-        // -userinfo
-        [Command("userinfo"), 
-         RequirePermissions(Permissions.Administrator)]
-        public async Task UserInfo(CommandContext msg, [Description("optional user, whose information will send bot")] DiscordMember user = null)
-        {
-            string userCreatedDate = "";
-            if (user == null)
-            {
-                for (int i = 0; i < msg.User.CreationTimestamp.ToString().Length - 7; i++)
-                {
-                    userCreatedDate = userCreatedDate + msg.User.CreationTimestamp.ToString()[i];
-                }
-                
-                var userInfoEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"{msg.User.Username}'s information",
-                    Description = $"User ID: {msg.User.Id}\nDate account created: {userCreatedDate}\nUser's avatar:",
-                    ImageUrl = msg.User.AvatarUrl,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = mainEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(userInfoEmbed);
-            }
-            else
-            {
-                for (int i = 0; i < user.CreationTimestamp.ToString().Length - 7; i++)
-                {
-                    userCreatedDate = userCreatedDate + user.CreationTimestamp.ToString()[i];
-                }
-                
-                var userInfoEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"{user.Username}'s information",
-                    Description = $"User ID: {user.Id}\nDate account created: {userCreatedDate}\nUser's avatar:",
-                    ImageUrl = user.AvatarUrl,
-                    
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = mainEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(userInfoEmbed);
-            }
-        }
-
-        [Command("userinfo"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task UserInfo(CommandContext msg, params string[] text)
-        {
-            var incorrectUserInfoCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-userinfo <user>(optional)`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = incorrectEmbedColor
-            };
-            await msg.Channel.SendMessageAsync(incorrectUserInfoCommandEmbed);
-        }
-        
-        
         // -ban
         [Command("ban"),
          RequirePermissions(Permissions.Administrator)]
@@ -108,7 +35,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
             }
@@ -124,7 +51,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 await user.Guild.BanMemberAsync(user);
                 DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
@@ -147,9 +74,72 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
+        }
+        
+        
+        // -kick 
+        [Command("kick"), 
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Kick(CommandContext msg, DiscordMember user = null)
+        {
+            if (user == null)
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** -kick <member>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+                return;
+            }
+
+            try
+            {
+                await user.RemoveAsync();
+            }
+            catch (Exception e)
+            {
+                var incorrectKickEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't kick this member",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectKickEmbed);
+                throw;
+            }
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
+        }
+
+        [Command("kick"),  
+         RequirePermissions(Permissions.Administrator)]
+        public async Task Kick(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** -kick <member>",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
 
 
@@ -158,18 +148,18 @@ namespace duckerBot
          RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, int amount)
         {
-            if (amount > 100)
+            if (amount > 100 || amount < 0)
             {
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
                     Title = $"Missing argument",
-                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100)`",
+                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
@@ -196,7 +186,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = mainEmbedColor
+                    Color = Bot.MainEmbedColor
                 };
                 DiscordMessage message = msg.Channel.SendMessageAsync(deletedMessagesReport).Result;
                 Thread.Sleep(3000);
@@ -217,7 +207,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
@@ -235,7 +225,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
@@ -246,16 +236,17 @@ namespace duckerBot
          RequirePermissions(Permissions.Administrator)]
         public async Task Embed(CommandContext msg, params string[] embedConfig)
         {
+            var color = Bot.MainEmbedColor;
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
-                Description = $"**Usage:** `-embed <embed config>`\n\n`config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -del`",
+                Description = $"**Usage:** `-embed <embed config>`\n\n`config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -color <#color> -del`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = incorrectEmbedColor
+                Color = Bot.IncorrectEmbedColor
             };
             
             try
@@ -309,38 +300,7 @@ namespace duckerBot
                 {
                     try
                     {
-                        switch (embedConfig[i + 1])
-                        {
-                            case "red":
-                                mainEmbedColor = DiscordColor.Red;
-                                break;
-                            case "green":
-                                mainEmbedColor = DiscordColor.Green;
-                                break;
-                            case "blue":
-                                mainEmbedColor = DiscordColor.Azure;
-                                break;
-                            case "black":
-                                mainEmbedColor = DiscordColor.Black;
-                                break;
-                            case "white":
-                                mainEmbedColor = DiscordColor.White;
-                                break;
-                            default:
-                                var incorrectColorFlag = new DiscordEmbedBuilder
-                                {
-                                    Title = "Missing argument",
-                                    Description = "Incorrect -color flag usage\n**Usage:** `-color <color>`\nPossible colors now: `red, green, blue, white, black`",
-                                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                                    {
-                                        IconUrl = msg.User.AvatarUrl,
-                                        Text = msg.User.Username
-                                    },
-                                    Color = incorrectEmbedColor
-                                };
-                                await msg.Channel.SendMessageAsync(incorrectColorFlag);
-                                return;
-                        }
+                        color = new DiscordColor(embedConfig[i + 1]);
                     }
                     catch (Exception e)
                     {
@@ -348,13 +308,13 @@ namespace duckerBot
                         {
                             Title = $"Missing argument",
                             Description = $"Incorrect `-color` flag\n" +
-                                          $"**Usage:** `-color <color>`",
+                                          $"**Usage:** `-color <#color> (HEX)`",
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
                                 IconUrl = msg.User.AvatarUrl,
                                 Text = msg.User.Username
                             },
-                            Color = incorrectEmbedColor
+                            Color = Bot.IncorrectEmbedColor
                         };
                         await msg.Channel.SendMessageAsync(incorrectColorFlag);
                         throw;
@@ -372,7 +332,7 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = mainEmbedColor
+                Color = color
             };
             await msg.Channel.SendMessageAsync(userCreatedEmbed);
         }
@@ -397,7 +357,7 @@ namespace duckerBot
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = incorrectEmbedColor
+                    Color = Bot.IncorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectPollCommand);
                 throw;
@@ -417,36 +377,21 @@ namespace duckerBot
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = mainEmbedColor
+                Color = Bot.MainEmbedColor
             };
             var pollMessage = msg.Channel.SendMessageAsync(pollEmbed);
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
             await pollMessage.Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
         }
-
-
-        [Command("dj")]
-        public async Task Dj(CommandContext msg)
+        
+        
+        [Command("reaction")]
+        public async Task Reaction(CommandContext msg, ulong messageId, DiscordEmoji emoji)
         {
-            var musicEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Music",
-                Color = mainEmbedColor,
-                ImageUrl = "https://png.pngtree.com/thumb_back/fh260/background/20200714/pngtree-modern-double-color-futuristic-neon-background-image_351866.jpg"
-            };
-            var message = await msg.Channel.SendMessageAsync(musicEmbed);
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":play_pause:"));
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":stop_button:"));
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":x:"));
+            var message = msg.Channel.GetMessageAsync(messageId);
+            await message.Result.CreateReactionAsync(emoji);
+            Thread.Sleep(5000);
+            await msg.Message.DeleteAsync();
         }
-
-        [Command("t"), 
-         RequirePermissions(Permissions.Administrator)]
-        public async Task T(CommandContext msg)
-        {
-            var interactivity = msg.Client.GetInteractivity();
-            await interactivity.WaitForReactionAsync(msg.Message, msg.User);
-            await msg.Channel.SendMessageAsync("1");
-        } 
     }
 }

@@ -19,7 +19,6 @@ using DSharpPlus.Net.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
-using DSharpPlus.SlashCommands;
 
 namespace duckerBot
 {
@@ -61,5 +60,35 @@ namespace duckerBot
                 await channel.SendMessageAsync(message);
             }
         }
+
+        public static async Task OnReactionAdded(DiscordClient client, MessageReactionAddEventArgs e)
+        {
+            if (e.Message.Id == 910591837411098634)
+            {
+                switch (e.Emoji.Name)
+                {
+                    case "🐤":
+                        var member = e.Guild.GetMemberAsync(e.User.Id);
+                        DiscordRole role = e.Guild.GetRole(876493139832111135);
+                        await member.Result.GrantRoleAsync(role);
+                        break;
+                }
+            }
+        } 
+        
+        public static async Task OnReactionRemoved(DiscordClient client, MessageReactionRemoveEventArgs e) 
+        {
+            if (e.Message.Id == 910591837411098634)
+            {
+                switch (e.Emoji.Name)
+                {
+                    case "🐤":
+                        var member = e.Guild.GetMemberAsync(e.User.Id);
+                        DiscordRole role = e.Guild.GetRole(876493139832111135);
+                        await member.Result.RevokeRoleAsync(role);
+                        break;
+                }
+            }
+        } 
     }
 }

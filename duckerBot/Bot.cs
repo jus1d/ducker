@@ -17,10 +17,10 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using DSharpPlus.Net.Models;
+using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
-using DSharpPlus.SlashCommands;
 
 namespace duckerBot
 {
@@ -29,6 +29,10 @@ namespace duckerBot
         public DiscordClient Client { get; private set; }
         public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
+        
+        public static DiscordColor MainEmbedColor = DiscordColor.Aquamarine;
+        public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
+        public static DiscordColor WarningColor = DiscordColor.Orange;
         
         public async Task RunAsync()
         {
@@ -39,7 +43,6 @@ namespace duckerBot
                 json = await sr.ReadToEndAsync().ConfigureAwait(false);
 
             var configJson = JsonConvert.DeserializeObject<ConfigJson>(json);
-            
             var config = new DiscordConfiguration
             {
                 Token = configJson.Token,
@@ -59,32 +62,33 @@ namespace duckerBot
 
             Client.MessageCreated += EventHandler.OnMessageCreated;
             Client.GuildMemberAdded += EventHandler.OnMemberAdded;
+            Client.MessageReactionAdded += EventHandler.OnReactionAdded;
+            Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;
 
-            var commandsConfig = new CommandsNextConfiguration
+            var commandsConfig = new CommandsNextConfiguration 
             {
                 StringPrefixes = new string[] { configJson.Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
                 EnableDefaultHelp = false
             };
-            
             var endpoint = new ConnectionEndpoint
             {
                 Hostname = "127.0.0.1",
                 Port = 2333
             };
-            
             var lavalinkConfig = new LavalinkConfiguration
             {
                 Password = "11111111",
                 RestEndpoint = endpoint,
                 SocketEndpoint = endpoint
             };
-            
             var lavalink = Client.UseLavalink();
+            var slash = Client.UseSlashCommands();
             
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<Commands>();
+            slash.RegisterCommands<SlashCommands>(696496218934608004);
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             await Task.Delay(-1);
