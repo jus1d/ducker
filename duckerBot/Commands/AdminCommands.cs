@@ -21,15 +21,35 @@ namespace duckerBot
         // -ban
         [Command("ban"),
          RequirePermissions(Permissions.BanMembers)]
-        public async Task Ban(CommandContext msg, DiscordMember user = null)
+        public async Task Ban(CommandContext msg, DiscordMember user, params string[] reasonInput)
         {
-            if (user == null)
+            string reason = "";
+            for (int i = 0; i < reasonInput.Length; i++)
+            {
+                reason += reasonInput[i] + " ";
+            }
+            
+            var banCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = "User banned",
+                Description = $":)",
+                ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            try
+            {
+                await user.Guild.BanMemberAsync(user, 0, reason);
+            }
+            catch (Exception e)
             {
                 var incorrectBanCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-ban <member>`",
-                    
+                    Description = $":x: You can't ban this user",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -38,27 +58,13 @@ namespace duckerBot
                     Color = Bot.IncorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
+                throw;
             }
-            else
-            {
-                var banCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "User banned",
-                    Description = $":)",
-                    ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                };
-                await user.Guild.BanMemberAsync(user);
-                DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
-                Thread.Sleep(3000);
-                await msg.Channel.DeleteMessageAsync(message);
-            }
+            DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
+            Thread.Sleep(3000);
+            await msg.Channel.DeleteMessageAsync(message);
         }
+        
 
         [Command("ban"),
          RequirePermissions(Permissions.BanMembers)]
@@ -68,7 +74,6 @@ namespace duckerBot
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-ban <member>`",
-                
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
