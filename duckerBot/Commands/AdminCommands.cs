@@ -88,28 +88,17 @@ namespace duckerBot
         // -kick 
         [Command("kick"), 
          RequirePermissions(Permissions.KickMembers)]
-        public async Task Kick(CommandContext msg, DiscordMember user = null)
+        public async Task Kick(CommandContext msg, DiscordMember user, params string[] reasonInput)
         {
-            if (user == null)
+            string reason = "";
+            for (int i = 0; i < reasonInput.Length; i++)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -kick <member>",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
+                reason += reasonInput[i] + " ";
             }
-
+            
             try
             {
-                await user.RemoveAsync();
+                await user.RemoveAsync(reason);
             }
             catch (Exception e)
             {
