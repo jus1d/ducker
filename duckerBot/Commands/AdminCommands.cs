@@ -20,7 +20,7 @@ namespace duckerBot
     {
         // -ban
         [Command("ban"),
-         RequirePermissions(Permissions.Administrator)]
+         RequirePermissions(Permissions.BanMembers)]
         public async Task Ban(CommandContext msg, DiscordMember user = null)
         {
             if (user == null)
@@ -61,7 +61,7 @@ namespace duckerBot
         }
 
         [Command("ban"),
-         RequirePermissions(Permissions.Administrator)]
+         RequirePermissions(Permissions.BanMembers)]
         public async Task Ban(CommandContext msg, params string[] text)
         {
             var incorrectBanCommandEmbed = new DiscordEmbedBuilder
@@ -82,7 +82,7 @@ namespace duckerBot
         
         // -kick 
         [Command("kick"), 
-         RequirePermissions(Permissions.Administrator)]
+         RequirePermissions(Permissions.KickMembers)]
         public async Task Kick(CommandContext msg, DiscordMember user = null)
         {
             if (user == null)
@@ -125,7 +125,7 @@ namespace duckerBot
         }
 
         [Command("kick"),  
-         RequirePermissions(Permissions.Administrator)]
+         RequirePermissions(Permissions.KickMembers)]
         public async Task Kick(CommandContext msg, params string[] text)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -251,7 +251,7 @@ namespace duckerBot
             
             try
             {
-                Console.WriteLine(embedConfig[0]); // catch exeption by appeal to some array element
+                Console.WriteLine(embedConfig[0]); // catch exception by appeal to some array element
             }
             catch (Exception e)
             {
