@@ -223,6 +223,36 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
+
+
+        [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
+        {
+            await member.GrantRoleAsync(role);
+        }
+        
+        [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task AddRoleCommand(CommandContext msg, DiscordRole role, DiscordMember member)
+        {
+            await member.GrantRoleAsync(role);
+        }
+        
+        [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task AddRoleCommand(CommandContext msg, params string[] text)
+        {
+            var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-addrole <member> <role>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectAddRoleCommandEmbed);
+        }
         
         
         // -embed 
