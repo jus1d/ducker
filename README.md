@@ -1,9 +1,9 @@
 
-# ducker
-## INFO
-> This bot is under development, it is intended for use in particular by server administrators.
+# ducker Discord Bot
+The bot is developing by jus1d, bot based on DSharpPlus library. Standard bot prefix is `-`, but you can also use the slash commands by typing `/` in your input discord line.
 
-Standart bot prefix is `-`, but you can also use the slash commands by typing `/` in your input discord line.
+#Developer Mode
+To use some commands you'll need member's, channel's or guild's IDs. To use IDs, you have to turn on the discord developer mode. **Go to: User settings -> Advanced -> Developer Mode**
 
 ## Commands
 | Command | Description | Usage |
