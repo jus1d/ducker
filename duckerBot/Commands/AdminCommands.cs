@@ -393,5 +393,29 @@ namespace duckerBot
             Thread.Sleep(5000);
             await msg.Message.DeleteAsync();
         }
+
+        [Command("reaction")]
+        public async Task Reaction(CommandContext msg, params string[] text)
+        {
+            try
+            {
+                string s = text[0];
+            }
+            catch (Exception e)
+            {
+                var incorrectReactionCommand = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** `-reaction <message id> <emoji>`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectReactionCommand);
+            }
+        }
     }
 }
