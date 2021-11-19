@@ -385,7 +385,7 @@ namespace duckerBot
         }
         
         
-        [Command("reaction")]
+        [Command("reaction"), Aliases("react")]
         public async Task Reaction(CommandContext msg, ulong messageId, DiscordEmoji emoji)
         {
             var message = msg.Channel.GetMessageAsync(messageId);
@@ -394,7 +394,7 @@ namespace duckerBot
             await msg.Message.DeleteAsync();
         }
 
-        [Command("reaction")]
+        [Command("reaction"), Aliases("react")]
         public async Task Reaction(CommandContext msg, params string[] text)
         {
             try

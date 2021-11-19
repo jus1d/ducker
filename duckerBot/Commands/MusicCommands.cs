@@ -67,7 +67,7 @@ namespace duckerBot
         
 
         // -quit
-        [Command("quit"),
+        [Command("quit"), Aliases("Leave"),
          RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
@@ -251,7 +251,7 @@ namespace duckerBot
         }
         
         // -play search
-        [Command("play")]
+        [Command("play"), Aliases("start")]
         public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
             if (msg.Channel.Id != musicChannelId)

@@ -129,7 +129,7 @@ namespace duckerBot
         
         
         // -avatar
-        [Command("avatar")]
+        [Command("avatar"), Aliases("ava")]
         public async Task Avatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
         {
             if (user == null)
@@ -166,7 +166,7 @@ namespace duckerBot
             }
         }
         
-        [Command("avatar")]
+        [Command("avatar"), Aliases("ava")]
         public async Task Avatar(CommandContext msg, params string[] text)
         {
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
@@ -202,7 +202,7 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
 
-        [Command("invitelink")]
+        [Command("invitelink"), Aliases("invite")]
         public async Task InviteLink(CommandContext msg, params string[] text)
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
@@ -221,7 +221,7 @@ namespace duckerBot
         
         
         // -random <min> <max>
-        [Command("random")]
+        [Command("random"), Aliases("rnd")]
         public async Task Random(CommandContext msg, [Description("min value")] int minValue, [Description("max value")] int maxValue)
         {
             var rnd = new Random();
@@ -255,7 +255,7 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(randomEmbed);
         }
 
-        [Command("random")]
+        [Command("random"), Aliases("rnd")]
         public async Task Random(CommandContext msg)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
@@ -272,7 +272,7 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(incorrectRandomCommandEmbed);
         }
 
-        [Command("random")]
+        [Command("random"), Aliases("rnd")]
         public async Task Random(CommandContext msg, params string[] text)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
