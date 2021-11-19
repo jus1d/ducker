@@ -253,6 +253,37 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectAddRoleCommandEmbed);
         }
+
+
+        [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role)
+        {
+            await member.RevokeRoleAsync(role);
+        }
+        
+        [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task RemoveRole(CommandContext msg, DiscordRole role, DiscordMember member)
+        {
+            await member.RevokeRoleAsync(role);
+        }
+        
+        [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task RemoveRoleCommand(CommandContext msg, params string[] text)
+        {
+            var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-remove <member> <role>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectAddRoleCommandEmbed);
+        }
+        
         
         
         // -embed 
