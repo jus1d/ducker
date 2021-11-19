@@ -33,20 +33,3 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `pause` | Pause now playing music | `none` |
 | `stop` | Permanently stop now playing music (can't use -play command to resume playing) | `none` |
 | `resume` | Resume playing music | `none` |
-
-
-
-
-
-
-
-
-
-
-
-
-
-|`help`| Bot will send help list to current channel | `-help / <command>` |
-|`avatar`| Bot will send embed with users avatar to current channel | `-avatar <user>` |
-|`invitelink`| Bot will send invite link for this bot to current channel | `-invitelink` |
-|`random`| Bot will send  random value in your range from min to max value to current channel | `-random <min> <max>` |
