@@ -42,3 +42,20 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `stop` | Permanently stop now playing music (can't use -play command to resume playing) | `none` |
 | `resume` | Resume playing music | `none` |
 | `phonk` | Starts playing Memphis Phonk | `none` |
+
+## Contributing
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
+
+1. Fork the Project
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+
+[@jus1d](https://twitter.com/jus1dq) - jus1dhah@gmail.com
