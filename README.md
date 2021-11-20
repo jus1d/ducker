@@ -8,7 +8,8 @@ Standard bot prefix is `-`, but you can also use the slash commands by typing `/
 To use some commands you'll need member's, channel's or guild's IDs. To use IDs, you have to turn on the discord developer mode. **Go to: User settings -> Advanced -> Developer Mode**
 
 ## To Install
-* Clone this repo to your computer
+* Clone this repo to your computer:
+  `git clone https://github.com/jus1d/duckerBot.git`
 * Compile this project with Visual Studio or Rider, and it will be ready
 * **Don't forget about `config.json` file.** Set up prefix and token in `config.json` file, than move it to the same folder as your executable
 
@@ -40,3 +41,4 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `pause` | Pause now playing music | `none` |
 | `stop` | Permanently stop now playing music (can't use -play command to resume playing) | `none` |
 | `resume` | Resume playing music | `none` |
+| `phonk` | Starts playing Memphis Phonk | `none` |
