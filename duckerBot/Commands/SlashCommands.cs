@@ -357,5 +357,46 @@ namespace duckerBot
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(userCreatedEmbed));
         }
+        
+        
+        // /reaction
+        [SlashCommand("reaction", "Adds a reaction to message, which ID you enter")]
+        public async Task Reaction(InteractionContext msg, 
+            [Option("messageID", "Messages ID to add reaction")] string messageIdInput, 
+            [Option("emoji", "Emojis to add")]  DiscordEmoji emoji)
+        {
+            ulong messageId;
+            try
+            {
+                messageId = ulong.Parse(messageIdInput);
+            }
+            catch (Exception e)
+            {
+                var incorrectMessageIdEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Your message ID is incorrect",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                throw;
+            }
+            await msg.Channel.GetMessageAsync(messageId).Result.CreateReactionAsync(emoji);
+            var completeEmbed = new DiscordEmbedBuilder
+            {
+                Description = "Complete, reaction added",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, 
+                new DiscordInteractionResponseBuilder().AddEmbed(completeEmbed));
+        }
     }
 }
