@@ -64,7 +64,6 @@ namespace duckerBot
             Client.MessageCreated += EventHandler.OnMessageCreated;
             Client.GuildMemberAdded += EventHandler.OnMemberAdded;
             Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
-            Client.MessageReactionAdded += EventHandler.OnReactionAdded;
             Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;
 
             var commandsConfig = new CommandsNextConfiguration 
