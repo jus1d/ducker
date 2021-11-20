@@ -285,7 +285,61 @@ namespace duckerBot
         }
         
         
+        // -mute
+        [Command("mute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Mute(CommandContext msg, DiscordMember member)
+        {
+            DiscordRole muteRole = msg.Guild.GetRole(911479294209970187);
+            await member.GrantRoleAsync(muteRole);
+        }
         
+        // -mute
+        [Command("mute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Mute(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-mute <member>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+        
+        
+        // -unmute
+        [Command("unmute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Unmute(CommandContext msg, DiscordMember member)
+        {
+            DiscordRole muteRole = msg.Guild.GetRole(911479294209970187);
+            await member.RevokeRoleAsync(muteRole);
+        }
+        
+        // -unmute
+        [Command("unmute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Unmute(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-unmute <member>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+
+
+
         // -embed 
         [Command("embed"),
          RequirePermissions(Permissions.Administrator)]
