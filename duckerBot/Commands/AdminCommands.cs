@@ -20,16 +20,36 @@ namespace duckerBot
     {
         // -ban
         [Command("ban"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task Ban(CommandContext msg, DiscordMember user = null)
+         RequirePermissions(Permissions.BanMembers)]
+        public async Task Ban(CommandContext msg, DiscordMember user, params string[] reasonInput)
         {
-            if (user == null)
+            string reason = "";
+            for (int i = 0; i < reasonInput.Length; i++)
+            {
+                reason += reasonInput[i] + " ";
+            }
+            
+            var banCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = "User banned",
+                Description = $":)",
+                ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            try
+            {
+                await user.Guild.BanMemberAsync(user, 0, reason);
+            }
+            catch (Exception e)
             {
                 var incorrectBanCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-ban <member>`",
-                    
+                    Description = $":x: You can't ban this user",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -38,37 +58,22 @@ namespace duckerBot
                     Color = Bot.IncorrectEmbedColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
+                throw;
             }
-            else
-            {
-                var banCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "User banned",
-                    Description = $":)",
-                    ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                };
-                await user.Guild.BanMemberAsync(user);
-                DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
-                Thread.Sleep(3000);
-                await msg.Channel.DeleteMessageAsync(message);
-            }
+            DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
+            Thread.Sleep(3000);
+            await msg.Channel.DeleteMessageAsync(message);
         }
+        
 
         [Command("ban"),
-         RequirePermissions(Permissions.Administrator)]
+         RequirePermissions(Permissions.BanMembers)]
         public async Task Ban(CommandContext msg, params string[] text)
         {
             var incorrectBanCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-ban <member>`",
-                
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -82,29 +87,18 @@ namespace duckerBot
         
         // -kick 
         [Command("kick"), 
-         RequirePermissions(Permissions.Administrator)]
-        public async Task Kick(CommandContext msg, DiscordMember user = null)
+         RequirePermissions(Permissions.KickMembers)]
+        public async Task Kick(CommandContext msg, DiscordMember user, params string[] reasonInput)
         {
-            if (user == null)
+            string reason = "";
+            for (int i = 0; i < reasonInput.Length; i++)
             {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** -kick <member>",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-                return;
+                reason += reasonInput[i] + " ";
             }
-
+            
             try
             {
-                await user.RemoveAsync();
+                await user.RemoveAsync(reason);
             }
             catch (Exception e)
             {
@@ -125,7 +119,7 @@ namespace duckerBot
         }
 
         [Command("kick"),  
-         RequirePermissions(Permissions.Administrator)]
+         RequirePermissions(Permissions.KickMembers)]
         public async Task Kick(CommandContext msg, params string[] text)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
@@ -229,8 +223,123 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
+
+
+        [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
+        {
+            await member.GrantRoleAsync(role);
+        }
+        
+        [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task AddRoleCommand(CommandContext msg, DiscordRole role, DiscordMember member)
+        {
+            await member.GrantRoleAsync(role);
+        }
+        
+        [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task AddRoleCommand(CommandContext msg, params string[] text)
+        {
+            var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-addrole <member> <role>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectAddRoleCommandEmbed);
+        }
+
+
+        [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role)
+        {
+            await member.RevokeRoleAsync(role);
+        }
+        
+        [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task RemoveRole(CommandContext msg, DiscordRole role, DiscordMember member)
+        {
+            await member.RevokeRoleAsync(role);
+        }
+        
+        [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
+        public async Task RemoveRoleCommand(CommandContext msg, params string[] text)
+        {
+            var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-remove <member> <role>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectAddRoleCommandEmbed);
+        }
         
         
+        // -mute
+        [Command("mute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Mute(CommandContext msg, DiscordMember member)
+        {
+            DiscordRole muteRole = msg.Guild.GetRole(911479294209970187);
+            await member.GrantRoleAsync(muteRole);
+        }
+        
+        // -mute
+        [Command("mute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Mute(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-mute <member>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+        
+        
+        // -unmute
+        [Command("unmute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Unmute(CommandContext msg, DiscordMember member)
+        {
+            DiscordRole muteRole = msg.Guild.GetRole(911479294209970187);
+            await member.RevokeRoleAsync(muteRole);
+        }
+        
+        // -unmute
+        [Command("unmute"), RequirePermissions(Permissions.Administrator)]
+        public async Task Unmute(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-unmute <member>`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
+
+
+
         // -embed 
         [Command("embed"),
          RequirePermissions(Permissions.Administrator)]
@@ -251,7 +360,7 @@ namespace duckerBot
             
             try
             {
-                Console.WriteLine(embedConfig[0]); // catch exeption by appeal to some array element
+                Console.WriteLine(embedConfig[0]); // catch exception by appeal to some array element
             }
             catch (Exception e)
             {

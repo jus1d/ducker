@@ -57,7 +57,7 @@ namespace duckerBot
             Client.UseInteractivity(new InteractivityConfiguration
             {
                 PollBehaviour = PollBehaviour.DeleteEmojis,
-                Timeout = TimeSpan.FromMinutes(3)
+                Timeout = TimeSpan.FromHours(12)
             });
 
             Client.MessageCreated += EventHandler.OnMessageCreated;

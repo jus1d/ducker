@@ -129,7 +129,7 @@ namespace duckerBot
         
         
         // -avatar
-        [Command("avatar")]
+        [Command("avatar"), Aliases("ava")]
         public async Task Avatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
         {
             if (user == null)
@@ -185,7 +185,7 @@ namespace duckerBot
         
         
         // -invitelink
-        [Command("invitelink")]
+        [Command("invitelink"), Aliases("invite")]
         public async Task InviteLink(CommandContext msg)
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
@@ -221,7 +221,7 @@ namespace duckerBot
         
         
         // -random <min> <max>
-        [Command("random")]
+        [Command("random"), Aliases("rnd")]
         public async Task Random(CommandContext msg, [Description("min value")] int minValue, [Description("max value")] int maxValue)
         {
             var rnd = new Random();

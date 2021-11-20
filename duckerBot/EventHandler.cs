@@ -37,28 +37,24 @@ namespace duckerBot
                     return;
                     
                 await msg.Message.DeleteAsync();
-                var embed = new DiscordEmbedBuilder();
-                embed
-                    .WithTitle($"Don't tag everyone!")
-                    .WithColor(DiscordColor.Red)
-                    .WithFooter(msg.Author.Username, msg.Author.AvatarUrl);
+                var embed = new DiscordEmbedBuilder
+                {
+                    Title = $"Don't tag everyone!",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.Author.AvatarUrl,
+                        Text = msg.Author.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
                 await msg.Message.Channel.SendMessageAsync(embed);
             }
         }
         
-        internal static async Task OnMemberAdded(DiscordClient client, GuildMemberAddEventArgs member)
+        public static async Task OnMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
         {
-            DiscordChannel channel = await client.GetChannelAsync(787190218221944862);
-            if (channel?.Guild.Id == member.Guild.Id)
-            {
-                await channel.AddOverwriteAsync(member.Member, Permissions.AccessChannels, Permissions.None);
-                DiscordEmbed message = new DiscordEmbedBuilder
-                {
-                    Description = "User '" + member.Member.Username + "#" + member.Member.Discriminator + "' has left the server.",
-                    Color = DiscordColor.Green
-                };
-                await channel.SendMessageAsync(message);
-            }
+            var channel = e.Guild.GetChannel(906326806146215986);
+            await channel.SendMessageAsync($"{e.Member.DisplayName}, just landed on {e.Guild.Name}");
         }
 
         public static async Task OnReactionAdded(DiscordClient client, MessageReactionAddEventArgs e)

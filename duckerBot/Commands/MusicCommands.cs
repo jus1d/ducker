@@ -67,7 +67,7 @@ namespace duckerBot
         
 
         // -quit
-        [Command("quit"),
+        [Command("quit"), Aliases("leave"),
          RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
@@ -125,9 +125,9 @@ namespace duckerBot
         }
         
         
-        // -play (resume)
+        // -resume
         [Command("play")]
-        public static async Task PlayResume(CommandContext msg)
+        public static async Task Play(CommandContext msg)
         {
             if (msg.Channel.Id != musicChannelId)
             {
@@ -173,20 +173,18 @@ namespace duckerBot
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
-                        Text = "Ordered by " + msg.User.Username
+                        Text = msg.User.Username
                     },
                 };
                 await msg.Channel.SendMessageAsync(incorrectMusicCommand);
                 return;
             }
             await connection.ResumeAsync();
-            var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
-            await msg.Message.CreateReactionAsync(emoji);
         }
         
         
         // -play url
-        [Command("play")]
+        [Command("play"), Aliases("p")]
         public async Task Play(CommandContext msg, Uri url)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -471,7 +469,7 @@ namespace duckerBot
         
         
         // -stop
-        [Command("stop")]
+        [Command("stop"), Aliases("s")]
         public async Task Stop(CommandContext msg)
         {
             if (msg.Channel.Id != musicChannelId)
@@ -548,6 +546,13 @@ namespace duckerBot
                 return;
             }
             await Quit(msg);
+        }
+
+
+        [Command("phonk")]
+        public async Task Phonk(CommandContext msg)
+        {
+            await Play(msg, "https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
         }
     }
 }
