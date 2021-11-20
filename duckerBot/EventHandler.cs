@@ -53,8 +53,14 @@ namespace duckerBot
         
         public static async Task OnMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
         {
-            var channel = e.Guild.GetChannel(906326806146215986);
-            await channel.SendMessageAsync($"{e.Member.DisplayName}, just landed on {e.Guild.Name}");
+            var channel = e.Guild.GetChannel(787190218221944862);
+            await channel.SendMessageAsync($"{e.Member.Mention}, just landed on the `{e.Guild.Name}`");
+        }
+
+        public static async Task OnMemberRemoved(DiscordClient client, GuildMemberRemoveEventArgs e)
+        {
+            var channel = e.Guild.GetChannel(787190218221944862);
+            await channel.SendMessageAsync($"{e.Member.Mention}. On siebalsya ksta");
         }
 
         public static async Task OnReactionAdded(DiscordClient client, MessageReactionAddEventArgs e)

@@ -48,7 +48,8 @@ namespace duckerBot
                 Token = configJson.Token,
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
-                MinimumLogLevel = LogLevel.Debug
+                MinimumLogLevel = LogLevel.Debug,
+                Intents = DiscordIntents.All
             };
             
             Client = new DiscordClient(config);
@@ -62,6 +63,7 @@ namespace duckerBot
 
             Client.MessageCreated += EventHandler.OnMessageCreated;
             Client.GuildMemberAdded += EventHandler.OnMemberAdded;
+            Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
             Client.MessageReactionAdded += EventHandler.OnReactionAdded;
             Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;
 
