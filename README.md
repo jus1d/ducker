@@ -40,3 +40,4 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `pause` | Pause now playing music | `none` |
 | `stop` | Permanently stop now playing music (can't use -play command to resume playing) | `none` |
 | `resume` | Resume playing music | `none` |
+| `phonk` | Starts playing Memphis Phonk | `none` |
