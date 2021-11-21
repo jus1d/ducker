@@ -406,6 +406,24 @@ namespace duckerBot
             [Option("role", "Role to add it")] DiscordRole role)
         {
             DiscordMember member = (DiscordMember) user;
+            
+            if (member.Roles.ToArray().Contains(role))
+            {
+                var memberHasRoleEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"This member currently has this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(memberHasRoleEmbed));
+                return;
+            }
+            
             try
             {
                 await member.GrantRoleAsync(role);
@@ -445,6 +463,24 @@ namespace duckerBot
             [Option("role", "Role to remove it")] DiscordRole role)
         {
             DiscordMember member = (DiscordMember) user;
+            
+            if (!member.Roles.ToArray().Contains(role))
+            {
+                var memberHasRoleEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"This member doesn't have this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(memberHasRoleEmbed));
+                return;
+            }
+            
             try
             {
                 await member.RevokeRoleAsync(role);
