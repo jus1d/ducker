@@ -15,8 +15,6 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        // public static ulong musicChannelId = 816659808627195915;
-
         // -join
         [Command("join")]
         public static async Task Join(CommandContext msg, DiscordChannel channel = null)
