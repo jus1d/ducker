@@ -425,9 +425,9 @@ namespace duckerBot
             await connection.PauseAsync();
             var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
             await msg.Message.CreateReactionAsync(emoji);
-            /*var interactivity = msg.Client.GetInteractivity();
+            var interactivity = msg.Client.GetInteractivity();
             await interactivity.WaitForReactionAsync(msg.Message, msg.User);
-            await connection.ResumeAsync();*/
+            await connection.ResumeAsync();
         }
 
         [Command("pause")]
