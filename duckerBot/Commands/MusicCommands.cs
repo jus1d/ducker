@@ -242,7 +242,9 @@ namespace duckerBot
                 },
                 Color = Bot.MainEmbedColor
             };
-            await msg.Channel.SendMessageAsync(playEmbed);
+            DiscordMessage message = msg.Channel.SendMessageAsync(playEmbed).Result;
+            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":pause_button:"));
+            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":arrow_forward:"));
         }
         
         // -play search
@@ -344,7 +346,9 @@ namespace duckerBot
                 },
                 Color = Bot.MainEmbedColor
             };
-            await msg.Channel.SendMessageAsync(playEmbed);
+            DiscordMessage message = msg.Channel.SendMessageAsync(playEmbed).Result;
+            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":pause_button:"));
+            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":arrow_forward:"));
         }
         
         
@@ -424,13 +428,13 @@ namespace duckerBot
             var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
             
             await msg.Message.CreateReactionAsync(emoji);
-            var interactivity = msg.Client.GetInteractivity();
+            /*var interactivity = msg.Client.GetInteractivity();
             var r = interactivity.WaitForReactionAsync(msg.Message, msg.User);
             while (r.Result.Result.Emoji != emoji)
             {
                 r = interactivity.WaitForReactionAsync(msg.Message, msg.User);
             }
-            await connection.ResumeAsync();
+            await connection.ResumeAsync();*/
         }
 
         [Command("pause")]

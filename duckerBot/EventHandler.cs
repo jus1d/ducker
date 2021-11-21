@@ -65,7 +65,56 @@ namespace duckerBot
 
         public static async Task OnReactionAdded(DiscordClient client, MessageReactionAddEventArgs e)
         {
+            if (e.User.IsBot)
+                return;
             
+            if (e.Emoji.Name == "⏯️" && e.Channel.Id == Bot.MusicChannelId)
+            {
+                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
+                
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                DiscordMember member = (DiscordMember) e.User;
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+
+                if (connection.IsConnected)
+                {
+                    
+                }
+                
+                try
+                {
+                    await connection.ResumeAsync();
+                }
+                catch (Exception exception)
+                {
+                    await e.Channel.SendMessageAsync(exception.Message);
+                }
+            }
+            else if (e.Emoji.Name == "▶️" && e.Channel.Id == Bot.MusicChannelId)
+            {
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                DiscordMember member = (DiscordMember) e.User;
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+                
+                if (((DiscordMember) e.User).VoiceState.Channel != connection.Channel)
+                    return;
+                await connection.ResumeAsync();
+                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
+            }
+            else if (e.Emoji.Name == "⏸️" && e.Channel.Id == Bot.MusicChannelId)
+            {
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                DiscordMember member = (DiscordMember) e.User;
+                
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+                if (((DiscordMember) e.User).VoiceState.Channel != connection.Channel)
+                    return;
+                await connection.PauseAsync();
+                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
+            }
         }
         
         public static async Task OnReactionRemoved(DiscordClient client, MessageReactionRemoveEventArgs e) 
