@@ -362,7 +362,8 @@ namespace duckerBot
         
         // /reaction
         [SlashCommand("reaction", "Adds a reaction to message, which ID you enter")]
-        public async Task Reaction(InteractionContext msg, [Option("messageID", "Messages ID to add reaction")] string messageIdInput, 
+        public async Task Reaction(InteractionContext msg, 
+            [Option("messageID", "Messages ID to add reaction")] string messageIdInput, 
             [Option("emoji", "Emojis to add")] DiscordEmoji emoji)
         {
             ulong messageId;
