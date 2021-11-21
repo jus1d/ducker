@@ -15,7 +15,7 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        public static ulong musicChannelId = 816659808627195915;
+        // public static ulong musicChannelId = 816659808627195915;
 
         // -join
         [Command("join")]
@@ -128,12 +128,12 @@ namespace duckerBot
         [Command("resume")]
         public async Task Resume(CommandContext msg)
         {
-            if (msg.Channel.Id != musicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
                     Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -186,12 +186,12 @@ namespace duckerBot
         [Command("play"), Aliases("p")]
         public async Task Play(CommandContext msg, Uri url)
         {
-            if (msg.Channel.Id != musicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
                     Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -251,12 +251,12 @@ namespace duckerBot
         [Command("play")]
         public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
-            if (msg.Channel.Id != musicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
                     Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -354,12 +354,12 @@ namespace duckerBot
         [Command("pause")]
         public async Task Pause(CommandContext msg)
         {
-            if (msg.Channel.Id != musicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
                     Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -438,12 +438,12 @@ namespace duckerBot
         [Command("pause")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != musicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
                     Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -476,12 +476,12 @@ namespace duckerBot
         [Command("stop"), Aliases("s")]
         public async Task Stop(CommandContext msg)
         {
-            if (msg.Channel.Id != musicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
                     Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -533,12 +533,12 @@ namespace duckerBot
         [Command("stop")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != musicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
                     Title = "Incorrect channel for music commands",
-                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
