@@ -17,13 +17,28 @@ namespace duckerBot
     {
         // -join
         [Command("join")]
-        public static async Task Join(CommandContext msg, DiscordChannel channel = null)
+        public async Task Join(CommandContext msg, DiscordChannel channel = null)
         {
-            if (channel == null)
-            { 
-                channel = msg.Member.VoiceState.Channel;
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.WarningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
             }
             
+            if (channel == null)
+                channel = msg.Member.VoiceState.Channel;
+
             var lava = msg.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
@@ -64,10 +79,27 @@ namespace duckerBot
         
 
         // -quit
-        [Command("quit"), Aliases("leave"),
+        [Command("quit"), Aliases("leave", "q"),
          RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg)
         {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                var incorrectChannel = new DiscordEmbedBuilder
+                {
+                    Title = "Incorrect channel for music commands",
+                    Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.WarningColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectChannel);
+                return;
+            }
+            
             DiscordChannel channel = msg.Member.VoiceState.Channel;
             
             var lava = msg.Client.GetLavalink();
@@ -126,7 +158,7 @@ namespace duckerBot
         [Command("resume")]
         public async Task Resume(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
@@ -184,7 +216,7 @@ namespace duckerBot
         [Command("play"), Aliases("p")]
         public async Task Play(CommandContext msg, Uri url)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
@@ -251,7 +283,7 @@ namespace duckerBot
         [Command("play")]
         public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
@@ -356,7 +388,7 @@ namespace duckerBot
         [Command("pause")]
         public async Task Pause(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
@@ -425,15 +457,12 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
-            var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
-            
-            await msg.Message.CreateReactionAsync(emoji);
         }
 
         [Command("pause")]
         public async Task Pause(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
@@ -471,7 +500,7 @@ namespace duckerBot
         [Command("stop"), Aliases("s")]
         public async Task Stop(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
@@ -528,7 +557,7 @@ namespace duckerBot
         [Command("stop")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId)
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 var incorrectChannel = new DiscordEmbedBuilder
                 {
