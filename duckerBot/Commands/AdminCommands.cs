@@ -228,13 +228,101 @@ namespace duckerBot
         [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
         {
-            await member.GrantRoleAsync(role);
+            if (member.Roles.ToArray().Contains(role))
+            {
+                var memberHasRoleEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"This member currently has this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(memberHasRoleEmbed);
+                return;
+            }
+            
+            try
+            {
+                await member.GrantRoleAsync(role);
+                var completeEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"Complete, {role.Name} added to {member.Mention}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(completeEmbed);
+            }
+            catch (Exception e)
+            {
+                var incorrectEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't add this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectEmbed);
+            }
         }
         
         [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRoleCommand(CommandContext msg, DiscordRole role, DiscordMember member)
         {
-            await member.GrantRoleAsync(role);
+            if (member.Roles.ToArray().Contains(role))
+            {
+                var memberHasRoleEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"This member currently has this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(memberHasRoleEmbed);
+                return;
+            }
+            
+            try
+            {
+                await member.GrantRoleAsync(role);
+                var completeEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"Complete, {role.Name} added to {member.Mention}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(completeEmbed);
+            }
+            catch (Exception e)
+            {
+                var incorrectEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't add this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectEmbed);
+            }
         }
         
         [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
@@ -258,19 +346,107 @@ namespace duckerBot
         [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role)
         {
-            await member.RevokeRoleAsync(role);
+            if (!member.Roles.ToArray().Contains(role))
+            {
+                var memberHasRoleEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"This member doesn't have this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(memberHasRoleEmbed);
+                return;
+            }
+
+            try
+            {
+                await member.RevokeRoleAsync(role);
+                var completeEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"Complete, {role.Name} removed from {member.Mention}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(completeEmbed);
+            }
+            catch (Exception e)
+            {
+                var incorrectEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't remove this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectEmbed);
+            }
         }
         
         [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(CommandContext msg, DiscordRole role, DiscordMember member)
         {
-            await member.RevokeRoleAsync(role);
+            if (!member.Roles.ToArray().Contains(role))
+            {
+                var memberHasRoleEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"This member doesn't have this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(memberHasRoleEmbed);
+                return;
+            }
+
+            try
+            {
+                await member.RevokeRoleAsync(role);
+                var completeEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"Complete, {role.Name} removed from {member.Mention}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(completeEmbed);
+            }
+            catch (Exception e)
+            {
+                var incorrectEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't remove this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectEmbed);
+            }
         }
         
         [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRoleCommand(CommandContext msg, params string[] text)
         {
-            var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
+            var incorrectRemoveRoleCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-remove <member> <role>`",
@@ -281,7 +457,7 @@ namespace duckerBot
                 },
                 Color = Bot.IncorrectEmbedColor
             };
-            await msg.Channel.SendMessageAsync(incorrectAddRoleCommandEmbed);
+            await msg.Channel.SendMessageAsync(incorrectRemoveRoleCommandEmbed);
         }
         
         
