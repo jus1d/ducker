@@ -551,7 +551,8 @@ namespace duckerBot
         [Command("phonk")]
         public async Task Phonk(CommandContext msg)
         {
-            await Play(msg, "https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
+            Uri url = new Uri("https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
+            await Play(msg, url);
         }
     }
 }
