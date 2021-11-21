@@ -555,7 +555,7 @@ namespace duckerBot
         }
 
 
-        [Command("phonk")]
+        [Command("phonk"), Aliases("ph")]
         public async Task Phonk(CommandContext msg)
         {
             Uri url = new Uri("https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
