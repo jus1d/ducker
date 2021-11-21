@@ -62,20 +62,48 @@ namespace duckerBot
             var channel = e.Guild.GetChannel(787190218221944862);
             await channel.SendMessageAsync($"{e.Member.Mention}. On siebalsya ksta");
         }
+
+        public static async Task OnReactionAdded(DiscordClient client, MessageReactionAddEventArgs e)
+        {
+            if (e.User.IsBot)
+                return;
+            await e.Message.DeleteReactionAsync(e.Emoji, e.User);
+            
+            if (e.Emoji.Name == "⏯️" && e.Channel.Id == Bot.MusicChannelId)
+            {
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                DiscordMember member = (DiscordMember) e.User;
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+                // here must be connection playing check
+            }
+            else if (e.Emoji.Name == "▶️" && e.Channel.Id == Bot.MusicChannelId)
+            {
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                DiscordMember member = (DiscordMember) e.User;
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+
+                if (((DiscordMember) e.User).VoiceState.Channel != connection.Channel)
+                    return;
+                await connection.ResumeAsync();
+            }
+            else if (e.Emoji.Name == "⏸️" && e.Channel.Id == Bot.MusicChannelId)
+            {
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                DiscordMember member = (DiscordMember) e.User;
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+
+                if (((DiscordMember) e.User).VoiceState.Channel != connection.Channel)
+                    return;
+                await connection.PauseAsync();
+            }
+        }
         
         public static async Task OnReactionRemoved(DiscordClient client, MessageReactionRemoveEventArgs e) 
         {
-            if (e.Message.Id == 910591837411098634)
-            {
-                switch (e.Emoji.Name)
-                {
-                    case "🐤":
-                        var member = e.Guild.GetMemberAsync(e.User.Id);
-                        DiscordRole role = e.Guild.GetRole(876493139832111135);
-                        await member.Result.RevokeRoleAsync(role);
-                        break;
-                }
-            }
+            
         } 
     }
 }

@@ -33,6 +33,7 @@ namespace duckerBot
         public static DiscordColor MainEmbedColor = DiscordColor.Aquamarine;
         public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
         public static DiscordColor WarningColor = DiscordColor.Orange;
+        public static ulong MusicChannelId = 816659808627195915;
         
         public async Task RunAsync()
         {
@@ -64,6 +65,7 @@ namespace duckerBot
             Client.MessageCreated += EventHandler.OnMessageCreated;
             Client.GuildMemberAdded += EventHandler.OnMemberAdded;
             Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
+            Client.MessageReactionAdded += EventHandler.OnReactionAdded;
             Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;
 
             var commandsConfig = new CommandsNextConfiguration 
