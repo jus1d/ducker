@@ -18,8 +18,7 @@ namespace duckerBot
         public static ulong musicChannelId = 816659808627195915;
 
         // -join
-        [Command("join"),
-         RequirePermissions(Permissions.Administrator)]
+        [Command("join")]
         public static async Task Join(CommandContext msg, DiscordChannel channel = null)
         {
             if (channel == null)
@@ -126,8 +125,8 @@ namespace duckerBot
         
         
         // -resume
-        [Command("play")]
-        public static async Task Play(CommandContext msg)
+        [Command("resume")]
+        public async Task Resume(CommandContext msg)
         {
             if (msg.Channel.Id != musicChannelId)
             {
@@ -424,11 +423,11 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
-            var emoji = DiscordEmoji.FromName(msg.Client, ":arrow_forward:");
+            var emoji = DiscordEmoji.FromName(msg.Client, ":play_pause:");
             await msg.Message.CreateReactionAsync(emoji);
-            var interactivity = msg.Client.GetInteractivity();
+            /*var interactivity = msg.Client.GetInteractivity();
             await interactivity.WaitForReactionAsync(msg.Message, msg.User);
-            await connection.ResumeAsync();
+            await connection.ResumeAsync();*/
         }
 
         [Command("pause")]
