@@ -228,6 +228,7 @@ namespace duckerBot
         [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
         {
+            await msg.Message.DeleteAsync();
             if (member.Roles.ToArray().Contains(role))
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
@@ -278,6 +279,7 @@ namespace duckerBot
         [Command("addrole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRoleCommand(CommandContext msg, DiscordRole role, DiscordMember member)
         {
+            await msg.Message.DeleteAsync();
             if (member.Roles.ToArray().Contains(role))
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
@@ -346,6 +348,7 @@ namespace duckerBot
         [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role)
         {
+            await msg.Message.DeleteAsync();
             if (!member.Roles.ToArray().Contains(role))
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
@@ -396,6 +399,7 @@ namespace duckerBot
         [Command("removerole"), RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(CommandContext msg, DiscordRole role, DiscordMember member)
         {
+            await msg.Message.DeleteAsync();
             if (!member.Roles.ToArray().Contains(role))
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
