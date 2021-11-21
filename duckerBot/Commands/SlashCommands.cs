@@ -401,7 +401,7 @@ namespace duckerBot
         }
 
 
-        [SlashCommand("addrole", "Adds a role to mentioned member")]
+        [SlashCommand("addrole", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRole(InteractionContext msg,
             [Option("member", "Member to add role")] DiscordUser user,
             [Option("role", "Role to add it")] DiscordRole role)
@@ -458,7 +458,7 @@ namespace duckerBot
             }
         }
 
-        [SlashCommand("removerole", "Removes role from mentioned member")]
+        [SlashCommand("removerole", "Removes role from mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(InteractionContext msg,
             [Option("member", "Member for remove role")] DiscordUser user,
             [Option("role", "Role to remove it")] DiscordRole role)
