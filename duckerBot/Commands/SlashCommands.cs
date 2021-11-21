@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -362,7 +363,7 @@ namespace duckerBot
         // /reaction
         [SlashCommand("reaction", "Adds a reaction to message, which ID you enter")]
         public async Task Reaction(InteractionContext msg, [Option("messageID", "Messages ID to add reaction")] string messageIdInput, 
-            [Option("emoji", "Emojis to add")]  DiscordEmoji emoji)
+            [Option("emoji", "Emojis to add")] DiscordEmoji emoji)
         {
             ulong messageId;
             try
@@ -396,6 +397,85 @@ namespace duckerBot
             };
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, 
                 new DiscordInteractionResponseBuilder().AddEmbed(completeEmbed));
+        }
+
+
+        [SlashCommand("addrole", "Adds a role to mentioned member")]
+        public async Task AddRole(InteractionContext msg,
+            [Option("member", "Member to add role")] DiscordUser user,
+            [Option("role", "Role to add it")] DiscordRole role)
+        {
+            DiscordMember member = (DiscordMember) user;
+            try
+            {
+                await member.GrantRoleAsync(role);
+                var completeEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"Complete, {role.Name} added to {user.Mention}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(completeEmbed));
+            }
+            catch (Exception e)
+            {
+                var incorrectEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't add this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectEmbed));
+            }
+        }
+
+        [SlashCommand("removerole", "Removes role from mentioned member")]
+        public async Task RemoveRole(InteractionContext msg,
+            [Option("member", "Member for remove role")] DiscordUser user,
+            [Option("role", "Role to remove it")] DiscordRole role)
+        {
+            DiscordMember member = (DiscordMember) user;
+            try
+            {
+                await member.RevokeRoleAsync(role);
+                var completeEmbed = new DiscordEmbedBuilder
+                {
+                    Description = $"Complete, {role.Name} removed from {user.Mention}",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(completeEmbed));
+            }
+            catch (Exception e)
+            {
+                var incorrectEmbed = new DiscordEmbedBuilder
+                {
+                    Description = ":x: You can't remove this role",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectEmbed));
+            }
         }
     }
 }
