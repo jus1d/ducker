@@ -9,10 +9,12 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using DiscordColour = DSharpPlus.Entities.DiscordColor;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Net.Models;
 using DSharpPlus.SlashCommands;
+using SpotifyAPI.Web;
 
 namespace duckerBot
 {

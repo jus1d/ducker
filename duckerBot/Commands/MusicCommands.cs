@@ -10,6 +10,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Interactivity.Extensions;
 using Microsoft.VisualBasic;
+using SpotifyAPI.Web;
 
 namespace duckerBot
 {
@@ -243,7 +244,6 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            //connection.CurrentState.CurrentTrack
             if (connection == null)
             {
                 var noConnectionEmbed = new DiscordEmbedBuilder
@@ -259,29 +259,88 @@ namespace duckerBot
                 await msg.Channel.SendMessageAsync(noConnectionEmbed);
                 return;
             }
-            var loadResult = await node.Rest.GetTracksAsync(url);
-            var track = loadResult.Tracks.First();
-            await connection.PlayAsync(track);
-            
-            var playEmbed = new DiscordEmbedBuilder
+
+            if (url.Authority == "open.spotify.com")
             {
-                Title = "Now playing",
-                Description = $"[{track.Title}]({url})",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
+                var config = SpotifyClientConfig.CreateDefault();
+                var request = new ClientCredentialsRequest("2e0c2440f50140cf9f2254ed41bb1f37", "f9b11904c45f42f28b05026fa803b9eb");
+                var response = await new OAuthClient(config).RequestToken(request);
+                var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+                var trackSpotify = await spotify.Tracks.Get(GetTrackId(url.ToString()));
+            
+                string authors = "";
+                for (int i = 0; i < trackSpotify.Artists.Count; i++)
                 {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = "Ordered by " + msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            DiscordMessage message = msg.Channel.SendMessageAsync(playEmbed).Result;
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":pause_button:"));
-            await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":arrow_forward:"));
+                    if (trackSpotify.Artists.Count == 1 || (trackSpotify.Artists.Count == i + 1))
+                    {
+                        authors += trackSpotify.Artists[i].Name;
+                    }
+                    else
+                    {
+                        authors += trackSpotify.Artists[i].Name + ", ";
+                    }
+                }
+
+                string search = trackSpotify.Name + authors;
+                
+                await Join(msg);
+                var loadResult = await node.Rest.GetTracksAsync(search);
+                var track = loadResult.Tracks.First();
+                await connection.PlayAsync(track);
+            
+                var playEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Now playing",
+                    Description = $"[{track.Title}]({url})",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = "Ordered by " + msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                DiscordMessage message = msg.Channel.SendMessageAsync(playEmbed).Result;
+                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":pause_button:"));
+                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":arrow_forward:"));
+            }
+            else
+            {
+                var loadResult = await node.Rest.GetTracksAsync(url);
+                var track = loadResult.Tracks.First();
+                await connection.PlayAsync(track);
+                var playEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Now playing",
+                    Description = $"[{track.Title}]({url})",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = "Ordered by " + msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                DiscordMessage message = msg.Channel.SendMessageAsync(playEmbed).Result;
+                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":pause_button:"));
+                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":arrow_forward:"));
+            }
+        }
+        
+        public static string GetTrackId(string trackUrl)
+        {
+            string trackId = "";
+
+            int i = 31;
+            while (trackUrl[i] != '?')
+            {
+                trackId += trackUrl[i];
+                i++;
+            }
+            return trackId;
         }
         
         // -play search
         [Command("play")]
-        public async Task Play(CommandContext msg, [Description("search query")] params string[] searchInput)
+        public async Task Play(CommandContext msg, params string[] searchInput)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
