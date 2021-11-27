@@ -739,5 +739,63 @@ namespace duckerBot
                 msg.Channel.SendMessageAsync(episode.Result.Name);
             }
         }
+
+        [Command("activity"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task ActivityChanger(CommandContext msg, string activityType)
+        {
+            if (activityType == "stream")
+            {
+                var activity = new DiscordActivity
+                {
+                    ActivityType = ActivityType.Streaming,
+                    Name = "with ducks |  -help",
+                    StreamUrl = "https://www.twitch.tv/itakash1"
+                };
+                await msg.Client.UpdateStatusAsync(activity);
+            }
+            else if (activityType == "def")
+            {
+                var activity = new DiscordActivity
+                {
+                    ActivityType = ActivityType.Playing,
+                    Name = "with ducks | -help"
+                };
+                await msg.Client.UpdateStatusAsync(activity);
+            }
+            else
+            {
+                var incorrectCommandEmbed = new DiscordEmbedBuilder
+                {
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** `-activity <type>`\nPossible types: `stream`, `def`",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                };
+                await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+            }
+        }
+
+        [Command("activity"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task ActivityChanger(CommandContext msg, params string[] text)
+        {
+            var incorrectCommandEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-activity <type>`\nPossible types: `stream`, `def`",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
+        }
     }
 }

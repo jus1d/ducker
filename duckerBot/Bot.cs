@@ -104,7 +104,7 @@ namespace duckerBot
             var activity = new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
-                Name = "with ducks | -help"
+                Name = "with ducks |  -help"
             };
             Client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
