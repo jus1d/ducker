@@ -752,7 +752,18 @@ namespace duckerBot
                     Name = "with ducks |  -help",
                     StreamUrl = "https://www.twitch.tv/itakash1"
                 };
+                var activityChanedEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Activity changed to streaming type",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
                 await msg.Client.UpdateStatusAsync(activity);
+                await msg.Channel.SendMessageAsync(activityChanedEmbed);
             }
             else if (activityType == "def")
             {
@@ -761,7 +772,18 @@ namespace duckerBot
                     ActivityType = ActivityType.Playing,
                     Name = "with ducks | -help"
                 };
+                var activityChanedEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Activity changed to playing type",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
                 await msg.Client.UpdateStatusAsync(activity);
+                await msg.Channel.SendMessageAsync(activityChanedEmbed);
             }
             else
             {
