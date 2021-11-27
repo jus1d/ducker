@@ -708,5 +708,36 @@ namespace duckerBot
                 await msg.Channel.SendMessageAsync(incorrectReactionCommand);
             }
         }
+
+        [Command("t")]
+        public async Task TestCommand(CommandContext msg, Uri url)
+        {
+            var config = SpotifyClientConfig.CreateDefault();
+            var request = new ClientCredentialsRequest("2e0c2440f50140cf9f2254ed41bb1f37", "0f48eeafd9584ff08d42cce68c49782c");
+            var response = await new OAuthClient(config).RequestToken(request);
+            var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+            
+            if (url.LocalPath[Range.EndAt(7)] == "/track/")
+            {
+                string trackId = url.ToString()[Range.StartAt(31)][Range.EndAt(22)];
+                var track = spotify.Tracks.Get(trackId).Result;
+                await msg.Channel.SendMessageAsync(track.Name);
+            }
+            else if (url.LocalPath[Range.EndAt(10)] == "/playlist/")
+            {
+                string playlistId = url.ToString()[Range.StartAt(34)][Range.EndAt(22)];
+                var playlist = spotify.Playlists.Get(playlistId).Result;
+                await msg.Channel.SendMessageAsync(playlist.Name);
+            }
+            else if (url.LocalPath[Range.EndAt(9)] == "/episode/")
+            {
+                await msg.Channel.SendMessageAsync("1");
+                string episodeId = url.ToString()[Range.StartAt(33)][Range.EndAt(22)];
+                await msg.Channel.SendMessageAsync(episodeId);
+                var episode = spotify.Episodes.Get(episodeId);
+                await msg.Channel.SendMessageAsync("1");
+                msg.Channel.SendMessageAsync(episode.Result.Name);
+            }
+        }
     }
 }
