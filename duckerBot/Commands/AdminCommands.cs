@@ -744,7 +744,7 @@ namespace duckerBot
          RequirePermissions(Permissions.Administrator)]
         public async Task ActivityChanger(CommandContext msg, string activityType)
         {
-            if (activityType == "stream")
+            if (activityType == "streaming")
             {
                 var activity = new DiscordActivity
                 {
@@ -765,7 +765,7 @@ namespace duckerBot
                 await msg.Client.UpdateStatusAsync(activity);
                 await msg.Channel.SendMessageAsync(activityChanedEmbed);
             }
-            else if (activityType == "def")
+            else if (activityType == "playing")
             {
                 var activity = new DiscordActivity
                 {

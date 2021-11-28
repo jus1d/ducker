@@ -265,15 +265,8 @@ namespace duckerBot
 
             if (url.Authority == "open.spotify.com")
             {
-                var json = string.Empty;
-
-                using (var fs = File.OpenRead("config.json"))
-                using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
-                    json = await sr.ReadToEndAsync().ConfigureAwait(false);
-                var configJson = JsonConvert.DeserializeObject<ConfigJson>(json);
-                
                 var config = SpotifyClientConfig.CreateDefault();
-                var request = new ClientCredentialsRequest(configJson.SpotifyId, configJson.SpotifySecret);
+                var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
                 var response = await new OAuthClient(config).RequestToken(request);
                 var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
                 var trackSpotify = await spotify.Tracks.Get(GetTrackId(url.ToString()));
