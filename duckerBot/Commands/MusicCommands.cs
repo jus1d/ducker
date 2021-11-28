@@ -11,6 +11,9 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Interactivity.Extensions;
 using Microsoft.VisualBasic;
 using SpotifyAPI.Web;
+using Newtonsoft.Json;
+using System.IO;
+using System.Text;
 
 namespace duckerBot
 {
@@ -262,8 +265,15 @@ namespace duckerBot
 
             if (url.Authority == "open.spotify.com")
             {
+                var json = string.Empty;
+
+                using (var fs = File.OpenRead("config.json"))
+                using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
+                    json = await sr.ReadToEndAsync().ConfigureAwait(false);
+                var configJson = JsonConvert.DeserializeObject<ConfigJson>(json);
+                
                 var config = SpotifyClientConfig.CreateDefault();
-                var request = new ClientCredentialsRequest("2e0c2440f50140cf9f2254ed41bb1f37", "0f48eeafd9584ff08d42cce68c49782c");
+                var request = new ClientCredentialsRequest(configJson.SpotifyId, configJson.SpotifySecret);
                 var response = await new OAuthClient(config).RequestToken(request);
                 var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
                 var trackSpotify = await spotify.Tracks.Get(GetTrackId(url.ToString()));

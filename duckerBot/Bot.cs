@@ -21,6 +21,8 @@ using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using TwitchCSharp;
+using TwitchCSharp.Clients;
 
 namespace duckerBot
 {

@@ -1,5 +1,4 @@
-﻿using DSharpPlus.CommandsNext.Attributes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace duckerBot
 {
@@ -10,5 +9,11 @@ namespace duckerBot
         
         [JsonProperty("prefix")]
         public string Prefix { get; private set; }
+        
+        [JsonProperty("spotifyId")]
+        public string SpotifyId { get; private set;  }
+        
+        [JsonProperty("spotifySecret")]
+        public string SpotifySecret { get; private set;  }
     }
 }
