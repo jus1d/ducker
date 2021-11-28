@@ -514,5 +514,56 @@ namespace duckerBot
                     new DiscordInteractionResponseBuilder().AddEmbed(incorrectEmbed));
             }
         }
+
+        [SlashCommand("activity", "Changes activity to the bot")]
+        public async Task ActivityChnger(InteractionContext msg,
+            [Choice("playing", "playing")] 
+            [Choice("streaming", "streaming")] 
+            [Option("type", "Type for activity")] string activityType)
+        {
+            if (activityType == "playing")
+            {
+                var activity = new DiscordActivity
+                {
+                    ActivityType = ActivityType.Playing,
+                    Name = "with ducks | -help"
+                };
+                var activityChanedEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Activity changed to playing type",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Client.UpdateStatusAsync(activity);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(activityChanedEmbed));
+            }
+            else if (activityType == "streaming")
+            {
+                var activity = new DiscordActivity
+                {
+                    ActivityType = ActivityType.Streaming,
+                    Name = "with ducks |  -help",
+                    StreamUrl = "https://www.twitch.tv/itakash1"
+                };
+                var activityChanedEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Activity changed to streaming type",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Client.UpdateStatusAsync(activity);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(activityChanedEmbed));
+            }
+        }
     }
 }
