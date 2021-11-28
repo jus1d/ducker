@@ -1,4 +1,6 @@
 {
     "token":"your token here",
-    "prefix":"your prefix here"
+    "prefix":"your prefix here",
+    "spotifyId":"your spotify client id here",
+    "spotifySecret":"your spotify client secret here"
 }
