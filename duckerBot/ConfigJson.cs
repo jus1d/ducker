@@ -22,7 +22,6 @@ namespace duckerBot
         public static ConfigJson? GetConfigField()
         {
             var json = string.Empty;
-
             using (var fs = File.OpenRead("config.json"))
             using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
                 json =  sr.ReadToEndAsync().ConfigureAwait(false).ToString();
