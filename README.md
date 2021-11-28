@@ -38,7 +38,7 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 ### Music Commands
 | Command | Description | Arguments |
 |---|----|---|
-| `play` | Starts playing music from youtube by link or search request | `url / search` |
+| `play` | Starts playing music from youtube, spotify or soundcloud by link or search request | `url / search` |
 | `pause` | Pause now playing music | `none` |
 | `stop` | Permanently stop now playing music (can't use -play command to resume playing) | `none` |
 | `resume` | Resume playing music | `none` |
