@@ -41,16 +41,9 @@ namespace duckerBot
         
         public async Task RunAsync()
         {
-            var json = string.Empty;
-
-            using (var fs = File.OpenRead("config.json"))
-            using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
-                json = await sr.ReadToEndAsync().ConfigureAwait(false);
-
-            var configJson = JsonConvert.DeserializeObject<ConfigJson>(json);
             var config = new DiscordConfiguration
             {
-                Token = configJson.Token,
+                Token = ConfigJson.GetConfigField().Token,
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 MinimumLogLevel = LogLevel.Debug,
@@ -74,7 +67,7 @@ namespace duckerBot
 
             var commandsConfig = new CommandsNextConfiguration 
             {
-                StringPrefixes = new string[] { configJson.Prefix },
+                StringPrefixes = new string[] { ConfigJson.GetConfigField().Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
                 EnableDefaultHelp = false
