@@ -35,10 +35,10 @@ namespace duckerBot
         public static DiscordColor MainEmbedColor = DiscordColor.Aquamarine;
         public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
         public static DiscordColor WarningColor = DiscordColor.Orange;
-        public static ulong MusicChannelId = 816659808627195915;
-        public static ulong ServerLogsChannelId = 787190218221944862;
-        public static ulong CmdChannelId = 755520237935263834;
-        public static ulong ReactionRolesMessageId = 914932802993143859;
+        public static ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
+        public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
+        public static ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
+        public static ulong ReactionRolesMessageId = ConfigJson.GetConfigField().ReactionRolesMessageId;
         
         public async Task RunAsync()
         {

@@ -22,6 +22,18 @@ namespace duckerBot
         
         [JsonProperty("spotifySecret")]
         public string SpotifySecret { get; private set;  }
+        
+        [JsonProperty("MusicChannelId")]
+        public ulong MusicChannelId { get; private set; }
+        
+        [JsonProperty("ServerLogsChannelId")]
+        public ulong ServerLogsChannelId { get; private set; }
+        
+        [JsonProperty("CmdChannelId")]
+        public ulong CmdChannelId { get; private set; }
+        
+        [JsonProperty("ReactionRolesMessageId")]
+        public ulong ReactionRolesMessageId { get; private set; }
 
         public static ConfigJson GetConfigField()
         {
