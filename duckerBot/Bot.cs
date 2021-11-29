@@ -35,6 +35,7 @@ namespace duckerBot
         public static DiscordColor MainEmbedColor = DiscordColor.Aquamarine;
         public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
         public static DiscordColor WarningColor = DiscordColor.Orange;
+        public static ulong Id = ConfigJson.GetConfigField().Id;
         public static ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
         public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
