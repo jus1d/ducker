@@ -819,5 +819,29 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
+
+        [Command("reactionrolesembed"), RequirePermissions(Permissions.Administrator)]
+        public async Task ServerNewsRole(CommandContext msg)
+        {
+            await msg.Message.DeleteAsync();
+
+            DiscordEmoji vibeEmoji = DiscordEmoji.FromName(msg.Client, ":vibe:");
+            DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
+            DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
+            var rolesEmbed = new DiscordEmbedBuilder
+            {
+                Title = $"{vibeEmoji} Welcome, tap reactions to get roles {vibeEmoji}",
+                Description = $"Reaction roles list:\n{twitchRgbEmoji} - twitch follower(by having this reaction, u will get stream notifications)\n{chelEmoji} - default role for this server\n\nGL",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    Text = msg.Guild.GetMemberAsync(906179696516026419).Result.DisplayName,
+                    IconUrl = msg.Guild.GetMemberAsync(906179696516026419).Result.AvatarUrl
+                },
+                Color = Bot.MainEmbedColor
+            };
+            var message = msg.Channel.SendMessageAsync(rolesEmbed);
+            await message.Result.CreateReactionAsync(twitchRgbEmoji);
+            await message.Result.CreateReactionAsync(chelEmoji);
+        }
     }
 }

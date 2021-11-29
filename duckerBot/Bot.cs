@@ -38,6 +38,7 @@ namespace duckerBot
         public static ulong MusicChannelId = 816659808627195915;
         public static ulong ServerLogsChannelId = 787190218221944862;
         public static ulong CmdChannelId = 755520237935263834;
+        public static ulong ReactionRolesMessageId = 914932802993143859;
         
         public async Task RunAsync()
         {
