@@ -820,7 +820,7 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
 
-        [Command("reactionrolesembed"), RequirePermissions(Permissions.Administrator)]
+        [Command("rrembed"), RequirePermissions(Permissions.Administrator)]
         public async Task ServerNewsRole(CommandContext msg)
         {
             await msg.Message.DeleteAsync();
