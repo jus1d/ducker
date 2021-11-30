@@ -294,7 +294,7 @@ namespace duckerBot
                 var playEmbed = new DiscordEmbedBuilder
                 {
                     Title = "Now playing",
-                    Description = $"[{track.Title}]({url})",
+                    Description = $"[{track.Title} - {authors}]({url})",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
