@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Principal;
@@ -839,9 +840,12 @@ namespace duckerBot
                 },
                 Color = Bot.MainEmbedColor
             };
-            var message = msg.Channel.SendMessageAsync(rolesEmbed);
-            await message.Result.CreateReactionAsync(twitchRgbEmoji);
-            await message.Result.CreateReactionAsync(chelEmoji);
+            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", $"", false, new DiscordComponentEmoji(twitchRgbEmoji));
+            var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
+            var builder = new DiscordMessageBuilder()
+                .AddEmbed(rolesEmbed)
+                .AddComponents(followButton, chelButton);
+            await msg.Channel.SendMessageAsync(builder);
         }
 
         [Command("stream"), RequirePermissions(Permissions.Administrator)]
@@ -868,6 +872,13 @@ namespace duckerBot
             };
             var followerTag = msg.Channel.SendMessageAsync(msg.Guild.GetRole(914921577634754600).Mention).Result.DeleteAsync();
             await msg.Channel.SendMessageAsync(streamAnnouncementembed).Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
-        } 
+        }
+
+
+        [Command("t")]
+        public async Task TestCommand(CommandContext msg)
+        {
+            
+        }
     }
 }

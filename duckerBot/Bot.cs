@@ -40,7 +40,7 @@ namespace duckerBot
         public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
         public static ulong ReactionRolesMessageId = ConfigJson.GetConfigField().ReactionRolesMessageId;
-        
+
         public async Task RunAsync()
         {
             var config = new DiscordConfiguration
@@ -61,8 +61,9 @@ namespace duckerBot
                 Timeout = TimeSpan.FromHours(12)
             });
 
-            Client.MessageCreated += EventHandler.OnMessageCreated;
+            Client.ComponentInteractionCreated += EventHandler.OnComponentInteractionCreated;
             Client.GuildMemberAdded += EventHandler.OnMemberAdded;
+            Client.MessageCreated += EventHandler.OnMessageCreated;
             Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
             Client.MessageReactionAdded += EventHandler.OnReactionAdded;
             Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;

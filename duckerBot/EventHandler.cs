@@ -128,5 +128,25 @@ namespace duckerBot
         {
             
         }
+
+        public static async Task OnComponentInteractionCreated(DiscordClient client, InteractionCreateEventArgs e)
+        {
+            await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+            DiscordMember member = (DiscordMember) e.Interaction.User;
+            if (e.Interaction.Data.CustomId == "get_follow_role")
+            {
+                if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)))
+                    await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
+                else
+                    await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
+            }
+            else if (e.Interaction.Data.CustomId == "get_chel_role")
+            {
+                if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.ChelRoleId)))
+                    await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
+                else
+                    await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
+            }
+        }
     }
 }
