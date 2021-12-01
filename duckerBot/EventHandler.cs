@@ -102,26 +102,6 @@ namespace duckerBot
                     return;
                 await connection.PauseAsync();
             }
-            else if (e.Emoji == DiscordEmoji.FromName(client, ":twitchrgb:") && e.Message.Id == Bot.ReactionRolesMessageId)
-            {
-                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
-                DiscordMember member = (DiscordMember) e.User;
-                
-                if (member.Roles.Contains(e.Guild.GetRole(914921577634754600)))
-                    await member.RevokeRoleAsync(e.Guild.GetRole(914921577634754600));
-                else
-                    await member.GrantRoleAsync(e.Guild.GetRole(914921577634754600));
-            }
-            else if (e.Emoji == DiscordEmoji.FromName(client, ":chel:") && e.Message.Id == Bot.ReactionRolesMessageId)
-            {
-                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
-                DiscordMember member = (DiscordMember) e.User;
-                
-                if (member.Roles.Contains(e.Guild.GetRole(816666984745140254)))
-                    await member.RevokeRoleAsync(e.Guild.GetRole(816666984745140254));
-                else
-                    await member.GrantRoleAsync(e.Guild.GetRole(816666984745140254));
-            }
         }
         
         public static async Task OnReactionRemoved(DiscordClient client, MessageReactionRemoveEventArgs e)
@@ -131,21 +111,75 @@ namespace duckerBot
 
         public static async Task OnComponentInteractionCreated(DiscordClient client, InteractionCreateEventArgs e)
         {
-            await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
             DiscordMember member = (DiscordMember) e.Interaction.User;
+            var grantedEmbed = new DiscordEmbedBuilder();
             if (e.Interaction.Data.CustomId == "get_follow_role")
             {
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)))
+                {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
+                    grantedEmbed = new DiscordEmbedBuilder
+                    {
+                        Description = $"You removed your `{e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId).Name}` role",
+                        Footer = new DiscordEmbedBuilder.EmbedFooter
+                        {
+                            IconUrl = e.Interaction.User.AvatarUrl,
+                            Text = e.Interaction.User.Username
+                        },
+                        Color = Bot.MainEmbedColor
+                    };
+                }
                 else
+                {
                     await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
+                    grantedEmbed = new DiscordEmbedBuilder
+                    {
+                        Description = $"You got the `{e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId).Name}` role",
+                        Footer = new DiscordEmbedBuilder.EmbedFooter
+                        {
+                            IconUrl = e.Interaction.User.AvatarUrl,
+                            Text = e.Interaction.User.Username
+                        },
+                        Color = Bot.MainEmbedColor
+                    };
+                }
+                
+                var message =  e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(grantedEmbed).AsEphemeral(true));
             }
             else if (e.Interaction.Data.CustomId == "get_chel_role")
             {
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.ChelRoleId)))
+                {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
+                    grantedEmbed = new DiscordEmbedBuilder
+                    {
+                        Description = $"You removed your `{e.Interaction.Guild.GetRole(Role.ChelRoleId).Name}` role",
+                        Footer = new DiscordEmbedBuilder.EmbedFooter
+                        {
+                            IconUrl = e.Interaction.User.AvatarUrl,
+                            Text = e.Interaction.User.Username
+                        },
+                        Color = Bot.MainEmbedColor
+                    };
+                }
                 else
+                {
                     await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
+                    grantedEmbed = new DiscordEmbedBuilder
+                    {
+                        Description = $"You got the `{e.Interaction.Guild.GetRole(Role.ChelRoleId).Name}` role",
+                        Footer = new DiscordEmbedBuilder.EmbedFooter
+                        {
+                            IconUrl = e.Interaction.User.AvatarUrl,
+                            Text = e.Interaction.User.Username
+                        },
+                        Color = Bot.MainEmbedColor
+                    };
+                }
+                
+                var message = e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(grantedEmbed).AsEphemeral(true));
             }
         }
     }

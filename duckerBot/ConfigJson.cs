@@ -32,9 +32,6 @@ namespace duckerBot
         [JsonProperty("cmdChannelId")]
         public ulong CmdChannelId { get; private set; }
         
-        [JsonProperty("reactionRolesMessageId")]
-        public ulong ReactionRolesMessageId { get; private set; }
-        
         [JsonProperty("id")]
         public ulong Id { get; private set; }
 

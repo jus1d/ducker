@@ -39,7 +39,6 @@ namespace duckerBot
         public static ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
         public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
-        public static ulong ReactionRolesMessageId = ConfigJson.GetConfigField().ReactionRolesMessageId;
 
         public async Task RunAsync()
         {
