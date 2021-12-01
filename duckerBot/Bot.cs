@@ -29,10 +29,10 @@ namespace duckerBot
     public class Bot
     {
         public DiscordClient Client { get; private set; }
-        public InteractivityExtension Interactivity { get; private set; }
+        //public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
         
-        public static DiscordColor MainEmbedColor = DiscordColor.Aquamarine;
+        public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
         public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
         public static DiscordColor WarningColor = DiscordColor.Orange;
         public static ulong Id = ConfigJson.GetConfigField().Id;
@@ -48,6 +48,7 @@ namespace duckerBot
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 MinimumLogLevel = LogLevel.Debug,
+                LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss tt",
                 Intents = DiscordIntents.All
             };
             
