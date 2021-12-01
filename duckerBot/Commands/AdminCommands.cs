@@ -473,8 +473,7 @@ namespace duckerBot
         [Command("mute"), RequirePermissions(Permissions.Administrator)]
         public async Task Mute(CommandContext msg, DiscordMember member)
         {
-            DiscordRole muteRole = msg.Guild.GetRole(911479294209970187);
-            await member.GrantRoleAsync(muteRole);
+            await member.GrantRoleAsync(msg.Guild.GetRole(Role.MutedRoleId));
         }
         
         // -mute
@@ -500,8 +499,7 @@ namespace duckerBot
         [Command("unmute"), RequirePermissions(Permissions.Administrator)]
         public async Task Unmute(CommandContext msg, DiscordMember member)
         {
-            DiscordRole muteRole = msg.Guild.GetRole(911479294209970187);
-            await member.RevokeRoleAsync(muteRole);
+            await member.RevokeRoleAsync(msg.Guild.GetRole(Role.MutedRoleId));
         }
         
         // -unmute
@@ -525,7 +523,8 @@ namespace duckerBot
 
 
         // -embed 
-        [Command("embed"),
+        [Command("embed"), 
+         Aliases("e"),
          RequirePermissions(Permissions.Administrator)]
         public async Task Embed(CommandContext msg, params string[] embedConfig)
         {
