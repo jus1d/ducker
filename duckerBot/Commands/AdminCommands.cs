@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
@@ -861,24 +862,17 @@ namespace duckerBot
             var streamAnnouncementembed = new DiscordEmbedBuilder
             {
                 Title = "Stream online!",
-                Description = $"{description} https://www.twitch.tv/itakash1",
+                Description = $"{description} \nhttps://www.twitch.tv/itakash1",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     Text = msg.Guild.GetMemberAsync(Bot.Id).Result.DisplayName,
                     IconUrl = msg.Guild.GetMemberAsync(Bot.Id).Result.AvatarUrl
                 },
-                ImageUrl = "https://psv4.userapi.com/c537232/u171567304/docs/d41/9e121b6e7f1c/main.gif?extra=SfCKm9eq4uM0yCcBmuf5rJjueEM6DOAANvGaAiRiW6zkUIXXYCvEsqOkK-qcl29K4iurvQTK8I4THZUYDTUxAfIs7FTi1lWlVmzgrO14Ou7ETGyGA66hgs6FU4TXqj9HZtWrmxu_vzPqO2TmKJ1i0sOlog",
+                ImageUrl = msg.Guild.GetMemberAsync(857687574281453598).Result.AvatarUrl,
                 Color = Bot.MainEmbedColor
             };
-            var followerTag = msg.Channel.SendMessageAsync(msg.Guild.GetRole(914921577634754600).Mention).Result.DeleteAsync();
+            await msg.Channel.SendMessageAsync(msg.Guild.GetRole(914921577634754600).Mention).Result.DeleteAsync();
             await msg.Channel.SendMessageAsync(streamAnnouncementembed).Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
-        }
-
-
-        [Command("t")]
-        public async Task TestCommand(CommandContext msg)
-        {
-            
         }
     }
 }
