@@ -831,8 +831,8 @@ namespace duckerBot
             DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
             var rolesEmbed = new DiscordEmbedBuilder
             {
-                Title = $"{vibeEmoji} Welcome, tap reactions to get roles {vibeEmoji}",
-                Description = $"Reaction roles list:\n{twitchRgbEmoji} - twitch follower(by having this reaction, u will get stream notifications)\n{chelEmoji} - default role for this server\n\nGL",
+                Title = $"{vibeEmoji} Welcome, tap buttons to get roles {vibeEmoji}",
+                Description = $"Roles list:\n{twitchRgbEmoji} - twitch follower(by having this reaction, u will get stream notifications)\n{chelEmoji} - default role for this server\n\nGL",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     Text = msg.Guild.GetMemberAsync(906179696516026419).Result.DisplayName,
