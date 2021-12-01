@@ -17,6 +17,9 @@ namespace duckerBot
         [JsonProperty("prefix")]
         public string Prefix { get; private set; }
         
+        [JsonProperty("id")]
+        public ulong Id { get; private set; }
+        
         [JsonProperty("spotifyId")]
         public string SpotifyId { get; private set;  }
         
@@ -31,9 +34,6 @@ namespace duckerBot
         
         [JsonProperty("cmdChannelId")]
         public ulong CmdChannelId { get; private set; }
-        
-        [JsonProperty("id")]
-        public ulong Id { get; private set; }
 
         public static ConfigJson GetConfigField()
         {
