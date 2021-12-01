@@ -33,8 +33,8 @@ namespace duckerBot
         public CommandsNextExtension Commands { get; private set; }
         
         public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
-        public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
-        public static DiscordColor WarningColor = DiscordColor.Orange;
+        public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
+        public static DiscordColor WarningColor = new DiscordColor("#ff9f30");
         public static ulong Id = ConfigJson.GetConfigField().Id;
         public static ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
         public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
