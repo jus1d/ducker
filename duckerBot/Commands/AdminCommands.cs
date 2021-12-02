@@ -14,6 +14,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DiscordColour = DSharpPlus.Entities.DiscordColor;
 using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.Lavalink;
 using DSharpPlus.Net.Models;
 using DSharpPlus.SlashCommands;
 using SpotifyAPI.Web;
@@ -795,6 +796,41 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(msg.Guild.GetRole(914921577634754600).Mention).Result.DeleteAsync();
             await msg.Channel.SendMessageAsync(streamAnnouncementembed).Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
+        }
+
+
+        [Command("queue")]
+        public async Task Queue(CommandContext msg)
+        {
+            string totalQueue = "";
+            int i = 1;
+            foreach (var track in queue)
+            {
+                totalQueue += $"{i}. " + track.Title + "\n";
+                i++;
+            }
+
+            var queueEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Queue:",
+                Description = totalQueue,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+
+            await msg.Channel.SendMessageAsync(queueEmbed);
+        }
+
+        [Command("next")]
+        public async Task Next(CommandContext msg)
+        {
+            await Play(msg, queue[0]);
+            Thread.Sleep(1000);
+            await Play(msg, queue[0]);
         }
     }
 }
