@@ -69,40 +69,6 @@ namespace duckerBot
         {
             if (e.User.IsBot)
                 return;
-
-            if (e.Emoji == DiscordEmoji.FromName(client, ":play_pause:") && e.Channel.Id == Bot.MusicChannelId)
-            {
-                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
-                var lava = client.GetLavalink();
-                var node = lava.ConnectedNodes.Values.First();
-                DiscordMember member = (DiscordMember) e.User;
-                var connection = node.GetGuildConnection(member.VoiceState.Guild);
-                // here must be connection playing check
-            }
-            else if (e.Emoji == DiscordEmoji.FromName(client, ":arrow_forward:") && e.Channel.Id == Bot.MusicChannelId)
-            {
-                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
-                var lava = client.GetLavalink();
-                var node = lava.ConnectedNodes.Values.First();
-                DiscordMember member = (DiscordMember) e.User;
-                var connection = node.GetGuildConnection(member.VoiceState.Guild);
-
-                if (((DiscordMember) e.User).VoiceState.Channel != connection.Channel)
-                    return;
-                await connection.ResumeAsync();
-            }
-            else if (e.Emoji == DiscordEmoji.FromName(client, ":pause_button:") && e.Channel.Id == Bot.MusicChannelId)
-            {
-                await e.Message.DeleteReactionAsync(e.Emoji, e.User);
-                var lava = client.GetLavalink();
-                var node = lava.ConnectedNodes.Values.First();
-                DiscordMember member = (DiscordMember) e.User;
-                var connection = node.GetGuildConnection(member.VoiceState.Guild);
-
-                if (((DiscordMember) e.User).VoiceState.Channel != connection.Channel)
-                    return;
-                await connection.PauseAsync();
-            }
         }
         
         public static async Task OnReactionRemoved(DiscordClient client, MessageReactionRemoveEventArgs e)
