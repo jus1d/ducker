@@ -153,7 +153,15 @@ namespace duckerBot
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
                 var lava = client.GetLavalink();
                 var node = lava.ConnectedNodes.Values.First();
-                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+                LavalinkGuildConnection connection;
+                try
+                {
+                    connection = node.GetGuildConnection(member.VoiceState.Guild);
+                }
+                catch
+                {
+                    return;
+                }
 
                 if (member.VoiceState.Channel != connection.Channel)
                     return;
@@ -164,7 +172,15 @@ namespace duckerBot
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
                 var lava = client.GetLavalink();
                 var node = lava.ConnectedNodes.Values.First();
-                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+                LavalinkGuildConnection connection;
+                try
+                {
+                    connection = node.GetGuildConnection(member.VoiceState.Guild);
+                }
+                catch
+                {
+                    return;
+                }
 
                 if (member.VoiceState.Channel != connection.Channel)
                     return;
