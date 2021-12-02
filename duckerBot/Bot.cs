@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,8 @@ namespace duckerBot
         public static ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
         public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
+
+        public static List<LavalinkTrack> queue = new List<LavalinkTrack>();
 
         public async Task RunAsync()
         {

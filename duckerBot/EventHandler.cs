@@ -186,6 +186,41 @@ namespace duckerBot
                     return;
                 await connection.PauseAsync();
             }
+            else if (e.Interaction.Data.CustomId == "next_button")
+            {
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+                await connection.PlayAsync(Bot.queue[0]);
+
+                await Embed.NowPlaying(client, e.Interaction.User, Bot.queue[0]).SendAsync(e.Interaction.Channel);
+                Bot.queue.Remove(Bot.queue[0]);
+            }
+            else if (e.Interaction.Data.CustomId == "queue_button")
+            {
+                string totalQueue = "";
+                int i = 1;
+                foreach (var track in Bot.queue)
+                {
+                    totalQueue += $"{i}. " + track.Title + "\n";
+                    i++;
+                }
+
+                var queueEmbed = new DiscordEmbedBuilder
+                {
+                    Title = "Queue:",
+                    Description = totalQueue,
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = e.Interaction.User.AvatarUrl,
+                        Text = e.Interaction.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(queueEmbed));
+            }
         }
     }
 }

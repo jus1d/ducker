@@ -20,8 +20,6 @@ namespace duckerBot
 {
     public partial class Commands : BaseCommandModule
     {
-        List<LavalinkTrack> queue = new List<LavalinkTrack>();
-        
         // -join
         [Command("join")]
         public async Task Join(CommandContext msg, DiscordChannel channel = null)
@@ -297,56 +295,18 @@ namespace duckerBot
                     var track = loadResult.Tracks.First();
                     await connection.PlayAsync(track);
             
-                    var playEmbed = new DiscordEmbedBuilder
-                    {
-                        Title = "Now playing",
-                        Description = $"[{track.Title} - {authors}]({url})",
-                        Footer = new DiscordEmbedBuilder.EmbedFooter
-                        {
-                            IconUrl = msg.User.AvatarUrl,
-                            Text = "Ordered by " + msg.User.Username
-                        }, 
-                        Color = Bot.MainEmbedColor
-                        
-                    };
-                    var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
-                    var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
-            
-                    var builder = new DiscordMessageBuilder()
-                        .AddEmbed(playEmbed)
-                        .AddComponents(pauseButton, playButton);
-
-                    await builder.SendAsync(msg.Channel);
+                    await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
                 }
                 else
                 {
                     var loadResult = await node.Rest.GetTracksAsync(url);
                     var track = loadResult.Tracks.First();
                     await connection.PlayAsync(track);
-                    var playEmbed = new DiscordEmbedBuilder
-                    {
-                        Title = "Now playing",
-                        Description = $"[{track.Title}]({url})",
-                        Footer = new DiscordEmbedBuilder.EmbedFooter
-                        {
-                            IconUrl = msg.User.AvatarUrl,
-                            Text = "Ordered by " + msg.User.Username
-                        },
-                        Color = Bot.MainEmbedColor
-                    };
-                    var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
-                    var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
-            
-                    var builder = new DiscordMessageBuilder()
-                        .AddEmbed(playEmbed)
-                        .AddComponents(pauseButton, playButton);
-
-                    await builder.SendAsync(msg.Channel);
+                    await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
                 }
             }
             else
             {
-                // List<LavalinkTrack> queue = new List<LavalinkTrack>();
                 if (url.Authority == "open.spotify.com")
                 {
                     var config = SpotifyClientConfig.CreateDefault();
@@ -373,25 +333,15 @@ namespace duckerBot
                     await Join(msg);
                     var loadResult = await node.Rest.GetTracksAsync(search);
                     var track = loadResult.Tracks.First();
-                    queue.Add(track);
+                    Bot.queue.Add(track);
                 }
                 else
                 {
                     var loadResult = await node.Rest.GetTracksAsync(url);
                     var track = loadResult.Tracks.First();
-                    queue.Add(track);
+                    Bot.queue.Add(track);
                 }
             }
-        }
-
-        [Command("play")]
-        public async Task Play(CommandContext msg, LavalinkTrack track)
-        {
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            await connection.PlayAsync(track);
-            queue.Remove(queue[0]);
         }
 
         // -play search
@@ -482,25 +432,7 @@ namespace duckerBot
 
             await connection.PlayAsync(track);
             
-            var playEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Now playing",
-                Description = $"[{track.Title}]({track.Uri})",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = "Ordered by " + msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
-            var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
-            
-            var builder = new DiscordMessageBuilder()
-                .AddEmbed(playEmbed)
-                .AddComponents(pauseButton, playButton);
-
-            await builder.SendAsync(msg.Channel);
+            await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
         }
         
         
@@ -612,6 +544,46 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
             var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
+        }
+        
+        
+        // -next
+        [Command("next")]
+        public async Task Next(CommandContext msg)
+        {
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            await connection.PlayAsync(Bot.queue[0]);
+            Bot.queue.Remove(Bot.queue[0]);
+        }
+        
+        
+        // -queue
+        [Command("queue")]
+        public async Task Queue(CommandContext msg)
+        {
+            string totalQueue = "";
+            int i = 1;
+            foreach (var track in Bot.queue)
+            {
+                totalQueue += $"{i}. " + track.Title + "\n";
+                i++;
+            }
+
+            var queueEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Queue:",
+                Description = totalQueue,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+
+            await msg.Channel.SendMessageAsync(queueEmbed);
         }
         
         
