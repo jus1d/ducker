@@ -569,7 +569,6 @@ namespace duckerBot
             };
             await msg.Channel.SendMessageAsync(incorrectPauseCommandEmbed);
             var emoji = DiscordEmoji.FromName(msg.Client, ":pause_button:");
-            await msg.Message.CreateReactionAsync(emoji);
         }
         
         
