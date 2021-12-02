@@ -406,7 +406,7 @@ namespace duckerBot
             await msg.Message.DeleteAsync();
             if (!member.Roles.ToArray().Contains(role))
             {
-                var memberHasRoleEmbed = new DiscordEmbedBuilder
+                var memberHasntRoleEmbed = new DiscordEmbedBuilder
                 {
                     Description = $"This member doesn't have this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -416,7 +416,7 @@ namespace duckerBot
                     },
                     Color = Bot.IncorrectEmbedColor
                 };
-                await msg.Channel.SendMessageAsync(memberHasRoleEmbed);
+                await msg.Channel.SendMessageAsync(memberHasntRoleEmbed);
                 return;
             }
 
