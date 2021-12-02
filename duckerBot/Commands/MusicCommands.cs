@@ -269,7 +269,7 @@ namespace duckerBot
                 var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
                 var response = await new OAuthClient(config).RequestToken(request);
                 var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-                var trackSpotify = await spotify.Tracks.Get(GetTrackId(url.ToString()));
+                var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]); // track's id
             
                 string authors = "";
                 for (int i = 0; i < trackSpotify.Artists.Count; i++)
@@ -337,20 +337,7 @@ namespace duckerBot
                 await builder.SendAsync(msg.Channel);
             }
         }
-        
-        public static string GetTrackId(string trackUrl)
-        {
-            string trackId = "";
 
-            int i = 31;
-            while (trackUrl[i] != '?')
-            {
-                trackId += trackUrl[i];
-                i++;
-            }
-            return trackId;
-        }
-        
         // -play search
         [Command("play")]
         public async Task Play(CommandContext msg, params string[] searchInput)
