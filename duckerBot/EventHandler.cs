@@ -16,6 +16,7 @@ using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using DSharpPlus.Net.Models;
+using Lavalink4NET;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
@@ -180,6 +181,28 @@ namespace duckerBot
                 
                 var message = e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().AddEmbed(grantedEmbed).AsEphemeral(true));
+            }
+            else if (e.Interaction.Data.CustomId == "play_button")
+            {
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+
+                if (member.VoiceState.Channel != connection.Channel)
+                    return;
+                await connection.ResumeAsync();
+            }
+            else if (e.Interaction.Data.CustomId == "pause_button")
+            {
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+
+                if (member.VoiceState.Channel != connection.Channel)
+                    return;
+                await connection.PauseAsync();
             }
         }
     }

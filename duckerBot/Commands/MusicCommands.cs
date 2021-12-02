@@ -302,9 +302,14 @@ namespace duckerBot
                     },
                     Color = Bot.MainEmbedColor
                 };
-                DiscordMessage message = msg.Channel.SendMessageAsync(playEmbed).Result;
-                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":pause_button:"));
-                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":arrow_forward:"));
+                var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
+                var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
+            
+                var builder = new DiscordMessageBuilder()
+                    .AddEmbed(playEmbed)
+                    .AddComponents(pauseButton, playButton);
+
+                await builder.SendAsync(msg.Channel);
             }
             else
             {
@@ -322,9 +327,14 @@ namespace duckerBot
                     },
                     Color = Bot.MainEmbedColor
                 };
-                DiscordMessage message = msg.Channel.SendMessageAsync(playEmbed).Result;
-                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":pause_button:"));
-                await message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":arrow_forward:"));
+                var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
+                var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
+            
+                var builder = new DiscordMessageBuilder()
+                    .AddEmbed(playEmbed)
+                    .AddComponents(pauseButton, playButton);
+
+                await builder.SendAsync(msg.Channel);
             }
         }
         
