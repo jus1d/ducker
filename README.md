@@ -30,10 +30,13 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `kick` | Kicks mentioned user from current server | `member, reason` |
 | `ban` | Bans mentioned user in current server | `user, reason` |
 | `clear` | Clear `amount` messages from current channel | `amount` |
-| `embed` | Creates, and sends an embed  with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted) | `title, description, image, title URL, -del flag` |
-| `poll` | Creates embed with poll with your description in current channel, and create on this message :white_check_mark: and :x: | `description` |
 | `addrole` | Adds a role to mentioned user | `member, role` |
 | `removerole` | Removes role from mentioned user | `member, role` |
+| `mute` | Mutes mentioned member | `member` |
+| `unmute` | Unmutes mentioned member | `member` |
+| `rrembed` | Sends an embed with buttons, by press there you will granted a role | `none` |
+| `activity` | Changes bot activity | `playing / streaming` |
+| `embed` | Creates, and sends an embed  with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted) | `title, description, image, title URL, -del flag` |
 
 ### Music Commands
 | Command | Description | Arguments |
