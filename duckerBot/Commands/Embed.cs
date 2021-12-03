@@ -31,7 +31,7 @@ namespace duckerBot
                 .AddComponents(pauseButton, playButton, nextButton, queueButton);
         }
         
-        public static DiscordMessageBuilder TrackSkipped(DiscordUser user, LavalinkTrack track)
+        public static DiscordMessageBuilder TrackSkipped(DiscordClient client, DiscordUser user, LavalinkTrack track)
         {
             var skipEmbed = new DiscordEmbedBuilder
             {
@@ -44,8 +44,15 @@ namespace duckerBot
                 },
                 Color = Bot.MainEmbedColor
             };
+            
+            var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":arrow_forward:")));
+            var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":pause_button:")));
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Next", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
+            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
+            
             return new DiscordMessageBuilder()
-                .AddEmbed(skipEmbed);
+                .AddEmbed(skipEmbed)
+                .AddComponents(pauseButton, playButton, nextButton, queueButton);
         }
         
         public static DiscordMessageBuilder IncorrectMusicChannel(CommandContext msg)

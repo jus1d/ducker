@@ -317,7 +317,7 @@ namespace duckerBot
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             await connection.PlayAsync(Bot.Queue[0]);
-            await duckerBot.Embed.TrackSkipped(msg.User, Bot.Queue[0]).SendAsync(msg.Channel);
+            await duckerBot.Embed.TrackSkipped(msg.Client, msg.User, Bot.Queue[0]).SendAsync(msg.Channel);
             Bot.Queue.Remove(Bot.Queue[0]);
         }
         
