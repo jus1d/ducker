@@ -79,9 +79,9 @@ namespace duckerBot
         public static async Task OnComponentInteractionCreated(DiscordClient client, InteractionCreateEventArgs e)
         {
             DiscordMember member = (DiscordMember) e.Interaction.User;
-            var grantedEmbed = new DiscordEmbedBuilder();
             if (e.Interaction.Data.CustomId == "get_follow_role")
             {
+                var grantedEmbed = new DiscordEmbedBuilder();
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)))
                 {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
@@ -116,6 +116,7 @@ namespace duckerBot
             }
             else if (e.Interaction.Data.CustomId == "get_chel_role")
             {
+                var grantedEmbed = new DiscordEmbedBuilder();
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.ChelRoleId)))
                 {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
