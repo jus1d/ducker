@@ -583,5 +583,12 @@ namespace duckerBot
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.Queue(msg.Client, msg.User)));
         }
+
+
+        [SlashCommand("skip", "Skip currently track")]
+        public async Task Skip(InteractionContext msg)
+        {
+            
+        }
     }
 }
