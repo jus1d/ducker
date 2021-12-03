@@ -23,7 +23,7 @@ namespace duckerBot
             };
             var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":arrow_forward:")));
             var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":pause_button:")));
-            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Next", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
             var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
             
             return new DiscordMessageBuilder()
@@ -47,7 +47,7 @@ namespace duckerBot
             
             var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":arrow_forward:")));
             var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":pause_button:")));
-            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Next", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
             var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
             
             return new DiscordMessageBuilder()
@@ -171,7 +171,7 @@ namespace duckerBot
                 Color = Bot.MainEmbedColor
             };
             
-            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Next", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
             var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
 
             return new DiscordMessageBuilder()
@@ -212,7 +212,7 @@ namespace duckerBot
                 },
                 Color = Bot.MainEmbedColor
             };
-            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Next", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
             var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
             
             return new DiscordMessageBuilder()
