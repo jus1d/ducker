@@ -41,7 +41,7 @@ namespace duckerBot
         public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
 
-        public static List<LavalinkTrack> queue = new List<LavalinkTrack>();
+        public static List<LavalinkTrack> Queue = new List<LavalinkTrack>();
 
         public async Task RunAsync()
         {

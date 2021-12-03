@@ -192,10 +192,10 @@ namespace duckerBot
                 var lava = client.GetLavalink();
                 var node = lava.ConnectedNodes.Values.First();
                 var connection = node.GetGuildConnection(member.VoiceState.Guild);
-                await connection.PlayAsync(Bot.queue[0]);
+                await connection.PlayAsync(Bot.Queue[0]);
 
-                await Embed.TrackSkipped(client, e.Interaction.User, Bot.queue[0]).SendAsync(e.Interaction.Channel);
-                Bot.queue.Remove(Bot.queue[0]);
+                await Embed.TrackSkipped(client, e.Interaction.User, Bot.Queue[0]).SendAsync(e.Interaction.Channel);
+                Bot.Queue.Remove(Bot.Queue[0]);
             }
             else if (e.Interaction.Data.CustomId == "queue_button")
             {

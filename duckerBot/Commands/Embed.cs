@@ -150,8 +150,8 @@ namespace duckerBot
         public static DiscordEmbedBuilder Queue(DiscordUser user)
         {
             string totalQueue = "";
-            for (int i = 0; i < Bot.queue.Count; i++)
-                totalQueue += $"{i + 1}. " + Bot.queue[i].Title + "\n";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
 
             return new DiscordEmbedBuilder
             {

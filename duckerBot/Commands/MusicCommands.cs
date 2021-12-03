@@ -204,13 +204,13 @@ namespace duckerBot
                     await Join(msg);
                     var loadResult = await node.Rest.GetTracksAsync(search);
                     var track = loadResult.Tracks.First();
-                    Bot.queue.Add(track);
+                    Bot.Queue.Add(track);
                 }
                 else
                 {
                     var loadResult = await node.Rest.GetTracksAsync(url);
                     var track = loadResult.Tracks.First();
-                    Bot.queue.Add(track);
+                    Bot.Queue.Add(track);
                 }
             }
         }
@@ -314,9 +314,9 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            await connection.PlayAsync(Bot.queue[0]);
-            await duckerBot.Embed.TrackSkipped(msg.Client, msg.User, Bot.queue[0]).SendAsync(msg.Channel);
-            Bot.queue.Remove(Bot.queue[0]);
+            await connection.PlayAsync(Bot.Queue[0]);
+            await duckerBot.Embed.TrackSkipped(msg.Client, msg.User, Bot.Queue[0]).SendAsync(msg.Channel);
+            Bot.Queue.Remove(Bot.Queue[0]);
         }
         
         
