@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -180,6 +179,27 @@ namespace duckerBot
             };
             return new DiscordMessageBuilder()
                 .AddEmbed(invalidChannel);
+        }
+
+        public static DiscordMessageBuilder TrackQueued(CommandContext msg, LavalinkTrack track)
+        {
+            var trackQueued = new DiscordEmbedBuilder
+            {
+                Title = $"Track queued, position - {Bot.Queue.Count}",
+                Description = $"[{track.Title}]({track.Uri})",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Queued by " + msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Next", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+            
+            return new DiscordMessageBuilder()
+                .AddEmbed(trackQueued)
+                .AddComponents(nextButton, queueButton);
         }
         
     }

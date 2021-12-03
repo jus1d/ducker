@@ -205,12 +205,14 @@ namespace duckerBot
                     var loadResult = await node.Rest.GetTracksAsync(search);
                     var track = loadResult.Tracks.First();
                     Bot.Queue.Add(track);
+                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
                 }
                 else
                 {
                     var loadResult = await node.Rest.GetTracksAsync(url);
                     var track = loadResult.Tracks.First();
                     Bot.Queue.Add(track);
+                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
                 }
             }
         }
