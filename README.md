@@ -22,7 +22,7 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `help` | Bot will send help list to current channel | `none / command` |
 | `random` | Bot will send  random value in your range from min to max value to current channel | `min value, max value` |
 | `avatar` | Bot will send embed with users avatar to current channel | `user` |
-| `invitelink` | Bot will send invite link for this bot to current channel | `none` |
+| `invite-link` | Bot will send invite link for this bot to current channel | `none` |
 
 ### Admin Commands
 | Command | Description | Arguments |
@@ -30,8 +30,8 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `kick` | Kicks mentioned user from current server | `member, reason` |
 | `ban` | Bans mentioned user in current server | `user, reason` |
 | `clear` | Clear `amount` messages from current channel | `amount` |
-| `addrole` | Adds a role to mentioned user | `member, role` |
-| `removerole` | Removes role from mentioned user | `member, role` |
+| `add-role` | Adds a role to mentioned user | `member, role` |
+| `remove-role` | Removes role from mentioned user | `member, role` |
 | `mute` | Mutes mentioned member | `member` |
 | `unmute` | Unmutes mentioned member | `member` |
 | `rrembed` | Sends an embed with buttons, by press there you will granted a role | `none` |
@@ -47,6 +47,7 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `resume` | Resume playing music | `none` |
 | `skip` | Skips current playing track to next in queue | `none` |
 | `queue` | Sends queue list to current channel | `none` |
+| `clear-queue` | Clear queue list | `none` |
 | `phonk` | Starts playing Memphis Phonk | `none` |
 
 ## Contributing

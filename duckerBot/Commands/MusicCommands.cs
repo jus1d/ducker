@@ -62,36 +62,8 @@ namespace duckerBot
             }
             await connection.DisconnectAsync();
         }
-        
-        
-        // -resume
-        [Command("resume")]
-        public async Task Resume(CommandContext msg)
-        {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
-            {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
-                return;
-            }
-            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
-            {
-                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
-                return;
-            }
-            
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            
-            if (connection.CurrentState.CurrentTrack == null)
-            {
-                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
-                return;
-            }
-            await connection.ResumeAsync();
-        }
-        
-        
+
+
         // -play
         [Command("play"), Aliases("p")]
         public async Task Play(CommandContext msg, params string[] input) 
@@ -282,6 +254,34 @@ namespace duckerBot
         }
         
         
+        // -resume
+        [Command("resume")]
+        public async Task Resume(CommandContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            
+            if (connection.CurrentState.CurrentTrack == null)
+            {
+                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                return;
+            }
+            await connection.ResumeAsync();
+        }
+        
+        
         // -skip
         [Command("skip")]
         public async Task Skip(CommandContext msg)
@@ -316,7 +316,7 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
         }
 
-        [Command("clearqueue")]
+        [Command("clear-queue")]
         public async Task ClearQueue(CommandContext msg)
         {
             Bot.Queue.Clear();

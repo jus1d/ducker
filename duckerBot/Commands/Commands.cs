@@ -185,7 +185,7 @@ namespace duckerBot
         
         
         // -invitelink
-        [Command("invitelink"), Aliases("invite")]
+        [Command("invite-link"), Aliases("invite")]
         public async Task InviteLink(CommandContext msg)
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
@@ -202,7 +202,7 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(inviteLinkEmbed);
         }
 
-        [Command("invitelink")]
+        [Command("invite-link")]
         public async Task InviteLink(CommandContext msg, params string[] text)
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder

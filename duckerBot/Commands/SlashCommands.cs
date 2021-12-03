@@ -140,7 +140,7 @@ namespace duckerBot
         
         
         // invitelink
-        [SlashCommand("invitelink", "Send invite link for this bot to current channel")]
+        [SlashCommand("invite-link", "Send invite link for this bot to current channel")]
         public async Task InviteLink(InteractionContext msg) 
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
@@ -307,29 +307,8 @@ namespace duckerBot
                     new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport));
             }
         }
-        
-        
-        // poll
-        [SlashCommand("poll", "Sends poll embed with reactions"), RequirePermissions(Permissions.Administrator)]
-        public async Task Poll(InteractionContext msg,
-            [Option("description", "Set description to your poll embed")] string pollDescription)
-        {
-            var pollEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Poll",
-                Description = pollDescription,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(pollEmbed));
-        }
-        
-        
+
+
         // embed
         [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"),
          RequirePermissions(Permissions.Administrator)]
@@ -402,7 +381,7 @@ namespace duckerBot
         }
 
 
-        [SlashCommand("addrole", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
+        [SlashCommand("add-role", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRole(InteractionContext msg,
             [Option("member", "Member to add role")] DiscordUser user,
             [Option("role", "Role to add it")] DiscordRole role)
@@ -459,7 +438,7 @@ namespace duckerBot
             }
         }
 
-        [SlashCommand("removerole", "Removes role from mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
+        [SlashCommand("remove-role", "Removes role from mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(InteractionContext msg,
             [Option("member", "Member for remove role")] DiscordUser user,
             [Option("role", "Role to remove it")] DiscordRole role)
@@ -588,7 +567,21 @@ namespace duckerBot
         [SlashCommand("skip", "Skip currently track")]
         public async Task Skip(InteractionContext msg)
         {
+            try
+            {
+                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
+            }
+            catch (Exception exception)
+            {
+                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+                return;
+            }
             
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            await connection.StopAsync();
+            await msg.CreateResponseAsync("Skipped", true);
         }
     }
 }
