@@ -1,6 +1,8 @@
-﻿using DSharpPlus;
+﻿using System.Diagnostics.CodeAnalysis;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
+using DSharpPlus.EventArgs;
 using DSharpPlus.Lavalink;
 
 namespace duckerBot
@@ -29,5 +31,158 @@ namespace duckerBot
                 .AddEmbed(playEmbed)
                 .AddComponents(pauseButton, playButton, nextButton, queueButton);
         }
+        
+        public static DiscordMessageBuilder TrackSkipped(DiscordClient client, DiscordUser user, LavalinkTrack track)
+        {
+            var skipEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Track skipped, now playing",
+                Description = $"[{track.Title}]({track.Uri})",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl,
+                    Text = "Ordered by " + user.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(skipEmbed);
+        }
+        
+        public static DiscordMessageBuilder IncorrectMusicChannel(CommandContext msg)
+        {
+            var incorrectMusicChannel = new DiscordEmbedBuilder
+            {
+                Title = "Incorrect channel for music commands",
+                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(incorrectMusicChannel);
+        }
+        
+        public static DiscordMessageBuilder NotInVoiceChannel(CommandContext msg)
+        {
+            var notInVoiceChannel = new DiscordEmbedBuilder
+            {
+                Description = "You are not in a voice channel",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(notInVoiceChannel);
+        }
+        
+        public static DiscordMessageBuilder NoConnection(CommandContext msg)
+        {
+            var noConnection = new DiscordEmbedBuilder
+            {
+                Description = "I'm is not connected",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(noConnection);
+        }
+        
+        public static DiscordMessageBuilder SearchFailed(CommandContext msg, string search)
+        {
+            var searchFailed = new DiscordEmbedBuilder
+            {
+                Description = $"Track search failed for: {search}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(searchFailed);
+        }
+        
+        public static DiscordMessageBuilder NoTracksPlaying(CommandContext msg)
+        {
+            var noPlayingTracks = new DiscordEmbedBuilder
+            {
+                Description = "There are no tracks loaded",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(noPlayingTracks);
+        }
+        
+        public static DiscordMessageBuilder IncorrectCommand(CommandContext msg, string usage)
+        {
+            var incorrectCommand = new DiscordEmbedBuilder
+            {
+                Title = "Missing argument",
+                Description = $"**Usage:** {usage}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.IncorrectEmbedColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(incorrectCommand);
+        }
+        
+        public static DiscordMessageBuilder Queue(CommandContext msg)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.queue[i].Title + "\n";
+
+            var queueEmbed = new DiscordEmbedBuilder
+            {
+                Title = "Queue:",
+                Description = totalQueue,
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(queueEmbed);
+        }
+        
+        public static DiscordMessageBuilder InvalidChannel(CommandContext msg)
+        {
+            var invalidChannel = new DiscordEmbedBuilder
+            {
+                Description = "Not a valid voice channel",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(invalidChannel);
+        }
+        
     }
 }
