@@ -232,8 +232,8 @@ namespace duckerBot
                     }
 
                     var track = loadResult.Tracks.First();
-                    await connection.PlayAsync(track);
-                    await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
+                    Bot.Queue.Add(track);
+                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
                 }
             }
         }
