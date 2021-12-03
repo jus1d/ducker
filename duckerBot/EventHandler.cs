@@ -199,27 +199,8 @@ namespace duckerBot
             }
             else if (e.Interaction.Data.CustomId == "queue_button")
             {
-                string totalQueue = "";
-                int i = 1;
-                foreach (var track in Bot.queue)
-                {
-                    totalQueue += $"{i}. " + track.Title + "\n";
-                    i++;
-                }
-
-                var queueEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "Queue:",
-                    Description = totalQueue,
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = e.Interaction.User.AvatarUrl,
-                        Text = e.Interaction.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                };
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(queueEmbed));
+                    new DiscordInteractionResponseBuilder().AddEmbed(Embed.Queue(e.Interaction.User)));
             }
         }
     }

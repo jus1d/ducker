@@ -324,7 +324,7 @@ namespace duckerBot
         [Command("queue")]
         public async Task Queue(CommandContext msg)
         {
-            await duckerBot.Embed.Queue(msg).SendAsync(msg.Channel);
+            await msg.Channel.SendMessageAsync(duckerBot.Embed.Queue(msg.User));
         }
         
         

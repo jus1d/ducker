@@ -147,25 +147,23 @@ namespace duckerBot
                 .AddEmbed(incorrectCommand);
         }
         
-        public static DiscordMessageBuilder Queue(CommandContext msg)
+        public static DiscordEmbedBuilder Queue(DiscordUser user)
         {
             string totalQueue = "";
             for (int i = 0; i < Bot.queue.Count; i++)
                 totalQueue += $"{i + 1}. " + Bot.queue[i].Title + "\n";
 
-            var queueEmbed = new DiscordEmbedBuilder
+            return new DiscordEmbedBuilder
             {
                 Title = "Queue:",
                 Description = totalQueue,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
+                    IconUrl = user.AvatarUrl,
+                    Text = user.Username
                 },
                 Color = Bot.MainEmbedColor
             };
-            return new DiscordMessageBuilder()
-                .AddEmbed(queueEmbed);
         }
         
         public static DiscordMessageBuilder InvalidChannel(CommandContext msg)
