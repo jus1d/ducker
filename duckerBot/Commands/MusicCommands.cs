@@ -142,7 +142,7 @@ namespace duckerBot
                             }
                         }
 
-                        string search = trackSpotify.Name + authors;
+                        string search = trackSpotify.Name + " - " + authors;
                         await Join(msg, msg.Member.VoiceState.Channel);
                         var loadResult = await node.Rest.GetTracksAsync(search);
                         var track = loadResult.Tracks.First();
@@ -202,7 +202,7 @@ namespace duckerBot
                             }
                         }
 
-                        string search = trackSpotify.Name + authors;
+                        string search = trackSpotify.Name + " - " + authors;
                         await Join(msg, msg.Member.VoiceState.Channel);
                         var loadResult = await node.Rest.GetTracksAsync(search);
                         var track = loadResult.Tracks.First();
