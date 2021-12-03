@@ -197,7 +197,14 @@ namespace duckerBot
                 var connection = node.GetGuildConnection(member.VoiceState.Guild);
                 await connection.PlayAsync(Bot.Queue[0]);
                 await Embed.TrackSkipped(client, e.Interaction.User, Bot.Queue[0]).SendAsync(e.Interaction.Channel);
-                Bot.Queue.Remove(Bot.Queue[0]);
+                try
+                {
+                    Bot.Queue.Remove(Bot.Queue[0]);
+                }
+                catch
+                {
+                    return;
+                }
             }
             else if (e.Interaction.Data.CustomId == "queue_button")
             {

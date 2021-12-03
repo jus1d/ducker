@@ -119,7 +119,7 @@ namespace duckerBot
             if (connection.CurrentState.CurrentTrack == null)
             {
                 Uri url;
-                if (Uri.TryCreate(input[0], UriKind.RelativeOrAbsolute, out url)) // by url
+                if (Uri.TryCreate(input[0], UriKind.Absolute, out url)) // by url
                 {
                     if (url.Authority == "open.spotify.com")
                     {
@@ -179,7 +179,7 @@ namespace duckerBot
             else
             {
                 Uri url;
-                if (Uri.TryCreate(input[0], UriKind.RelativeOrAbsolute, out url)) // by url
+                if (Uri.TryCreate(input[0], UriKind.Absolute, out url)) // by url
                 {
                     if (url.Authority == "open.spotify.com")
                     {
@@ -306,6 +306,15 @@ namespace duckerBot
         public async Task Queue(CommandContext msg)
         {
             await msg.Channel.SendMessageAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
+        }
+
+        [Command("clearqueue")]
+        public async Task ClearQueue(CommandContext msg)
+        {
+            foreach (var item in Bot.Queue)
+            {
+                Bot.Queue.Remove(item);
+            }
         }
         
         
