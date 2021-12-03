@@ -32,7 +32,7 @@ namespace duckerBot
                 .AddComponents(pauseButton, playButton, nextButton, queueButton);
         }
         
-        public static DiscordMessageBuilder TrackSkipped(DiscordClient client, DiscordUser user, LavalinkTrack track)
+        public static DiscordMessageBuilder TrackSkipped(DiscordUser user, LavalinkTrack track)
         {
             var skipEmbed = new DiscordEmbedBuilder
             {
