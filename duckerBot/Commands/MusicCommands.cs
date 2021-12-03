@@ -319,6 +319,12 @@ namespace duckerBot
             Bot.Queue.Remove(Bot.Queue[0]);
         }
         
+        [Command("skip")]
+        public async Task Next(CommandContext msg, params string[] text)
+        {
+            await duckerBot.Embed.IncorrectCommand(msg, "-skip").SendAsync(msg.Channel);
+        }
+        
         
         // -queue
         [Command("queue")]
