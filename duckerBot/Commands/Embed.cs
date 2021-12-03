@@ -1,4 +1,5 @@
-﻿using DSharpPlus;
+﻿using System;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
@@ -8,7 +9,7 @@ namespace duckerBot
 {
     public class Embed
     {
-        public static DiscordMessageBuilder NowPlaying(DiscordClient client, DiscordUser user, LavalinkTrack track)
+        public static DiscordMessageBuilder NowPlaying(DiscordClient client, LavalinkTrack track, DiscordUser user)
         {
             var playEmbed = new DiscordEmbedBuilder
             {
@@ -28,30 +29,6 @@ namespace duckerBot
             
             return new DiscordMessageBuilder()
                 .AddEmbed(playEmbed)
-                .AddComponents(pauseButton, playButton, nextButton, queueButton);
-        }
-        
-        public static DiscordMessageBuilder TrackSkipped(DiscordClient client, DiscordUser user, LavalinkTrack track)
-        {
-            var skipEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Track skipped, now playing",
-                Description = $"[{track.Title}]({track.Uri})",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = user.AvatarUrl,
-                    Text = "Ordered by " + user.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            
-            var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":arrow_forward:")));
-            var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":pause_button:")));
-            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
-            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
-            
-            return new DiscordMessageBuilder()
-                .AddEmbed(skipEmbed)
                 .AddComponents(pauseButton, playButton, nextButton, queueButton);
         }
         
@@ -155,13 +132,23 @@ namespace duckerBot
         
         public static DiscordMessageBuilder Queue(DiscordClient client, DiscordUser user)
         {
+            string title = "Queue:";
+            try
+            {
+                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
+            }
+            catch (Exception exception)
+            {
+                title = "Queue is clear";
+            }
+            
             string totalQueue = "";
             for (int i = 0; i < Bot.Queue.Count; i++)
                 totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
 
             var e = new DiscordEmbedBuilder
             {
-                Title = "Queue:",
+                Title = title,
                 Description = totalQueue,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -218,6 +205,20 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(trackQueued)
                 .AddComponents(nextButton, queueButton);
+        }
+
+        public static DiscordEmbedBuilder ClearQueue(DiscordUser user)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Title = "Queue is clear",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl,
+                    Text = user.Username
+                },
+                Color = Bot.WarningColor
+            };
         }
         
     }

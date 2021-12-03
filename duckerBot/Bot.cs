@@ -96,7 +96,7 @@ namespace duckerBot
             slash.RegisterCommands<SlashCommands>(696496218934608004);
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
-            //(await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
+            (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
             await Task.Delay(-1);
         }
 

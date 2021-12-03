@@ -191,20 +191,22 @@ namespace duckerBot
             }
             else if (e.Interaction.Data.CustomId == "next_button")
             {
+                try
+                {
+                    LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
+                }
+                catch (Exception exception)
+                {
+                    await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                        new DiscordInteractionResponseBuilder().AddEmbed(Embed.ClearQueue(e.Interaction.User)));
+                    return;
+                }
+                
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
                 var lava = client.GetLavalink();
                 var node = lava.ConnectedNodes.Values.First();
                 var connection = node.GetGuildConnection(member.VoiceState.Guild);
-                await connection.PlayAsync(Bot.Queue[0]);
-                await Embed.TrackSkipped(client, e.Interaction.User, Bot.Queue[0]).SendAsync(e.Interaction.Channel);
-                try
-                {
-                    Bot.Queue.Remove(Bot.Queue[0]);
-                }
-                catch
-                {
-                    return;
-                }
+                await connection.StopAsync();
             }
             else if (e.Interaction.Data.CustomId == "queue_button")
             {
@@ -217,13 +219,15 @@ namespace duckerBot
         {
             try
             {
-                await sender.PlayAsync(Bot.Queue[0]);
-                Bot.Queue.Remove(Bot.Queue[0]);
+                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
             }
-            catch
+            catch (Exception exception)
             {
                 return;
             }
+            await sender.PlayAsync(Bot.Queue[0]);
+            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await sender.Node.Discord.GetGuildAsync(696496218934608004).Result.GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(Bot.MusicChannelId));
+            Bot.Queue.Remove(Bot.Queue[0]);
         }
     }
 }

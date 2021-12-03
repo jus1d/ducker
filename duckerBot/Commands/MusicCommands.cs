@@ -147,14 +147,14 @@ namespace duckerBot
                         var loadResult = await node.Rest.GetTracksAsync(search);
                         var track = loadResult.Tracks.First();
                         await connection.PlayAsync(track);
-                        await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
+                        await duckerBot.Embed.NowPlaying(msg.Client, track, msg.User).SendAsync(msg.Channel);
                     }
                     else 
                     {
                         var loadResult = await node.Rest.GetTracksAsync(url);
                         var track = loadResult.Tracks.First();
                         await connection.PlayAsync(track);
-                        await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
+                        await duckerBot.Embed.NowPlaying(msg.Client, track, msg.User).SendAsync(msg.Channel);
                     }
                 }
                 else // by search
@@ -173,7 +173,7 @@ namespace duckerBot
 
                     var track = loadResult.Tracks.First();
                     await connection.PlayAsync(track);
-                    await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
+                    await duckerBot.Embed.NowPlaying(msg.Client, track, msg.User).SendAsync(msg.Channel);
                 }
             }
             else
@@ -286,12 +286,20 @@ namespace duckerBot
         [Command("skip")]
         public async Task Skip(CommandContext msg)
         {
+            try
+            {
+                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
+            }
+            catch (Exception exception)
+            {
+                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+                return;
+            }
+            
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            await connection.PlayAsync(Bot.Queue[0]);
-            await duckerBot.Embed.TrackSkipped(msg.Client, msg.User, Bot.Queue[0]).SendAsync(msg.Channel);
-            Bot.Queue.Remove(Bot.Queue[0]);
+            await connection.StopAsync();
         }
         
         [Command("skip")]
