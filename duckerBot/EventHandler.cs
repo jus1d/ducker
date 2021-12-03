@@ -211,7 +211,7 @@ namespace duckerBot
             else if (e.Interaction.Data.CustomId == "queue_button")
             {
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-                await Embed.Queue(client, e.Interaction.User).SendAsync(e.Interaction.Channel);
+                await e.Interaction.Channel.SendMessageAsync(Embed.Queue(client, e.Interaction.User));
             }
         }
 

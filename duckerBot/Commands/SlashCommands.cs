@@ -7,6 +7,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 
 namespace duckerBot
@@ -564,6 +565,45 @@ namespace duckerBot
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().AddEmbed(activityChanedEmbed));
             }
+        }
+
+        
+        [SlashCommand("skip", "Skip currently playing track")]
+        public async Task Skip(InteractionContext msg)
+        {
+            try
+            {
+                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
+            }
+            catch (Exception exception)
+            {
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, 
+                    new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.ClearQueue(msg.User)));
+                return;
+            }
+            
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            await connection.StopAsync();
+            await msg.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+        }
+        
+        
+        [SlashCommand("queue", "Send queue list")]
+        public async Task Queue(InteractionContext msg)
+        {
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.Queue(msg.Client, msg.User)));
+        }
+        
+        
+        [SlashCommand("clear-queue", "Clear queue list")]
+        public async Task ClearQueue(InteractionContext msg)
+        {
+            Bot.Queue.Clear();
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.Queue(msg.Client, msg.User)));
         }
     }
 }
