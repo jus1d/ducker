@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,7 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
+using DSharpPlus.Lavalink.EventArgs;
 using DSharpPlus.Net;
 using DSharpPlus.Net.Models;
 using Lavalink4NET;
@@ -194,14 +196,25 @@ namespace duckerBot
                 var node = lava.ConnectedNodes.Values.First();
                 var connection = node.GetGuildConnection(member.VoiceState.Guild);
                 await connection.PlayAsync(Bot.Queue[0]);
-
                 await Embed.TrackSkipped(client, e.Interaction.User, Bot.Queue[0]).SendAsync(e.Interaction.Channel);
-                Bot.Queue.Remove(Bot.Queue[0]);
             }
             else if (e.Interaction.Data.CustomId == "queue_button")
             {
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
                 await Embed.Queue(client, e.Interaction.User).SendAsync(e.Interaction.Channel);
+            }
+        }
+
+        public static async Task OnPlaybackFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
+        {
+            try
+            {
+                await sender.PlayAsync(Bot.Queue[0]);
+                Bot.Queue.Remove(Bot.Queue[0]);
+            }
+            catch
+            {
+                return;
             }
         }
     }

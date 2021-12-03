@@ -26,22 +26,18 @@ namespace duckerBot
                 await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-            
-            if (channel == null)
-                channel = msg.Member.VoiceState.Channel;
-
-            var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-                return;
-
-            var node = lava.ConnectedNodes.Values.First();
-            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
                 return;
             }
+            if (channel == null)
+            {
+                channel = msg.Member.VoiceState.Channel;
+            }
             
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
             await node.ConnectAsync(channel);
         }
         
@@ -56,20 +52,9 @@ namespace duckerBot
                 await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-            
-            DiscordChannel channel = msg.Member.VoiceState.Channel;
-            
             var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-                return;
-            
             var node = lava.ConnectedNodes.Values.First();
-            if (channel.Type != ChannelType.Voice)
-            {
-                await duckerBot.Embed.InvalidChannel(msg).SendAsync(msg.Channel);
-                return;
-            }
-            var connection = node.GetGuildConnection(channel.Guild);
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             if (connection == null)
             {
                 await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
@@ -88,17 +73,16 @@ namespace duckerBot
                 await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-
+            
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-
+            
             if (connection.CurrentState.CurrentTrack == null)
             {
                 await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
@@ -108,69 +92,85 @@ namespace duckerBot
         }
         
         
-        // -play url
+        // -play
         [Command("play"), Aliases("p")]
-        public async Task Play(CommandContext msg, Uri url)
+        public async Task Play(CommandContext msg, params string[] input) 
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-
-            await Join(msg);
-            
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
                 return;
             }
+            await Join(msg, msg.Member.VoiceState.Channel);
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-
             if (connection == null)
             {
-
                 await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
                 return;
             }
-            
+
             if (connection.CurrentState.CurrentTrack == null)
             {
-                if (url.Authority == "open.spotify.com")
+                Uri url;
+                if (Uri.TryCreate(input[0], UriKind.RelativeOrAbsolute, out url)) // by url
                 {
-                    var config = SpotifyClientConfig.CreateDefault();
-                    var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
-                    var response = await new OAuthClient(config).RequestToken(request);
-                    var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-                    var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]); // track's id
-            
-                    string authors = "";
-                    for (int i = 0; i < trackSpotify.Artists.Count; i++)
+                    if (url.Authority == "open.spotify.com")
                     {
-                        if (trackSpotify.Artists.Count == 1 || (trackSpotify.Artists.Count == i + 1))
+                        var config = SpotifyClientConfig.CreateDefault();
+                        var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
+                        var response = await new OAuthClient(config).RequestToken(request);
+                        var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+                        var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
+                        
+                        string authors = "";
+                        for (int i = 0; i < trackSpotify.Artists.Count; i++)
                         {
-                            authors += trackSpotify.Artists[i].Name;
+                            if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
+                            {
+                                authors += trackSpotify.Artists[i].Name;
+                            }
+                            else
+                            {
+                                authors += trackSpotify.Artists[i].Name + ", ";
+                            }
                         }
-                        else
-                        {
-                            authors += trackSpotify.Artists[i].Name + ", ";
-                        }
+
+                        string search = trackSpotify.Name + authors;
+                        await Join(msg, msg.Member.VoiceState.Channel);
+                        var loadResult = await node.Rest.GetTracksAsync(search);
+                        var track = loadResult.Tracks.First();
+                        await connection.PlayAsync(track);
+                        await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
+                    }
+                    else 
+                    {
+                        var loadResult = await node.Rest.GetTracksAsync(url);
+                        var track = loadResult.Tracks.First();
+                        await connection.PlayAsync(track);
+                        await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
+                    }
+                }
+                else // by search
+                {
+                    string search = "";
+                    for (int i = 0; i < input.Length; i++)
+                        search += input[i] + " ";
+
+                    var loadResult = await node.Rest.GetTracksAsync(search);
+
+                    if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
+                    {
+                        await duckerBot.Embed.SearchFailed(msg, search).SendAsync(msg.Channel);
+                        return;
                     }
 
-                    string search = trackSpotify.Name + authors;
-                
-                    await Join(msg);
-                    var loadResult = await node.Rest.GetTracksAsync(search);
-                    var track = loadResult.Tracks.First();
-                    await connection.PlayAsync(track);
-            
-                    await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
-                }
-                else
-                {
-                    var loadResult = await node.Rest.GetTracksAsync(url);
                     var track = loadResult.Tracks.First();
                     await connection.PlayAsync(track);
                     await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
@@ -178,90 +178,67 @@ namespace duckerBot
             }
             else
             {
-                if (url.Authority == "open.spotify.com")
+                Uri url;
+                if (Uri.TryCreate(input[0], UriKind.RelativeOrAbsolute, out url)) // by url
                 {
-                    var config = SpotifyClientConfig.CreateDefault();
-                    var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
-                    var response = await new OAuthClient(config).RequestToken(request);
-                    var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-                    var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]); // track's id
-            
-                    string authors = "";
-                    for (int i = 0; i < trackSpotify.Artists.Count; i++)
+                    if (url.Authority == "open.spotify.com")
                     {
-                        if (trackSpotify.Artists.Count == 1 || (trackSpotify.Artists.Count == i + 1))
+                        var config = SpotifyClientConfig.CreateDefault();
+                        var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
+                        var response = await new OAuthClient(config).RequestToken(request);
+                        var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+                        var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
+                        
+                        string authors = "";
+                        for (int i = 0; i < trackSpotify.Artists.Count; i++)
                         {
-                            authors += trackSpotify.Artists[i].Name;
+                            if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
+                            {
+                                authors += trackSpotify.Artists[i].Name;
+                            }
+                            else
+                            {
+                                authors += trackSpotify.Artists[i].Name + ", ";
+                            }
                         }
-                        else
-                        {
-                            authors += trackSpotify.Artists[i].Name + ", ";
-                        }
+
+                        string search = trackSpotify.Name + authors;
+                        await Join(msg, msg.Member.VoiceState.Channel);
+                        var loadResult = await node.Rest.GetTracksAsync(search);
+                        var track = loadResult.Tracks.First();
+                        Bot.Queue.Add(track);
+                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                    }
+                    else 
+                    {
+                        var loadResult = await node.Rest.GetTracksAsync(url);
+                        var track = loadResult.Tracks.First();
+                        Bot.Queue.Add(track);
+                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                    }
+                }
+                else // by search
+                {
+                    string search = "";
+                    for (int i = 0; i < input.Length; i++)
+                        search += input[i] + " ";
+
+                    var loadResult = await node.Rest.GetTracksAsync(search);
+
+                    if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
+                    {
+                        await duckerBot.Embed.SearchFailed(msg, search).SendAsync(msg.Channel);
+                        return;
                     }
 
-                    string search = trackSpotify.Name + authors;
-                
-                    await Join(msg);
-                    var loadResult = await node.Rest.GetTracksAsync(search);
                     var track = loadResult.Tracks.First();
-                    Bot.Queue.Add(track);
-                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
-                }
-                else
-                {
-                    var loadResult = await node.Rest.GetTracksAsync(url);
-                    var track = loadResult.Tracks.First();
-                    Bot.Queue.Add(track);
-                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                    await connection.PlayAsync(track);
+                    await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
                 }
             }
         }
 
-        // -play search
-        [Command("play")]
-        public async Task Play(CommandContext msg, params string[] searchInput)
-        {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
-            {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
-                return;
-            }
 
-            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
-            {
-                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
-                return;
-            }
-            await Join(msg);
-
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-
-            if (connection == null)
-            {
-                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
-                return;
-            }
-
-            string search = "";
-            for (int i = 0; i < searchInput.Length; i++)
-                search += searchInput[i] + " ";
-
-            var loadResult = await node.Rest.GetTracksAsync(search);
-
-            if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
-            {
-                await duckerBot.Embed.SearchFailed(msg, search).SendAsync(msg.Channel);
-                return;
-            }
-
-            var track = loadResult.Tracks.First();
-            await connection.PlayAsync(track);
-            await duckerBot.Embed.NowPlaying(msg.Client, msg.User, track).SendAsync(msg.Channel);
-        }
-        
-        
         // -pause
         [Command("pause")]
         public async Task Pause(CommandContext msg)
@@ -271,24 +248,20 @@ namespace duckerBot
                 await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-
+            
             if (connection == null)
             {
-
                 await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
                 return;
             }
-
             if (connection.CurrentState.CurrentTrack == null)
             {
                 await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
@@ -311,7 +284,7 @@ namespace duckerBot
         
         // -skip
         [Command("skip")]
-        public async Task Next(CommandContext msg)
+        public async Task Skip(CommandContext msg)
         {
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
@@ -322,7 +295,7 @@ namespace duckerBot
         }
         
         [Command("skip")]
-        public async Task Next(CommandContext msg, params string[] text)
+        public async Task Skip(CommandContext msg, params string[] text)
         {
             await duckerBot.Embed.IncorrectCommand(msg, "-skip").SendAsync(msg.Channel);
         }
@@ -345,17 +318,12 @@ namespace duckerBot
                 await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-
             var lava = msg.Client.GetLavalink();
-            if (!lava.ConnectedNodes.Any())
-                return;
-            
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Channel.Guild);
 
             if (connection == null)
             {
-
                 await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
                 return;
             }
@@ -370,15 +338,14 @@ namespace duckerBot
                 await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-            await Quit(msg);
+            await duckerBot.Embed.IncorrectCommand(msg, "-stop").SendAsync(msg.Channel);
         }
 
 
         [Command("phonk"), Aliases("ph")]
         public async Task Phonk(CommandContext msg)
         {
-            Uri url = new Uri("https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
-            await Play(msg, url);
+            await Play(msg, "https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
         }
     }
 }
