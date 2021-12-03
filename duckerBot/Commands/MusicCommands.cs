@@ -319,10 +319,8 @@ namespace duckerBot
         [Command("clearqueue")]
         public async Task ClearQueue(CommandContext msg)
         {
-            foreach (var item in Bot.Queue)
-            {
-                Bot.Queue.Remove(item);
-            }
+            Bot.Queue.Clear();
+            await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
         }
         
         
