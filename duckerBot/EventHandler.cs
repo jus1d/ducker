@@ -79,9 +79,9 @@ namespace duckerBot
         public static async Task OnComponentInteractionCreated(DiscordClient client, InteractionCreateEventArgs e)
         {
             DiscordMember member = (DiscordMember) e.Interaction.User;
-            var grantedEmbed = new DiscordEmbedBuilder();
             if (e.Interaction.Data.CustomId == "get_follow_role")
             {
+                var grantedEmbed = new DiscordEmbedBuilder();
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)))
                 {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
@@ -116,6 +116,7 @@ namespace duckerBot
             }
             else if (e.Interaction.Data.CustomId == "get_chel_role")
             {
+                var grantedEmbed = new DiscordEmbedBuilder();
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.ChelRoleId)))
                 {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
@@ -185,6 +186,22 @@ namespace duckerBot
                 if (member.VoiceState.Channel != connection.Channel)
                     return;
                 await connection.PauseAsync();
+            }
+            else if (e.Interaction.Data.CustomId == "next_button")
+            {
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+                var lava = client.GetLavalink();
+                var node = lava.ConnectedNodes.Values.First();
+                var connection = node.GetGuildConnection(member.VoiceState.Guild);
+                await connection.PlayAsync(Bot.Queue[0]);
+
+                await Embed.TrackSkipped(client, e.Interaction.User, Bot.Queue[0]).SendAsync(e.Interaction.Channel);
+                Bot.Queue.Remove(Bot.Queue[0]);
+            }
+            else if (e.Interaction.Data.CustomId == "queue_button")
+            {
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
+                await Embed.Queue(client, e.Interaction.User).SendAsync(e.Interaction.Channel);
             }
         }
     }

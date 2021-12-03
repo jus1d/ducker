@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,16 +30,17 @@ namespace duckerBot
     public class Bot
     {
         public DiscordClient Client { get; private set; }
-        //public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
         
         public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
         public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
         public static DiscordColor WarningColor = new DiscordColor("#ff9f30");
-        public static ulong Id = ConfigJson.GetConfigField().Id;
-        public static ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
-        public static ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
-        public static ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
+        public static readonly ulong Id = ConfigJson.GetConfigField().Id;
+        public static readonly ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
+        public static readonly ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
+        public static readonly ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
+
+        public static List<LavalinkTrack> Queue = new List<LavalinkTrack>();
 
         public async Task RunAsync()
         {
