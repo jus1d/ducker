@@ -153,13 +153,13 @@ namespace duckerBot
                 .AddEmbed(incorrectCommand);
         }
         
-        public static DiscordEmbedBuilder Queue(DiscordUser user)
+        public static DiscordMessageBuilder Queue(DiscordClient client, DiscordUser user)
         {
             string totalQueue = "";
             for (int i = 0; i < Bot.Queue.Count; i++)
                 totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
 
-            return new DiscordEmbedBuilder
+            var e = new DiscordEmbedBuilder
             {
                 Title = "Queue:",
                 Description = totalQueue,
@@ -170,6 +170,13 @@ namespace duckerBot
                 },
                 Color = Bot.MainEmbedColor
             };
+            
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Next", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
+            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
+
+            return new DiscordMessageBuilder()
+                .AddEmbed(e)
+                .AddComponents(nextButton, queueButton);
         }
         
         public static DiscordMessageBuilder InvalidChannel(CommandContext msg)
