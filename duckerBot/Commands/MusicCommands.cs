@@ -39,6 +39,7 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             await node.ConnectAsync(channel);
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
         
 
@@ -61,6 +62,7 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
 
 
@@ -240,6 +242,7 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
 
         [Command("pause")]
@@ -279,6 +282,7 @@ namespace duckerBot
                 return;
             }
             await connection.ResumeAsync();
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
         
         
@@ -344,6 +348,7 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
 
         [Command("stop")]
