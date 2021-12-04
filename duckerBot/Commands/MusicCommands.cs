@@ -300,6 +300,7 @@ namespace duckerBot
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             await connection.StopAsync();
+            await msg.Channel.SendMessageAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
         
         [Command("skip")]

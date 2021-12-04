@@ -581,7 +581,7 @@ namespace duckerBot
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             await connection.StopAsync();
-            await msg.CreateResponseAsync("Skipped", true);
+            await msg.CreateResponseAsync($"{DiscordEmoji.FromName(msg.Client, ":success:")}");
         }
     }
 }
