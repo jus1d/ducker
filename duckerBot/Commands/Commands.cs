@@ -184,7 +184,7 @@ namespace duckerBot
         }
         
         
-        // -invitelink
+        // -invite-link
         [Command("invite-link"), Aliases("invite")]
         public async Task InviteLink(CommandContext msg)
         {

@@ -745,7 +745,7 @@ namespace duckerBot
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
 
-        [Command("rrembed"), RequirePermissions(Permissions.Administrator)]
+        [Command("reaction-role-embed"), RequirePermissions(Permissions.Administrator)]
         public async Task ReactionRolesEmbed(CommandContext msg)
         {
             await msg.Message.DeleteAsync();
