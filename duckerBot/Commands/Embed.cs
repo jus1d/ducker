@@ -213,6 +213,24 @@ namespace duckerBot
                 Color = Bot.WarningColor
             };
         }
+
+        public static DiscordEmbedBuilder ReactionRolesEmbed(DiscordClient client, DiscordGuild guild)
+        {
+            DiscordEmoji vibeEmoji = DiscordEmoji.FromName(client, ":vibe:");
+            DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(client, ":twitchrgb:");
+            DiscordEmoji chelEmoji = DiscordEmoji.FromName(client, ":chel:");
+            return new DiscordEmbedBuilder
+            {
+                Title = $"{vibeEmoji} Welcome, tap buttons to get roles {vibeEmoji}",
+                Description = $"Roles list:\n{twitchRgbEmoji} - twitch follower(by having this reaction, u will get stream notifications)\n{chelEmoji} - default role for this server\n\nGL",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    Text = guild.GetMemberAsync(906179696516026419).Result.DisplayName,
+                    IconUrl = guild.GetMemberAsync(906179696516026419).Result.AvatarUrl
+                },
+                Color = Bot.MainEmbedColor
+            };
+        }
         
     }
 }

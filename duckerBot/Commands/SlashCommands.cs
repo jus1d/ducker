@@ -583,5 +583,21 @@ namespace duckerBot
             await connection.StopAsync();
             await msg.CreateResponseAsync($"{DiscordEmoji.FromName(msg.Client, ":success:")}");
         }
+
+
+        [SlashCommand("reaction-role-embed", "Sends embed with reactions, press them to get role"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task ReactionRoleEmbed(InteractionContext msg)
+        {
+            DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
+            DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
+            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", $"", false, new DiscordComponentEmoji(twitchRgbEmoji));
+            var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
+            
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder()
+                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                .AddComponents(followButton, chelButton));
+        }
     }
 }

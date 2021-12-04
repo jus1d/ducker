@@ -750,24 +750,12 @@ namespace duckerBot
         {
             await msg.Message.DeleteAsync();
 
-            DiscordEmoji vibeEmoji = DiscordEmoji.FromName(msg.Client, ":vibe:");
             DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
             DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
-            var rolesEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"{vibeEmoji} Welcome, tap buttons to get roles {vibeEmoji}",
-                Description = $"Roles list:\n{twitchRgbEmoji} - twitch follower(by having this reaction, u will get stream notifications)\n{chelEmoji} - default role for this server\n\nGL",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = msg.Guild.GetMemberAsync(906179696516026419).Result.DisplayName,
-                    IconUrl = msg.Guild.GetMemberAsync(906179696516026419).Result.AvatarUrl
-                },
-                Color = Bot.MainEmbedColor
-            };
             var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", $"", false, new DiscordComponentEmoji(twitchRgbEmoji));
             var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
             var builder = new DiscordMessageBuilder()
-                .AddEmbed(rolesEmbed)
+                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton);
             await msg.Channel.SendMessageAsync(builder);
         }
