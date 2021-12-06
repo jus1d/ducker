@@ -564,7 +564,7 @@ namespace duckerBot
         }
 
 
-        [SlashCommand("skip", "Skip currently track")]
+        // [SlashCommand("skip", "Skip currently track")]
         public async Task Skip(InteractionContext msg)
         {
             try
