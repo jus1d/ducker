@@ -12,7 +12,7 @@ using DSharpPlus.SlashCommands;
 
 namespace duckerBot
 {
-    public class SlashCommands : ApplicationCommandModule
+    public partial class SlashCommands : ApplicationCommandModule
     {
         // help
         [SlashCommand("help", "Send help list to current channel")]
