@@ -113,8 +113,38 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(noConnection);
         }
+        public static DiscordMessageBuilder NoConnection(InteractionContext msg)
+        {
+            var noConnection = new DiscordEmbedBuilder
+            {
+                Description = "I'm is not connected",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(noConnection);
+        }
         
         public static DiscordMessageBuilder SearchFailed(CommandContext msg, string search)
+        {
+            var searchFailed = new DiscordEmbedBuilder
+            {
+                Description = $"Track search failed for: {search}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(searchFailed);
+        }
+        public static DiscordMessageBuilder SearchFailed(InteractionContext msg, string search)
         {
             var searchFailed = new DiscordEmbedBuilder
             {
@@ -209,6 +239,30 @@ namespace duckerBot
         }
 
         public static DiscordMessageBuilder TrackQueued(CommandContext msg, LavalinkTrack track)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
+            
+            var trackQueued = new DiscordEmbedBuilder
+            {
+                Title = $"Track queued, position - {Bot.Queue.Count}",
+                Description = $"Queue:\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Queued by " + msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+            
+            return new DiscordMessageBuilder()
+                .AddEmbed(trackQueued)
+                .AddComponents(nextButton, queueButton);
+        }
+        public static DiscordMessageBuilder TrackQueued(InteractionContext msg, LavalinkTrack track)
         {
             string totalQueue = "";
             for (int i = 0; i < Bot.Queue.Count; i++)
