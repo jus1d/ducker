@@ -3,6 +3,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
+using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 
@@ -49,8 +50,39 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(incorrectMusicChannel);
         }
+        public static DiscordMessageBuilder IncorrectMusicChannel(InteractionContext msg)
+        {
+            var incorrectMusicChannel = new DiscordEmbedBuilder
+            {
+                Title = "Incorrect channel for music commands",
+                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(incorrectMusicChannel);
+        }
         
         public static DiscordMessageBuilder NotInVoiceChannel(CommandContext msg)
+        {
+            var notInVoiceChannel = new DiscordEmbedBuilder
+            {
+                Description = "You are not in a voice channel",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(notInVoiceChannel);
+        }
+        public static DiscordMessageBuilder NotInVoiceChannel(InteractionContext msg)
         {
             var notInVoiceChannel = new DiscordEmbedBuilder
             {
