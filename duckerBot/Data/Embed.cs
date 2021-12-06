@@ -231,6 +231,22 @@ namespace duckerBot
                 Color = Bot.MainEmbedColor
             };
         }
+
+        public static DiscordEmbedBuilder StreamAnnouncement(CommandContext msg, string description)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Title = "Stream online!",
+                Description = $"{description} \nhttps://www.twitch.tv/itakash1",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    Text = msg.Guild.GetMemberAsync(Bot.Id).Result.DisplayName,
+                    IconUrl = msg.Guild.GetMemberAsync(Bot.Id).Result.AvatarUrl
+                },
+                ImageUrl = msg.Guild.GetMemberAsync(857687574281453598).Result.AvatarUrl,
+                Color = Bot.MainEmbedColor
+            };
+        }
         
     }
 }

@@ -763,27 +763,16 @@ namespace duckerBot
         [Command("stream"), RequirePermissions(Permissions.Administrator)]
         public async Task StreamAnnouncement(CommandContext msg, params string[] text)
         {
+            await msg.Message.DeleteAsync();
+            
             string description = "";
             for (int i = 0; i < text.Length; i++)
             {
                 description += text[i] + " ";
             }
             
-            await msg.Message.DeleteAsync();
-            var streamAnnouncementembed = new DiscordEmbedBuilder
-            {
-                Title = "Stream online!",
-                Description = $"{description} \nhttps://www.twitch.tv/itakash1",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    Text = msg.Guild.GetMemberAsync(Bot.Id).Result.DisplayName,
-                    IconUrl = msg.Guild.GetMemberAsync(Bot.Id).Result.AvatarUrl
-                },
-                ImageUrl = msg.Guild.GetMemberAsync(857687574281453598).Result.AvatarUrl,
-                Color = Bot.MainEmbedColor
-            };
             await msg.Channel.SendMessageAsync(msg.Guild.GetRole(914921577634754600).Mention).Result.DeleteAsync();
-            await msg.Channel.SendMessageAsync(streamAnnouncementembed).Result.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
+            await (await msg.Channel.SendMessageAsync(duckerBot.Embed.StreamAnnouncement(msg, description))).CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
         }
     }
 }
