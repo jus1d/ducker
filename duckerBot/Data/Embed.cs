@@ -215,7 +215,7 @@ namespace duckerBot
             };
         }
 
-        public static DiscordEmbedBuilder ReactionRolesEmbed(DiscordClient client, DiscordGuild guild)
+        public static DiscordEmbedBuilder ReactionRoles(DiscordClient client, DiscordGuild guild)
         {
             DiscordEmoji vibeEmoji = DiscordEmoji.FromName(client, ":vibe:");
             DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(client, ":twitchrgb:");

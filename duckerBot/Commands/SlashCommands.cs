@@ -596,7 +596,7 @@ namespace duckerBot
             
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
-                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                .AddEmbed(duckerBot.Embed.ReactionRoles(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton));
         }
 

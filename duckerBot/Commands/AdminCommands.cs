@@ -755,7 +755,7 @@ namespace duckerBot
             var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", $"", false, new DiscordComponentEmoji(twitchRgbEmoji));
             var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
             var builder = new DiscordMessageBuilder()
-                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                .AddEmbed(duckerBot.Embed.ReactionRoles(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton);
             await msg.Channel.SendMessageAsync(builder);
         }
