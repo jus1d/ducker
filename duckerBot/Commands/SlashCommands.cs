@@ -557,7 +557,7 @@ namespace duckerBot
             
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
-                .AddEmbed(duckerBot.Embed.ReactionRoles(msg.Client, msg.Guild))
+                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton));
         }
 
@@ -566,7 +566,7 @@ namespace duckerBot
         public async Task StreamAnnouncement(InteractionContext msg, [Option("description", "Stream description")] string description = "")
         {
              await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, 
-                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.StreamAnnouncement(msg, description)));
+                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.StreamAnnouncementEmbed(msg, description)));
             await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention).Result.DeleteAsync();
         }
     }

@@ -18,12 +18,12 @@ namespace duckerBot
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NotInVoiceChannelEmbed(msg));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -37,7 +37,7 @@ namespace duckerBot
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -45,7 +45,7 @@ namespace duckerBot
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             if (connection == null)
             {
-                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NoConnectionEmbed(msg));
                 return;
             }
             await connection.DisconnectAsync();
@@ -116,7 +116,7 @@ namespace duckerBot
                         var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
                         await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                             new DiscordInteractionResponseBuilder()
-                                .AddEmbed(duckerBot.Embed.NowPlayingEmbed(msg.Client, track, msg.User))
+                                .AddEmbed(duckerBot.Embed.NowPlayingEmbed(track, msg.User))
                                 .AddComponents(playButton, pauseButton, nextButton, queueButton));
                     }
                     else 
@@ -130,7 +130,7 @@ namespace duckerBot
                         var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
                         await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                             new DiscordInteractionResponseBuilder()
-                                .AddEmbed(duckerBot.Embed.NowPlayingEmbed(msg.Client, track, msg.User))
+                                .AddEmbed(duckerBot.Embed.NowPlayingEmbed(track, msg.User))
                                 .AddComponents(playButton, pauseButton, nextButton, queueButton));
                     }
                 }
@@ -139,7 +139,7 @@ namespace duckerBot
                     var loadResult = await node.Rest.GetTracksAsync(search);
                     if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
                     {
-                        await duckerBot.Embed.SearchFailed(msg, search).SendAsync(msg.Channel);
+                        await msg.CreateResponseAsync(duckerBot.Embed.SearchFailedEmbed(msg, search));
                         return;
                     }
 
@@ -152,7 +152,7 @@ namespace duckerBot
                     var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
                     await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                         new DiscordInteractionResponseBuilder()
-                            .AddEmbed(duckerBot.Embed.NowPlayingEmbed(msg.Client, track, msg.User))
+                            .AddEmbed(duckerBot.Embed.NowPlayingEmbed(track, msg.User))
                             .AddComponents(playButton, pauseButton, nextButton, queueButton));
                 }
             }
@@ -212,7 +212,7 @@ namespace duckerBot
 
                     if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
                     {
-                        await duckerBot.Embed.SearchFailed(msg, search).SendAsync(msg.Channel);
+                        await msg.CreateResponseAsync(duckerBot.Embed.SearchFailedEmbed(msg, search));
                         return;
                     }
 
@@ -233,12 +233,12 @@ namespace duckerBot
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NotInVoiceChannelEmbed(msg));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -247,12 +247,12 @@ namespace duckerBot
             
             if (connection == null)
             {
-                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NoConnectionEmbed(msg));
                 return;
             }
             if (connection.CurrentState.CurrentTrack == null)
             {
-                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NoTracksPlayingEmbed(msg));
                 return;
             }
             await connection.PauseAsync();
@@ -264,12 +264,12 @@ namespace duckerBot
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NotInVoiceChannelEmbed(msg));
                 return;
             }
             
@@ -279,7 +279,7 @@ namespace duckerBot
             
             if (connection.CurrentState.CurrentTrack == null)
             {
-                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NoTracksPlayingEmbed(msg));
                 return;
             }
             await connection.ResumeAsync();
@@ -291,12 +291,12 @@ namespace duckerBot
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NotInVoiceChannelEmbed(msg));
                 return;
             }
             
@@ -306,7 +306,7 @@ namespace duckerBot
             }
             catch (Exception exception)
             {
-                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+                await msg.CreateResponseAsync(duckerBot.Embed.ClearQueueEmbed(msg.User));
                 return;
             }
 
@@ -315,7 +315,7 @@ namespace duckerBot
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             if (connection.CurrentState.CurrentTrack == null)
             {
-                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NoTracksPlayingEmbed(msg));
                 return;
             }
             await connection.StopAsync();
@@ -325,14 +325,24 @@ namespace duckerBot
         [SlashCommand("queue", "Send queue list")]
         public async Task Queue(InteractionContext msg)
         {
-            await msg.CreateResponseAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
+                return;
+            }
+            await msg.CreateResponseAsync(duckerBot.Embed.Queue(msg.User));
         }
         
         [SlashCommand("clear-queue", "Clear queue list")]
         public async Task ClearQueue(InteractionContext msg)
         {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
+                return;
+            }
             Bot.Queue.Clear();
-            await msg.CreateResponseAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
+            await msg.CreateResponseAsync(duckerBot.Embed.Queue(msg.User));
         }
 
         [SlashCommand("stop", "Stop playing")]
@@ -340,7 +350,7 @@ namespace duckerBot
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -349,7 +359,7 @@ namespace duckerBot
 
             if (connection == null)
             {
-                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(duckerBot.Embed.NoConnectionEmbed(msg));
                 return;
             }
             await connection.DisconnectAsync();

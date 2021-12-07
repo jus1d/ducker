@@ -197,7 +197,7 @@ namespace duckerBot
                 catch (Exception exception)
                 {
                     await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                        new DiscordInteractionResponseBuilder().AddEmbed(Embed.ClearQueue(e.Interaction.User)));
+                        new DiscordInteractionResponseBuilder().AddEmbed(Embed.ClearQueueEmbed(e.Interaction.User)));
                     return;
                 }
                 
@@ -210,7 +210,7 @@ namespace duckerBot
             else if (e.Interaction.Data.CustomId == "queue_button")
             {
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
-                await e.Interaction.Channel.SendMessageAsync(Embed.Queue(client, e.Interaction.User));
+                await e.Interaction.Channel.SendMessageAsync(Embed.Queue(e.Interaction.User));
             }
         }
 

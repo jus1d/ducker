@@ -308,7 +308,7 @@ namespace duckerBot
             }
             catch (Exception exception)
             {
-                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueueEmbed(msg.User));
                 return;
             }
             
@@ -335,14 +335,14 @@ namespace duckerBot
         [Command("queue")]
         public async Task Queue(CommandContext msg)
         {
-            await msg.Channel.SendMessageAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
+            await msg.Channel.SendMessageAsync(duckerBot.Embed.Queue(msg.User));
         }
 
         [Command("clear-queue")]
         public async Task ClearQueue(CommandContext msg)
         {
             Bot.Queue.Clear();
-            await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+            await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueueEmbed(msg.User));
         }
         
         

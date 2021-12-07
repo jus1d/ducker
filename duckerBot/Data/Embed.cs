@@ -33,7 +33,7 @@ namespace duckerBot
                 .AddEmbed(playEmbed)
                 .AddComponents(pauseButton, playButton, nextButton, queueButton);
         }
-        public static DiscordEmbedBuilder NowPlayingEmbed(DiscordClient client, LavalinkTrack track, DiscordUser user)
+        public static DiscordEmbedBuilder NowPlayingEmbed(LavalinkTrack track, DiscordUser user)
         {
             return new DiscordEmbedBuilder
             {
@@ -213,6 +213,19 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(searchFailed);
         }
+        public static DiscordEmbedBuilder SearchFailedEmbed(InteractionContext msg, string search)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Description = $"Track search failed for: {search}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+        }
         
         public static DiscordMessageBuilder NoTracksPlaying(CommandContext msg)
         {
@@ -244,6 +257,19 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(noPlayingTracks);
         }
+        public static DiscordEmbedBuilder NoTracksPlayingEmbed(InteractionContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Description = "There are no tracks loaded",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+        }
         
         public static DiscordMessageBuilder IncorrectCommand(CommandContext msg, string usage)
         {
@@ -262,7 +288,7 @@ namespace duckerBot
                 .AddEmbed(incorrectCommand);
         }
         
-        public static DiscordEmbedBuilder Queue(DiscordClient client, DiscordUser user)
+        public static DiscordEmbedBuilder Queue(DiscordUser user)
         {
             string title = "Queue:";
             try
@@ -374,7 +400,7 @@ namespace duckerBot
             };
         }
 
-        public static DiscordEmbedBuilder ClearQueue(DiscordUser user)
+        public static DiscordEmbedBuilder ClearQueueEmbed(DiscordUser user)
         {
             return new DiscordEmbedBuilder
             {
@@ -388,7 +414,7 @@ namespace duckerBot
             };
         }
 
-        public static DiscordEmbedBuilder ReactionRoles(DiscordClient client, DiscordGuild guild)
+        public static DiscordEmbedBuilder ReactionRolesEmbed(DiscordClient client, DiscordGuild guild)
         {
             DiscordEmoji vibeEmoji = DiscordEmoji.FromName(client, ":vibe:");
             DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(client, ":twitchrgb:");
@@ -406,7 +432,7 @@ namespace duckerBot
             };
         }
 
-        public static DiscordEmbedBuilder StreamAnnouncement(CommandContext msg, string description)
+        public static DiscordEmbedBuilder StreamAnnouncementEmbed(CommandContext msg, string description)
         {
             return new DiscordEmbedBuilder
             {
@@ -421,7 +447,7 @@ namespace duckerBot
                 Color = Bot.MainEmbedColor
             };
         }
-        public static DiscordEmbedBuilder StreamAnnouncement(InteractionContext msg, string description)
+        public static DiscordEmbedBuilder StreamAnnouncementEmbed(InteractionContext msg, string description)
         {
             return new DiscordEmbedBuilder
             {
