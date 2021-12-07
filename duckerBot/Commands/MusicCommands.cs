@@ -39,7 +39,7 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             await node.ConnectAsync(channel);
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
 
@@ -62,7 +62,8 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            Bot.Queue.Clear();
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
 
@@ -181,14 +182,14 @@ namespace duckerBot
                         var loadResult = await node.Rest.GetTracksAsync(search);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        await duckerBot.Embed.TrackQueued(msg).SendAsync(msg.Channel);
                     }
                     else 
                     {
                         var loadResult = await node.Rest.GetTracksAsync(url);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        await duckerBot.Embed.TrackQueued(msg).SendAsync(msg.Channel);
                     }
                 }
                 else // by search
@@ -207,7 +208,7 @@ namespace duckerBot
 
                     var track = loadResult.Tracks.First();
                     Bot.Queue.Add(track);
-                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                    await duckerBot.Embed.TrackQueued(msg).SendAsync(msg.Channel);
                 }
             }
         }
@@ -242,7 +243,7 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [Command("pause")]
@@ -282,7 +283,7 @@ namespace duckerBot
                 return;
             }
             await connection.ResumeAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
         
@@ -290,21 +291,37 @@ namespace duckerBot
         [Command("skip")]
         public async Task Skip(CommandContext msg)
         {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            
             try
             {
                 LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
             }
             catch (Exception exception)
             {
-                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueueEmbed(msg.User));
                 return;
             }
             
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection.CurrentState.CurrentTrack == null)
+            {
+                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                return;
+            }
             await connection.StopAsync();
-            await msg.Channel.SendMessageAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
         [Command("skip")]
@@ -318,14 +335,14 @@ namespace duckerBot
         [Command("queue")]
         public async Task Queue(CommandContext msg)
         {
-            await msg.Channel.SendMessageAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
+            await msg.Channel.SendMessageAsync(duckerBot.Embed.Queue(msg.User));
         }
 
         [Command("clear-queue")]
         public async Task ClearQueue(CommandContext msg)
         {
             Bot.Queue.Clear();
-            await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+            await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueueEmbed(msg.User));
         }
         
         
@@ -348,7 +365,7 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [Command("stop")]

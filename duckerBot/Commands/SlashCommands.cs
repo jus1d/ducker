@@ -546,45 +546,6 @@ namespace duckerBot
             }
         }
 
-
-        [SlashCommand("queue", "Send queue list")]
-        public async Task Queue(InteractionContext msg)
-        {
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.Queue(msg.Client, msg.User)));
-        }
-        
-        
-        [SlashCommand("clear-queue", "Clear queue list")]
-        public async Task ClearQueue(InteractionContext msg)
-        {
-            Bot.Queue.Clear();
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.Queue(msg.Client, msg.User)));
-        }
-
-
-        // [SlashCommand("skip", "Skip currently track")]
-        public async Task Skip(InteractionContext msg)
-        {
-            try
-            {
-                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
-            }
-            catch (Exception exception)
-            {
-                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
-                return;
-            }
-            
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            await connection.StopAsync();
-            await msg.CreateResponseAsync($"{DiscordEmoji.FromName(msg.Client, ":success:")}");
-        }
-
-
         [SlashCommand("reaction-role-embed", "Sends embed with reactions, press them to get role"),
          RequirePermissions(Permissions.Administrator)]
         public async Task ReactionRoleEmbed(InteractionContext msg)
@@ -596,7 +557,7 @@ namespace duckerBot
             
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
-                .AddEmbed(duckerBot.Embed.ReactionRoles(msg.Client, msg.Guild))
+                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton));
         }
 
@@ -605,7 +566,7 @@ namespace duckerBot
         public async Task StreamAnnouncement(InteractionContext msg, [Option("description", "Stream description")] string description = "")
         {
              await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, 
-                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.StreamAnnouncement(msg, description)));
+                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.StreamAnnouncementEmbed(msg, description)));
             await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention).Result.DeleteAsync();
         }
     }

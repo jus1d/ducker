@@ -755,7 +755,7 @@ namespace duckerBot
             var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", $"", false, new DiscordComponentEmoji(twitchRgbEmoji));
             var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
             var builder = new DiscordMessageBuilder()
-                .AddEmbed(duckerBot.Embed.ReactionRoles(msg.Client, msg.Guild))
+                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton);
             await msg.Channel.SendMessageAsync(builder);
         }
@@ -772,7 +772,7 @@ namespace duckerBot
             }
             
             await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention).Result.DeleteAsync();
-            await (await msg.Channel.SendMessageAsync(duckerBot.Embed.StreamAnnouncement(msg, description))).CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
+            await (await msg.Channel.SendMessageAsync(duckerBot.Embed.StreamAnnouncementEmbed(msg, description))).CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
         }
     }
 }
