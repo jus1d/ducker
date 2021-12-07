@@ -270,6 +270,19 @@ namespace duckerBot
                 Color = Bot.WarningColor
             };
         }
+        public static DiscordEmbedBuilder NoTracksPlayingEmbed(CommandContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Description = "There are no tracks loaded",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+        }
         
         public static DiscordMessageBuilder IncorrectCommand(CommandContext msg, string usage)
         {

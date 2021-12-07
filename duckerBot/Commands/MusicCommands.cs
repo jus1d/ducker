@@ -214,6 +214,33 @@ namespace duckerBot
         }
 
 
+        [Command("np"), Aliases("track")]
+        public async Task NowPlying(CommandContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection == null)
+            {
+                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (connection.CurrentState == null || connection.CurrentState.CurrentTrack == null)
+            {
+                await msg.Channel.SendMessageAsync(duckerBot.Embed.NoTracksPlayingEmbed(msg));
+                return;
+            }
+
+            await msg.Channel.SendMessageAsync(duckerBot.Embed.NowPlaying(msg.Client,
+                connection.CurrentState.CurrentTrack, msg.User));
+        }
+
+
         // -pause
         [Command("pause")]
         public async Task Pause(CommandContext msg)
