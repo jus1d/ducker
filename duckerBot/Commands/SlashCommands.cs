@@ -508,7 +508,7 @@ namespace duckerBot
                     ActivityType = ActivityType.Playing,
                     Name = "with ducks | -help"
                 };
-                var activityChanedEmbed = new DiscordEmbedBuilder
+                var activityChangedEmbed = new DiscordEmbedBuilder
                 {
                     Description = "Activity changed to playing type",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -520,7 +520,7 @@ namespace duckerBot
                 };
                 await msg.Client.UpdateStatusAsync(activity);
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(activityChanedEmbed));
+                    new DiscordInteractionResponseBuilder().AddEmbed(activityChangedEmbed));
             }
             else if (activityType == "streaming")
             {
