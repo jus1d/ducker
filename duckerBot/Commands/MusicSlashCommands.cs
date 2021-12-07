@@ -334,5 +334,32 @@ namespace duckerBot
             Bot.Queue.Clear();
             await msg.CreateResponseAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
         }
+
+        [SlashCommand("stop", "Stop playing")]
+        public async Task Stop(InteractionContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Channel.Guild);
+
+            if (connection == null)
+            {
+                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
+                return;
+            }
+            await connection.DisconnectAsync();
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+        }
+
+        [SlashCommand("phonk", "Start playing 24/7 Memphis Phonk Radio")]
+        public async Task Phonk(InteractionContext msg)
+        {
+            await Play(msg, "https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
+        }
     }
 }
