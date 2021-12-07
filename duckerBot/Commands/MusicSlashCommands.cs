@@ -29,7 +29,7 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             await node.ConnectAsync(msg.Member.VoiceState.Channel);
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [SlashCommand("quit", "Quit voice channel"), RequirePermissions(Permissions.Administrator)]
@@ -50,7 +50,7 @@ namespace duckerBot
             }
             await connection.DisconnectAsync();
             Bot.Queue.Clear();
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
         [SlashCommand("play", "Start playing track")]
@@ -256,7 +256,7 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [SlashCommand("resume", "Resume current track")]
@@ -283,7 +283,7 @@ namespace duckerBot
                 return;
             }
             await connection.ResumeAsync();
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [SlashCommand("skip", "Skip current track to next in queue")]
@@ -319,7 +319,7 @@ namespace duckerBot
                 return;
             }
             await connection.StopAsync();
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [SlashCommand("queue", "Send queue list")]
@@ -363,7 +363,7 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [SlashCommand("phonk", "Start playing 24/7 Memphis Phonk Radio")]

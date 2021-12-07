@@ -31,7 +31,8 @@ namespace duckerBot
     {
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
-        
+
+        public static string RespondEmojiName = ":success:";
         public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
         public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
         public static DiscordColor WarningColor = new DiscordColor("#ff9f30");

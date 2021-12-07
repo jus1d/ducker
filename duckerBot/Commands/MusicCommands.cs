@@ -39,7 +39,7 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             await node.ConnectAsync(channel);
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
 
@@ -63,7 +63,7 @@ namespace duckerBot
             }
             await connection.DisconnectAsync();
             Bot.Queue.Clear();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
 
@@ -243,7 +243,7 @@ namespace duckerBot
                 return;
             }
             await connection.PauseAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [Command("pause")]
@@ -283,7 +283,7 @@ namespace duckerBot
                 return;
             }
             await connection.ResumeAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
         
@@ -321,7 +321,7 @@ namespace duckerBot
                 return;
             }
             await connection.StopAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
         [Command("skip")]
@@ -365,7 +365,7 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [Command("stop")]
