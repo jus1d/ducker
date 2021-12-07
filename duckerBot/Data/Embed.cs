@@ -229,6 +229,21 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(noPlayingTracks);
         }
+        public static DiscordMessageBuilder NoTracksPlaying(InteractionContext msg)
+        {
+            var noPlayingTracks = new DiscordEmbedBuilder
+            {
+                Description = "There are no tracks loaded",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+            return new DiscordMessageBuilder()
+                .AddEmbed(noPlayingTracks);
+        }
         
         public static DiscordMessageBuilder IncorrectCommand(CommandContext msg, string usage)
         {

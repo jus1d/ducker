@@ -227,5 +227,112 @@ namespace duckerBot
                 }
             }
         }
+
+        [SlashCommand("pause", "Pause current track")]
+        public async Task Pause(InteractionContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            
+            if (connection == null)
+            {
+                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (connection.CurrentState.CurrentTrack == null)
+            {
+                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                return;
+            }
+            await connection.PauseAsync();
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+        }
+
+        [SlashCommand("resume", "Resume current track")]
+        public async Task Resume(InteractionContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            
+            if (connection.CurrentState.CurrentTrack == null)
+            {
+                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                return;
+            }
+            await connection.ResumeAsync();
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+        }
+
+        [SlashCommand("skip", "Skip current track to next in queue")]
+        public async Task Skip(InteractionContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            
+            try
+            {
+                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
+            }
+            catch (Exception exception)
+            {
+                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+                return;
+            }
+
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection.CurrentState.CurrentTrack == null)
+            {
+                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                return;
+            }
+            await connection.StopAsync();
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+        }
+
+        [SlashCommand("queue", "Send queue list")]
+        public async Task Queue(InteractionContext msg)
+        {
+            await msg.CreateResponseAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
+        }
+        
+        [SlashCommand("clear-queue", "Clear queue list")]
+        public async Task ClearQueue(InteractionContext msg)
+        {
+            Bot.Queue.Clear();
+            await msg.CreateResponseAsync(duckerBot.Embed.Queue(msg.Client, msg.User));
+        }
     }
 }

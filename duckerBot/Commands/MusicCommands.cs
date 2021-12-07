@@ -291,6 +291,17 @@ namespace duckerBot
         [Command("skip")]
         public async Task Skip(CommandContext msg)
         {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            
             try
             {
                 LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
@@ -304,8 +315,13 @@ namespace duckerBot
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection.CurrentState.CurrentTrack == null)
+            {
+                await duckerBot.Embed.NoTracksPlaying(msg).SendAsync(msg.Channel);
+                return;
+            }
             await connection.StopAsync();
-            await msg.Channel.SendMessageAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
         
         [Command("skip")]
