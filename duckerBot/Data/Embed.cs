@@ -33,6 +33,20 @@ namespace duckerBot
                 .AddEmbed(playEmbed)
                 .AddComponents(pauseButton, playButton, nextButton, queueButton);
         }
+        public static DiscordEmbedBuilder NowPlayingEmbed(DiscordClient client, LavalinkTrack track, DiscordUser user)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Title = "Now playing",
+                Description = $"[{track.Title}]({track.Uri})",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl,
+                    Text = "Ordered by " + user.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+        }
         
         public static DiscordMessageBuilder IncorrectMusicChannel(CommandContext msg)
         {
@@ -66,6 +80,20 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(incorrectMusicChannel);
         }
+        public static DiscordEmbedBuilder IncorrectMusicChannelEmbed(InteractionContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Title = "Incorrect channel for music commands",
+                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+        }
         
         public static DiscordMessageBuilder NotInVoiceChannel(CommandContext msg)
         {
@@ -97,6 +125,19 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(notInVoiceChannel);
         }
+        public static DiscordEmbedBuilder NotInVoiceChannelEmbed(InteractionContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Description = "You are not in a voice channel",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+        }
         
         public static DiscordMessageBuilder NoConnection(CommandContext msg)
         {
@@ -127,6 +168,19 @@ namespace duckerBot
             };
             return new DiscordMessageBuilder()
                 .AddEmbed(noConnection);
+        }
+        public static DiscordEmbedBuilder NoConnectionEmbed(InteractionContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Description = "I'm is not connected",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
         }
         
         public static DiscordMessageBuilder SearchFailed(CommandContext msg, string search)
@@ -238,7 +292,7 @@ namespace duckerBot
                 .AddEmbed(invalidChannel);
         }
 
-        public static DiscordMessageBuilder TrackQueued(CommandContext msg, LavalinkTrack track)
+        public static DiscordMessageBuilder TrackQueued(CommandContext msg)
         {
             string totalQueue = "";
             for (int i = 0; i < Bot.Queue.Count; i++)
@@ -246,7 +300,7 @@ namespace duckerBot
             
             var trackQueued = new DiscordEmbedBuilder
             {
-                Title = $"Track queued, position - {Bot.Queue.Count}",
+                Title = $"Track **{Bot.Queue[0].Title}** queued, position - {Bot.Queue.Count}",
                 Description = $"Queue:\n{totalQueue}",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -262,7 +316,7 @@ namespace duckerBot
                 .AddEmbed(trackQueued)
                 .AddComponents(nextButton, queueButton);
         }
-        public static DiscordMessageBuilder TrackQueued(InteractionContext msg, LavalinkTrack track)
+        public static DiscordMessageBuilder TrackQueued(InteractionContext msg)
         {
             string totalQueue = "";
             for (int i = 0; i < Bot.Queue.Count; i++)
@@ -270,7 +324,7 @@ namespace duckerBot
             
             var trackQueued = new DiscordEmbedBuilder
             {
-                Title = $"Track queued, position - {Bot.Queue.Count}",
+                Title = $"Track **{Bot.Queue[0].Title}** queued, position - {Bot.Queue.Count}",
                 Description = $"Queue:\n{totalQueue}",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -285,6 +339,24 @@ namespace duckerBot
             return new DiscordMessageBuilder()
                 .AddEmbed(trackQueued)
                 .AddComponents(nextButton, queueButton);
+        }
+        public static DiscordEmbedBuilder TrackQueuedEmbed(InteractionContext msg)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
+            
+            return new DiscordEmbedBuilder
+            {
+                Title = $"Track **{Bot.Queue[0].Title}** queued, position - {Bot.Queue.Count}",
+                Description = $"Queue:\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Queued by " + msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
         }
 
         public static DiscordEmbedBuilder ClearQueue(DiscordUser user)

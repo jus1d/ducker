@@ -62,6 +62,7 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
+            Bot.Queue.Clear();
             await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
 
@@ -181,14 +182,14 @@ namespace duckerBot
                         var loadResult = await node.Rest.GetTracksAsync(search);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        await duckerBot.Embed.TrackQueued(msg).SendAsync(msg.Channel);
                     }
                     else 
                     {
                         var loadResult = await node.Rest.GetTracksAsync(url);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        await duckerBot.Embed.TrackQueued(msg).SendAsync(msg.Channel);
                     }
                 }
                 else // by search
@@ -207,7 +208,7 @@ namespace duckerBot
 
                     var track = loadResult.Tracks.First();
                     Bot.Queue.Add(track);
-                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                    await duckerBot.Embed.TrackQueued(msg).SendAsync(msg.Channel);
                 }
             }
         }

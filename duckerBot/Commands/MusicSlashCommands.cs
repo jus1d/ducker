@@ -49,37 +49,41 @@ namespace duckerBot
                 return;
             }
             await connection.DisconnectAsync();
+            Bot.Queue.Clear();
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
         
         [SlashCommand("play", "Start playing track")]
-        public async Task Play(InteractionContext msg, [Option("search", "Track name or url to play")] string search = null)
+        public async Task Play(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await duckerBot.Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.IncorrectMusicChannelEmbed(msg)));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await duckerBot.Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
-                return;
-            }
-
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = await node.ConnectAsync(msg.Member.VoiceState.Channel);
-            if (connection == null)
-            {
-                await duckerBot.Embed.NoConnection(msg).SendAsync(msg.Channel);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.NotInVoiceChannelEmbed(msg)));
                 return;
             }
             
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = await node.ConnectAsync(msg.Member.VoiceState.Channel);
+            
+            if (connection == null)
+            {
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.NoConnectionEmbed(msg)));
+                return;
+            }
+
             if (connection.CurrentState.CurrentTrack == null)
             {
                 Uri url;
-                if (Uri.TryCreate(search, UriKind.Absolute, out url)) // by url
+                if (Uri.TryCreate(search, UriKind.Absolute, out url))
                 {
                     if (url.Authority == "open.spotify.com")
                     {
@@ -102,23 +106,37 @@ namespace duckerBot
                             }
                         }
 
-                        var loadResult = await node.Rest.GetTracksAsync(search);
+                        string searchBySpotifyName = trackSpotify.Name + " - " + authors;
+                        var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
                         var track = loadResult.Tracks.First();
                         await connection.PlayAsync(track);
-                        await duckerBot.Embed.NowPlaying(msg.Client, track, msg.User).SendAsync(msg.Channel);
+                        var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
+                        var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
+                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+                        await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                            new DiscordInteractionResponseBuilder()
+                                .AddEmbed(duckerBot.Embed.NowPlayingEmbed(msg.Client, track, msg.User))
+                                .AddComponents(playButton, pauseButton, nextButton, queueButton));
                     }
                     else 
                     {
                         var loadResult = await node.Rest.GetTracksAsync(url);
                         var track = loadResult.Tracks.First();
                         await connection.PlayAsync(track);
-                        await duckerBot.Embed.NowPlaying(msg.Client, track, msg.User).SendAsync(msg.Channel);
+                        var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
+                        var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
+                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+                        await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                            new DiscordInteractionResponseBuilder()
+                                .AddEmbed(duckerBot.Embed.NowPlayingEmbed(msg.Client, track, msg.User))
+                                .AddComponents(playButton, pauseButton, nextButton, queueButton));
                     }
                 }
-                else // by search
+                else
                 {
                     var loadResult = await node.Rest.GetTracksAsync(search);
-
                     if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
                     {
                         await duckerBot.Embed.SearchFailed(msg, search).SendAsync(msg.Channel);
@@ -127,13 +145,21 @@ namespace duckerBot
 
                     var track = loadResult.Tracks.First();
                     await connection.PlayAsync(track);
-                    await duckerBot.Embed.NowPlaying(msg.Client, track, msg.User).SendAsync(msg.Channel);
+                    
+                    var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
+                    var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
+                    var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+                    var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+                    await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                        new DiscordInteractionResponseBuilder()
+                            .AddEmbed(duckerBot.Embed.NowPlayingEmbed(msg.Client, track, msg.User))
+                            .AddComponents(playButton, pauseButton, nextButton, queueButton));
                 }
             }
             else
             {
                 Uri url;
-                if (Uri.TryCreate(search, UriKind.Absolute, out url)) // by url
+                if (Uri.TryCreate(search, UriKind.Absolute, out url))
                 {
                     if (url.Authority == "open.spotify.com")
                     {
@@ -156,20 +182,31 @@ namespace duckerBot
                             }
                         }
 
-                        var loadResult = await node.Rest.GetTracksAsync(search);
+                        string searchBySpotifyName = trackSpotify.Name + " - " + authors;
+                        var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+                        await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                            new DiscordInteractionResponseBuilder()
+                                .AddEmbed(duckerBot.Embed.TrackQueuedEmbed(msg))
+                                .AddComponents(nextButton, queueButton));
                     }
                     else 
                     {
                         var loadResult = await node.Rest.GetTracksAsync(url);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+                        await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                            new DiscordInteractionResponseBuilder()
+                                .AddEmbed(duckerBot.Embed.TrackQueuedEmbed(msg))
+                                .AddComponents(nextButton, queueButton));
                     }
                 }
-                else // by search
+                else
                 {
                     var loadResult = await node.Rest.GetTracksAsync(search);
 
@@ -181,7 +218,12 @@ namespace duckerBot
 
                     var track = loadResult.Tracks.First();
                     Bot.Queue.Add(track);
-                    await duckerBot.Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                    var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
+                    var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+                    await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                        new DiscordInteractionResponseBuilder()
+                            .AddEmbed(duckerBot.Embed.TrackQueuedEmbed(msg))
+                            .AddComponents(nextButton, queueButton));
                 }
             }
         }
