@@ -138,6 +138,19 @@ namespace duckerBot
                 Color = Bot.WarningColor
             };
         }
+        public static DiscordEmbedBuilder NotInVoiceChannelEmbed(CommandContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Description = "You are not in a voice channel",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+        }
         
         public static DiscordMessageBuilder NoConnection(CommandContext msg)
         {

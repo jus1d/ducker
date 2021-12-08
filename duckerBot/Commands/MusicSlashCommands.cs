@@ -236,6 +236,11 @@ namespace duckerBot
                 await msg.CreateResponseAsync(duckerBot.Embed.IncorrectMusicChannelEmbed(msg));
                 return;
             }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await msg.CreateResponseAsync(duckerBot.Embed.NotInVoiceChannelEmbed(msg));
+                return;
+            }
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
