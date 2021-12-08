@@ -17,38 +17,39 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 ## Commands List
 
 ### Commands
-| Command | Description | Arguments |
-|---|----|---|
-| `help` | Send help list to current channel | `none / command` |
-| `random` | Send  random value in your range from min to max value to current channel | `min value, max value` |
-| `avatar` | Send user's avatar and it's link to current channel | `user` |
-| `invite-link` | Send invite link for this bot to current channel | `none` |
+| Command       | Description                                                               | Arguments              |
+|---------------|---------------------------------------------------------------------------|------------------------|
+| `help`        | Send help list to current channel                                         | `none / command`       |
+| `random`      | Send  random value in your range from min to max value to current channel | `min value, max value` |
+| `avatar`      | Send user's avatar and it's link to current channel                       | `user`                 |
+| `invite-link` | Send invite link for this bot to current channel                          | `none`                 |
 
 ### Admin Commands
-| Command | Description | Arguments |
-|---|----|---|
-| `kick` | Kick mentioned user from current server | `member, reason` |
-| `ban` | Ban mentioned user in current server | `user, reason` |
-| `mute` | Mute mentioned member | `member` |
-| `unmute` | Unmute mentioned member | `member` |
-| `clear` | Clear `amount` messages from current channel | `amount` |
-| `add-role` | Add a role to mentioned user | `member, role` |
-| `remove-role` | Remove role from mentioned user | `member, role` |
-| `reaction-role-embed` | Send an embed with buttons, by press there you will granted a role | `none` |
-| `activity` | Change bot activity | `playing / streaming` |
-| `embed` | Create, and sends an embed  with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted) | `title, description, image, title URL, -del flag` |
+| Command               | Description                                                                                                                                                                            | Arguments                                      |
+|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------|
+| `kick`                | Kick mentioned user from current server                                                                                                                                                | `member, reason`                               |
+| `ban`                 | Ban mentioned user in current server                                                                                                                                                   | `user, reason`                                 |
+| `mute`                | Mute mentioned member                                                                                                                                                                  | `member`                                       |
+| `unmute`              | Unmute mentioned member                                                                                                                                                                | `member`                                       |
+| `clear`               | Clear `amount` messages from current channel                                                                                                                                           | `amount`                                       |
+| `add-role`            | Add a role to mentioned user                                                                                                                                                           | `member, role`                                 |
+| `remove-role`         | Remove role from mentioned user                                                                                                                                                        | `member, role`                                 |
+| `reaction-role-embed` | Send an embed with buttons, by press there you will granted a role                                                                                                                     | `none`                                         |
+| `activity`            | Change bot activity                                                                                                                                                                    | `playing / streaming`                          |
+| `embed`               | Create, and sends an embed  with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted) | `title, description, image, title URL, -del`   |
+| `stream`              | Send stream announcement                                                                                                                                                               | ` none / stream description `                  |
 
 ### Music Commands
-| Command | Description | Arguments |
-|---|----|---|
-| `play` | Starts playing music from youtube, spotify or soundcloud by link or search request | `url / search` |
-| `pause` | Pause now playing music | `none` |
-| `stop` | Permanently stop now playing music (can't use -play command to resume playing) | `none` |
-| `resume` | Resume playing music | `none` |
-| `skip` | Skips current playing track to next in queue | `none` |
-| `queue` | Sends queue list to current channel | `none` |
-| `clear-queue` | Clear queue list | `none` |
-| `phonk` | Starts playing Memphis Phonk | `none` |
+| Command       | Description                                                                         | Arguments      |
+|---------------|-------------------------------------------------------------------------------------|----------------|
+| `play`        | Starts playing music from youtube, spotify or soundcloud by link or search request  | `url / search` |
+| `pause`       | Pause now playing music                                                             | `none`         |
+| `stop`        | Permanently stop now playing music (can't use -play command to resume playing)      | `none`         |
+| `resume`      | Resume playing music                                                                | `none`         |
+| `skip`        | Skips current playing track to next in queue                                        | `none`         |
+| `queue`       | Sends queue list to current channel                                                 | `none`         |
+| `clear-queue` | Clear queue list                                                                    | `none`         |
+| `phonk`       | Starts playing Memphis Phonk                                                        | `none`         |
 
 ## Contributing
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.

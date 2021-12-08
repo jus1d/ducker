@@ -6,28 +6,27 @@ using DSharpPlus.SlashCommands;
 
 namespace ducker
 {
-    public class SlashCommands : ApplicationCommandModule
+    public partial class SlashCommands : ApplicationCommandModule
     {
         // help
-        //[SlashCommand("help", "Send help list to current channel")]
-        public async Task Help(InteractionContext msg, [Choice("avatar", "avatar")] [Choice("invitelink", "invitelink")] [Choice("random", "random")]
-            [Choice("play", "play")] [Choice("pause", "pause")] [Choice("stop", "stop")] [Choice("ban", "ban")] 
-            [Choice("kick", "kick")] [Choice("clear", "clear")] [Choice("embed", "embed")] [Choice("poll", "poll")]
-            [Option("Command", "Command for detailed description")] string command = null) 
+        [SlashCommand("help", "Send help list to current channel")]
+        public async Task Help(InteractionContext msg, [Option("command", "Command to help")] string command = "") 
         {
-            var helpMessageEmbed = new DiscordEmbedBuilder();
-            if (command == null)
+            if (command == "")
             {
+                var helpMessageEmbed = new DiscordEmbedBuilder();
                 helpMessageEmbed = new DiscordEmbedBuilder
                 {
                     Title = "Help",
                     Description = "List of all server commands.\n" +
-                                  "Prefix for this server: '-'\n" +
-                                  "Use `-help <command>` to see certain command description\n\n" +
-                                  "**Commands**\n" +
-                                  "`avatar`, `invitelink`, `random`, `play`, `pause`, `stop`\n" +
-                                  "**Admin Commands**\n" +
-                                  "`ban`, `kick`, `clear`, `embed`, `poll`",
+                                  "Prefix for this server: `-`, but you can use slash commands(just type `/`)\n" +
+                                  "Use `-help <command>` to see certain command description\n" +
+                                  "\n**Commands**\n" +
+                                  "`avatar`, `invite-link`, `random`" +
+                                  "\n**Music commands**\n" +
+                                  "`join`, `play`, `stop`, `pause`, `resume`, `np`, `skip`, `queue`, `clear-queue`" +
+                                  "\n**Admin commands**\n" +
+                                  "`ban`, `kick`, `clear`, `quit`, `add-role`, `remove-role`, `mute`, `unmute`, `embed`, `reaction`, `activity`, `reaction-role-embed`, `stream`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -35,29 +34,31 @@ namespace ducker
                     },
                     Color = Bot.MainEmbedColor
                 };
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder()
+                    .AddEmbed(helpMessageEmbed));
             }
             else
             {
+                var helpMessageEmbed = new DiscordEmbedBuilder();
                 string helpEmbedDescription = "";
                 string helpEmbedCommandUsage = "";
                 switch (command)
                 {
                     case "avatar":
-                        helpEmbedDescription = "Sends you embed with users avatar";
+                        helpEmbedDescription = "Send you embed with users avatar";
                         helpEmbedCommandUsage = "-avatar <user>";
                         break;
-                    case "invitelink":
-                        helpEmbedDescription = "Sends you invite link for this bot";
-                        helpEmbedCommandUsage = "-invitelink";
+                    case "invite-link":
+                        helpEmbedDescription = "Send you invite link for this bot";
+                        helpEmbedCommandUsage = "-invite-link";
                         break;
                     case "random":
-                        helpEmbedDescription = "Sends you random value in your range from min to max value";
+                        helpEmbedDescription = "Send you random value in your range from min to max value";
                         helpEmbedCommandUsage = "-random <min> <max>";
                         break;
                     case "play":
-                        helpEmbedDescription = "Starts playing music from youtube by link or search request";
-                        helpEmbedCommandUsage = "-play <link to youtube video> or <search>";
+                        helpEmbedDescription = "Start playing music from youtube by link or search request";
+                        helpEmbedCommandUsage = "-play <link to track(youtube, soundcloud, twitch, spotify)> or <search>";
                         break;
                     case "pause":
                         helpEmbedDescription = "Pause now playing music (can use `-play` command to resume playing)";
@@ -83,9 +84,57 @@ namespace ducker
                         helpEmbedDescription = "Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use `-del` flag, message with config will be deleted)";
                         helpEmbedCommandUsage = "-embed -t <title> -d <description> -image <image URL> -titlelink <title URL> -del";
                         break;
-                    case "poll":
-                        helpEmbedDescription = "Creates embed with poll with your description in current channel, and create on this message :white_check_mark: and :x:";
-                        helpEmbedCommandUsage = "-poll <poll description>";
+                    case "reaction":
+                        helpEmbedDescription = "Create reaction on message with your emoji";
+                        helpEmbedCommandUsage = "-reaction <message id> <emoji>";
+                        break;
+                    case "np":
+                        helpEmbedDescription = "Send currently playing track";
+                        helpEmbedCommandUsage = "-np";
+                        break;
+                    case "skip":
+                        helpEmbedDescription = "Skip track to next in queue";
+                        helpEmbedCommandUsage = "-skip";
+                        break;
+                    case "queue":
+                        helpEmbedDescription = "Send queue list to current channel";
+                        helpEmbedCommandUsage = "-queue";
+                        break;
+                    case "clear-queue":
+                        helpEmbedDescription = "Clear queue list";
+                        helpEmbedCommandUsage = "-clear-queue";
+                        break;
+                    case "quit":
+                        helpEmbedDescription = "Quit from any voice channel";
+                        helpEmbedCommandUsage = "-quit";
+                        break;
+                    case "add-role":
+                        helpEmbedDescription = "Add role to mentioned user";
+                        helpEmbedCommandUsage = "-add-role <user> <role>";
+                        break;
+                    case "remove-role":
+                        helpEmbedDescription = "Remove role from mentioned user";
+                        helpEmbedCommandUsage = "-remove-role <user> <role>";
+                        break;
+                    case "mute":
+                        helpEmbedDescription = "Mute mentioned user";
+                        helpEmbedCommandUsage = "-mute <user>";
+                        break;
+                    case "unmute":
+                        helpEmbedDescription = "Unmute mentioned user";
+                        helpEmbedCommandUsage = "-unmute <user>";
+                        break;
+                    case "activity":
+                        helpEmbedDescription = "Change bot activity type";
+                        helpEmbedCommandUsage = "-activity <playing / streaming>";
+                        break;
+                    case "reaction-role-embed":
+                        helpEmbedDescription = "Send embed with buttons, press them to take roles";
+                        helpEmbedCommandUsage = "-reaction-role-embed";
+                        break;
+                    case "stream":
+                        helpEmbedDescription = "Send stream announcement";
+                        helpEmbedCommandUsage = "-stream <description>";
                         break;
                     default:
                         helpEmbedDescription = "You try to use `-help <command>` with unknown command";
@@ -105,7 +154,6 @@ namespace ducker
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
             }
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, new DiscordInteractionResponseBuilder().AddEmbed(helpMessageEmbed));
         }
         
         
@@ -133,14 +181,14 @@ namespace ducker
         }
         
         
-        // invitelink
+        // invite-link
         [SlashCommand("invite-link", "Send invite link for this bot to current channel")]
         public async Task InviteLink(InteractionContext msg) 
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
             {
                 Title = "Invite Link",
-                Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
+                Url = Bot.InviteLink,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -541,45 +589,7 @@ namespace ducker
         }
 
 
-        [SlashCommand("queue", "Send queue list")]
-        public async Task Queue(InteractionContext msg)
-        {
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.Queue(msg.Client, msg.User)));
-        }
-        
-        
-        [SlashCommand("clear-queue", "Clear queue list")]
-        public async Task ClearQueue(InteractionContext msg)
-        {
-            Bot.Queue.Clear();
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.Queue(msg.Client, msg.User)));
-        }
-
-
-        [SlashCommand("skip", "Skip currently track")]
-        public async Task Skip(InteractionContext msg)
-        {
-            try
-            {
-                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
-            }
-            catch (Exception exception)
-            {
-                await msg.Channel.SendMessageAsync(ducker.Embed.ClearQueue(msg.User));
-                return;
-            }
-            
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            await connection.StopAsync();
-            await msg.CreateResponseAsync($"{DiscordEmoji.FromName(msg.Client, ":success:")}");
-        }
-
-
-        [SlashCommand("reaction-role-embed", "Sends embed with reactions, press them to get role"),
+        [SlashCommand("reaction-role-embed", "Send embed with reactions, press them to get role"),
          RequirePermissions(Permissions.Administrator)]
         public async Task ReactionRoleEmbed(InteractionContext msg)
         {
@@ -592,6 +602,15 @@ namespace ducker
                 new DiscordInteractionResponseBuilder()
                 .AddEmbed(ducker.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton));
+        }
+
+
+        [SlashCommand("stream", "Send stream announcement")]
+        public async Task StreamAnnouncement(InteractionContext msg, [Option("description", "Stream description")] string description = "")
+        {
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, 
+                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.StreamAnnouncementEmbed(msg, description)));
+            await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention).Result.DeleteAsync();
         }
     }
 }

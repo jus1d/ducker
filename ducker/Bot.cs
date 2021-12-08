@@ -22,7 +22,6 @@ using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
-// m?
 
 namespace ducker
 {
@@ -30,7 +29,8 @@ namespace ducker
     {
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
-        
+
+        public static string RespondEmojiName = ":success:";
         public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
         public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
         public static DiscordColor WarningColor = new DiscordColor("#ff9f30");
@@ -38,6 +38,7 @@ namespace ducker
         public static readonly ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
         public static readonly ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static readonly ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
+        public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=918248095869968434&permissions=8&scope=bot%20applications.commands";
 
         public static List<LavalinkTrack> Queue = new List<LavalinkTrack>();
 
@@ -74,7 +75,7 @@ namespace ducker
                 StringPrefixes = new string[] { ConfigJson.GetConfigField().Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
-                EnableDefaultHelp = true
+                EnableDefaultHelp = false
             };
             var endpoint = new ConnectionEndpoint
             {
