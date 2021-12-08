@@ -17,20 +17,22 @@ namespace ducker
     {
         // -help
         [Command("help")]
-        public async Task Help(CommandContext msg, string command = null)
+        public async Task Help(CommandContext msg, string command = "")
         {
-            if (command == null)
+            if (command == "")
             {
                 var helpMessageEmbed = new DiscordEmbedBuilder
                 {
                     Title = "Help",
                     Description = "List of all server commands.\n" +
-                                  "Prefix for this server: '-'\n" +
-                                  "Use `-help <command>` to see certain command description\n\n" +
-                                  "**Commands**\n" +
-                                  "`avatar`, `invitelink`, `random`, `play`, `pause`, `stop`\n" +
-                                  "**Admin Commands**\n" +
-                                  "`ban`, `kick`, `clear`, `embed`, `poll`",
+                                  "Prefix for this server: `-`, but you can use slash commands(just type `/`)\n" +
+                                  "Use `-help <command>` to see certain command description\n" +
+                                  "\n**Commands**\n" +
+                                  "`avatar`, `invite-link`, `random`" +
+                                  "\n**Music commands**\n" +
+                                  "`join`, `play`, `stop`, `pause`, `resume`, `np`, `skip`, `queue`, `clear-queue`" +
+                                  "\n**Admin commands**\n" +
+                                  "`ban`, `kick`, `clear`, `quit`, `add-role`, `remove-role`, `mute`, `unmute`, `embed`, `reaction`, `activity`, `reaction-role-embed`, `stream`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -47,20 +49,20 @@ namespace ducker
                 switch (command)
                 {
                     case "avatar":
-                        helpEmbedDescription = "Sends you embed with users avatar";
+                        helpEmbedDescription = "Send you embed with users avatar";
                         helpEmbedCommandUsage = "-avatar <user>";
                         break;
-                    case "invitelink":
-                        helpEmbedDescription = "Sends you invite link for this bot";
-                        helpEmbedCommandUsage = "-invitelink";
+                    case "invite-link":
+                        helpEmbedDescription = "Send you invite link for this bot";
+                        helpEmbedCommandUsage = "-invite-link";
                         break;
                     case "random":
-                        helpEmbedDescription = "Sends you random value in your range from min to max value";
+                        helpEmbedDescription = "Send you random value in your range from min to max value";
                         helpEmbedCommandUsage = "-random <min> <max>";
                         break;
                     case "play":
-                        helpEmbedDescription = "Starts playing music from youtube by link or search request";
-                        helpEmbedCommandUsage = "-play <link to youtube video> or <search>";
+                        helpEmbedDescription = "Start playing music from youtube by link or search request";
+                        helpEmbedCommandUsage = "-play <link to track(youtube, soundcloud, twitch, spotify)> or <search>";
                         break;
                     case "pause":
                         helpEmbedDescription = "Pause now playing music (can use `-play` command to resume playing)";
@@ -86,9 +88,57 @@ namespace ducker
                         helpEmbedDescription = "Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use `-del` flag, message with config will be deleted)";
                         helpEmbedCommandUsage = "-embed -t <title> -d <description> -image <image URL> -titlelink <title URL> -del";
                         break;
-                    case "poll":
-                        helpEmbedDescription = "Creates embed with poll with your description in current channel, and create on this message :white_check_mark: and :x:";
-                        helpEmbedCommandUsage = "-poll <poll description>";
+                    case "reaction":
+                        helpEmbedDescription = "Create reaction on message with your emoji";
+                        helpEmbedCommandUsage = "-reaction <message id> <emoji>";
+                        break;
+                    case "np":
+                        helpEmbedDescription = "Send currently playing track";
+                        helpEmbedCommandUsage = "-np";
+                        break;
+                    case "skip":
+                        helpEmbedDescription = "Skip track to next in queue";
+                        helpEmbedCommandUsage = "-skip";
+                        break;
+                    case "queue":
+                        helpEmbedDescription = "Send queue list to current channel";
+                        helpEmbedCommandUsage = "-queue";
+                        break;
+                    case "clear-queue":
+                        helpEmbedDescription = "Clear queue list";
+                        helpEmbedCommandUsage = "-clear-queue";
+                        break;
+                    case "quit":
+                        helpEmbedDescription = "Quit from any voice channel";
+                        helpEmbedCommandUsage = "-quit";
+                        break;
+                    case "add-role":
+                        helpEmbedDescription = "Add role to mentioned user";
+                        helpEmbedCommandUsage = "-add-role <user> <role>";
+                        break;
+                    case "remove-role":
+                        helpEmbedDescription = "Remove role from mentioned user";
+                        helpEmbedCommandUsage = "-remove-role <user> <role>";
+                        break;
+                    case "mute":
+                        helpEmbedDescription = "Mute mentioned user";
+                        helpEmbedCommandUsage = "-mute <user>";
+                        break;
+                    case "unmute":
+                        helpEmbedDescription = "Unmute mentioned user";
+                        helpEmbedCommandUsage = "-unmute <user>";
+                        break;
+                    case "activity":
+                        helpEmbedDescription = "Change bot activity type";
+                        helpEmbedCommandUsage = "-activity <playing / streaming>";
+                        break;
+                    case "reaction-role-embed":
+                        helpEmbedDescription = "Send embed with buttons, press them to take roles";
+                        helpEmbedCommandUsage = "-reaction-role-embed";
+                        break;
+                    case "stream":
+                        helpEmbedDescription = "Send stream announcement";
+                        helpEmbedCommandUsage = "-stream <description>";
                         break;
                     default:
                         helpEmbedDescription = "You try to use `-help <command>` with unknown command";
