@@ -117,7 +117,17 @@ namespace ducker
                         }
                         else
                         {
-                            await msg.CreateResponseAsync("Episodes and playlists will available in next version");
+                            await msg.CreateResponseAsync(new DiscordEmbedBuilder
+                            {
+                                Description = "Episodes and playlists will available in next version",
+                                Footer = new DiscordEmbedBuilder.EmbedFooter
+                                {
+                                    IconUrl = msg.User.AvatarUrl,
+                                    Text = msg.User.Username
+                                },
+                                Color = Bot.MainEmbedColor
+                            });
+                            return;
                         }
 
                         var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
@@ -200,6 +210,20 @@ namespace ducker
                             var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
                             track = loadResult.Tracks.First();
                             Bot.Queue.Add(track);
+                        }
+                        else
+                        {
+                            await msg.CreateResponseAsync(new DiscordEmbedBuilder
+                            {
+                                Description = "Episodes and playlists will available in next version",
+                                Footer = new DiscordEmbedBuilder.EmbedFooter
+                                {
+                                    IconUrl = msg.User.AvatarUrl,
+                                    Text = msg.User.Username
+                                },
+                                Color = Bot.MainEmbedColor
+                            });
+                            return;
                         }
                         
                         
