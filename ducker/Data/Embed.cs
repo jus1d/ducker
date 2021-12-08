@@ -94,6 +94,20 @@ namespace ducker
                 Color = Bot.WarningColor
             };
         }
+        public static DiscordEmbedBuilder IncorrectMusicChannelEmbed(CommandContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Title = "Incorrect channel for music commands",
+                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+        }
         
         public static DiscordMessageBuilder NotInVoiceChannel(CommandContext msg)
         {
@@ -183,6 +197,19 @@ namespace ducker
                 .AddEmbed(noConnection);
         }
         public static DiscordEmbedBuilder NoConnectionEmbed(InteractionContext msg)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Description = "I'm is not connected",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = msg.User.Username
+                },
+                Color = Bot.WarningColor
+            };
+        }
+        public static DiscordEmbedBuilder NoConnectionEmbed(CommandContext msg)
         {
             return new DiscordEmbedBuilder
             {
