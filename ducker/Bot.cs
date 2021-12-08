@@ -92,6 +92,7 @@ namespace ducker
             
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<Commands>();
+            Commands.RegisterCommands<MusicCommands>();
             slash.RegisterCommands<SlashCommands>(696496218934608004);
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);

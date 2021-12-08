@@ -87,29 +87,39 @@ namespace ducker
                 {
                     if (url.Authority == "open.spotify.com")
                     {
-                        var config = SpotifyClientConfig.CreateDefault();
-                        var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
-                        var response = await new OAuthClient(config).RequestToken(request);
-                        var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-                        var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
-                        
-                        string authors = "";
-                        for (int i = 0; i < trackSpotify.Artists.Count; i++)
+
+                        LavalinkTrack track = new LavalinkTrack();
+                        if (url.LocalPath[Range.EndAt(7)] == "/track/")
                         {
-                            if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
+                            var config = SpotifyClientConfig.CreateDefault();
+                            var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
+                            var response = await new OAuthClient(config).RequestToken(request);
+                            var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+                            var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
+                        
+                            string authors = "";
+                            for (int i = 0; i < trackSpotify.Artists.Count; i++)
                             {
-                                authors += trackSpotify.Artists[i].Name;
+                                if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
+                                {
+                                    authors += trackSpotify.Artists[i].Name;
+                                }
+                                else
+                                {
+                                    authors += trackSpotify.Artists[i].Name + ", ";
+                                }
                             }
-                            else
-                            {
-                                authors += trackSpotify.Artists[i].Name + ", ";
-                            }
+
+                            string searchBySpotifyName = trackSpotify.Name + " - " + authors;
+                            var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
+                            track = loadResult.Tracks.First();
+                            await connection.PlayAsync(track);
+                        }
+                        else
+                        {
+                            await msg.CreateResponseAsync("Episodes and playlists will available in next version");
                         }
 
-                        string searchBySpotifyName = trackSpotify.Name + " - " + authors;
-                        var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
-                        var track = loadResult.Tracks.First();
-                        await connection.PlayAsync(track);
                         var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
                         var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
                         var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
@@ -167,25 +177,32 @@ namespace ducker
                         var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
                         var response = await new OAuthClient(config).RequestToken(request);
                         var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-                        var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
-                        
-                        string authors = "";
-                        for (int i = 0; i < trackSpotify.Artists.Count; i++)
-                        {
-                            if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
-                            {
-                                authors += trackSpotify.Artists[i].Name;
-                            }
-                            else
-                            {
-                                authors += trackSpotify.Artists[i].Name + ", ";
-                            }
-                        }
 
-                        string searchBySpotifyName = trackSpotify.Name + " - " + authors;
-                        var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
-                        var track = loadResult.Tracks.First();
-                        Bot.Queue.Add(track);
+                        LavalinkTrack track;
+                        if (url.LocalPath[Range.EndAt(7)] == "/track/")
+                        {
+                            var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
+                        
+                            string authors = "";
+                            for (int i = 0; i < trackSpotify.Artists.Count; i++)
+                            {
+                                if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
+                                {
+                                    authors += trackSpotify.Artists[i].Name;
+                                }
+                                else
+                                {
+                                    authors += trackSpotify.Artists[i].Name + ", ";
+                                }
+                            }
+
+                            string searchBySpotifyName = trackSpotify.Name + " - " + authors;
+                            var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
+                            track = loadResult.Tracks.First();
+                            Bot.Queue.Add(track);
+                        }
+                        
+                        
                         var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
                         var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
                         await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
