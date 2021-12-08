@@ -5,7 +5,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Lavalink;
 
-namespace duckerBot
+namespace ducker
 {
     public class Embed
     {

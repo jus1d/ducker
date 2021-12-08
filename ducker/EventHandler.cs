@@ -22,7 +22,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 
-namespace duckerBot
+namespace ducker
 {
     public class EventHandler
     {

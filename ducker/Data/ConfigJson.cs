@@ -7,7 +7,7 @@ using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace duckerBot
+namespace ducker
 {
     public class ConfigJson
     {

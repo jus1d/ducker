@@ -1,25 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Security.Principal;
-using System.Threading;
-using System.Threading.Tasks;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 using DiscordColour = DSharpPlus.Entities.DiscordColor;
-using DSharpPlus.Interactivity.Extensions;
-using DSharpPlus.Lavalink;
-using DSharpPlus.Net.Models;
-using DSharpPlus.SlashCommands;
-using SpotifyAPI.Web;
 
-namespace duckerBot
+namespace ducker
 {
     public partial class Commands : BaseCommandModule
     {
@@ -37,7 +22,7 @@ namespace duckerBot
             var banCommandEmbed = new DiscordEmbedBuilder
             {
                 Title = "User banned",
-                Description = $":)",
+                Description = ":)",
                 ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
@@ -54,7 +39,7 @@ namespace duckerBot
             {
                 var incorrectBanCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $":x: You can't ban this user",
+                    Description = ":x: You can't ban this user",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -77,8 +62,8 @@ namespace duckerBot
         {
             var incorrectBanCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-ban <member>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-ban <member>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -129,8 +114,8 @@ namespace duckerBot
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -kick <member>",
+                Title = "Missing argument",
+                Description = "**Usage:** -kick <member>",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -151,8 +136,8 @@ namespace duckerBot
             {
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -178,7 +163,7 @@ namespace duckerBot
             
                 var deletedMessagesReport = new DiscordEmbedBuilder
                 {
-                    Title = $"Deleted messages report", 
+                    Title = "Deleted messages report", 
                     Description = $"I have deleted {amount} {messageOrMessages}",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -199,8 +184,8 @@ namespace duckerBot
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-clear <amount>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-clear <amount>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -217,8 +202,8 @@ namespace duckerBot
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-clear <amount>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-clear <amount>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -238,7 +223,7 @@ namespace duckerBot
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member currently has this role",
+                    Description = "This member currently has this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -289,7 +274,7 @@ namespace duckerBot
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member currently has this role",
+                    Description = "This member currently has this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -337,8 +322,8 @@ namespace duckerBot
         {
             var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-addrole <member> <role>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-addrole <member> <role>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -358,7 +343,7 @@ namespace duckerBot
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member doesn't have this role",
+                    Description = "This member doesn't have this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -409,7 +394,7 @@ namespace duckerBot
             {
                 var memberHasntRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member doesn't have this role",
+                    Description = "This member doesn't have this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -457,8 +442,8 @@ namespace duckerBot
         {
             var incorrectRemoveRoleCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-remove <member> <role>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-remove <member> <role>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -483,8 +468,8 @@ namespace duckerBot
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-mute <member>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-mute <member>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -509,8 +494,8 @@ namespace duckerBot
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-unmute <member>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-unmute <member>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -532,8 +517,8 @@ namespace duckerBot
             var color = Bot.MainEmbedColor;
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-embed <embed config>`\n\n`config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -color <#color> -del`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-embed <embed config>`\n\n`config template: -t <title> -d <description> -image <URL> \n-titlelink <URL> -color <#color> -del`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -599,9 +584,9 @@ namespace duckerBot
                     {
                         var incorrectColorFlag = new DiscordEmbedBuilder
                         {
-                            Title = $"Missing argument",
-                            Description = $"Incorrect `-color` flag\n" +
-                                          $"**Usage:** `-color <#color> (HEX)`",
+                            Title = "Missing argument",
+                            Description = "Incorrect `-color` flag\n" +
+                                          "**Usage:** `-color <#color> (HEX)`",
                             Footer = new DiscordEmbedBuilder.EmbedFooter
                             {
                                 IconUrl = msg.User.AvatarUrl,
@@ -651,8 +636,8 @@ namespace duckerBot
             {
                 var incorrectReactionCommand = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-reaction <message id> <emoji>`",
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-reaction <message id> <emoji>`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -714,8 +699,8 @@ namespace duckerBot
             {
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-activity <type>`\nPossible types: `stream`, `def`",
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-activity <type>`\nPossible types: `stream`, `def`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -733,8 +718,8 @@ namespace duckerBot
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-activity <type>`\nPossible types: `stream`, `def`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-activity <type>`\nPossible types: `stream`, `def`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -752,10 +737,10 @@ namespace duckerBot
 
             DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
             DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
-            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", $"", false, new DiscordComponentEmoji(twitchRgbEmoji));
+            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", "", false, new DiscordComponentEmoji(twitchRgbEmoji));
             var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
             var builder = new DiscordMessageBuilder()
-                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                .AddEmbed(ducker.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton);
             await msg.Channel.SendMessageAsync(builder);
         }

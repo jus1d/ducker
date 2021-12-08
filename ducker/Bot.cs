@@ -24,7 +24,7 @@ using Microsoft.VisualBasic;
 using Newtonsoft.Json;
 // m?
 
-namespace duckerBot
+namespace ducker
 {
     public class Bot
     {

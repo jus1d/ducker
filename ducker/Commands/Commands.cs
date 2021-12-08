@@ -1,17 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Lavalink;
-using DSharpPlus.Interactivity.Extensions;
-using Microsoft.VisualBasic;
 
-namespace duckerBot
+namespace ducker
 {
     public partial class Commands : BaseCommandModule
     {
@@ -136,8 +127,8 @@ namespace duckerBot
             {
                 var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-avatar <user>`",
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-avatar <user>`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -171,8 +162,8 @@ namespace duckerBot
         {
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-avatar <user>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-avatar <user>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -207,8 +198,8 @@ namespace duckerBot
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-invitelink`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-invitelink`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -229,8 +220,8 @@ namespace duckerBot
             {
                 var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-random <min value> <max value>`",
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-random <min value> <max value>`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -260,8 +251,8 @@ namespace duckerBot
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-random <min value> <max value>`",
+                Title = "Missing argument",
+                Description = "**Usage:** `-random <min value> <max value>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -277,7 +268,7 @@ namespace duckerBot
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
+                Title = "Missing argument",
                 Description = $"**Usage:** `-random <min value> <max value>`\n [for {msg.Member.Mention}]",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {

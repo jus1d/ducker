@@ -1,16 +1,10 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using DSharpPlus;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 
-namespace duckerBot
+namespace ducker
 {
     public class SlashCommands : ApplicationCommandModule
     {
@@ -211,7 +205,7 @@ namespace duckerBot
             {
                 banEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $":x: **You can't ban this user**",
+                    Description = ":x: **You can't ban this user**",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -266,8 +260,8 @@ namespace duckerBot
             {
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -294,7 +288,7 @@ namespace duckerBot
             
                 var deletedMessagesReport = new DiscordEmbedBuilder
                 {
-                    Title = $"Deleted messages report", 
+                    Title = "Deleted messages report", 
                     Description = $"I have deleted {amount} {messageOrMessages}",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -392,7 +386,7 @@ namespace duckerBot
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member currently has this role",
+                    Description = "This member currently has this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -449,7 +443,7 @@ namespace duckerBot
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member doesn't have this role",
+                    Description = "This member doesn't have this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -551,7 +545,7 @@ namespace duckerBot
         public async Task Queue(InteractionContext msg)
         {
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.Queue(msg.Client, msg.User)));
+                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.Queue(msg.Client, msg.User)));
         }
         
         
@@ -560,7 +554,7 @@ namespace duckerBot
         {
             Bot.Queue.Clear();
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(duckerBot.Embed.Queue(msg.Client, msg.User)));
+                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.Queue(msg.Client, msg.User)));
         }
 
 
@@ -573,7 +567,7 @@ namespace duckerBot
             }
             catch (Exception exception)
             {
-                await msg.Channel.SendMessageAsync(duckerBot.Embed.ClearQueue(msg.User));
+                await msg.Channel.SendMessageAsync(ducker.Embed.ClearQueue(msg.User));
                 return;
             }
             
@@ -591,12 +585,12 @@ namespace duckerBot
         {
             DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
             DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
-            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", $"", false, new DiscordComponentEmoji(twitchRgbEmoji));
+            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", "", false, new DiscordComponentEmoji(twitchRgbEmoji));
             var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
             
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
-                .AddEmbed(duckerBot.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                .AddEmbed(ducker.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton));
         }
     }

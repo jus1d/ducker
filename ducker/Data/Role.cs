@@ -1,4 +1,4 @@
-﻿namespace duckerBot
+﻿namespace ducker
 {
     public class Role
     {

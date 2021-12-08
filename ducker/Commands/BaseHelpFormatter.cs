@@ -1,9 +1,8 @@
-﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Entities;
 using DSharpPlus.Entities;
 
-namespace duckerBot
+namespace ducker
 {
     public class BaseHelpFormatter 
     {
