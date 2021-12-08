@@ -181,14 +181,14 @@ namespace ducker
         }
         
         
-        // invitelink
+        // invite-link
         [SlashCommand("invite-link", "Send invite link for this bot to current channel")]
         public async Task InviteLink(InteractionContext msg) 
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
             {
                 Title = "Invite Link",
-                Url = "https://discord.com/api/oauth2/authorize?client_id=906179696516026419&permissions=8&scope=bot",
+                Url = Bot.InviteLink,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,

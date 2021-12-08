@@ -38,6 +38,7 @@ namespace ducker
         public static readonly ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
         public static readonly ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static readonly ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
+        public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=918248095869968434&permissions=8&scope=bot%20applications.commands";
 
         public static List<LavalinkTrack> Queue = new List<LavalinkTrack>();
 
