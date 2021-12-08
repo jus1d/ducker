@@ -774,11 +774,5 @@ namespace ducker
             await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention).Result.DeleteAsync();
             await (await msg.Channel.SendMessageAsync(ducker.Embed.StreamAnnouncementEmbed(msg, description))).CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
         }
-
-        [Command("t"), RequirePermissions(Permissions.Administrator)]
-        public async Task Test(CommandContext msg, Uri url)
-        {
-            await msg.Channel.SendMessageAsync(url.LocalPath[Range.EndAt(7)]);
-        }
     }
 }
