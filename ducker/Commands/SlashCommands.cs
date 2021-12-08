@@ -1,20 +1,15 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using DSharpPlus;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Interactivity.Extensions;
+using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 
-namespace duckerBot
+namespace ducker
 {
     public class SlashCommands : ApplicationCommandModule
     {
         // help
-        [SlashCommand("help", "Send help list to current channel")]
+        //[SlashCommand("help", "Send help list to current channel")]
         public async Task Help(InteractionContext msg, [Choice("avatar", "avatar")] [Choice("invitelink", "invitelink")] [Choice("random", "random")]
             [Choice("play", "play")] [Choice("pause", "pause")] [Choice("stop", "stop")] [Choice("ban", "ban")] 
             [Choice("kick", "kick")] [Choice("clear", "clear")] [Choice("embed", "embed")] [Choice("poll", "poll")]
@@ -139,7 +134,7 @@ namespace duckerBot
         
         
         // invitelink
-        [SlashCommand("invitelink", "Send invite link for this bot to current channel")]
+        [SlashCommand("invite-link", "Send invite link for this bot to current channel")]
         public async Task InviteLink(InteractionContext msg) 
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
@@ -210,7 +205,7 @@ namespace duckerBot
             {
                 banEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $":x: **You can't ban this user**",
+                    Description = ":x: **You can't ban this user**",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -265,8 +260,8 @@ namespace duckerBot
             {
                 var incorrectCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
+                    Title = "Missing argument",
+                    Description = "**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -293,7 +288,7 @@ namespace duckerBot
             
                 var deletedMessagesReport = new DiscordEmbedBuilder
                 {
-                    Title = $"Deleted messages report", 
+                    Title = "Deleted messages report", 
                     Description = $"I have deleted {amount} {messageOrMessages}",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
@@ -306,29 +301,8 @@ namespace duckerBot
                     new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport));
             }
         }
-        
-        
-        // poll
-        [SlashCommand("poll", "Sends poll embed with reactions"), RequirePermissions(Permissions.Administrator)]
-        public async Task Poll(InteractionContext msg,
-            [Option("description", "Set description to your poll embed")] string pollDescription)
-        {
-            var pollEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Poll",
-                Description = pollDescription,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(pollEmbed));
-        }
-        
-        
+
+
         // embed
         [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"),
          RequirePermissions(Permissions.Administrator)]
@@ -401,7 +375,7 @@ namespace duckerBot
         }
 
 
-        [SlashCommand("addrole", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
+        [SlashCommand("add-role", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRole(InteractionContext msg,
             [Option("member", "Member to add role")] DiscordUser user,
             [Option("role", "Role to add it")] DiscordRole role)
@@ -412,7 +386,7 @@ namespace duckerBot
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member currently has this role",
+                    Description = "This member currently has this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -458,7 +432,7 @@ namespace duckerBot
             }
         }
 
-        [SlashCommand("removerole", "Removes role from mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
+        [SlashCommand("remove-role", "Removes role from mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(InteractionContext msg,
             [Option("member", "Member for remove role")] DiscordUser user,
             [Option("role", "Role to remove it")] DiscordRole role)
@@ -469,7 +443,7 @@ namespace duckerBot
             {
                 var memberHasRoleEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $"This member doesn't have this role",
+                    Description = "This member doesn't have this role",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -513,6 +487,111 @@ namespace duckerBot
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().AddEmbed(incorrectEmbed));
             }
+        }
+
+        [SlashCommand("activity", "Changes activity to the bot")]
+        public async Task ActivityChnger(InteractionContext msg,
+            [Choice("playing", "playing")] 
+            [Choice("streaming", "streaming")] 
+            [Option("type", "Type for activity")] string activityType)
+        {
+            if (activityType == "playing")
+            {
+                var activity = new DiscordActivity
+                {
+                    ActivityType = ActivityType.Playing,
+                    Name = "with ducks | -help"
+                };
+                var activityChanedEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Activity changed to playing type",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Client.UpdateStatusAsync(activity);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(activityChanedEmbed));
+            }
+            else if (activityType == "streaming")
+            {
+                var activity = new DiscordActivity
+                {
+                    ActivityType = ActivityType.Streaming,
+                    Name = "with ducks |  -help",
+                    StreamUrl = "https://www.twitch.tv/itakash1"
+                };
+                var activityChanedEmbed = new DiscordEmbedBuilder
+                {
+                    Description = "Activity changed to streaming type",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.MainEmbedColor
+                };
+                await msg.Client.UpdateStatusAsync(activity);
+                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                    new DiscordInteractionResponseBuilder().AddEmbed(activityChanedEmbed));
+            }
+        }
+
+
+        [SlashCommand("queue", "Send queue list")]
+        public async Task Queue(InteractionContext msg)
+        {
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.Queue(msg.Client, msg.User)));
+        }
+        
+        
+        [SlashCommand("clear-queue", "Clear queue list")]
+        public async Task ClearQueue(InteractionContext msg)
+        {
+            Bot.Queue.Clear();
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.Queue(msg.Client, msg.User)));
+        }
+
+
+        [SlashCommand("skip", "Skip currently track")]
+        public async Task Skip(InteractionContext msg)
+        {
+            try
+            {
+                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
+            }
+            catch (Exception exception)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.ClearQueue(msg.User));
+                return;
+            }
+            
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            await connection.StopAsync();
+            await msg.CreateResponseAsync($"{DiscordEmoji.FromName(msg.Client, ":success:")}");
+        }
+
+
+        [SlashCommand("reaction-role-embed", "Sends embed with reactions, press them to get role"),
+         RequirePermissions(Permissions.Administrator)]
+        public async Task ReactionRoleEmbed(InteractionContext msg)
+        {
+            DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
+            DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
+            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", "", false, new DiscordComponentEmoji(twitchRgbEmoji));
+            var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
+            
+            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                new DiscordInteractionResponseBuilder()
+                .AddEmbed(ducker.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                .AddComponents(followButton, chelButton));
         }
     }
 }

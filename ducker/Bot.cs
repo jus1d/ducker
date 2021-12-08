@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,35 +22,34 @@ using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+// m?
 
-namespace duckerBot
+namespace ducker
 {
     public class Bot
     {
         public DiscordClient Client { get; private set; }
-        public InteractivityExtension Interactivity { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
         
-        public static DiscordColor MainEmbedColor = DiscordColor.Aquamarine;
-        public static DiscordColor IncorrectEmbedColor = DiscordColor.Red;
-        public static DiscordColor WarningColor = DiscordColor.Orange;
-        public static ulong MusicChannelId = 816659808627195915;
-        
+        public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
+        public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
+        public static DiscordColor WarningColor = new DiscordColor("#ff9f30");
+        public static readonly ulong Id = ConfigJson.GetConfigField().Id;
+        public static readonly ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
+        public static readonly ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
+        public static readonly ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
+
+        public static List<LavalinkTrack> Queue = new List<LavalinkTrack>();
+
         public async Task RunAsync()
         {
-            var json = string.Empty;
-
-            using (var fs = File.OpenRead("config.json"))
-            using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
-                json = await sr.ReadToEndAsync().ConfigureAwait(false);
-
-            var configJson = JsonConvert.DeserializeObject<ConfigJson>(json);
             var config = new DiscordConfiguration
             {
-                Token = configJson.Token,
+                Token = ConfigJson.GetConfigField().Token,
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 MinimumLogLevel = LogLevel.Debug,
+                LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss tt",
                 Intents = DiscordIntents.All
             };
             
@@ -62,18 +62,19 @@ namespace duckerBot
                 Timeout = TimeSpan.FromHours(12)
             });
 
-            Client.MessageCreated += EventHandler.OnMessageCreated;
+            Client.ComponentInteractionCreated += EventHandler.OnComponentInteractionCreated;
             Client.GuildMemberAdded += EventHandler.OnMemberAdded;
+            Client.MessageCreated += EventHandler.OnMessageCreated;
             Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
             Client.MessageReactionAdded += EventHandler.OnReactionAdded;
             Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;
 
             var commandsConfig = new CommandsNextConfiguration 
             {
-                StringPrefixes = new string[] { configJson.Prefix },
+                StringPrefixes = new string[] { ConfigJson.GetConfigField().Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
-                EnableDefaultHelp = false
+                EnableDefaultHelp = true
             };
             var endpoint = new ConnectionEndpoint
             {
@@ -91,9 +92,11 @@ namespace duckerBot
             
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<Commands>();
+            Commands.RegisterCommands<MusicCommands>();
             slash.RegisterCommands<SlashCommands>(696496218934608004);
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
+            (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
             await Task.Delay(-1);
         }
 
@@ -102,7 +105,7 @@ namespace duckerBot
             var activity = new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
-                Name = "with ducks | -help"
+                Name = "with ducks |  -help"
             };
             Client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
