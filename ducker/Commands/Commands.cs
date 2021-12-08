@@ -1,13 +1,22 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using DSharpPlus.Lavalink;
+using DSharpPlus.Interactivity.Extensions;
+using Microsoft.VisualBasic;
 
 namespace ducker
 {
     public partial class Commands : BaseCommandModule
     {
         // -help
-        //[Command("help")]
+        [Command("help")]
         public async Task Help(CommandContext msg, string command = null)
         {
             if (command == null)
@@ -101,7 +110,7 @@ namespace ducker
             }
         }
 
-        //[Command("help")]
+        [Command("help")]
         public async Task Help(CommandContext msg, params string[] text)
         {
             var incorrectHelpEmbed = new DiscordEmbedBuilder
@@ -120,15 +129,15 @@ namespace ducker
         
         
         // -avatar
-        [Command("avatar"), Aliases("ava"), GroupCommand]
+        [Command("avatar"), Aliases("ava")]
         public async Task Avatar(CommandContext msg, [Description("user, whose avatar URL will send bot")] DiscordMember user = null)
         {
             if (user == null)
             {
                 var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = "Missing argument",
-                    Description = "**Usage:** `-avatar <user>`",
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** `-avatar <user>`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -162,8 +171,8 @@ namespace ducker
         {
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = "Missing argument",
-                Description = "**Usage:** `-avatar <user>`",
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-avatar <user>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -198,8 +207,8 @@ namespace ducker
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = "Missing argument",
-                Description = "**Usage:** `-invitelink`",
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-invitelink`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -220,8 +229,8 @@ namespace ducker
             {
                 var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Title = "Missing argument",
-                    Description = "**Usage:** `-random <min value> <max value>`",
+                    Title = $"Missing argument",
+                    Description = $"**Usage:** `-random <min value> <max value>`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -251,8 +260,8 @@ namespace ducker
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = "Missing argument",
-                Description = "**Usage:** `-random <min value> <max value>`",
+                Title = $"Missing argument",
+                Description = $"**Usage:** `-random <min value> <max value>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -268,7 +277,7 @@ namespace ducker
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {
-                Title = "Missing argument",
+                Title = $"Missing argument",
                 Description = $"**Usage:** `-random <min value> <max value>`\n [for {msg.Member.Mention}]",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {

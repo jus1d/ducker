@@ -174,14 +174,14 @@ namespace ducker
                         var loadResult = await node.Rest.GetTracksAsync(search);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        await Embed.TrackQueued(msg).SendAsync(msg.Channel);
                     }
                     else 
                     {
                         var loadResult = await node.Rest.GetTracksAsync(url);
                         var track = loadResult.Tracks.First();
                         Bot.Queue.Add(track);
-                        await Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                        await Embed.TrackQueued(msg).SendAsync(msg.Channel);
                     }
                 }
                 else // by search
@@ -200,7 +200,7 @@ namespace ducker
 
                     var track = loadResult.Tracks.First();
                     Bot.Queue.Add(track);
-                    await Embed.TrackQueued(msg, track).SendAsync(msg.Channel);
+                    await Embed.TrackQueued(msg).SendAsync(msg.Channel);
                 }
             }
         }
@@ -289,7 +289,7 @@ namespace ducker
             }
             catch (Exception exception)
             {
-                await msg.Channel.SendMessageAsync(Embed.ClearQueue(msg.User));
+                await msg.Channel.SendMessageAsync(Embed.ClearQueueEmbed(msg.User));
                 return;
             }
             
@@ -311,14 +311,14 @@ namespace ducker
         [Command("queue")]
         public async Task Queue(CommandContext msg)
         {
-            await msg.Channel.SendMessageAsync(Embed.Queue(msg.Client, msg.User));
+            await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
         }
 
         [Command("clear-queue")]
         public async Task ClearQueue(CommandContext msg)
         {
             Bot.Queue.Clear();
-            await msg.Channel.SendMessageAsync(Embed.ClearQueue(msg.User));
+            await msg.Channel.SendMessageAsync(Embed.ClearQueueEmbed(msg.User));
         }
         
         

@@ -22,7 +22,6 @@ using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
-// m?
 
 namespace ducker
 {
@@ -30,7 +29,8 @@ namespace ducker
     {
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
-        
+
+        public static string RespondEmojiName = ":success:";
         public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
         public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
         public static DiscordColor WarningColor = new DiscordColor("#ff9f30");
@@ -74,7 +74,7 @@ namespace ducker
                 StringPrefixes = new string[] { ConfigJson.GetConfigField().Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
-                EnableDefaultHelp = true
+                EnableDefaultHelp = false
             };
             var endpoint = new ConnectionEndpoint
             {
@@ -92,7 +92,6 @@ namespace ducker
             
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<Commands>();
-            Commands.RegisterCommands<MusicCommands>();
             slash.RegisterCommands<SlashCommands>(696496218934608004);
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
