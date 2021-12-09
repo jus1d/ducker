@@ -1,4 +1,3 @@
-
 # ducker Discord Bot
 The bot is developing in C# by jus1d, based on DSharpPlus library. This bot currently still under developing, most changes is coming. 
 ####
