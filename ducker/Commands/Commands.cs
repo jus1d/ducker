@@ -148,7 +148,7 @@ namespace ducker
                 var avatarHelpEmbed = new DiscordEmbedBuilder
                 {
                     Title = "Help",
-                    Description = $"**Description:** {helpEmbedDescription}\n**Usage:** `{helpEmbedCommandUsage}`",
+                    Description = $"**Description:**\n{helpEmbedDescription}\n**Usage:**\n`{helpEmbedCommandUsage}`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
