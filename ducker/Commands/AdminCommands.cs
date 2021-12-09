@@ -771,7 +771,7 @@ namespace ducker
                 description += text[i] + " ";
             }
             
-            await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention).Result.DeleteAsync();
+            await (await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention)).DeleteAsync();
             await (await msg.Channel.SendMessageAsync(ducker.Embed.StreamAnnouncementEmbed(msg, description))).CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
         }
     }
