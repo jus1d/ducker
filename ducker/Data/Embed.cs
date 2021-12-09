@@ -652,5 +652,24 @@ namespace ducker
                 };
             }
         }
+
+        public static DiscordEmbedBuilder TrackRepeatEmbed(DiscordUser user)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
+
+            return new DiscordEmbedBuilder
+            {
+                Title = "Track will repeat",
+                Description = $"**Queue:**\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl,
+                    Text = $"Ordered by {user.Username}"
+                },
+                Color = Bot.MainEmbedColor
+            };
+        }
     }
 }

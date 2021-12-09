@@ -300,6 +300,37 @@ namespace ducker
                 msg.User));
         }
 
+        [SlashCommand("repeat", "Repeat current track")]
+        public async Task Repeat(InteractionContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await msg.CreateResponseAsync(ducker.Embed.NotInVoiceChannelEmbed(msg));
+                return;
+            }
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection == null)
+            {
+                await msg.CreateResponseAsync(ducker.Embed.NoConnectionEmbed(msg));
+                return;
+            }
+            if (connection.CurrentState == null || connection.CurrentState.CurrentTrack == null)
+            {
+                await msg.CreateResponseAsync(ducker.Embed.NoTracksPlayingEmbed(msg));
+                return;
+            }
+            
+            Bot.Queue.Insert(0, connection.CurrentState.CurrentTrack);
+            await msg.CreateResponseAsync(ducker.Embed.TrackRepeatEmbed(msg.User));
+        }
+
         [SlashCommand("pause", "Pause current track")]
         public async Task Pause(InteractionContext msg)
         {
