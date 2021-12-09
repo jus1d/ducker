@@ -28,7 +28,7 @@ namespace ducker
             await msg.Channel.SendMessageAsync(ducker.Embed.HelpEmbed(msg.User, "some text"));
         }
         
-        
+         
         // -avatar
         [Command("avatar"), Aliases("ava")]
         public async Task Avatar(CommandContext msg, DiscordMember user)
