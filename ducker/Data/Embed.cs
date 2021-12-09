@@ -529,7 +529,7 @@ namespace ducker
                                   "\n**Commands**\n" +
                                   "`avatar`, `invite-link`, `random`" +
                                   "\n**Music commands**\n" +
-                                  "`join`, `play`, `stop`, `pause`, `resume`, `np`, `skip`, `queue`, `clear-queue`" +
+                                  "`join`, `play`, `stop`, `pause`, `resume`, `np`, `repeat`, `skip`, `queue`, `clear-queue`" +
                                   "\n**Admin commands**\n" +
                                   "`ban`, `kick`, `clear`, `quit`, `add-role`, `remove-role`, `mute`, `unmute`, `embed`, `reaction`, `activity`, `reaction-role-embed`, `stream`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -638,6 +638,10 @@ namespace ducker
                         helpEmbedDescription = "Send stream announcement";
                         helpEmbedCommandUsage = "-stream <description>";
                         break;
+                    case "repeat":
+                        helpEmbedDescription = "Repeat current track";
+                        helpEmbedCommandUsage = "-repeat";
+                        break;
                 }
                 return new DiscordEmbedBuilder
                 {
@@ -651,6 +655,25 @@ namespace ducker
                     Color = Bot.MainEmbedColor
                 };
             }
+        }
+
+        public static DiscordEmbedBuilder TrackRepeatEmbed(DiscordUser user)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
+
+            return new DiscordEmbedBuilder
+            {
+                Title = "Track will repeat",
+                Description = $"**Queue:**\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl,
+                    Text = $"Ordered by {user.Username}"
+                },
+                Color = Bot.MainEmbedColor
+            };
         }
     }
 }

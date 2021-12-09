@@ -349,6 +349,39 @@ namespace ducker
         }
         
         
+        // -repeat
+        [Command("repeat")]
+        public async Task Repeat(CommandContext msg)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg));
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NotInVoiceChannelEmbed(msg));
+                return;
+            }
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
+            if (connection == null)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NoConnectionEmbed(msg));
+                return;
+            }
+            if (connection.CurrentState == null || connection.CurrentState.CurrentTrack == null)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NoTracksPlayingEmbed(msg));
+                return;
+            }
+            
+            Bot.Queue.Insert(0, connection.CurrentState.CurrentTrack);
+            await msg.Channel.SendMessageAsync(Embed.TrackRepeatEmbed(msg.User));
+        }
+        
+        
         // -skip
         [Command("skip")]
         public async Task Skip(CommandContext msg)
