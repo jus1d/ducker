@@ -39,16 +39,17 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
 | `stream`              | Send stream announcement                                                                                                                                                               | ` none / stream description `                  |
 
 ### Music Commands
-| Command       | Description                                                                         | Arguments      |
-|---------------|-------------------------------------------------------------------------------------|----------------|
-| `play`        | Starts playing music from youtube, spotify or soundcloud by link or search request  | `url / search` |
-| `pause`       | Pause now playing music                                                             | `none`         |
-| `stop`        | Permanently stop now playing music (can't use -play command to resume playing)      | `none`         |
-| `resume`      | Resume playing music                                                                | `none`         |
-| `skip`        | Skips current playing track to next in queue                                        | `none`         |
-| `queue`       | Sends queue list to current channel                                                 | `none`         |
-| `clear-queue` | Clear queue list                                                                    | `none`         |
-| `phonk`       | Starts playing Memphis Phonk                                                        | `none`         |
+| Command       | Description                                                                       | Arguments      |
+|---------------|-----------------------------------------------------------------------------------|----------------|
+| `play`        | Start playing music from youtube, spotify or soundcloud by link or search request | `url / search` |
+| `pause`       | Pause now playing music                                                           | `none`         |
+| `stop`        | Permanently stop now playing music (can't use -play command to resume playing)    | `none`         |
+| `resume`      | Resume playing music                                                              | `none`         |
+| `skip`        | Skip current playing track to next in queue                                       | `none`         |
+| `repeat`      | Repeat current track                                                              | `none`         |
+| `queue`       | Send queue list to current channel                                                | `none`         |
+| `clear-queue` | Clear queue list                                                                  | `none`         |
+| `phonk`       | Starts playing Memphis Phonk                                                      | `none`         |
 
 ## Contributing
 Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are greatly appreciated.
