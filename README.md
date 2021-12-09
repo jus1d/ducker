@@ -6,7 +6,7 @@ Standard bot prefix is `-`, but you can also use the slash commands by typing `/
 ### Developer Mode
 To use some commands you'll need member's, channel's or guild's IDs. To use IDs, you have to turn on the discord developer mode. **Go to: User settings -> Advanced -> Developer Mode**
 
-## To Install
+## To Install 
 * Clone this repo to your computer:
   ```bash 
   git clone https://github.com/jus1d/duckerBot.git
