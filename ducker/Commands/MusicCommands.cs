@@ -423,6 +423,27 @@ namespace ducker
             Bot.Queue.Clear();
             await msg.Channel.SendMessageAsync(Embed.ClearQueueEmbed(msg.User));
         }
+
+        [Command("remove-from-queue")]
+        public async Task RemoveFromQueue(CommandContext msg, uint position)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg));
+                return;
+            }
+
+            try
+            {
+                Bot.Queue.RemoveAt((int)position - 1);
+            }
+            catch
+            {
+                await msg.Channel.SendMessageAsync(Embed.InvalidTrackPositionEmbed(msg.User));
+            }
+
+            await msg.Channel.SendMessageAsync(Embed.TrackRemovedFromQueueEmbed(msg.User));
+        }
         
         
         // -stop
