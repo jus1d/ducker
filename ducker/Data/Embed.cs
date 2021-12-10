@@ -529,7 +529,7 @@ namespace ducker
                                   "\n**Commands**\n" +
                                   "`avatar`, `invite-link`, `random`" +
                                   "\n**Music commands**\n" +
-                                  "`join`, `play`, `stop`, `pause`, `resume`, `np`, `repeat`, `skip`, `queue`, `clear-queue`" +
+                                  "`join`, `play`, `stop`, `pause`, `resume`, `np`, `repeat`, `skip`, `queue`, `clear-queue`, `remove-from-queue`" +
                                   "\n**Admin commands**\n" +
                                   "`ban`, `kick`, `clear`, `quit`, `add-role`, `remove-role`, `mute`, `unmute`, `embed`, `reaction`, `activity`, `reaction-role-embed`, `stream`",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -543,104 +543,108 @@ namespace ducker
             else
             {
                 string helpEmbedDescription = "You try to use `-help <command>` with unknown command";
-                string helpEmbedCommandUsage = "-help <command>";
+                string helpEmbedCommandUsage = "/help <command>";
                 switch (command)
                 {
                     case "avatar":
                         helpEmbedDescription = "Send you embed with users avatar";
-                        helpEmbedCommandUsage = "-avatar <user>";
+                        helpEmbedCommandUsage = "/avatar <user>";
                         break;
                     case "invite-link":
                         helpEmbedDescription = "Send you invite link for this bot";
-                        helpEmbedCommandUsage = "-invite-link";
+                        helpEmbedCommandUsage = "/invite-link";
                         break;
                     case "random":
                         helpEmbedDescription = "Send you random value in your range from min to max value";
-                        helpEmbedCommandUsage = "-random <min> <max>";
+                        helpEmbedCommandUsage = "/random <min> <max>";
                         break;
                     case "play":
                         helpEmbedDescription = "Start playing music from youtube by link or search request";
-                        helpEmbedCommandUsage = "-play <link to track(youtube, soundcloud, twitch, spotify)> or <search>";
+                        helpEmbedCommandUsage = "/play <link to track(youtube, soundcloud, twitch, spotify)> or <search>";
                         break;
                     case "pause":
                         helpEmbedDescription = "Pause now playing music (can use `-play` command to resume playing)";
-                        helpEmbedCommandUsage = "-pause";
+                        helpEmbedCommandUsage = "/pause";
                         break;
                     case "stop":
                         helpEmbedDescription = "Permanently stop now playing music (can't use `-play` command to resume playing)";
-                        helpEmbedCommandUsage = "-stop";
+                        helpEmbedCommandUsage = "/stop";
                         break;
                     case "ban":
                         helpEmbedDescription = "Ban mentioned user in current server";
-                        helpEmbedCommandUsage = "-ban <user>";
+                        helpEmbedCommandUsage = "/ban <user>";
                         break;
                     case "kick":
                         helpEmbedDescription = "Kick mentioned user from current server";
-                        helpEmbedCommandUsage = "-kick <user>";
+                        helpEmbedCommandUsage = "/kick <user>";
                         break;
                     case "clear":
                         helpEmbedDescription = "Clear certain number of messages in current channel";
-                        helpEmbedCommandUsage = "-clear <amount> (amount must be less than 100)";
+                        helpEmbedCommandUsage = "/clear <amount> (amount must be less than 100)";
                         break;
                     case "embed":
                         helpEmbedDescription = "Send embed to current channel with your title, description, title URL, image (all optional, but title or description must be, if you use `-del` flag, message with config will be deleted)";
-                        helpEmbedCommandUsage = "-embed -t <title> -d <description> -image <image URL> -titlelink <title URL> -del";
+                        helpEmbedCommandUsage = "/embed -t <title> -d <description> -image <image URL> -titlelink <title URL> -del";
                         break;
                     case "reaction":
                         helpEmbedDescription = "Create reaction on message with your emoji";
-                        helpEmbedCommandUsage = "-reaction <message id> <emoji>";
+                        helpEmbedCommandUsage = "/reaction <message id> <emoji>";
                         break;
                     case "np":
                         helpEmbedDescription = "Send currently playing track";
-                        helpEmbedCommandUsage = "-np";
+                        helpEmbedCommandUsage = "/np";
                         break;
                     case "skip":
                         helpEmbedDescription = "Skip track to next in queue";
-                        helpEmbedCommandUsage = "-skip";
+                        helpEmbedCommandUsage = "/skip";
                         break;
                     case "queue":
                         helpEmbedDescription = "Send queue list to current channel";
-                        helpEmbedCommandUsage = "-queue";
+                        helpEmbedCommandUsage = "/queue";
                         break;
                     case "clear-queue":
                         helpEmbedDescription = "Clear queue list";
-                        helpEmbedCommandUsage = "-clear-queue";
+                        helpEmbedCommandUsage = "/clear-queue";
                         break;
                     case "quit":
                         helpEmbedDescription = "Quit from any voice channel";
-                        helpEmbedCommandUsage = "-quit";
+                        helpEmbedCommandUsage = "/quit";
                         break;
                     case "add-role":
                         helpEmbedDescription = "Add role to mentioned user";
-                        helpEmbedCommandUsage = "-add-role <user> <role>";
+                        helpEmbedCommandUsage = "/add-role <user> <role>";
                         break;
                     case "remove-role":
                         helpEmbedDescription = "Remove role from mentioned user";
-                        helpEmbedCommandUsage = "-remove-role <user> <role>";
+                        helpEmbedCommandUsage = "/remove-role <user> <role>";
                         break;
                     case "mute":
                         helpEmbedDescription = "Mute mentioned user";
-                        helpEmbedCommandUsage = "-mute <user>";
+                        helpEmbedCommandUsage = "/mute <user>";
                         break;
                     case "unmute":
                         helpEmbedDescription = "Unmute mentioned user";
-                        helpEmbedCommandUsage = "-unmute <user>";
+                        helpEmbedCommandUsage = "/unmute <user>";
                         break;
                     case "activity":
                         helpEmbedDescription = "Change bot activity type";
-                        helpEmbedCommandUsage = "-activity <playing / streaming>";
+                        helpEmbedCommandUsage = "/activity <playing / streaming>";
                         break;
                     case "reaction-role-embed":
                         helpEmbedDescription = "Send embed with buttons, press them to take roles";
-                        helpEmbedCommandUsage = "-reaction-role-embed";
+                        helpEmbedCommandUsage = "/reaction-role-embed";
                         break;
                     case "stream":
                         helpEmbedDescription = "Send stream announcement";
-                        helpEmbedCommandUsage = "-stream <description>";
+                        helpEmbedCommandUsage = "/stream <description>";
                         break;
                     case "repeat":
                         helpEmbedDescription = "Repeat current track";
-                        helpEmbedCommandUsage = "-repeat";
+                        helpEmbedCommandUsage = "/repeat";
+                        break;
+                    case "remove-from-queue":
+                        helpEmbedDescription = "Remove a track by position in queue";
+                        helpEmbedCommandUsage = "/remove-from-queue <position>";
                         break;
                 }
                 return new DiscordEmbedBuilder
