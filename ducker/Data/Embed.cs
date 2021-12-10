@@ -697,5 +697,23 @@ namespace ducker
                 Color = Bot.MainEmbedColor
             };
         }
+
+        public static DiscordEmbedBuilder InvalidTrackPositionEmbed(DiscordUser user)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
+
+            return new DiscordEmbedBuilder
+            {
+                Title = "Invalid track position in queue",
+                Description = $"**Queue:**\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl, Text = $"Removed by {user.Username}"
+                },
+                Color = Bot.WarningColor
+            };
+        }
     }
 }
