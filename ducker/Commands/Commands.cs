@@ -29,7 +29,7 @@ namespace ducker
         }
         
          
-        // -avatar
+        // -avatar 
         [Command("avatar"), Aliases("ava")]
         public async Task Avatar(CommandContext msg, DiscordMember user)
         {
