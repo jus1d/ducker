@@ -452,6 +452,24 @@ namespace ducker
                 Color = Bot.MainEmbedColor
             };
         }
+        public static DiscordEmbedBuilder TrackQueuedEmbed(CommandContext msg)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
+            
+            return new DiscordEmbedBuilder
+            {
+                Title = $"Track **{Bot.Queue[0].Title}** queued, position - {Bot.Queue.Count}",
+                Description = $"Queue:\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = msg.User.AvatarUrl,
+                    Text = "Queued by " + msg.User.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+        }
 
         public static DiscordEmbedBuilder ClearQueueEmbed(DiscordUser user)
         {

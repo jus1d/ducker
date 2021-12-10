@@ -196,6 +196,7 @@ namespace ducker
                             var loadResult = await node.Rest.GetTracksAsync(search);
                             track = loadResult.Tracks.First();
                             Bot.Queue.Add(track);
+                            await msg.Channel.SendMessageAsync(Embed.TrackQueuedEmbed(msg));
                         }
                         else
                         {
