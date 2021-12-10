@@ -448,6 +448,33 @@ namespace ducker
             await msg.CreateResponseAsync(ducker.Embed.Queue(msg.User));
         }
 
+        [SlashCommand("remove-from-queue", "Remove track from queue by his index")]
+        public async Task RemoveFromQueue(InteractionContext msg, [Option("index", "Track's index in queue")] string indexInput)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                return;
+            }
+
+            if (!int.TryParse(indexInput, out int index))
+            {
+                await msg.CreateResponseAsync("invalid index");
+                return;
+            }
+            try
+            {
+                Bot.Queue.RemoveAt(index - 1);
+            }
+            catch
+            {
+                await msg.CreateResponseAsync("invalid index");
+                return;
+            }
+
+            await msg.CreateResponseAsync(ducker.Embed.TrackRemovedFromQueueEmbed(msg.User));
+        }
+
         [SlashCommand("stop", "Stop playing")]
         public async Task Stop(InteractionContext msg)
         {

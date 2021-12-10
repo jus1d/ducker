@@ -675,5 +675,23 @@ namespace ducker
                 Color = Bot.MainEmbedColor
             };
         }
+
+        public static DiscordEmbedBuilder TrackRemovedFromQueueEmbed(DiscordUser user)
+        {
+            string totalQueue = "";
+            for (int i = 0; i < Bot.Queue.Count; i++)
+                totalQueue += $"{i + 1}. " + Bot.Queue[i].Title + "\n";
+
+            return new DiscordEmbedBuilder
+            {
+                Title = "Track removed from queue",
+                Description = $"**Queue:**\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl, Text = $"Removed by {user.Username}"
+                },
+                Color = Bot.MainEmbedColor
+            };
+        }
     }
 }
