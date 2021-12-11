@@ -459,8 +459,7 @@ namespace ducker
         [SlashCommand("stream", "Send stream announcement"), RequirePermissions(Permissions.Administrator)]
         public async Task StreamAnnouncement(InteractionContext msg, [Option("description", "Stream description")] string description = "")
         {
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource, 
-                new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.StreamAnnouncementEmbed(msg, description)));
+            await msg.CreateResponseAsync(ducker.Embed.StreamAnnouncementEmbed(msg, description));
             await (await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention)).DeleteAsync();
         }
     }
