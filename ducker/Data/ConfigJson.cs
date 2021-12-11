@@ -39,20 +39,10 @@ namespace ducker
         {
             var json = string.Empty;
 
-            try
-            {
-                using ( var fs = File.OpenRead("config.json"))
-                using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
-                    json = sr.ReadToEndAsync().Result;
-                return JsonConvert.DeserializeObject<ConfigJson>(json);
-            }
-            catch (Exception e)
-            {
-                using ( var fs = File.OpenRead(@"bin/Debug/net6.0/config.json"))
-                using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
-                    json = sr.ReadToEndAsync().Result;
-                return JsonConvert.DeserializeObject<ConfigJson>(json);
-            }
+            using ( var fs = File.OpenRead(@"C:\Users\Artem\Documents\PROJECTS\CODE\ducker\ducker\bin\Debug\net6.0\config.json"))
+            using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
+                json = sr?.ReadToEndAsync().Result;
+            return JsonConvert.DeserializeObject<ConfigJson>(json);
         }
     }
 }
