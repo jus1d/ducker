@@ -12,7 +12,7 @@ namespace ducker
     {
         // -join
         [Command("join")]
-        public async Task Join(CommandContext msg, DiscordChannel channel = null)
+        public async Task Join(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -24,11 +24,26 @@ namespace ducker
                 await Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
                 return;
             }
-            if (channel == null)
-            {
-                channel = msg.Member.VoiceState.Channel;
-            }
             
+            var lava = msg.Client.GetLavalink();
+            var node = lava.ConnectedNodes.Values.First();
+            await node.ConnectAsync(msg.Member.VoiceState.Channel);
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+        }
+
+        [Command("join")]
+        public async Task Join(CommandContext msg, DiscordChannel channel)
+        {
+            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
+            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
+            {
+                await Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
+                return;
+            }
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             await node.ConnectAsync(channel);
@@ -39,7 +54,7 @@ namespace ducker
         // -quit
         [Command("quit"), Aliases("leave", "q"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(CommandContext msg)
+        public async Task Quit(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -196,6 +211,7 @@ namespace ducker
                             var loadResult = await node.Rest.GetTracksAsync(search);
                             track = loadResult.Tracks.First();
                             Bot.Queue.Add(track);
+                            await msg.Channel.SendMessageAsync(Embed.TrackQueuedEmbed(msg));
                         }
                         else
                         {
