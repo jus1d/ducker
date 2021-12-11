@@ -30,7 +30,7 @@ namespace ducker
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
-        public static string RespondEmojiName = ":success:";
+        public static string RespondEmojiName = ":tick:";
         public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
         public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
         public static DiscordColor WarningColor = new DiscordColor("#ff9f30");
@@ -75,7 +75,7 @@ namespace ducker
                 StringPrefixes = new string[] { ConfigJson.GetConfigField().Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
-                EnableDefaultHelp = false
+                EnableDefaultHelp = true
             };
             var endpoint = new ConnectionEndpoint
             {
@@ -94,6 +94,7 @@ namespace ducker
             Commands = Client.UseCommandsNext(commandsConfig);
             Commands.RegisterCommands<Commands>();
             Commands.RegisterCommands<MusicCommands>();
+            Commands.SetHelpFormatter<DefaultHelpFormatter>();
             slash.RegisterCommands<SlashCommands>(696496218934608004);
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
