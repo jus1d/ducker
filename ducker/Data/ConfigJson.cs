@@ -39,7 +39,7 @@ namespace ducker
         {
             var json = string.Empty;
 
-            using (var fs = File.OpenRead("config.json"))
+            using (var fs = File.OpenRead(@"bin/Debug/net6.0/config.json"))
             using (var sr = new StreamReader(fs, new UTF8Encoding(false)))
                 json = sr.ReadToEndAsync().Result;
             return JsonConvert.DeserializeObject<ConfigJson>(json);
