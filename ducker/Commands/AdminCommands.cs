@@ -74,7 +74,7 @@ namespace ducker
 
         [Command("ban"),
          RequirePermissions(Permissions.BanMembers)]
-        public async Task Ban(CommandContext msg, params string[] text)
+        public async Task Ban(CommandContext msg, params string[] txt)
         {
             var incorrectBanCommandEmbed = new DiscordEmbedBuilder
             {
@@ -127,7 +127,7 @@ namespace ducker
 
         [Command("kick"),  
          RequirePermissions(Permissions.KickMembers)]
-        public async Task Kick(CommandContext msg, params string[] text)
+        public async Task Kick(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -198,7 +198,7 @@ namespace ducker
         
         [Command("clear"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task Clear(CommandContext msg, params string[] text)
+        public async Task Clear(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -338,7 +338,7 @@ namespace ducker
         }
         
         [Command("add-role"), RequirePermissions(Permissions.ManageRoles)]
-        public async Task AddRoleCommand(CommandContext msg, params string[] text)
+        public async Task AddRoleCommand(CommandContext msg, params string[] txt)
         {
             var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
             {
@@ -460,7 +460,7 @@ namespace ducker
         }
         
         [Command("remove-role"), RequirePermissions(Permissions.ManageRoles)]
-        public async Task RemoveRoleCommand(CommandContext msg, params string[] text)
+        public async Task RemoveRoleCommand(CommandContext msg, params string[] txt)
         {
             var incorrectRemoveRoleCommandEmbed = new DiscordEmbedBuilder
             {
@@ -488,7 +488,7 @@ namespace ducker
         
         // -mute
         [Command("mute"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, params string[] text)
+        public async Task Mute(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -516,7 +516,7 @@ namespace ducker
         
         // -unmute
         [Command("unmute"), RequirePermissions(Permissions.Administrator)]
-        public async Task Unmute(CommandContext msg, params string[] text)
+        public async Task Unmute(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -708,7 +708,7 @@ namespace ducker
 
         [Command("activity"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task ActivityChanger(CommandContext msg, params string[] text)
+        public async Task ActivityChanger(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {

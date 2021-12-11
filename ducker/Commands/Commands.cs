@@ -38,7 +38,7 @@ namespace ducker
         }
         
         [Command("avatar")]
-        public async Task Avatar(CommandContext msg, params string[] text)
+        public async Task Avatar(CommandContext msg, params string[] txt)
         {
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
@@ -76,7 +76,7 @@ namespace ducker
         }
 
         [Command("invite-link")]
-        public async Task InviteLink(CommandContext msg, params string[] text)
+        public async Task InviteLink(CommandContext msg, params string[] txt)
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
@@ -148,7 +148,7 @@ namespace ducker
         }
 
         [Command("random")]
-        public async Task Random(CommandContext msg, params string[] text)
+        public async Task Random(CommandContext msg, params string[] txt)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {

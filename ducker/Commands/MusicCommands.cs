@@ -12,8 +12,9 @@ namespace ducker
     {
         // -join
         [Command("join"),
-        Description("Join your voice channel")]
-        public async Task Join(CommandContext msg, params string[] text)
+        Description("Join your voice channel"),
+        Aliases("connect")]
+        public async Task Join(CommandContext msg, params string[] txt)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -57,7 +58,7 @@ namespace ducker
          Description("Quit any voice channel"),
          Aliases("leave", "q"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(CommandContext msg, params string[] text)
+        public async Task Quit(CommandContext msg, params string[] txt)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -298,7 +299,7 @@ namespace ducker
         }
 
         [Command("pause")]
-        public async Task Pause(CommandContext msg, params string[] text)
+        public async Task Pause(CommandContext msg, params string[] txt)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -430,7 +431,7 @@ namespace ducker
         }
         
         [Command("skip")]
-        public async Task Skip(CommandContext msg, params string[] text)
+        public async Task Skip(CommandContext msg, params string[] txt)
         {
             await Embed.IncorrectCommand(msg, "-skip").SendAsync(msg.Channel);
         }
