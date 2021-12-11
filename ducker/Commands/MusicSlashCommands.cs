@@ -389,7 +389,7 @@ namespace ducker
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
-        [SlashCommand("skip", "Skip current track to next in queue")]
+        [SlashCommand("skip", "Skip to the next track in queue")]
         public async Task Skip(InteractionContext msg)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)

@@ -7,15 +7,7 @@ using DSharpPlus.SlashCommands;
 namespace ducker
 {
     public partial class SlashCommands : ApplicationCommandModule
-    {
-        // help
-        [SlashCommand("help", "Send help list to current channel")]
-        public async Task Help(InteractionContext msg, [Option("command", "Command to help")] string command = "")
-        {
-            await msg.CreateResponseAsync(ducker.Embed.HelpEmbed(msg.User, command));
-        }
-        
-        
+    { 
         // avatar
         [SlashCommand("avatar", "Send embed with users avatar to current channel")]
         public async Task Avatar(InteractionContext msg,

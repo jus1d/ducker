@@ -15,22 +15,10 @@ namespace ducker
 {
     public partial class Commands : BaseCommandModule
     {
-        // -help
-        [Command("help")]
-        public async Task Help(CommandContext msg, string command = "")
-        {
-            await msg.Channel.SendMessageAsync(ducker.Embed.HelpEmbed(msg.User, command));
-        }
-
-        [Command("help")]
-        public async Task Help(CommandContext msg, params string[] text)
-        {
-            await msg.Channel.SendMessageAsync(ducker.Embed.HelpEmbed(msg.User, "some text"));
-        }
-        
-         
         // -avatar 
-        [Command("avatar"), Aliases("ava")]
+        [Command("avatar"), 
+         Description("Send user's avatar and it's link to current channel"), 
+         Aliases("ava")]
         public async Task Avatar(CommandContext msg, DiscordMember user)
         {
             var userAvatarEmbed = new DiscordEmbedBuilder
@@ -50,7 +38,7 @@ namespace ducker
         }
         
         [Command("avatar")]
-        public async Task Avatar(CommandContext msg, params string[] text)
+        public async Task Avatar(CommandContext msg, params string[] txt)
         {
             var incorrectAvatarCommandEmbed = new DiscordEmbedBuilder
             {
@@ -68,7 +56,9 @@ namespace ducker
         
         
         // -invite-link
-        [Command("invite-link"), Aliases("invite")]
+        [Command("invite-link"), 
+         Description("Send invite link for this bot to current channel"),
+         Aliases("invite")]
         public async Task InviteLink(CommandContext msg)
         {
             var inviteLinkEmbed = new DiscordEmbedBuilder
@@ -86,7 +76,7 @@ namespace ducker
         }
 
         [Command("invite-link")]
-        public async Task InviteLink(CommandContext msg, params string[] text)
+        public async Task InviteLink(CommandContext msg, params string[] txt)
         {
             var incorrectInviteLinkCommandEmbed = new DiscordEmbedBuilder
             {
@@ -104,7 +94,9 @@ namespace ducker
         
         
         // -random <min> <max>
-        [Command("random"), Aliases("rnd")]
+        [Command("random"), 
+         Description("Send random value in your range from min to max value to current channel"),
+         Aliases("rnd")]
         public async Task Random(CommandContext msg, [Description("min value")] int minValue, [Description("max value")] int maxValue)
         {
             var rnd = new Random();
@@ -156,7 +148,7 @@ namespace ducker
         }
 
         [Command("random")]
-        public async Task Random(CommandContext msg, params string[] text)
+        public async Task Random(CommandContext msg, params string[] txt)
         {
             var incorrectRandomCommandEmbed = new DiscordEmbedBuilder
             {

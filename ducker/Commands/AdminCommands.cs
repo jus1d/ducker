@@ -25,6 +25,7 @@ namespace ducker
     {
         // -ban
         [Command("ban"),
+         Description("Ban mentioned user in current server"),
          RequirePermissions(Permissions.BanMembers)]
         public async Task Ban(CommandContext msg, DiscordMember user, params string[] reasonInput)
         {
@@ -73,7 +74,7 @@ namespace ducker
 
         [Command("ban"),
          RequirePermissions(Permissions.BanMembers)]
-        public async Task Ban(CommandContext msg, params string[] text)
+        public async Task Ban(CommandContext msg, params string[] txt)
         {
             var incorrectBanCommandEmbed = new DiscordEmbedBuilder
             {
@@ -92,6 +93,7 @@ namespace ducker
         
         // -kick 
         [Command("kick"), 
+         Description("Kick mentioned user from current server"),
          RequirePermissions(Permissions.KickMembers)]
         public async Task Kick(CommandContext msg, DiscordMember user, params string[] reasonInput)
         {
@@ -125,7 +127,7 @@ namespace ducker
 
         [Command("kick"),  
          RequirePermissions(Permissions.KickMembers)]
-        public async Task Kick(CommandContext msg, params string[] text)
+        public async Task Kick(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -144,6 +146,7 @@ namespace ducker
 
         // -clear
         [Command("clear"),
+         Description("Clear `amount` messages from current channel"),
          RequirePermissions(Permissions.Administrator)]
         public async Task Clear(CommandContext msg, int amount)
         {
@@ -195,7 +198,7 @@ namespace ducker
         
         [Command("clear"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task Clear(CommandContext msg, params string[] text)
+        public async Task Clear(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -230,7 +233,9 @@ namespace ducker
         }
 
 
-        [Command("add-role"), RequirePermissions(Permissions.ManageRoles)]
+        [Command("add-role"), 
+         Description("Add a role to mentioned user"),
+         RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
         {
             await msg.Message.DeleteAsync();
@@ -333,7 +338,7 @@ namespace ducker
         }
         
         [Command("add-role"), RequirePermissions(Permissions.ManageRoles)]
-        public async Task AddRoleCommand(CommandContext msg, params string[] text)
+        public async Task AddRoleCommand(CommandContext msg, params string[] txt)
         {
             var incorrectAddRoleCommandEmbed = new DiscordEmbedBuilder
             {
@@ -350,7 +355,9 @@ namespace ducker
         }
 
 
-        [Command("remove-role"), RequirePermissions(Permissions.ManageRoles)]
+        [Command("remove-role"), 
+         Description("Remove role from mentioned user"),
+         RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role)
         {
             await msg.Message.DeleteAsync();
@@ -453,7 +460,7 @@ namespace ducker
         }
         
         [Command("remove-role"), RequirePermissions(Permissions.ManageRoles)]
-        public async Task RemoveRoleCommand(CommandContext msg, params string[] text)
+        public async Task RemoveRoleCommand(CommandContext msg, params string[] txt)
         {
             var incorrectRemoveRoleCommandEmbed = new DiscordEmbedBuilder
             {
@@ -471,7 +478,9 @@ namespace ducker
         
         
         // -mute
-        [Command("mute"), RequirePermissions(Permissions.Administrator)]
+        [Command("mute"), 
+         Description("Mute mentioned member"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task Mute(CommandContext msg, DiscordMember member)
         {
             await member.GrantRoleAsync(msg.Guild.GetRole(Role.MutedRoleId));
@@ -479,7 +488,7 @@ namespace ducker
         
         // -mute
         [Command("mute"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, params string[] text)
+        public async Task Mute(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -497,7 +506,9 @@ namespace ducker
         
         
         // -unmute
-        [Command("unmute"), RequirePermissions(Permissions.Administrator)]
+        [Command("unmute"), 
+         Description("Unmute mentioned member"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task Unmute(CommandContext msg, DiscordMember member)
         {
             await member.RevokeRoleAsync(msg.Guild.GetRole(Role.MutedRoleId));
@@ -505,7 +516,7 @@ namespace ducker
         
         // -unmute
         [Command("unmute"), RequirePermissions(Permissions.Administrator)]
-        public async Task Unmute(CommandContext msg, params string[] text)
+        public async Task Unmute(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -525,6 +536,7 @@ namespace ducker
 
         // -embed 
         [Command("embed"), 
+         Description("Create, and sends an embed with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted)"),
          Aliases("e"),
          RequirePermissions(Permissions.Administrator)]
         public async Task Embed(CommandContext msg, params string[] embedConfig)
@@ -631,41 +643,8 @@ namespace ducker
         }
 
 
-        [Command("reaction")]
-        public async Task Reaction(CommandContext msg, ulong messageId, DiscordEmoji emoji)
-        {
-            var message = msg.Channel.GetMessageAsync(messageId);
-            await message.Result.CreateReactionAsync(emoji);
-            Thread.Sleep(5000);
-            await msg.Message.DeleteAsync();
-        }
-
-        [Command("reaction")]
-        public async Task Reaction(CommandContext msg, params string[] text)
-        {
-            try
-            {
-                string s = text[0];
-            }
-            catch (Exception e)
-            {
-                var incorrectReactionCommand = new DiscordEmbedBuilder
-                {
-                    Title = $"Missing argument",
-                    Description = $"**Usage:** `-reaction <message id> <emoji>`",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectReactionCommand);
-            }
-        }
-        
-
         [Command("activity"),
+         Description("Change bot activity"),
          RequirePermissions(Permissions.Administrator)]
         public async Task ActivityChanger(CommandContext msg, string activityType)
         {
@@ -729,7 +708,7 @@ namespace ducker
 
         [Command("activity"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task ActivityChanger(CommandContext msg, params string[] text)
+        public async Task ActivityChanger(CommandContext msg, params string[] txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
@@ -745,7 +724,9 @@ namespace ducker
             await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
         }
 
-        [Command("reaction-role-embed"), RequirePermissions(Permissions.Administrator)]
+        [Command("reaction-role-embed"), 
+         Description("Send an embed with buttons, by press there you will granted a role"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task ReactionRolesEmbed(CommandContext msg)
         {
             await msg.Message.DeleteAsync();
@@ -760,7 +741,9 @@ namespace ducker
             await msg.Channel.SendMessageAsync(builder);
         }
 
-        [Command("stream"), RequirePermissions(Permissions.Administrator)]
+        [Command("stream"), 
+         Description("Send stream announcement"),
+         RequirePermissions(Permissions.Administrator)]
         public async Task StreamAnnouncement(CommandContext msg, params string[] text)
         {
             await msg.Message.DeleteAsync();

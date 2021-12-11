@@ -11,8 +11,10 @@ namespace ducker
     public class MusicCommands : BaseCommandModule
     {
         // -join
-        [Command("join")]
-        public async Task Join(CommandContext msg, params string[] text)
+        [Command("join"),
+        Description("Join your voice channel"),
+        Aliases("connect")]
+        public async Task Join(CommandContext msg, params string[] txt)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -52,9 +54,11 @@ namespace ducker
         
 
         // -quit
-        [Command("quit"), Aliases("leave", "q"),
+        [Command("quit"), 
+         Description("Quit any voice channel"),
+         Aliases("leave", "q"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(CommandContext msg, params string[] text)
+        public async Task Quit(CommandContext msg, params string[] txt)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -75,7 +79,9 @@ namespace ducker
 
 
         // -play
-        [Command("play"), Aliases("p")]
+        [Command("play"), 
+         Description("Start playing music from youtube, spotify or soundcloud by link or search request"),
+         Aliases("p")]
         public async Task Play(CommandContext msg, params string[] input) 
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
@@ -260,7 +266,8 @@ namespace ducker
 
 
         // -pause
-        [Command("pause")]
+        [Command("pause"),
+        Description("Pause now playing music")]
         public async Task Pause(CommandContext msg)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
@@ -292,7 +299,7 @@ namespace ducker
         }
 
         [Command("pause")]
-        public async Task Pause(CommandContext msg, params string[] text)
+        public async Task Pause(CommandContext msg, params string[] txt)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -304,7 +311,8 @@ namespace ducker
         
         
         // -resume
-        [Command("resume")]
+        [Command("resume"),
+        Description("Resume playing music")]
         public async Task Resume(CommandContext msg)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
@@ -333,7 +341,8 @@ namespace ducker
         
         
         // -np
-        [Command("np")]
+        [Command("np"),
+        Description("Display now playing track")]
         public async Task NowPlaying(CommandContext msg)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
@@ -366,7 +375,8 @@ namespace ducker
         
         
         // -repeat
-        [Command("repeat")]
+        [Command("repeat"),
+        Description("Repeat currnet playing track")]
         public async Task Repeat(CommandContext msg)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
@@ -399,7 +409,8 @@ namespace ducker
         
         
         // -skip
-        [Command("skip")]
+        [Command("skip"),
+        Description("Skip to the next track in queue")]
         public async Task Skip(CommandContext msg)
         {
             try
@@ -420,27 +431,30 @@ namespace ducker
         }
         
         [Command("skip")]
-        public async Task Skip(CommandContext msg, params string[] text)
+        public async Task Skip(CommandContext msg, params string[] txt)
         {
             await Embed.IncorrectCommand(msg, "-skip").SendAsync(msg.Channel);
         }
         
         
         // -queue
-        [Command("queue")]
+        [Command("queue"),
+        Description("Send queue list")]
         public async Task Queue(CommandContext msg)
         {
             await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
         }
 
-        [Command("clear-queue")]
+        [Command("clear-queue"),
+        Description("Clear queue")]
         public async Task ClearQueue(CommandContext msg)
         {
             Bot.Queue.Clear();
             await msg.Channel.SendMessageAsync(Embed.ClearQueueEmbed(msg.User));
         }
 
-        [Command("remove-from-queue")]
+        [Command("remove-from-queue"),
+        Description("Remove track from queue by it's position")]
         public async Task RemoveFromQueue(CommandContext msg, uint position)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
@@ -463,7 +477,9 @@ namespace ducker
         
         
         // -stop
-        [Command("stop"), Aliases("s")]
+        [Command("stop"), 
+         Description("Stop playing"),
+         Aliases("s")]
         public async Task Stop(CommandContext msg)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
@@ -496,7 +512,9 @@ namespace ducker
         }
 
 
-        [Command("phonk"), Aliases("ph")]
+        [Command("phonk"), 
+         Description("Start playing 24/7 Memphis Phonk Radio"),
+         Aliases("ph")]
         public async Task Phonk(CommandContext msg)
         {
             await Play(msg, "https://www.youtube.com/watch?v=3lwdObInlqU&ab_channel=Memphis66.6");
