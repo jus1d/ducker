@@ -22,6 +22,10 @@ using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
 using Newtonsoft.Json;
+using TwitchLib.Api;
+using TwitchLib.Api.Services;
+using TwitchLib.Api.Services.Events;
+using TwitchLib.Api.Services.Events.LiveStreamMonitor;
 
 namespace ducker
 {
@@ -29,6 +33,8 @@ namespace ducker
     {
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
+        private LiveStreamMonitorService Monitor;
+        private TwitchAPI API;
 
         public static string RespondEmojiName = ":tick:";
         public static DiscordColor MainEmbedColor = new DiscordColor("#9b73ff");
@@ -44,6 +50,20 @@ namespace ducker
 
         public async Task RunAsync()
         {
+            API = new TwitchAPI();
+            API.Settings.ClientId = "2zij38j2vmug5ictoalp9nxttl7s9w";
+            API.Settings.Secret = "av494afabwc27lb6yv49qdqkii3jkb";
+            API.Settings.AccessToken = "19tc6p6bpqt1teiypn9a17r7ts484a";  
+            
+            Monitor = new LiveStreamMonitorService(API, 10);
+            List<string> idList = new List<string>{ "itakash1", "jus1d", "cheatbanned", "pate1k", "bratishkinoff", "evelone192" };
+            Monitor.SetChannelsById(idList);
+            Monitor.Start();
+            Monitor.OnStreamOnline += OnStreamOnline;
+            Monitor.OnStreamOffline += OnStreamOffline;
+            
+            // Monitor.Start();
+            
             var config = new DiscordConfiguration
             {
                 Token = ConfigJson.GetConfigField().Token,
@@ -99,7 +119,22 @@ namespace ducker
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
+            //Monitor.Start();
             await Task.Delay(-1);
+        }
+
+        public async void OnStreamOffline(object? sender, OnStreamOfflineArgs e)
+        {
+            Console.WriteLine($"stream offline");
+            var guild = await Client.GetGuildAsync(696496218934608004);
+            await guild.GetChannel(CmdChannelId).SendMessageAsync($"stream offline! title: {e.Stream.Title} channel: {e.Channel}");
+        }
+
+        public async void OnStreamOnline(object? sender, OnStreamOnlineArgs e)
+        {
+            Console.WriteLine($"stream online! title: {e.Stream.Title} channel: {e.Channel}");
+            var guild = await Client.GetGuildAsync(696496218934608004);
+            await guild.GetChannel(CmdChannelId).SendMessageAsync($"stream online! title: {e.Stream.Title} channel: {e.Channel}");
         }
 
         private Task OnClientReady(DiscordClient c, ReadyEventArgs e)
