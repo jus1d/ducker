@@ -6,5 +6,5 @@
     "musicChannelId":"music channel id",
     "serverLogsChannelId":"logs channel id",
     "cmdChannelId":"channel testing or admin channel id",
-    "id":"bot's discord id"
+    "id":"bot id"
 }
