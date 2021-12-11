@@ -12,7 +12,7 @@ namespace ducker
     {
         // -join
         [Command("join")]
-        public async Task Join(CommandContext msg)
+        public async Task Join(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
@@ -54,7 +54,7 @@ namespace ducker
         // -quit
         [Command("quit"), Aliases("leave", "q"),
          RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(CommandContext msg)
+        public async Task Quit(CommandContext msg, params string[] text)
         {
             if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
             {
