@@ -61,9 +61,7 @@ namespace ducker
             Monitor.Start();
             Monitor.OnStreamOnline += OnStreamOnline;
             Monitor.OnStreamOffline += OnStreamOffline;
-            
-            // Monitor.Start();
-            
+
             var config = new DiscordConfiguration
             {
                 Token = ConfigJson.GetConfigField().Token,
@@ -119,7 +117,7 @@ namespace ducker
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
-            //Monitor.Start();
+            Monitor.Start();
             await Task.Delay(-1);
         }
 
