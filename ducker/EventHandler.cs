@@ -225,8 +225,7 @@ namespace ducker
             {
                 return;
             }
-            
-            
+
             ulong musicChannelIdFromDB = Database.GetMusicChannel(sender.Guild.Id);
 
             await sender.PlayAsync(Bot.Queue[0]);

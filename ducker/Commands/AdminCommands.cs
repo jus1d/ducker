@@ -772,13 +772,13 @@ namespace ducker
             DataTable findGuildTable = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `main` WHERE `guildId` = '{msg.Guild.Id}'", 
+            MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `ducker` WHERE `guildId` = '{msg.Guild.Id}'", 
                 database.GetConnection());
             adapter.SelectCommand = findGuildCommand;
             adapter.Fill(findGuildTable);
             if (findGuildTable.Rows.Count > 0)
             {
-                MySqlCommand command = new MySqlCommand($"UPDATE `main` SET `musicChannelId` = {channel.Id} WHERE `main`.`guildId` = {msg.Guild.Id}",
+                MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `musicChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
                     database.GetConnection());
             
                 adapter.SelectCommand = command;
@@ -786,7 +786,7 @@ namespace ducker
             }
             else
             {
-                MySqlCommand command = new MySqlCommand("INSERT INTO `main` (`guildId`, `musicChannelId`) VALUES (@guildId, @musicChannelId)", 
+                MySqlCommand command = new MySqlCommand("INSERT INTO `ducker` (`guildId`, `musicChannelId`) VALUES (@guildId, @musicChannelId)", 
                     database.GetConnection());
                 command.Parameters.Add("@guildId", MySqlDbType.VarChar).Value = msg.Channel.Guild.Id;
                 command.Parameters.Add("@musicChannelId", MySqlDbType.VarChar).Value = channel.Id;

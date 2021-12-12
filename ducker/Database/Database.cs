@@ -30,7 +30,7 @@ public class Database
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-        MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {guildId}", database.GetConnection());
+        MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `ducker` WHERE `guildId` = {guildId}", database.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
