@@ -1,5 +1,5 @@
 ﻿using System.Data;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
 
 namespace ducker;
 
@@ -10,17 +10,13 @@ public class Database
     public void OpenConnection()
     {
         if (connection.State == ConnectionState.Closed)
-        {
             connection.Open();
-        }
     }
 
     public void CloseConnection()
     {
         if (connection.State == ConnectionState.Open)
-        {
             connection.Close();
-        }
     }
 
     public MySqlConnection GetConnection()
