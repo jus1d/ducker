@@ -759,7 +759,11 @@ namespace ducker
             await (await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention)).DeleteAsync();
             await (await msg.Channel.SendMessageAsync(ducker.Embed.StreamAnnouncementEmbed(msg, description))).CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":twitch:"));
         }
-
+        
+        [Command("set-music-channel"), 
+         Description("Set music channel for this guild"),
+         Aliases("smc"), 
+         RequirePermissions(Permissions.Administrator)]
         public async Task SetMusicChannel(CommandContext msg, DiscordChannel channel)
         {
             await msg.Channel.SendMessageAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
@@ -768,15 +772,14 @@ namespace ducker
             DataTable findGuildTable = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `main` WHERE `guildId` = '{msg.Guild.Id}'", database.GetConnection());
+            MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `main` WHERE `guildId` = '{msg.Guild.Id}'", 
+                database.GetConnection());
             adapter.SelectCommand = findGuildCommand;
             adapter.Fill(findGuildTable);
             if (findGuildTable.Rows.Count > 0)
             {
-                MySqlCommand command = new MySqlCommand($"UPDATE `main` SET `musicChannelId` = @musicChannelId WHERE `main`.`guildId` = @guildId",
+                MySqlCommand command = new MySqlCommand($"UPDATE `main` SET `musicChannelId` = {channel.Id} WHERE `main`.`guildId` = {msg.Guild.Id}",
                     database.GetConnection());
-                command.Parameters.Add("@guildId", MySqlDbType.VarChar).Value = msg.Channel.Guild.Id;
-                command.Parameters.Add("@musicChannelId", MySqlDbType.VarChar).Value = channel.Id;
             
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
