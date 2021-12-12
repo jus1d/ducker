@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -7,6 +8,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
+using MySqlConnector;
 using SpotifyAPI.Web;
 
 namespace ducker
@@ -16,9 +18,20 @@ namespace ducker
         [SlashCommand("join", "Join your voice channel")]
         public async Task Join(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -35,9 +48,20 @@ namespace ducker
         [SlashCommand("quit", "Quit voice channel"), RequirePermissions(Permissions.Administrator)]
         public async Task Quit(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -56,10 +80,20 @@ namespace ducker
         [SlashCommand("play", "Start playing track")]
         public async Task Play(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(ducker.Embed.IncorrectMusicChannelEmbed(msg)));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -272,9 +306,20 @@ namespace ducker
         [SlashCommand("np", "Display now playing track")]
         public async Task NowPlaying(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -303,9 +348,20 @@ namespace ducker
         [SlashCommand("repeat", "Repeat current track")]
         public async Task Repeat(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -334,9 +390,20 @@ namespace ducker
         [SlashCommand("pause", "Pause current track")]
         public async Task Pause(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -365,9 +432,20 @@ namespace ducker
         [SlashCommand("resume", "Resume current track")]
         public async Task Resume(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -392,9 +470,20 @@ namespace ducker
         [SlashCommand("skip", "Skip to the next track in queue")]
         public async Task Skip(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -428,9 +517,20 @@ namespace ducker
         [SlashCommand("queue", "Send queue list")]
         public async Task Queue(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             await msg.CreateResponseAsync(ducker.Embed.Queue(msg.User));
@@ -439,9 +539,20 @@ namespace ducker
         [SlashCommand("clear-queue", "Clear queue list")]
         public async Task ClearQueue(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             Bot.Queue.Clear();
@@ -451,9 +562,20 @@ namespace ducker
         [SlashCommand("remove-from-queue", "Remove track from queue by his index")]
         public async Task RemoveFromQueue(InteractionContext msg, [Option("position", "Track's position in queue")] string positionInput)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
 
@@ -478,9 +600,20 @@ namespace ducker
         [SlashCommand("stop", "Stop playing")]
         public async Task Stop(InteractionContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
-                await msg.CreateResponseAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
             }
             var lava = msg.Client.GetLavalink();

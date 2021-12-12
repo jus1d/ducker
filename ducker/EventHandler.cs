@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,7 @@ using DSharpPlus.Net;
 using DSharpPlus.Net.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
+using MySqlConnector;
 using Newtonsoft.Json;
 
 namespace ducker
@@ -223,8 +225,20 @@ namespace ducker
             {
                 return;
             }
+            
+            Database database = new Database();
+            DataTable table = new DataTable();
+            MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {sender.Guild.Id}", database.GetConnection());
+            adapter.SelectCommand = command;
+            adapter.Fill(table);
+            ulong musicChannelIdFromDB = 0;
+            if (table.Rows.Count > 0)
+                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            
             await sender.PlayAsync(Bot.Queue[0]);
-            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await sender.Node.Discord.GetGuildAsync(696496218934608004).Result.GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(Bot.MusicChannelId));
+            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await sender.Node.Discord.GetGuildAsync(696496218934608004).Result.GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(musicChannelIdFromDB));
             Bot.Queue.Remove(Bot.Queue[0]);
         }
     }

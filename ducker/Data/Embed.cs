@@ -50,12 +50,12 @@ namespace ducker
             };
         }
         
-        public static DiscordMessageBuilder IncorrectMusicChannel(CommandContext msg)
+        public static DiscordMessageBuilder IncorrectMusicChannel(CommandContext msg, ulong musicChannelId)
         {
             var incorrectMusicChannel = new DiscordEmbedBuilder
             {
                 Title = "Incorrect channel for music commands",
-                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Description = $"This command can be used only in <#{msg.Guild.GetChannel(musicChannelId).Id}>",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -66,12 +66,12 @@ namespace ducker
             return new DiscordMessageBuilder()
                 .AddEmbed(incorrectMusicChannel);
         }
-        public static DiscordMessageBuilder IncorrectMusicChannel(InteractionContext msg)
+        public static DiscordMessageBuilder IncorrectMusicChannel(InteractionContext msg, ulong musicChannelId)
         {
             var incorrectMusicChannel = new DiscordEmbedBuilder
             {
                 Title = "Incorrect channel for music commands",
-                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Description = $"This command can be used only in {msg.Guild.GetChannel(musicChannelId).Mention}",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -82,12 +82,12 @@ namespace ducker
             return new DiscordMessageBuilder()
                 .AddEmbed(incorrectMusicChannel);
         }
-        public static DiscordEmbedBuilder IncorrectMusicChannelEmbed(InteractionContext msg)
+        public static DiscordEmbedBuilder IncorrectMusicChannelEmbed(InteractionContext msg, ulong musicChannelId)
         {
             return new DiscordEmbedBuilder
             {
                 Title = "Incorrect channel for music commands",
-                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Description = $"This command can be used only in {msg.Guild.GetChannel(musicChannelId).Mention}",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,

@@ -57,10 +57,5 @@ public partial class Commands
             musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
 
         await msg.Channel.SendMessageAsync(musicChannelIdFromDB.ToString());
-
-        if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != musicChannelIdFromDB)
-        {
-            await msg.Channel.SendMessageAsync("not music channel");
-        }
     }
 }

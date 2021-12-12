@@ -36,7 +36,7 @@ namespace ducker
                 return;
             }
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -67,7 +67,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -102,7 +102,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -137,7 +137,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -334,7 +334,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -376,7 +376,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -401,7 +401,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -442,7 +442,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -487,7 +487,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -532,7 +532,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -568,7 +568,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -594,7 +594,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -618,7 +618,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -643,7 +643,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -679,7 +679,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;
@@ -711,7 +711,7 @@ namespace ducker
             if (table.Rows.Count > 0)
                 musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId && msg.Channel.Id != musicChannelIdFromDB)
+            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
             {
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
                 return;

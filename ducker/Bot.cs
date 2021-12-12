@@ -35,7 +35,7 @@ namespace ducker
         public static DiscordColor IncorrectEmbedColor = new DiscordColor("#ff0000");
         public static DiscordColor WarningColor = new DiscordColor("#ff9f30");
         public static readonly ulong Id = ConfigJson.GetConfigField().Id;
-        public static readonly ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
+        // public static readonly ulong MusicChannelId = ConfigJson.GetConfigField().MusicChannelId;
         public static readonly ulong ServerLogsChannelId = ConfigJson.GetConfigField().ServerLogsChannelId;
         public static readonly ulong CmdChannelId = ConfigJson.GetConfigField().CmdChannelId;
         public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=918248095869968434&permissions=8&scope=bot%20applications.commands";
