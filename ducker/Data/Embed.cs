@@ -605,5 +605,34 @@ namespace ducker
                 Color = Bot.WarningColor
             };
         }
+
+        public static DiscordEmbedBuilder ChannelConfiguredEmbed(DiscordUser user, string channelTypeIn,
+            DiscordChannel channel)
+        {
+            string channelType = "";
+            if (channelTypeIn == "music")
+            {
+                channelType = "Music channel";
+            }
+            else if (channelTypeIn == "cmd")
+            {
+                channelType = "Command channel";
+            }
+            else if (channelType == "logs")
+            {
+                channelType = "Logs channel";
+            }
+
+            return new DiscordEmbedBuilder
+            {
+                Description = $"{channelType} configured to {channel.Mention}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl,
+                    Text = user.Username
+                },
+                Color = Bot.MainEmbedColor
+            };
+        }
     }
 }

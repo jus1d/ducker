@@ -465,9 +465,13 @@ namespace ducker
             await (await msg.Channel.SendMessageAsync(msg.Guild.GetRole(Role.TwitchFollowerRoleId).Mention)).DeleteAsync();
         }
 
-        [SlashCommand("set-music-channel", "Set music channel for this server"),
+        [SlashCommand("set-channel", "Set music channel for this server"),
          RequirePermissions(Permissions.Administrator)]
         public async Task SetMusicCommand(InteractionContext msg,
+            [Option("channelType", "Channel to set")] 
+            [Choice("Command channel", "cmd")] 
+            [Choice("Logs channel", "logs")] 
+            [Choice("Music channel", "music")] string channelType,
             [Option("channel", "Music channel")] DiscordChannel channel)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
@@ -479,22 +483,65 @@ namespace ducker
             MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `ducker` WHERE `guildId` = '{msg.Guild.Id}'", database.GetConnection());
             adapter.SelectCommand = findGuildCommand;
             adapter.Fill(findGuildTable);
-            if (findGuildTable.Rows.Count > 0)
+            switch (channelType)
             {
-                MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `musicChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
-                    database.GetConnection());
+                case "music":
+                    if (findGuildTable.Rows.Count > 0)
+                    {
+                        MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `musicChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
+                            database.GetConnection());
             
-                adapter.SelectCommand = command;
-                adapter.Fill(table);
-            }
-            else
-            {
-                MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`) VALUES ({msg.Guild.Id}, {channel.Id})", 
-                    database.GetConnection());
+                        adapter.SelectCommand = command;
+                        adapter.Fill(table);
+                    }
+                    else
+                    {
+                        MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`, `cmdChannelId`, `logsChannelId`) VALUES ({msg.Guild.Id}, {channel.Id}, NULL, NULL)", 
+                            database.GetConnection());
 
-                adapter.SelectCommand = command;
-                adapter.Fill(table);
+                        adapter.SelectCommand = command;
+                        adapter.Fill(table);
+                    }
+                    break;
+                case "cmd":
+                    if (findGuildTable.Rows.Count > 0)
+                    {
+                        MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `cmdChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
+                            database.GetConnection());
+            
+                        adapter.SelectCommand = command;
+                        adapter.Fill(table);
+                    }
+                    else
+                    {
+                        MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`, `cmdChannelId`, `logsChannelId`) VALUES ({msg.Guild.Id}, NULL, {channel.Id}, NULL)", 
+                            database.GetConnection());
+
+                        adapter.SelectCommand = command;
+                        adapter.Fill(table);
+                    }
+                    break;
+                case "logs":
+                    if (findGuildTable.Rows.Count > 0)
+                    {
+                        MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `logsChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
+                            database.GetConnection());
+            
+                        adapter.SelectCommand = command;
+                        adapter.Fill(table);
+                    }
+                    else
+                    {
+                        MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`, `cmdChannelId`, `logsChannelId`) VALUES ({msg.Guild.Id}, NULL, NULL, {channel.Id})", 
+                            database.GetConnection());
+
+                        adapter.SelectCommand = command;
+                        adapter.Fill(table);
+                    }
+                    break;
             }
+
+            await msg.Channel.SendMessageAsync(ducker.Embed.ChannelConfiguredEmbed(msg.User, channelType, channel));
         }
     }
 }
