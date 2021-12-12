@@ -41,21 +41,4 @@ public partial class Commands
             adapter.Fill(table);
         }
     }
-
-    [Command("t")]
-    public async Task Test(CommandContext msg)
-    {
-        Database database = new Database();
-        DataTable table = new DataTable();
-        MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-        MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-        adapter.SelectCommand = command;
-        adapter.Fill(table);
-        ulong musicChannelIdFromDB = 0;
-        if (table.Rows.Count > 0)
-            musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
-
-        await msg.Channel.SendMessageAsync(musicChannelIdFromDB.ToString());
-    }
 }

@@ -23,4 +23,23 @@ public class Database
     {
         return connection;
     }
+
+    public static ulong GetMusicChannel(ulong guildId)
+    {
+        Database database = new Database();
+        DataTable table = new DataTable();
+        MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+        MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {guildId}", database.GetConnection());
+        adapter.SelectCommand = command;
+        adapter.Fill(table);
+        if (table.Rows.Count > 0)
+        {
+            return ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+        }
+        else
+        {
+            return 0;
+        }
+    }
 }

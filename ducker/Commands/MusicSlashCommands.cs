@@ -19,20 +19,16 @@ namespace ducker
         public async Task Join(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -49,20 +45,16 @@ namespace ducker
         public async Task Quit(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -81,20 +73,16 @@ namespace ducker
         public async Task Play(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -302,20 +290,16 @@ namespace ducker
         public async Task NowPlaying(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -345,20 +329,16 @@ namespace ducker
         public async Task Repeat(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -388,20 +368,16 @@ namespace ducker
         public async Task Pause(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -430,20 +406,16 @@ namespace ducker
         public async Task Resume(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -468,20 +440,16 @@ namespace ducker
         public async Task Skip(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -515,20 +483,16 @@ namespace ducker
         public async Task Queue(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             await msg.Channel.SendMessageAsync(ducker.Embed.Queue(msg.User));
@@ -538,20 +502,16 @@ namespace ducker
         public async Task ClearQueue(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             Bot.Queue.Clear();
@@ -562,20 +522,16 @@ namespace ducker
         public async Task RemoveFromQueue(InteractionContext msg, [Option("position", "Track's position in queue")] string positionInput)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
 
@@ -601,20 +557,16 @@ namespace ducker
         public async Task Stop(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {msg.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             
-            if (msg.Channel.Id != musicChannelIdFromDB && msg.Channel.Id != Bot.CmdChannelId)
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDB));
+                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            {
+                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             var lava = msg.Client.GetLavalink();

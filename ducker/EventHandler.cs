@@ -226,17 +226,9 @@ namespace ducker
                 return;
             }
             
-            Database database = new Database();
-            DataTable table = new DataTable();
-            MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-            MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `main` WHERE `guildId` = {sender.Guild.Id}", database.GetConnection());
-            adapter.SelectCommand = command;
-            adapter.Fill(table);
-            ulong musicChannelIdFromDB = 0;
-            if (table.Rows.Count > 0)
-                musicChannelIdFromDB = ulong.Parse(table.Rows[0].ItemArray[0].ToString());
             
+            ulong musicChannelIdFromDB = Database.GetMusicChannel(sender.Guild.Id);
+
             await sender.PlayAsync(Bot.Queue[0]);
             await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await sender.Node.Discord.GetGuildAsync(696496218934608004).Result.GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(musicChannelIdFromDB));
             Bot.Queue.Remove(Bot.Queue[0]);
