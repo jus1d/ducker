@@ -12,6 +12,7 @@ To use some commands you'll need member's, channel's or guild's IDs. To use IDs,
   https://github.com/jus1d/ducker.git
 * Compile this project with Visual Studio or Rider, and it will be ready
 * **Don't forget about `config.json` file.** Set up token, prefix and other configuratin information in `config.json` file, than move it to the same folder as your executable file
+* Move Lavalink.jar and application.yml to one directory, set your connection password in application.yml and Bot.cs, than it before bot start
 
 ## Help
 Type `-help` to see help list with all commands. You can also type `/` in input line and see all commands there. In next updates there will be only slash commands
