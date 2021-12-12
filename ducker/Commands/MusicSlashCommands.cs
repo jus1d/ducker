@@ -10,6 +10,7 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 using MySqlConnector;
 using SpotifyAPI.Web;
+using ducker;
 
 namespace ducker
 {
@@ -20,13 +21,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -46,13 +48,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -74,13 +77,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -291,13 +295,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -330,13 +335,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -369,13 +375,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -407,13 +414,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -441,13 +449,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -484,13 +493,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -503,13 +513,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -523,13 +534,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
@@ -558,13 +570,14 @@ namespace ducker
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != Bot.CmdChannelId)
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
                 await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
