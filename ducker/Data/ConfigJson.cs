@@ -21,19 +21,10 @@ namespace ducker
         public ulong Id { get; private set; }
         
         [JsonProperty("spotifyId")]
-        public string SpotifyId { get; private set;  }
+        public string SpotifyId { get; private set; }
         
         [JsonProperty("spotifySecret")]
-        public string SpotifySecret { get; private set;  }
-        
-        [JsonProperty("musicChannelId")]
-        public ulong MusicChannelId { get; private set; }
-        
-        [JsonProperty("serverLogsChannelId")]
-        public ulong ServerLogsChannelId { get; private set; }
-        
-        [JsonProperty("cmdChannelId")]
-        public ulong CmdChannelId { get; private set; }
+        public string SpotifySecret { get; private set; }
 
         public static ConfigJson GetConfigField()
         {
