@@ -30,7 +30,7 @@ namespace ducker
         public DiscordClient Client { get; private set; }
         public CommandsNextExtension Commands { get; private set; }
 
-        public static string RespondEmojiName = ":tick:";
+        public static string RespondEmojiName = ":verify:";
         public static DiscordColor MainEmbedColor = new ("#9b73ff");
         public static DiscordColor IncorrectEmbedColor = new ("#ff0000");
         public static DiscordColor WarningColor = new ("#ff9f30");
