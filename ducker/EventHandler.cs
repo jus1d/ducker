@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
@@ -20,6 +21,7 @@ using DSharpPlus.Net;
 using DSharpPlus.Net.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualBasic;
+using MySqlConnector;
 using Newtonsoft.Json;
 
 namespace ducker
@@ -55,14 +57,14 @@ namespace ducker
         
         public static async Task OnMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
         {
-            var channel = e.Guild.GetChannel(Bot.ServerLogsChannelId);
-            await e.Member.GrantRoleAsync(e.Guild.GetRole(816666984745140254));
+            var channel = e.Guild.GetChannel(Database.GetLogsChannel(e.Guild.Id));
+            await e.Member.GrantRoleAsync(e.Guild.GetRole(Role.ChelRoleId));
             await channel.SendMessageAsync($"{e.Member.Mention}, just landed on the `{e.Guild.Name}`");
         }
 
         public static async Task OnMemberRemoved(DiscordClient client, GuildMemberRemoveEventArgs e)
         {
-            var channel = e.Guild.GetChannel(Bot.ServerLogsChannelId);
+            var channel = e.Guild.GetChannel(Database.GetLogsChannel(e.Guild.Id));
             await channel.SendMessageAsync($"{e.Member.Mention}. On siebalsya ksta");
         }
 
@@ -223,8 +225,11 @@ namespace ducker
             {
                 return;
             }
+
+            ulong musicChannelIdFromDB = Database.GetMusicChannel(sender.Guild.Id);
+
             await sender.PlayAsync(Bot.Queue[0]);
-            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await sender.Node.Discord.GetGuildAsync(696496218934608004).Result.GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(Bot.MusicChannelId));
+            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await sender.Node.Discord.GetGuildAsync(696496218934608004).Result.GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(musicChannelIdFromDB));
             Bot.Queue.Remove(Bot.Queue[0]);
         }
     }
