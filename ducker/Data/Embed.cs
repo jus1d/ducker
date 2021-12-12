@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
@@ -6,6 +7,7 @@ using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
+using MySqlConnector;
 
 namespace ducker
 {
@@ -94,12 +96,12 @@ namespace ducker
                 Color = Bot.WarningColor
             };
         }
-        public static DiscordEmbedBuilder IncorrectMusicChannelEmbed(CommandContext msg)
+        public static DiscordEmbedBuilder IncorrectMusicChannelEmbed(CommandContext msg, ulong musicChannelId)
         {
             return new DiscordEmbedBuilder
             {
                 Title = "Incorrect channel for music commands",
-                Description = $"This command can be used only in <#{msg.Guild.GetChannel(Bot.MusicChannelId).Id}>",
+                Description = $"This command can be used only in {msg.Guild.GetChannel(musicChannelId).Mention}",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
@@ -582,6 +584,20 @@ namespace ducker
             {
                 Title = "Invalid track position in queue",
                 Description = $"**Queue:**\n{totalQueue}",
+                Footer = new DiscordEmbedBuilder.EmbedFooter
+                {
+                    IconUrl = user.AvatarUrl, Text = $"Removed by {user.Username}"
+                },
+                Color = Bot.WarningColor
+            };
+        }
+
+        public static DiscordEmbedBuilder NoMusicChannelConfigured(DiscordUser user)
+        {
+            return new DiscordEmbedBuilder
+            {
+                Title = "No music channel configured for your server",
+                Description = $"Type `-set-music-channel` to configure",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = user.AvatarUrl, Text = $"Removed by {user.Username}"
