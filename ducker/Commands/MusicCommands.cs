@@ -1,13 +1,14 @@
-﻿using DSharpPlus;
+﻿using System.Data;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using MySqlConnector;
 using SpotifyAPI.Web;
 
 namespace ducker
 {
-    //[Group("MusicCommands")]
     public class MusicCommands : BaseCommandModule
     {
         // -join
@@ -16,9 +17,17 @@ namespace ducker
         Aliases("connect")]
         public async Task Join(CommandContext msg, params string[] txt)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -36,9 +45,17 @@ namespace ducker
         [Command("join")]
         public async Task Join(CommandContext msg, DiscordChannel channel)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -60,9 +77,17 @@ namespace ducker
          RequirePermissions(Permissions.Administrator)]
         public async Task Quit(CommandContext msg, params string[] txt)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -84,9 +109,17 @@ namespace ducker
          Aliases("p")]
         public async Task Play(CommandContext msg, params string[] input) 
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -270,9 +303,17 @@ namespace ducker
         Description("Pause now playing music")]
         public async Task Pause(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -301,9 +342,17 @@ namespace ducker
         [Command("pause")]
         public async Task Pause(CommandContext msg, params string[] txt)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             await Embed.IncorrectCommand(msg, "-pause").SendAsync(msg.Channel);
@@ -315,9 +364,17 @@ namespace ducker
         Description("Resume playing music")]
         public async Task Resume(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -345,9 +402,17 @@ namespace ducker
         Description("Display now playing track")]
         public async Task NowPlaying(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -379,9 +444,17 @@ namespace ducker
         Description("Repeat currnet playing track")]
         public async Task Repeat(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
@@ -413,6 +486,19 @@ namespace ducker
         Description("Skip to the next track in queue")]
         public async Task Skip(CommandContext msg)
         {
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
+                return;
+            }
             try
             {
                 LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
@@ -433,6 +519,20 @@ namespace ducker
         [Command("skip")]
         public async Task Skip(CommandContext msg, params string[] txt)
         {
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
+                return;
+            }
+            
             await Embed.IncorrectCommand(msg, "-skip").SendAsync(msg.Channel);
         }
         
@@ -442,6 +542,20 @@ namespace ducker
         Description("Send queue list")]
         public async Task Queue(CommandContext msg)
         {
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
+                return;
+            }
+            
             await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
         }
 
@@ -449,6 +563,20 @@ namespace ducker
         Description("Clear queue")]
         public async Task ClearQueue(CommandContext msg)
         {
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
+                return;
+            }
+            
             Bot.Queue.Clear();
             await msg.Channel.SendMessageAsync(Embed.ClearQueueEmbed(msg.User));
         }
@@ -457,9 +585,17 @@ namespace ducker
         Description("Remove track from queue by it's position")]
         public async Task RemoveFromQueue(CommandContext msg, uint position)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
 
@@ -482,9 +618,17 @@ namespace ducker
          Aliases("s")]
         public async Task Stop(CommandContext msg)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -503,9 +647,17 @@ namespace ducker
         [Command("stop")]
         public async Task Stop(CommandContext msg, params string[] text)
         {
-            if (msg.Channel.Id != Bot.MusicChannelId && msg.Channel.Id != Bot.CmdChannelId)
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
             {
-                await Embed.IncorrectMusicChannel(msg).SendAsync(msg.Channel);
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             await Embed.IncorrectCommand(msg, "-stop").SendAsync(msg.Channel);
