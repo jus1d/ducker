@@ -171,7 +171,7 @@ namespace ducker
                     Color = Bot.IncorrectEmbedColor
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectCommandEmbed));
+                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectCommandEmbed).AsEphemeral(true));
             }
             else
             {
@@ -199,7 +199,7 @@ namespace ducker
                     Color = Bot.MainEmbedColor
                 };
                 await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport));
+                    new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport).AsEphemeral(true));
             }
         }
 
@@ -481,20 +481,16 @@ namespace ducker
             adapter.Fill(findGuildTable);
             if (findGuildTable.Rows.Count > 0)
             {
-                MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `musicChannelId` = @musicChannelId WHERE `ducker`.`guildId` = @guildId",
+                MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `musicChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
                     database.GetConnection());
-                command.Parameters.Add("@guildId", MySqlDbType.VarChar).Value = msg.Channel.Guild.Id;
-                command.Parameters.Add("@musicChannelId", MySqlDbType.VarChar).Value = channel.Id;
             
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
             }
             else
             {
-                MySqlCommand command = new MySqlCommand("INSERT INTO `ducker` (`guildId`, `musicChannelId`) VALUES (@guildId, @musicChannelId)", 
+                MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`) VALUES ({msg.Guild.Id}, {channel.Id})", 
                     database.GetConnection());
-                command.Parameters.Add("@guildId", MySqlDbType.VarChar).Value = msg.Channel.Guild.Id;
-                command.Parameters.Add("@musicChannelId", MySqlDbType.VarChar).Value = channel.Id;
 
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
