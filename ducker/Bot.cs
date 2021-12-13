@@ -1,15 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
@@ -17,11 +7,9 @@ using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
-using DSharpPlus.Net.Models;
 using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
-using Newtonsoft.Json;
+using ducker.Commands.AdministrationModule;
 
 namespace ducker
 {
@@ -89,6 +77,7 @@ namespace ducker
             var slash = Client.UseSlashCommands();
             
             Commands = Client.UseCommandsNext(commandsConfig);
+            Commands.RegisterCommands<AdministrationCommands>();
             Commands.RegisterCommands<MiscCommands>();
             Commands.RegisterCommands<AdminCommands>();
             Commands.RegisterCommands<MusicCommands>();
