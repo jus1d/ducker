@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ducker.Core", "ducker.Core\ducker.Core.csproj", "{DAC1A334-146D-4230-A2AD-3C6219C1F62F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ducker", "ducker\ducker.csproj", "{DAC1A334-146D-4230-A2AD-3C6219C1F62F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
