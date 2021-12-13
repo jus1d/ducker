@@ -25,127 +25,6 @@ namespace ducker
 {
     public class AdminCommands : BaseCommandModule
     {
-        // -ban
-        [Command("ban"),
-         Description("Ban mentioned user in current server"),
-         RequirePermissions(Permissions.BanMembers)]
-        public async Task Ban(CommandContext msg, DiscordMember user, params string[] reasonInput)
-        {
-            string reason = "";
-            for (int i = 0; i < reasonInput.Length; i++)
-            {
-                reason += reasonInput[i] + " ";
-            }
-            
-            var banCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = "User banned",
-                Description = $":)",
-                ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            try
-            {
-                await user.Guild.BanMemberAsync(user, 0, reason);
-            }
-            catch (Exception e)
-            {
-                var incorrectBanCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Description = $":x: You can't ban this user",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
-                throw;
-            }
-            DiscordMessage message = msg.Channel.SendMessageAsync(banCommandEmbed).Result;
-            Thread.Sleep(3000);
-            await msg.Channel.DeleteMessageAsync(message);
-        }
-        
-
-        [Command("ban"),
-         RequirePermissions(Permissions.BanMembers)]
-        public async Task Ban(CommandContext msg, params string[] txt)
-        {
-            var incorrectBanCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-ban <member>`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            };
-            await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
-        }
-        
-        
-        // -kick 
-        [Command("kick"), 
-         Description("Kick mentioned user from current server"),
-         RequirePermissions(Permissions.KickMembers)]
-        public async Task Kick(CommandContext msg, DiscordMember user, params string[] reasonInput)
-        {
-            string reason = "";
-            for (int i = 0; i < reasonInput.Length; i++)
-            {
-                reason += reasonInput[i] + " ";
-            }
-            
-            try
-            {
-                await user.RemoveAsync(reason);
-            }
-            catch (Exception e)
-            {
-                var incorrectKickEmbed = new DiscordEmbedBuilder
-                {
-                    Description = ":x: You can't kick this member",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectKickEmbed);
-                throw;
-            }
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":white_check_mark:"));
-        }
-
-        [Command("kick"),  
-         RequirePermissions(Permissions.KickMembers)]
-        public async Task Kick(CommandContext msg, params string[] txt)
-        {
-            var incorrectCommandEmbed = new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -kick <member>",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            };
-            await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
-        }
-
-
         // -clear
         [Command("clear"),
          Description("Clear `amount` messages from current channel"),
@@ -485,12 +364,46 @@ namespace ducker
          RequirePermissions(Permissions.Administrator)]
         public async Task Mute(CommandContext msg, DiscordMember member)
         {
-            await member.GrantRoleAsync(msg.Guild.GetRole(Role.MutedRoleId));
+            ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);
+            if (muteRoleId == 0)
+            {
+                DiscordRole muteRole = await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.DarkGray, false, false);
+
+                var channels = await msg.Guild.GetChannelsAsync();
+
+                foreach (var channel in channels)
+                {
+                    await channel.AddOverwriteAsync(muteRole, Permissions.None, Permissions.SendMessages);
+                }
+
+                muteRoleId = muteRole.Id;
+
+                Database database = new Database();
+                DataTable table = new DataTable();
+                DataTable findGuildTable = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+                MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `ducker` WHERE `guildId` = '{msg.Guild.Id}'", 
+                    database.GetConnection());
+                adapter.SelectCommand = findGuildCommand;
+                adapter.Fill(findGuildTable);
+                
+                MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `muteRoleId` = {muteRoleId} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
+                    database.GetConnection());
+            
+                adapter.SelectCommand = command;
+                adapter.Fill(table);
+                await member.GrantRoleAsync(msg.Guild.GetRole(Database.GetMuteRoleId(msg.Guild.Id)));
+            }
+            else
+            {
+                await member.GrantRoleAsync(msg.Guild.GetRole(Database.GetMuteRoleId(msg.Guild.Id)));
+            }
         }
         
         // -mute
         [Command("mute"), RequirePermissions(Permissions.Administrator)]
-        public async Task Mute(CommandContext msg, params string[] txt)
+        public async Task Mute(CommandContext msg, [RemainingText] string txt)
         {
             var incorrectCommandEmbed = new DiscordEmbedBuilder
             {
