@@ -5,8 +5,6 @@ ducker/bin/Debug/net5.0/config.json
 .idea/
 ducker/bin/
 ducker/obj/
-ducker.sln
-ducker/ducker.csproj
 
 # link to .exe file
 ducker.lnk
