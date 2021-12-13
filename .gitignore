@@ -1,10 +1,10 @@
 # bot config
-ducker.Core/bin/Debug/net5.0/config.json
+ducker/bin/Debug/net5.0/config.json
 
 # temporary files, compilation files, IDEs files and other
 .idea/
-ducker.Core/bin/
-ducker.Core/obj/
+ducker/bin/
+ducker/obj/
 
 # link to .exe file
 ducker.lnk
