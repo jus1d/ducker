@@ -23,7 +23,7 @@ using SpotifyAPI.Web;
 
 namespace ducker
 {
-    public partial class Commands : BaseCommandModule
+    public class AdminCommands : BaseCommandModule
     {
         // -ban
         [Command("ban"),

@@ -13,7 +13,7 @@ using Microsoft.VisualBasic;
 
 namespace ducker
 {
-    public partial class Commands : BaseCommandModule
+    public class MiscCommands : BaseCommandModule
     {
         // -avatar 
         [Command("avatar"), 
