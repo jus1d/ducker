@@ -43,7 +43,7 @@ namespace ducker
                         Text = msg.User.Username
                     },
                     Color = Bot.IncorrectEmbedColor
-                };
+                }; 
                 await msg.Channel.SendMessageAsync(incorrectCommandEmbed);
             }
             else
