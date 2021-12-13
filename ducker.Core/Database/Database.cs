@@ -5,23 +5,23 @@ namespace ducker;
 
 public class Database
 {
-    private MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=ducker");
+    private MySqlConnection _connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=ducker");
 
     public void OpenConnection()
     {
-        if (connection.State == ConnectionState.Closed)
-            connection.Open();
+        if (_connection.State == ConnectionState.Closed)
+            _connection.Open();
     }
 
     public void CloseConnection()
     {
-        if (connection.State == ConnectionState.Open)
-            connection.Close();
+        if (_connection.State == ConnectionState.Open)
+            _connection.Close();
     }
 
     public MySqlConnection GetConnection()
     {
-        return connection;
+        return _connection;
     }
 
     public static ulong GetMusicChannel(ulong guildId)
