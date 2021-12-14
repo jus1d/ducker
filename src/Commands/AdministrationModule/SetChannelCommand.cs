@@ -10,6 +10,12 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
+        /// <summary>
+        /// Command to set guild's music, logs, cmd channels
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="channelType">Channel type to set as default</param>
+        /// <param name="channel">Channel to set</param>
         [Command("set-channel"), 
          Description("Set music channel for this guild"),
          Aliases("sc"), 

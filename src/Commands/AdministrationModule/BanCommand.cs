@@ -8,21 +8,27 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule : BaseCommandModule
     {
+        /// <summary>
+        /// Command to ban mentioned member from this guild
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="member">Member to ban</param>
+        /// <param name="reason">Reason for this ban. Optional</param>
         [Command("ban"),
          Description("Ban mentioned user in current server"),
          RequireAdmin]
-        public async Task BanCommand(CommandContext msg, DiscordMember user, [RemainingText] string reason = "Reason does not given")
+        public async Task BanCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "Reason does not given")
         {
             try
             {
-                await user.Guild.BanMemberAsync(user, 0, reason);
+                await member.Guild.BanMemberAsync(member, 0, reason);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             }
-            catch (Exception e)
+            catch
             {
                 var incorrectBanCommandEmbed = new DiscordEmbedBuilder
                 {
-                    Description = $":x: You can't ban this user",
+                    Description = "You can't ban this user",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -34,6 +40,11 @@ namespace ducker.Commands.AdministrationModule
             }
         }
 
+        /// <summary>
+        /// Overload to send incorrect command embed
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="text">Some text</param>
         [Command("ban")]
         public async Task BanCommand(CommandContext msg, [RemainingText] string text)
         {

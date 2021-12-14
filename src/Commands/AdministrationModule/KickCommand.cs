@@ -8,6 +8,12 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
+        /// <summary>
+        /// Command to kick member from guild
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="member">Member to kick</param>
+        /// <param name="reason">Reason for kick. Optional</param>
         [Command("kick"),
          Description("Kick mentioned user from current server"),
          RequireAdmin]
@@ -35,6 +41,11 @@ namespace ducker.Commands.AdministrationModule
             }
         }
 
+        /// <summary>
+        /// Overload to send incorrect command embed
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="text">Some text</param>
         [Command("kick")]
         public async Task KickCommand(CommandContext msg, [RemainingText] string text)
         {

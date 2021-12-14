@@ -8,6 +8,12 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
+        /// <summary>
+        /// Command to grant a role to mentioned user
+        /// </summary>
+        /// <param name="msg">The context that the command belongs to</param>
+        /// <param name="member">Member to add role</param>
+        /// <param name="role">Role to add</param>
         [Command("add-role"), 
          Description("Add a role to mentioned user"),
          RequireAdmin]
@@ -58,6 +64,11 @@ namespace ducker.Commands.AdministrationModule
             }
         }
         
+        /// <summary>
+        /// Overload to send incorrect command embed
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="text">Some text</param>
         [Command("add-role")]
         public async Task AddRoleCommand(CommandContext msg, [RemainingText] string text)
         {

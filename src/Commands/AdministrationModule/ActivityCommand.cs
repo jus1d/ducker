@@ -8,6 +8,11 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
+        /// <summary>
+        /// Command to change bot activity
+        /// </summary>
+        /// <param name="msg">The context that the command belongs to</param>
+        /// <param name="activityType">Bot activity tyre</param>
         [Command("activity"),
          Description("Change bot activity"),
          RequireAdmin]

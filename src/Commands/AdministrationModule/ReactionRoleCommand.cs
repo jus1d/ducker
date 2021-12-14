@@ -8,6 +8,11 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
+        /// <summary>
+        /// Command to send reaction role message
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="text">Some text</param>
         [Command("reaction-role"), 
          Description("Send an embed with buttons, by press there you will granted a role"),
          RequireAdmin]

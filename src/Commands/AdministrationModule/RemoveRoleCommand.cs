@@ -8,6 +8,12 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
+        /// <summary>
+        /// Command to remove role from mentioned user
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="member">Member to remove role</param>
+        /// <param name="role">Role to remove</param>
         [Command("remove-role"), 
          Description("Remove role from mentioned user"),
          RequireAdmin]
@@ -58,6 +64,11 @@ namespace ducker.Commands.AdministrationModule
             }
         }
         
+        /// <summary>
+        /// Overload to send incorrect command embed
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="text">Some text</param>
         [Command("remove-role")]
         public async Task RemoveRoleCommand(CommandContext msg, [RemainingText] string text)
         {
