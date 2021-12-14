@@ -10,7 +10,7 @@ namespace ducker.Commands.MusicModule
         [Command("join"),
          Description("Join your voice channel"),
          Aliases("connect")]
-        public async Task JoinCommand(CommandContext msg, [RemainingText] string text)
+        public async Task JoinCommand(CommandContext msg)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
@@ -62,6 +62,25 @@ namespace ducker.Commands.MusicModule
             var node = lava.ConnectedNodes.Values.First();
             await node.ConnectAsync(channel);
             await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
+        }
+        
+        [Command("join")]
+        public async Task JoinCommand(CommandContext msg, [RemainingText] string text)
+        {
+            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            
+            if (musicChannelIdFromDb == 0)
+            {
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
+                return;
+            }
+            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
+                return;
+            }
+            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "-join <channel>"));
         }
     }
 }

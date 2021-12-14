@@ -43,7 +43,7 @@ namespace ducker.Commands.MusicModule
             await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, ":success:"));
         }
 
-        [Command("join")]
+        [Command("resume")]
         public async Task ResumeCommand(CommandContext msg, [RemainingText] string text)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

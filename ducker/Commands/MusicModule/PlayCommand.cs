@@ -151,7 +151,7 @@ namespace ducker.Commands.MusicModule
                             var loadResult = await node.Rest.GetTracksAsync(search);
                             track = loadResult.Tracks.First();
                             Bot.Queue.Add(track);
-                            await msg.Channel.SendMessageAsync(Embed.TrackQueuedEmbed(msg));
+                            await Embed.TrackQueued(msg).SendAsync(msg.Channel);
                         }
                         else
                         {
@@ -167,7 +167,6 @@ namespace ducker.Commands.MusicModule
                             });
                             return;
                         }
-                        await Embed.TrackQueued(msg).SendAsync(msg.Channel);
                     }
                     else 
                     {
