@@ -498,8 +498,8 @@ namespace ducker
                 Description = $"Roles list:\n{twitchRgbEmoji} - twitch follower(by having this reaction, u will get stream notifications)\n{chelEmoji} - default role for this server\n\nGL",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
-                    Text = guild.GetMemberAsync(906179696516026419).Result.DisplayName,
-                    IconUrl = guild.GetMemberAsync(906179696516026419).Result.AvatarUrl
+                    Text = guild.GetMemberAsync(Bot.Id).Result.DisplayName,
+                    IconUrl = guild.GetMemberAsync(Bot.Id).Result.AvatarUrl
                 },
                 Color = Bot.MainEmbedColor
             };

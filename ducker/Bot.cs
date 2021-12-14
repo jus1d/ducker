@@ -25,7 +25,7 @@ namespace ducker
         public static readonly ulong Id = ConfigJson.GetConfigField().Id;
         public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=918248095869968434&permissions=8&scope=bot%20applications.commands";
 
-        public static List<LavalinkTrack> Queue = new List<LavalinkTrack>();
+        public static List<LavalinkTrack> Queue = new ();
 
         public async Task RunAsync()
         {
@@ -77,9 +77,8 @@ namespace ducker
             var slash = Client.UseSlashCommands();
             
             Commands = Client.UseCommandsNext(commandsConfig);
-            Commands.RegisterCommands<AdministrationCommands>();
+            Commands.RegisterCommands<AdministrationModule>();
             Commands.RegisterCommands<MiscCommands>();
-            Commands.RegisterCommands<AdminCommands>();
             Commands.RegisterCommands<MusicCommands>();
             Commands.SetHelpFormatter<DefaultHelpFormatter>();
             slash.RegisterCommands<SlashCommands>(696496218934608004);
@@ -94,7 +93,7 @@ namespace ducker
             var activity = new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
-                Name = "with ducks |  -help"
+                Name = "with ducks | -help"
             };
             Client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
