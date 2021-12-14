@@ -1,13 +1,8 @@
-﻿using System;
-using System.Data;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
-using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
-using MySqlConnector;
 
 namespace ducker
 {
@@ -26,10 +21,14 @@ namespace ducker
                 },
                 Color = Bot.MainEmbedColor
             };
-            var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":arrow_forward:")));
-            var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":pause_button:")));
-            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
-            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
+            var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, 
+                new DiscordComponentEmoji(DiscordEmoji.FromName(client,":arrow_forward:")));
+            var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, 
+                new DiscordComponentEmoji(DiscordEmoji.FromName(client,":pause_button:")));
+            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, 
+                new DiscordComponentEmoji(DiscordEmoji.FromName(client,":track_next:")));
+            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, 
+                new DiscordComponentEmoji(DiscordEmoji.FromName(client,":page_facing_up:")));
             
             return new DiscordMessageBuilder()
                 .AddEmbed(playEmbed)
