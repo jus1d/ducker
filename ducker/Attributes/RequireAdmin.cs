@@ -4,6 +4,9 @@ using DSharpPlus.CommandsNext.Attributes;
 
 namespace ducker.Attributes
 {
+    /// <summary>
+    /// Check whether the command invoker has admin permissions at current server
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class RequireAdmin : CheckBaseAttribute
     {
