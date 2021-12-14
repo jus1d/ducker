@@ -9,6 +9,8 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Logging;
+using ducker.Commands;
+using ducker.Commands.MiscModule;
 using ducker.Commands.AdministrationModule;
 
 namespace ducker
