@@ -11,7 +11,7 @@ namespace ducker.Commands.MusicModule
         [Command("play"), 
          Description("Start playing music from youtube, spotify or soundcloud by link or search request"),
          Aliases("p")]
-        public async Task PlayCommand(CommandContext msg, params string[] input) 
+        public async Task PlayCommand(CommandContext msg, [RemainingText] string input) 
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
             ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
@@ -43,7 +43,7 @@ namespace ducker.Commands.MusicModule
             if (connection.CurrentState.CurrentTrack == null)
             {
                 Uri url;
-                if (Uri.TryCreate(input[0], UriKind.Absolute, out url)) // by url
+                if (Uri.TryCreate(input, UriKind.Absolute, out url))
                 {
                     if (url.Authority == "open.spotify.com")
                     {
@@ -102,9 +102,7 @@ namespace ducker.Commands.MusicModule
                 }
                 else // by search
                 {
-                    string search = "";
-                    for (int i = 0; i < input.Length; i++)
-                        search += input[i] + " ";
+                    string search = input;
 
                     var loadResult = await node.Rest.GetTracksAsync(search);
 
@@ -122,7 +120,7 @@ namespace ducker.Commands.MusicModule
             else
             {
                 Uri url;
-                if (Uri.TryCreate(input[0], UriKind.Absolute, out url)) // by url
+                if (Uri.TryCreate(input, UriKind.Absolute, out url)) // by url
                 {
                     if (url.Authority == "open.spotify.com")
                     {
@@ -181,9 +179,7 @@ namespace ducker.Commands.MusicModule
                 }
                 else
                 {
-                    string search = "";
-                    for (int i = 0; i < input.Length; i++)
-                        search += input[i] + " ";
+                    string search = input;
 
                     var loadResult = await node.Rest.GetTracksAsync(search);
 
