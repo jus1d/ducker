@@ -46,7 +46,7 @@ namespace ducker.Commands.MiscModule
             await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
             {
                 Title = "Missing argument",
-                Description = $"**Usage:** `-random <min value> <max value>`\n [for {msg.Member.Mention}]",
+                Description = $"**Usage:** `-random <min value> <max value>`",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
