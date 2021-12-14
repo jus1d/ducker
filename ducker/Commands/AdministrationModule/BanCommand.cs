@@ -5,7 +5,7 @@ using DSharpPlus.Entities;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationCommands : BaseCommandModule
+    public partial class AdministrationModule : BaseCommandModule
     {
         [Command("ban"),
          Description("Ban mentioned user in current server"),
@@ -33,9 +33,7 @@ namespace ducker.Commands.AdministrationModule
             }
         }
 
-        [Command("ban"),
-         Description("Ban mentioned user in current server"),
-         RequirePermissions(Permissions.BanMembers)]
+        [Command("ban")]
         public async Task BanCommand(CommandContext msg, [RemainingText] string text)
         {
             var incorrectBanCommandEmbed = new DiscordEmbedBuilder

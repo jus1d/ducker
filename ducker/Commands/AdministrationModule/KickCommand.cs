@@ -5,7 +5,7 @@ using DSharpPlus.Entities;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationCommands
+    public partial class AdministrationModule
     {
         [Command("kick"),
          Description("Kick mentioned user from current server"),
@@ -34,9 +34,7 @@ namespace ducker.Commands.AdministrationModule
             }
         }
 
-        [Command("kick"),
-         Description("Kick mentioned user from current server"),
-         RequirePermissions(Permissions.KickMembers)]
+        [Command("kick")]
         public async Task KickCommand(CommandContext msg, [RemainingText] string text)
         {
             await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
