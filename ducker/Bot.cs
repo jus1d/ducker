@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using ducker.Commands;
 using ducker.Commands.MiscModule;
 using ducker.Commands.AdministrationModule;
+using ducker.Commands.MusicModule;
 
 namespace ducker
 {

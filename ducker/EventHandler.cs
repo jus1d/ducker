@@ -1,28 +1,8 @@
-using System;
-using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using DSharpPlus.Interactivity;
-using DSharpPlus.Interactivity.Extensions;
 using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
-using DSharpPlus.Net;
-using DSharpPlus.Net.Models;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualBasic;
-using MySqlConnector;
-using Newtonsoft.Json;
 
 namespace ducker
 {
