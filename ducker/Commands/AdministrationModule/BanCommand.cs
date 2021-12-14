@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("ban"),
          Description("Ban mentioned user in current server"),
-         RequirePermissions(Permissions.BanMembers)]
+         RequireAdmin]
         public async Task BanCommand(CommandContext msg, DiscordMember user, [RemainingText] string reason = "Reason does not given")
         {
             try

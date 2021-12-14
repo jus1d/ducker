@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("remove-role"), 
          Description("Remove role from mentioned user"),
-         RequirePermissions(Permissions.ManageRoles)]
+         RequireAdmin]
         public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role)
         {
             await msg.Message.DeleteAsync();

@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("unmute"), 
          Description("Unmute mentioned member"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task Unmute(CommandContext msg, DiscordMember member)
         {
             ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);

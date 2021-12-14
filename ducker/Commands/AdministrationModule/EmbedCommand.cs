@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -10,7 +11,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("embed"), 
          Description("Create, and sends an embed with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted)"),
          Aliases("e"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task Embed(CommandContext msg, params string[] embedConfig)
         {
             var color = Bot.MainEmbedColor;

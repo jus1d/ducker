@@ -85,7 +85,9 @@ namespace ducker
             Commands.RegisterCommands<MiscCommands>();
             Commands.RegisterCommands<MusicCommands>();
             Commands.SetHelpFormatter<DefaultHelpFormatter>();
-            slash.RegisterCommands<SlashCommands>(696496218934608004);
+            // slash.RegisterCommands<SlashCommands>(696496218934608004);
+            // slash.RegisterCommands(Array.Empty<SlashCommands>(), 696496218934608004);
+            
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;

@@ -3,6 +3,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 using MySqlConnector;
 
 namespace ducker.Commands.AdministrationModule
@@ -11,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("mute"),
          Description("Mute mentioned member"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task MuteCommand(CommandContext msg, DiscordMember member)
         {
             ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);

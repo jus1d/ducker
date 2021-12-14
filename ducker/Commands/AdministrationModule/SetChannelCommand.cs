@@ -3,6 +3,7 @@ using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 using MySqlConnector;
 
 namespace ducker.Commands.AdministrationModule
@@ -12,7 +13,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("set-channel"), 
          Description("Set music channel for this guild"),
          Aliases("sc"), 
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task SetMusicCommand(CommandContext msg, string channelType, DiscordChannel channel)
         {
             await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));

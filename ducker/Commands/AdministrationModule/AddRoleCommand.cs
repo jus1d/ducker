@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("add-role"), 
          Description("Add a role to mentioned user"),
-         RequirePermissions(Permissions.ManageRoles)]
+         RequireAdmin]
         public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
         {
             await msg.Message.DeleteAsync();

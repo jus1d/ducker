@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("kick"),
          Description("Kick mentioned user from current server"),
-         RequirePermissions(Permissions.KickMembers)]
+         RequireAdmin]
         public async Task KickCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "Reason does not given")
         {
             try

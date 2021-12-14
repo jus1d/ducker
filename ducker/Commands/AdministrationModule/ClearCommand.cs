@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("clear"),
          Description("Clear `amount` messages from current channel"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task ClearCommand(CommandContext msg, int amount)
         {
             if (amount > 100 || amount < 0)

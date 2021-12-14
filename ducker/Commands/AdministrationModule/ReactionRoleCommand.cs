@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("reaction-role"), 
          Description("Send an embed with buttons, by press there you will granted a role"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task ReactionRolesEmbed(CommandContext msg, [RemainingText] string text)
         {
             await msg.Message.DeleteAsync();

@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("stream"), 
          Description("Send stream announcement"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task StreamAnnouncement(CommandContext msg, [RemainingText] string description)
         {
             await msg.Message.DeleteAsync();

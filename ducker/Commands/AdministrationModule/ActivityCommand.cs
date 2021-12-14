@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -9,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("activity"),
          Description("Change bot activity"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task ActivityCommand(CommandContext msg, [RemainingText] string activityType)
         {
             if (activityType == "streaming")
