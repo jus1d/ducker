@@ -13,6 +13,7 @@ using ducker.Commands;
 using ducker.Commands.MiscModule;
 using ducker.Commands.AdministrationModule;
 using ducker.Commands.MusicModule;
+using ducker.Config;
 
 namespace ducker
 {

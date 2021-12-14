@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ducker.Config;
 using SpotifyAPI.Web;
 
 namespace ducker.Commands.MusicModule
