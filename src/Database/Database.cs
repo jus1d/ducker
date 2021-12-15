@@ -1,27 +1,28 @@
 ﻿using System.Data;
+using ducker.Config;
 using MySqlConnector;
 
 namespace ducker;
 
 public class Database
 {
-    private MySqlConnection connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=ducker");
+    private MySqlConnection _connection = new (ConfigJson.GetConfigField().MySqlConnectionString);
 
     public void OpenConnection()
     {
-        if (connection.State == ConnectionState.Closed)
-            connection.Open();
+        if (_connection.State == ConnectionState.Closed)
+            _connection.Open();
     }
 
     public void CloseConnection()
     {
-        if (connection.State == ConnectionState.Open)
-            connection.Close();
+        if (_connection.State == ConnectionState.Open)
+            _connection.Close();
     }
 
     public MySqlConnection GetConnection()
     {
-        return connection;
+        return _connection;
     }
 
     public static ulong GetMusicChannel(ulong guildId)
@@ -34,13 +35,8 @@ public class Database
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
-        {
             return ulong.Parse(table.Rows[0].ItemArray[0].ToString());
-        }
-        else
-        {
-            return 0;
-        }
+        return 0;
     }
 
     public static ulong GetLogsChannel(ulong guildId)
@@ -54,13 +50,8 @@ public class Database
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
-        {
             return ulong.Parse(table.Rows[0].ItemArray[0].ToString());
-        }
-        else
-        {
-            return 0;
-        }
+        return 0;
     }
     
     public static ulong GetCmdChannel(ulong guildId)
@@ -74,12 +65,30 @@ public class Database
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
-        {
             return ulong.Parse(table.Rows[0].ItemArray[0].ToString());
-        }
-        else
+        return 0;
+    }
+
+    public static ulong GetMuteRoleId(ulong guildId)
+    {
+        Database database = new Database();
+        DataTable table = new DataTable();
+        MySqlDataAdapter adapter = new MySqlDataAdapter();
+        database.OpenConnection();
+        MySqlCommand command = new MySqlCommand($"SELECT `muteRoleId` FROM `ducker` WHERE `guildId` = {guildId}", database.GetConnection());
+        adapter.SelectCommand = command;
+        adapter.Fill(table);
+        if (table.Rows.Count > 0)
         {
-            return 0;
+            try
+            {
+                return ulong.Parse(table.Rows[0].ItemArray[0].ToString());
+            }
+            catch
+            {
+                return 0;
+            }
         }
+        return 0;
     }
 }

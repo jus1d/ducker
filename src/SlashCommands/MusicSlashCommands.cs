@@ -11,6 +11,7 @@ using DSharpPlus.SlashCommands;
 using MySqlConnector;
 using SpotifyAPI.Web;
 using ducker;
+using ducker.Config;
 
 namespace ducker
 {
