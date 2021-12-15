@@ -2,13 +2,15 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ducker.Attributes;
 
 namespace ducker.Commands.MusicModule
 {
     public partial class MusicCommands
     {
         [Command("skip"),
-         Description("Skip to the next track in queue")]
+         Description("Skip to the next track in queue"),
+         RequireMusicChannel]
         public async Task SkipCommand(CommandContext msg)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ducker.Attributes;
 using ducker.Config;
 using SpotifyAPI.Web;
 
@@ -11,7 +12,8 @@ namespace ducker.Commands.MusicModule
     {
         [Command("play"), 
          Description("Start playing music from youtube, spotify or soundcloud by link or search request"),
-         Aliases("p")]
+         Aliases("p"),
+         RequireMusicChannel]
         public async Task PlayCommand(CommandContext msg, [RemainingText] string input) 
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

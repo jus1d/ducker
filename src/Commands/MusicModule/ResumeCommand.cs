@@ -2,13 +2,15 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ducker.Attributes;
 
 namespace ducker.Commands.MusicModule
 {
     public partial class MusicCommands
     {
         [Command("resume"),
-         Description("Resume playing music")]
+         Description("Resume playing music"),
+         RequireMusicChannel]
         public async Task ResumeCommand(CommandContext msg)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

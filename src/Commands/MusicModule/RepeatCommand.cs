@@ -1,13 +1,15 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Lavalink;
+using ducker.Attributes;
 
 namespace ducker.Commands.MusicModule
 {
     public partial class MusicCommands
     {
         [Command("repeat"),
-         Description("Repeat currnet playing track")]
+         Description("Repeat currnet playing track"),
+         RequireMusicChannel]
         public async Task RepeatCommand(CommandContext msg)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

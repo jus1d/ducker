@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ducker.Attributes;
 
 namespace ducker.Commands.MusicModule
 {
@@ -9,7 +10,8 @@ namespace ducker.Commands.MusicModule
     {
         [Command("join"),
          Description("Join your voice channel"),
-         Aliases("connect")]
+         Aliases("connect"),
+         RequireMusicChannel]
         public async Task JoinCommand(CommandContext msg)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

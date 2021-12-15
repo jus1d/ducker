@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ducker.Attributes;
 
 namespace ducker.Commands.MusicModule
 {
@@ -9,7 +10,8 @@ namespace ducker.Commands.MusicModule
     {
         [Command("stop"), 
          Description("Stop playing"),
-         Aliases("s")]
+         Aliases("s"),
+         RequireMusicChannel]
         public async Task StopCommand(CommandContext msg)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

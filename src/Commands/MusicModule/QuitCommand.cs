@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using ducker.Attributes;
 
 namespace ducker.Commands.MusicModule
 {
@@ -11,7 +12,8 @@ namespace ducker.Commands.MusicModule
         [Command("quit"), 
          Description("Quit any voice channel"),
          Aliases("leave", "q"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin,
+         RequireMusicChannel]
         public async Task QuitCommand(CommandContext msg, [RemainingText] string text)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);

@@ -1,12 +1,14 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using ducker.Attributes;
 
 namespace ducker.Commands.MusicModule
 {
     public partial class MusicCommands
     {
         [Command("clear-queue"),
-         Description("Clear queue")]
+         Description("Clear queue"),
+        RequireMusicChannel]
         public async Task ClearQueueCommand(CommandContext msg)
         {
             ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
