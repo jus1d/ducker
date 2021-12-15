@@ -16,19 +16,6 @@ namespace ducker.Commands.MusicModule
          RequireMusicChannel]
         public async Task PlayCommand(CommandContext msg, [RemainingText] string input) 
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await Embed.NotInVoiceChannel(msg).SendAsync(msg.Channel);
