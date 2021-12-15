@@ -12,19 +12,6 @@ namespace ducker.Commands.MusicModule
          RequireMusicChannel]
         public async Task NowPlayingCommand(CommandContext msg)
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync(Embed.NotInVoiceChannelEmbed(msg));
@@ -51,19 +38,6 @@ namespace ducker.Commands.MusicModule
         [Command("np")]
         public async Task NowPlayingCommand(CommandContext msg, [RemainingText] string text)
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "-np"));
         }
     }
