@@ -6,6 +6,10 @@ namespace ducker.Commands.MiscModule
 {
     public partial class MiscCommands
     {
+        /// <summary>
+        /// Command to get bot invite link
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
         [Command("invite-link"), 
          Description("Send invite link for this bot to current channel"),
          Aliases("invite")]
@@ -24,6 +28,11 @@ namespace ducker.Commands.MiscModule
             });
         }
 
+        /// <summary>
+        /// Overload to send incorrect command embed
+        /// </summary>
+        /// <param name="msg">The context that command belongs to</param>
+        /// <param name="text">Some text</param>
         [Command("invite-link")]
         public async Task InviteLink(CommandContext msg, [RemainingText] string text)
         { 
