@@ -8,11 +8,6 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
-        /// <summary>
-        /// Command to delete some messages from current channel
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="amount">Amount of messages</param>
         [Command("clear"),
          Description("Clear `amount` messages from current channel"),
          RequireAdmin]
@@ -58,11 +53,6 @@ namespace ducker.Commands.AdministrationModule
             }
         }
         
-        /// <summary>
-        /// Overload to send incorrect command embed 
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="text">Some text</param>
         [Command("clear")]
         public async Task ClearCommand(CommandContext msg, [RemainingText] string text)
         {

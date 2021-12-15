@@ -8,11 +8,6 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
-        /// <summary>
-        /// Command to unmute mentioned member
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="member">Member to mute</param>
         [Command("unmute"), 
          Description("Unmute mentioned member"),
          RequireAdmin]
@@ -39,11 +34,6 @@ namespace ducker.Commands.AdministrationModule
             }
         }
         
-        /// <summary>
-        /// Overload to send incorrect command embed
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="text">Some text</param>
         [Command("unmute")]
         public async Task Unmute(CommandContext msg, [RemainingText] string text)
         {
