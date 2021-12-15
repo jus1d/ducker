@@ -11,20 +11,6 @@ namespace ducker.Commands.MusicModule
          RequireMusicChannel]
         public async Task RemoveFromQueue(CommandContext msg, uint position)
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
-
             try
             {
                 Bot.Queue.RemoveAt((int)position - 1);
@@ -40,19 +26,6 @@ namespace ducker.Commands.MusicModule
         [Command("remove-from-queue")]
         public async Task RemoveFromQueueCommand(CommandContext msg, [RemainingText] string text)
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "-remove-from-queue <position>"));
         }
     }
