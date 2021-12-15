@@ -8,6 +8,9 @@ using ducker.Config;
 
 namespace ducker.Commands
 {
+    /// <summary>
+    /// Default help command formatter (need true in commands config)
+    /// </summary>
     public class DefaultHelpFormatter : BaseHelpFormatter
     {
         public DiscordEmbedBuilder EmbedBuilder { get; }
