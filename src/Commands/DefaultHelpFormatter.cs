@@ -1,4 +1,5 @@
-﻿using DSharpPlus;
+﻿using System.Text;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.CommandsNext.Entities;
@@ -31,6 +32,27 @@ namespace ducker.Commands
             if (command.Aliases?.Any() == true)
             {
                 EmbedBuilder.AddField("Aliases", string.Join(", ", command.Aliases.Select(Formatter.InlineCode)), false);
+            }
+            if (command.Overloads?.Any() == true)
+            {
+                var sb = new StringBuilder();
+
+                foreach (var ovl in command.Overloads.OrderByDescending(x => x.Priority))
+                {
+                    sb.Append('`').Append(command.QualifiedName);
+
+                    foreach (var arg in ovl.Arguments)
+                        sb.Append(arg.IsOptional || arg.IsCatchAll ? " [" : " <").Append(arg.Name).Append(arg.IsCatchAll ? "..." : "").Append(arg.IsOptional || arg.IsCatchAll ? ']' : '>');
+
+                    sb.Append("`\n");
+
+                    foreach (var arg in ovl.Arguments)
+                        sb.Append('`').Append(arg.Name).Append(" (").Append(this.CommandsNext.GetUserFriendlyTypeName(arg.Type)).Append(")`: ").Append(arg.Description ?? "No description provided.").Append('\n');
+
+                    sb.Append('\n');
+                }
+
+                this.EmbedBuilder.AddField("Arguments", sb.ToString().Trim(), false);
             }
             return this;
         }
