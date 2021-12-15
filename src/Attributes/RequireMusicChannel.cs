@@ -16,6 +16,8 @@ namespace ducker.Attributes
             bool correctChannel = msg.Channel.Id == musicChannelId || msg.Channel.Id == cmdChannelId;
             if (!correctChannel)
                 msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelId));
+            if (musicChannelId == 0)
+                msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
             
             return Task.FromResult(correctChannel);
         }
