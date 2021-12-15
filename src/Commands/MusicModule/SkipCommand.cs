@@ -13,19 +13,6 @@ namespace ducker.Commands.MusicModule
          RequireMusicChannel]
         public async Task SkipCommand(CommandContext msg)
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             try
             {
                 LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
@@ -46,19 +33,6 @@ namespace ducker.Commands.MusicModule
         [Command("skip")]
         public async Task SkipCommand(CommandContext msg, params string[] txt)
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             await Embed.IncorrectCommand(msg, "-skip").SendAsync(msg.Channel);
         }
     }
