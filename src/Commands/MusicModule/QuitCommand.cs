@@ -16,19 +16,6 @@ namespace ducker.Commands.MusicModule
          RequireMusicChannel]
         public async Task QuitCommand(CommandContext msg, [RemainingText] string text)
         {
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             var lava = msg.Client.GetLavalink();
             var node = lava.ConnectedNodes.Values.First();
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
