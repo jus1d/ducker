@@ -8,11 +8,6 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
-        /// <summary>
-        /// Command to send embed with user settings
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="embedConfig">Config for embed. Optional all, except description or title</param>
         [Command("embed"), 
          Description("Create, and sends an embed with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted)"),
          Aliases("e"),

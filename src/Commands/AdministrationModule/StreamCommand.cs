@@ -8,11 +8,6 @@ namespace ducker.Commands.AdministrationModule
 {
     public partial class AdministrationModule
     {
-        /// <summary>
-        /// Command to send announcement about stream
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="description">Description for announcement. Optional</param>
         [Command("stream"), 
          Description("Send stream announcement"),
          RequireAdmin]

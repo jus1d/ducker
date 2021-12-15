@@ -14,6 +14,7 @@ using ducker.Commands.MiscModule;
 using ducker.Commands.AdministrationModule;
 using ducker.Commands.MusicModule;
 using ducker.Config;
+using ducker.Events;
 
 namespace ducker
 {
@@ -53,16 +54,14 @@ namespace ducker
                 Timeout = TimeSpan.FromHours(12)
             });
 
-            Client.ComponentInteractionCreated += EventHandler.OnComponentInteractionCreated;
-            Client.GuildMemberAdded += EventHandler.OnMemberAdded;
-            Client.MessageCreated += EventHandler.OnMessageCreated;
-            Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
-            Client.MessageReactionAdded += EventHandler.OnReactionAdded;
-            Client.MessageReactionRemoved += EventHandler.OnReactionRemoved;
+            Client.ComponentInteractionCreated += Events.EventHandler.OnComponentInteractionCreated;
+            Client.GuildMemberAdded += Events.EventHandler.OnMemberAdded;
+            Client.MessageCreated += Events.EventHandler.OnMessageCreated;
+            Client.GuildMemberRemoved += Events.EventHandler.OnMemberRemoved;
 
             var commandsConfig = new CommandsNextConfiguration 
             {
-                StringPrefixes = new string[] { ConfigJson.GetConfigField().Prefix },
+                StringPrefixes = new [] { ConfigJson.GetConfigField().Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
                 EnableDefaultHelp = true
@@ -91,7 +90,7 @@ namespace ducker
             
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
-            (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
+            (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += Events.EventHandler.OnPlaybackFinished;
             await Task.Delay(-1);
         }
 

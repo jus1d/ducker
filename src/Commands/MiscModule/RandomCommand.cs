@@ -6,12 +6,6 @@ namespace ducker.Commands.MiscModule
 {
     public partial class MiscCommands
     {
-        /// <summary>
-        /// Command to get random number in some range
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="minValue">Minimal value of your range</param>
-        /// <param name="maxValue">Maximum value of your range</param>
         [Command("random"), 
          Description("Send random value in your range from min to max value to current channel"),
          Aliases("rnd")]
@@ -46,11 +40,6 @@ namespace ducker.Commands.MiscModule
             });
         }
 
-        /// <summary>
-        /// Overload to send incorrect command embed
-        /// </summary>
-        /// <param name="msg">The context that command belongs to</param>
-        /// <param name="text">Some text</param>
         [Command("random")]
         public async Task Random(CommandContext msg, [RemainingText] string text)
         {
