@@ -1,11 +1,12 @@
 ﻿using System.Data;
+using ducker.Config;
 using MySqlConnector;
 
 namespace ducker;
 
 public class Database
 {
-    private MySqlConnection _connection = new MySqlConnection("server=localhost;port=3306;username=root;password=root;database=ducker");
+    private MySqlConnection _connection = new (ConfigJson.GetConfigField().MySqlConnectionString);
 
     public void OpenConnection()
     {
