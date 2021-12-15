@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>ducker</id>
+    <version>1.0.0</version>
+    <authors>ducker</authors>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework="net6.0">
+        <dependency id="DSharpPlus" version="4.2.0-nightly-01051" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus.CommandsNext" version="4.2.0-nightly-01051" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus.Interactivity" version="4.2.0-nightly-01051" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus.Lavalink" version="4.2.0-nightly-01051" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus.SlashCommands" version="4.2.0-nightly-01051" exclude="Build,Analyzers" />
+        <dependency id="DSharpPlus.VoiceNext" version="4.2.0-nightly-01051" exclude="Build,Analyzers" />
+        <dependency id="Json.Net" version="1.0.33" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.AspNetCore.Hosting" version="2.2.7" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore" version="6.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.EntityFrameworkCore.SqlServer" version="6.0.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Hosting" version="6.0.0" exclude="Build,Analyzers" />
+        <dependency id="MySqlConnector" version="2.1.0" exclude="Build,Analyzers" />
+        <dependency id="SpotifyAPI.Web" version="6.2.2" exclude="Build,Analyzers" />
+        <dependency id="System.ComponentModel.Annotations" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
+        <dependency id="TwitchLib.Api" version="3.4.0-preview-f3b3afbb4fa8d1641bf4b69747b8cd1db7c2f86a" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\Artem\Documents\PROJECTS\CODE\ducker\src\bin\Debug\net6.0\ducker.runtimeconfig.json" target="lib\net6.0\ducker.runtimeconfig.json" />
+    <file src="C:\Users\Artem\Documents\PROJECTS\CODE\ducker\src\bin\Debug\net6.0\ducker.dll" target="lib\net6.0\ducker.dll" />
+  </files>
+</package>
