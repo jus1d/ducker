@@ -19,7 +19,7 @@ namespace ducker.Events
             ulong musicChannelIdFromDb = Database.GetMusicChannel(sender.Guild.Id);
 
             await sender.PlayAsync(Bot.Queue[0]);
-            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await sender.Node.Discord.GetGuildAsync(696496218934608004).Result.GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(musicChannelIdFromDb));
+            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await (await sender.Node.Discord.GetGuildAsync(696496218934608004)).GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(musicChannelIdFromDb));
             Bot.Queue.Remove(Bot.Queue[0]);
         }
     }
