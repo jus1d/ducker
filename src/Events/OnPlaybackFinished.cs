@@ -11,7 +11,7 @@ namespace ducker.Events
             {
                 LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
             }
-            catch (Exception exception)
+            catch
             {
                 return;
             }
