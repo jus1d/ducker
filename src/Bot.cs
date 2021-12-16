@@ -51,7 +51,7 @@ namespace ducker
             Client.UseInteractivity(new InteractivityConfiguration
             {
                 PollBehaviour = PollBehaviour.DeleteEmojis,
-                Timeout = TimeSpan.FromHours(12)
+                Timeout = TimeSpan.FromHours(1)
             });
 
             Client.ComponentInteractionCreated += Events.EventHandler.OnComponentInteractionCreated;
