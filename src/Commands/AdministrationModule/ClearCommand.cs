@@ -50,6 +50,8 @@ namespace ducker.Commands.AdministrationModule
                 });
                 Thread.Sleep(3000);
                 await msg.Channel.DeleteMessageAsync(message);
+                
+                // TODO: logs(@jus1d cleared amount messages from #channel, message list:)
             }
         }
         
