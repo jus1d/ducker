@@ -45,10 +45,12 @@ namespace ducker.Commands.AdministrationModule
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
                 await member.GrantRoleAsync(msg.Guild.GetRole(Database.GetMuteRoleId(msg.Guild.Id)));
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             }
             else
             {
                 await member.GrantRoleAsync(msg.Guild.GetRole(Database.GetMuteRoleId(msg.Guild.Id)));
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             }
         }
         
