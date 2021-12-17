@@ -11,7 +11,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("clear"),
          Description("Clear `amount` messages from current channel"),
          RequireAdmin]
-        public async Task ClearCommand(CommandContext msg, int amount)
+        public async Task ClearCommand(CommandContext msg, int amount, [RemainingText] string reason = "No reason given")
         {
             if (amount > 100 || amount < 0)
             {
