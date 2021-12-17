@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -37,6 +38,9 @@ namespace ducker.Commands.AdministrationModule
                 else
                     messageOrMessages = "messages";
                 
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} deleted {amount} {messageOrMessages} in {msg.Channel.Mention}");
+                // TODO: logs(@jus1d cleared amount messages from #channel, message list:)
+                
                 DiscordMessage message = await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Title = "Deleted messages report", 
@@ -50,8 +54,6 @@ namespace ducker.Commands.AdministrationModule
                 });
                 Thread.Sleep(3000);
                 await msg.Channel.DeleteMessageAsync(message);
-                
-                // TODO: logs(@jus1d cleared amount messages from #channel, message list:)
             }
         }
         
