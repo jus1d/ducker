@@ -24,7 +24,7 @@ namespace ducker.Commands.AdministrationModule
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.IncorrectEmbedColor
+                    Color = Bot.WarningColor
                 });
                 return;
             }
@@ -32,16 +32,7 @@ namespace ducker.Commands.AdministrationModule
             try
             {
                 await member.RevokeRoleAsync(role);
-                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-                {
-                    Description = $"Complete, {role.Name} removed from {member.Mention}",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                });
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             }
             catch
             {
@@ -53,7 +44,7 @@ namespace ducker.Commands.AdministrationModule
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.IncorrectEmbedColor
+                    Color = Bot.WarningColor
                 });
             }
         }

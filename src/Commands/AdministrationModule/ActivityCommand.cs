@@ -31,6 +31,7 @@ namespace ducker.Commands.AdministrationModule
                     },
                     Color = Bot.MainEmbedColor
                 });
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             }
             else if (activityType == "playing")
             {
@@ -49,6 +50,7 @@ namespace ducker.Commands.AdministrationModule
                     },
                     Color = Bot.MainEmbedColor
                 });
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             }
             else
             {

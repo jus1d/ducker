@@ -28,7 +28,7 @@ namespace ducker.Commands.AdministrationModule
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.IncorrectEmbedColor
+                    Color = Bot.WarningColor
                 };
                 await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
             }
