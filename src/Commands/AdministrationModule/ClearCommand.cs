@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -11,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("clear"),
          Description("Clear `amount` messages from current channel"),
          RequireAdmin]
-        public async Task ClearCommand(CommandContext msg, int amount)
+        public async Task ClearCommand(CommandContext msg, int amount, [RemainingText] string reason = "No reason given")
         {
             if (amount > 100 || amount < 0)
             {
@@ -36,6 +37,9 @@ namespace ducker.Commands.AdministrationModule
                     messageOrMessages = "message";
                 else
                     messageOrMessages = "messages";
+                
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} deleted {amount} {messageOrMessages} in {msg.Channel.Mention}");
+                // TODO: logs(@jus1d cleared amount messages from #channel, message list:)
                 
                 DiscordMessage message = await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {

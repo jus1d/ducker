@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -11,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("unmute"), 
          Description("Unmute mentioned member"),
          RequireAdmin]
-        public async Task Unmute(CommandContext msg, DiscordMember member)
+        public async Task Unmute(CommandContext msg, DiscordMember member, [RemainingText] string reason)
         {
             ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);
             if (muteRoleId == 0)
@@ -31,6 +32,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await member.RevokeRoleAsync(msg.Guild.GetRole(muteRoleId));
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} unmuted {member.Mention}. Reason: {reason}");
             }
         }
         

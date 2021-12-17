@@ -112,6 +112,7 @@ namespace ducker.Commands.AdministrationModule
                 },
                 Color = color
             });
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
     }
 }

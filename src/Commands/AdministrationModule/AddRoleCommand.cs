@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -11,9 +12,8 @@ namespace ducker.Commands.AdministrationModule
         [Command("add-role"), 
          Description("Add a role to mentioned user"),
          RequireAdmin]
-        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
+        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role, [RemainingText] string reason = "No reason given")
         {
-            await msg.Message.DeleteAsync();
             if (member.Roles.ToArray().Contains(role))
             {
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
@@ -24,7 +24,7 @@ namespace ducker.Commands.AdministrationModule
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.IncorrectEmbedColor
+                    Color = Bot.WarningColor
                 });
                 return;
             }
@@ -32,16 +32,8 @@ namespace ducker.Commands.AdministrationModule
             try
             {
                 await member.GrantRoleAsync(role);
-                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-                {
-                    Description = $"Complete, {role.Name} added to {member.Mention}",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                });
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {member.Mention}. Reason: {reason}");
             }
             catch
             {
@@ -53,7 +45,7 @@ namespace ducker.Commands.AdministrationModule
                         IconUrl = msg.User.AvatarUrl,
                         Text = msg.User.Username
                     },
-                    Color = Bot.IncorrectEmbedColor
+                    Color = Bot.WarningColor
                 });
             }
         }
