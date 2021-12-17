@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 using MySqlConnector;
 
 namespace ducker.Commands.AdministrationModule
@@ -37,6 +38,7 @@ namespace ducker.Commands.AdministrationModule
             
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
+                        await Log.LogToAudit(msg.Guild, $"Music channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     }
                     else
                     {
@@ -45,6 +47,7 @@ namespace ducker.Commands.AdministrationModule
 
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
+                        await Log.LogToAudit(msg.Guild, $"Music channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     }
                     break;
                 case "cmd":
@@ -55,6 +58,7 @@ namespace ducker.Commands.AdministrationModule
             
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
+                        await Log.LogToAudit(msg.Guild, $"Command channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     }
                     else
                     {
@@ -63,6 +67,7 @@ namespace ducker.Commands.AdministrationModule
 
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
+                        await Log.LogToAudit(msg.Guild, $"Command channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     }
                     break;
                 case "logs":
@@ -73,6 +78,7 @@ namespace ducker.Commands.AdministrationModule
             
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
+                        await Log.LogToAudit(msg.Guild, $"Logs channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     }
                     else
                     {
@@ -81,6 +87,7 @@ namespace ducker.Commands.AdministrationModule
 
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
+                        await Log.LogToAudit(msg.Guild, $"Logs channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     }
                     break;
             }
