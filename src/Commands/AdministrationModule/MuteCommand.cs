@@ -13,7 +13,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("mute"),
          Description("Mute mentioned member"),
          RequireAdmin]
-        public async Task MuteCommand(CommandContext msg, DiscordMember member)
+        public async Task MuteCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason)
         {
             ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);
             if (muteRoleId == 0)
