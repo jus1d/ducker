@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 using MySqlConnector;
 
 namespace ducker.Commands.AdministrationModule
@@ -13,7 +14,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("mute"),
          Description("Mute mentioned member"),
          RequireAdmin]
-        public async Task MuteCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason)
+        public async Task MuteCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "No reason given")
         {
             ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);
             if (muteRoleId == 0)
@@ -51,6 +52,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await member.GrantRoleAsync(msg.Guild.GetRole(Database.GetMuteRoleId(msg.Guild.Id)));
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
         }
         

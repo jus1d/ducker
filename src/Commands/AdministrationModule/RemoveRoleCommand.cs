@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -11,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("remove-role"), 
          Description("Remove role from mentioned user"),
          RequireAdmin]
-        public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role)
+        public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role, [RemainingText] string reason)
         {
             await msg.Message.DeleteAsync();
             if (!member.Roles.ToArray().Contains(role))
@@ -33,6 +34,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await member.RevokeRoleAsync(role);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} remove role {role.Mention} from {member.Mention}. Reason: {reason}");
             }
             catch
             {

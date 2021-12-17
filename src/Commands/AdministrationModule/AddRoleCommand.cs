@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -11,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("add-role"), 
          Description("Add a role to mentioned user"),
          RequireAdmin]
-        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role)
+        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role, [RemainingText] string reason = "No reason given")
         {
             if (member.Roles.ToArray().Contains(role))
             {
@@ -32,6 +33,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await member.GrantRoleAsync(role);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {member.Mention}. Reason: {reason}");
             }
             catch
             {

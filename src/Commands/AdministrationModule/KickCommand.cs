@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -11,12 +12,13 @@ namespace ducker.Commands.AdministrationModule
         [Command("kick"),
          Description("Kick mentioned user from current server"),
          RequireAdmin]
-        public async Task KickCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "Reason does not given")
+        public async Task KickCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "No reason given")
         {
             try
             {
                 await member.RemoveAsync(reason);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} kicked {member.Mention}. Reason: {reason}");
             }
             catch
             {
