@@ -22,6 +22,7 @@ namespace ducker.Commands.MiscModule
                 },
                 Color = Bot.MainEmbedColor
             });
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
 
         [Command("invite-link")]
