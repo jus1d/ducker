@@ -11,7 +11,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("unmute"), 
          Description("Unmute mentioned member"),
          RequireAdmin]
-        public async Task Unmute(CommandContext msg, DiscordMember member)
+        public async Task Unmute(CommandContext msg, DiscordMember member, [RemainingText] string reason)
         {
             ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);
             if (muteRoleId == 0)
