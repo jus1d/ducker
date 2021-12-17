@@ -59,6 +59,7 @@ namespace ducker
             Client.GuildMemberAdded += Events.EventHandler.OnMemberAdded;
             Client.MessageCreated += Events.EventHandler.OnMessageCreated;
             Client.GuildMemberRemoved += Events.EventHandler.OnMemberRemoved;
+            Client.MessageUpdated += Events.EventHandler.OnMessageUpdated;
 
             var commandsConfig = new CommandsNextConfiguration 
             {
