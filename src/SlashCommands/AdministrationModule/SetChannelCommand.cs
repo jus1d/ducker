@@ -1,6 +1,4 @@
 ﻿using System.Data;
-using DSharpPlus;
-using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using ducker.Attributes;
@@ -11,8 +9,7 @@ namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("set-channel", "Set music channel for this server"),
-         RequireAdmin]
+        [SlashCommand("set-channel", "Set music channel for this server"), RequireAdmin]
         public async Task SetChannelCommand(InteractionContext msg,
             [Option("channelType", "Channel to set")] 
             [Choice("Command channel", "cmd")] 
@@ -86,7 +83,7 @@ namespace ducker.SlashCommands.AdministrationModule
                     }
                     break;
             }
-            await msg.Channel.SendMessageAsync(ducker.Embed.ChannelConfiguredEmbed(msg.User, channelType, channel));
+            await msg.Channel.SendMessageAsync(Embed.ChannelConfiguredEmbed(msg.User, channelType, channel));
         }
     }
 }
