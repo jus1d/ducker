@@ -14,7 +14,7 @@ using ducker;
 using ducker.Config;
 using ducker.Database;
 
-namespace ducker
+namespace ducker.SlashCommands
 {
     public partial class SlashCommands
     {

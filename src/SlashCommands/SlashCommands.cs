@@ -7,7 +7,7 @@ using DSharpPlus.SlashCommands;
 using ducker.Database;
 using MySqlConnector;
 
-namespace ducker
+namespace ducker.SlashCommands
 {
     public partial class SlashCommands : ApplicationCommandModule
     { 
