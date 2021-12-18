@@ -2,9 +2,9 @@
 using ducker.Config;
 using MySqlConnector;
 
-namespace ducker;
+namespace ducker.Database;
 
-public class Database
+public class DB
 {
     /// <summary>
     /// MySQL Database connection
@@ -45,11 +45,11 @@ public class Database
     /// <returns>Return music channel ID</returns>
     public static ulong GetMusicChannel(ulong guildId)
     {
-        Database database = new Database();
+        DB db = new DB();
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-        MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `ducker` WHERE `guildId` = {guildId}", database.GetConnection());
+        MySqlCommand command = new MySqlCommand($"SELECT `musicChannelId` FROM `ducker` WHERE `guildId` = {guildId}", db.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
@@ -64,12 +64,12 @@ public class Database
     /// <returns>Return command line channel ID</returns>
     public static ulong GetLogsChannel(ulong guildId)
     {
-        Database database = new Database();
+        DB db = new DB();
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
 
         MySqlCommand command = new MySqlCommand($"SELECT `logsChannelId` FROM `ducker` WHERE `guildId` = {guildId}", 
-            database.GetConnection());
+            db.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
@@ -84,12 +84,12 @@ public class Database
     /// <returns>Return server logs channel ID</returns>
     public static ulong GetCmdChannel(ulong guildId)
     {
-        Database database = new Database();
+        DB db = new DB();
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
 
         MySqlCommand command = new MySqlCommand($"SELECT `cmdChannelId` FROM `ducker` WHERE `guildId` = {guildId}", 
-            database.GetConnection());
+            db.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
@@ -104,11 +104,11 @@ public class Database
     /// <returns>Return mute role ID</returns>
     public static ulong GetMuteRoleId(ulong guildId)
     {
-        Database database = new Database();
+        DB db = new DB();
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
-        database.OpenConnection();
-        MySqlCommand command = new MySqlCommand($"SELECT `muteRoleId` FROM `ducker` WHERE `guildId` = {guildId}", database.GetConnection());
+        db.OpenConnection();
+        MySqlCommand command = new MySqlCommand($"SELECT `muteRoleId` FROM `ducker` WHERE `guildId` = {guildId}", db.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)

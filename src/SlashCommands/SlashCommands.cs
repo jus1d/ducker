@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
+using ducker.Database;
 using MySqlConnector;
 
 namespace ducker
@@ -475,12 +476,12 @@ namespace ducker
             [Option("channel", "Music channel")] DiscordChannel channel)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Database database = new Database();
+            DB db = new DB();
             DataTable table = new DataTable();
             DataTable findGuildTable = new DataTable();
             MySqlDataAdapter adapter = new MySqlDataAdapter();
 
-            MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `ducker` WHERE `guildId` = '{msg.Guild.Id}'", database.GetConnection());
+            MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `ducker` WHERE `guildId` = '{msg.Guild.Id}'", db.GetConnection());
             adapter.SelectCommand = findGuildCommand;
             adapter.Fill(findGuildTable);
             switch (channelType)
@@ -489,7 +490,7 @@ namespace ducker
                     if (findGuildTable.Rows.Count > 0)
                     {
                         MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `musicChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
-                            database.GetConnection());
+                            db.GetConnection());
             
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
@@ -497,7 +498,7 @@ namespace ducker
                     else
                     {
                         MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`, `cmdChannelId`, `logsChannelId`) VALUES ({msg.Guild.Id}, {channel.Id}, NULL, NULL)", 
-                            database.GetConnection());
+                            db.GetConnection());
 
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
@@ -507,7 +508,7 @@ namespace ducker
                     if (findGuildTable.Rows.Count > 0)
                     {
                         MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `cmdChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
-                            database.GetConnection());
+                            db.GetConnection());
             
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
@@ -515,7 +516,7 @@ namespace ducker
                     else
                     {
                         MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`, `cmdChannelId`, `logsChannelId`) VALUES ({msg.Guild.Id}, NULL, {channel.Id}, NULL)", 
-                            database.GetConnection());
+                            db.GetConnection());
 
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
@@ -525,7 +526,7 @@ namespace ducker
                     if (findGuildTable.Rows.Count > 0)
                     {
                         MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `logsChannelId` = {channel.Id} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
-                            database.GetConnection());
+                            db.GetConnection());
             
                         adapter.SelectCommand = command;
                         adapter.Fill(table);
@@ -533,7 +534,7 @@ namespace ducker
                     else
                     {
                         MySqlCommand command = new MySqlCommand($"INSERT INTO `ducker` (`guildId`, `musicChannelId`, `cmdChannelId`, `logsChannelId`) VALUES ({msg.Guild.Id}, NULL, NULL, {channel.Id})", 
-                            database.GetConnection());
+                            db.GetConnection());
 
                         adapter.SelectCommand = command;
                         adapter.Fill(table);

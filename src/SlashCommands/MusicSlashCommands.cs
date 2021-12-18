@@ -12,6 +12,7 @@ using MySqlConnector;
 using SpotifyAPI.Web;
 using ducker;
 using ducker.Config;
+using ducker.Database;
 
 namespace ducker
 {
@@ -21,8 +22,8 @@ namespace ducker
         public async Task Join(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -48,8 +49,8 @@ namespace ducker
         public async Task Quit(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -77,8 +78,8 @@ namespace ducker
         public async Task Play(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -295,8 +296,8 @@ namespace ducker
         public async Task NowPlaying(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -335,8 +336,8 @@ namespace ducker
         public async Task Repeat(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -375,8 +376,8 @@ namespace ducker
         public async Task Pause(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -414,8 +415,8 @@ namespace ducker
         public async Task Resume(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -449,8 +450,8 @@ namespace ducker
         public async Task Skip(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -493,8 +494,8 @@ namespace ducker
         public async Task Queue(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -513,8 +514,8 @@ namespace ducker
         public async Task ClearQueue(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -534,8 +535,8 @@ namespace ducker
         public async Task RemoveFromQueue(InteractionContext msg, [Option("position", "Track's position in queue")] string positionInput)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {
@@ -570,8 +571,8 @@ namespace ducker
         public async Task Stop(InteractionContext msg)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
             
             if (musicChannelIdFromDb == 0)
             {

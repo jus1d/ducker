@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.Entities;
+using ducker.Database;
 
 namespace ducker.Logs
 {
@@ -6,7 +7,7 @@ namespace ducker.Logs
     {
         public static async Task LogToAudit(DiscordGuild guild, string logText)
         {
-            ulong auditChannelId = Database.GetLogsChannel(guild.Id);
+            ulong auditChannelId = DB.GetLogsChannel(guild.Id);
             DiscordChannel auditChannel = guild.GetChannel(auditChannelId);
             await auditChannel.SendMessageAsync(logText);
         }
