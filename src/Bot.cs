@@ -90,11 +90,9 @@ namespace ducker
             Commands.RegisterCommands<MiscCommands>();
             Commands.RegisterCommands<MusicCommands>();
             Commands.SetHelpFormatter<DefaultHelpFormatter>();
-            slash.RegisterCommands<AdministrationSlashCommands>();
-            slash.RegisterCommands<MiscSlashCommands>();
-            slash.RegisterCommands<MusicSlashCommands>();
-            // slash.RegisterCommands<SlashCommands>(696496218934608004);
-            // slash.RegisterCommands(Array.Empty<SlashCommands>(), 696496218934608004);
+            slash.RegisterCommands<AdministrationSlashCommands>(696496218934608004);
+            slash.RegisterCommands<MiscSlashCommands>(696496218934608004);
+            slash.RegisterCommands<MusicSlashCommands>(696496218934608004);
             
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);

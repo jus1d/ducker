@@ -8,10 +8,10 @@ namespace ducker.SlashCommands.AdministrationModule
     public partial class AdministrationSlashCommands
     {
         [SlashCommand("ban", "Ban mentioned user in current server"), RequireAdmin]
-        public async Task BanCommand(InteractionContext msg, [Option("user", "User for ban")] DiscordMember member, [Option("reason", "Reason for ban this user")] string reason = "No reason given")
+        public async Task BanCommand(InteractionContext msg, [Option("user", "User for ban")] DiscordUser user, [Option("reason", "Reason for ban this user")] string reason = "No reason given")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            
+            DiscordMember member = (DiscordMember) user;
             try
             {
                 await msg.Guild.BanMemberAsync(member, 0, reason);

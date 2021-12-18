@@ -6,8 +6,7 @@ namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("clear", "Clear amount messages in a current channel"),
-         RequireAdmin]
+        [SlashCommand("clear", "Clear amount messages in a current channel"), RequireAdmin]
         public async Task ClearCommand(InteractionContext msg, [Option("amount", "Amount messages to delete")] long amount)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));

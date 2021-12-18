@@ -6,8 +6,7 @@ namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"),
-         RequireAdmin]
+        [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"), RequireAdmin]
         public async Task EmbedCommand(InteractionContext msg,
             [Option("description", "Set description tp your embed")] string description = null,
             [Option("title", "Set title for your embed")] string title = null,
