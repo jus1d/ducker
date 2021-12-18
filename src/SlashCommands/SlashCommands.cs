@@ -10,74 +10,7 @@ using MySqlConnector;
 namespace ducker.SlashCommands
 {
     public partial class SlashCommands : ApplicationCommandModule
-    { 
-        // avatar
-        [SlashCommand("avatar", "Send embed with users avatar to current channel")]
-        public async Task Avatar(InteractionContext msg,
-            [Option("User", "User, whose avatar you need")] DiscordUser user) 
-        {
-            var avatarEmbed = new DiscordEmbedBuilder
-            {
-                Title = "User's avatar",
-                Description = $"**{user.Mention}'s avatar**",
-                ImageUrl = user.AvatarUrl,
-                Url = user.AvatarUrl,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(avatarEmbed));
-        }
-        
-        
-        // invite-link
-        [SlashCommand("invite-link", "Send invite link for this bot to current channel")]
-        public async Task InviteLink(InteractionContext msg) 
-        {
-            var inviteLinkEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Invite Link",
-                Url = Bot.InviteLink,
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(inviteLinkEmbed));
-        }
-        
-        
-        // random
-        [SlashCommand("random", "Send random value in your range from min to max value to current channel")]
-        public async Task Random(InteractionContext msg, 
-            [Option("min", "Minimal value in your range")] long minValue, 
-            [Option("max", "Maximal value in your range")] long maxValue) 
-        {
-            var rnd = new Random();
-            var randomEmbed = new DiscordEmbedBuilder
-            {
-                Title = "Random number",
-                Description = $"Your random number is: **{rnd.Next((int)minValue, (int)maxValue + 1)}**",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.MainEmbedColor
-            };
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(randomEmbed));
-        }
-        
-        
+    {
         // ban
         [SlashCommand("ban", "Ban mentioned user in current server"), RequirePermissions(Permissions.Administrator)]
         public async Task Ban(InteractionContext msg, [Option("user", "User for ban")] DiscordUser user, [Option("reason", "Reason for ban this user")] string reason = "") 
