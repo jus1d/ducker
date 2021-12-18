@@ -4,6 +4,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
+using ducker.Attributes;
 using ducker.Database;
 using MySqlConnector;
 
@@ -13,7 +14,7 @@ namespace ducker.SlashCommands
     {
         // embed
         [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"),
-         RequirePermissions(Permissions.Administrator)]
+         RequireAdmin]
         public async Task Embed(InteractionContext msg,
             [Option("description", "Set description tp your embed")] string description = null,
             [Option("title", "Set title for your embed")] string title = null,
