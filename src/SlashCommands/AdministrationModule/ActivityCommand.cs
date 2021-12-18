@@ -3,7 +3,7 @@ using DSharpPlus.SlashCommands;
 
 namespace ducker.SlashCommands.AdministrationModule
 {
-    public partial class AdministrationSlashCommands
+    public partial class AdministrationSlashCommands : ApplicationCommandModule
     {
         [SlashCommand("activity", "Changes activity to the bot")]
         public async Task ActivityCommand(InteractionContext msg,
