@@ -16,8 +16,9 @@ namespace ducker.SlashCommands.AdministrationModule
             [Option("image", "Add image to your embed")] string imageUrl = null,
             [Option("titleURL", "Set title clickable to your URL")] string titleUrl = null)
         {
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             var color = new DiscordColor(colorHexCode);
-            await msg.CreateResponseAsync(new DiscordEmbedBuilder
+            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
             {
                 Title = title,
                 Description = description,

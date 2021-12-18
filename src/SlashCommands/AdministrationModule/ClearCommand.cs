@@ -10,9 +10,10 @@ namespace ducker.SlashCommands.AdministrationModule
          RequireAdmin]
         public async Task ClearCommand(InteractionContext msg, [Option("amount", "Amount messages to delete")] long amount)
         {
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             if (amount > 100 || amount < 0)
             {
-                await msg.CreateResponseAsync(new DiscordEmbedBuilder
+                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Title = "Missing argument",
                     Description = "**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
@@ -34,7 +35,7 @@ namespace ducker.SlashCommands.AdministrationModule
                 else
                     messageOrMessages = "messages";
                 
-                await msg.CreateResponseAsync(new DiscordEmbedBuilder
+                var message = await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Title = "Deleted messages report", 
                     Description = $"I have deleted {amount} {messageOrMessages}",
@@ -44,7 +45,9 @@ namespace ducker.SlashCommands.AdministrationModule
                         Text = msg.User.Username
                     },
                     Color = Bot.MainEmbedColor
-                }, true);
+                });
+                Thread.Sleep(3000);
+                await message.DeleteAsync();
             }
         }
     }
