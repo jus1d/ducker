@@ -12,62 +12,6 @@ namespace ducker.SlashCommands
 {
     public partial class SlashCommands : ApplicationCommandModule
     {
-        [SlashCommand("add-role", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
-        public async Task AddRole(InteractionContext msg,
-            [Option("member", "Member to add role")] DiscordUser user,
-            [Option("role", "Role to add it")] DiscordRole role)
-        {
-            DiscordMember member = (DiscordMember) user;
-            
-            if (member.Roles.ToArray().Contains(role))
-            {
-                var memberHasRoleEmbed = new DiscordEmbedBuilder
-                {
-                    Description = "This member currently has this role",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(memberHasRoleEmbed));
-                return;
-            }
-            
-            try
-            {
-                await member.GrantRoleAsync(role);
-                var completeEmbed = new DiscordEmbedBuilder
-                {
-                    Description = $"Complete, {role.Name} added to {user.Mention}",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                };
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(completeEmbed));
-            }
-            catch (Exception e)
-            {
-                var incorrectEmbed = new DiscordEmbedBuilder
-                {
-                    Description = ":x: You can't add this role",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectEmbed));
-            }
-        }
 
         [SlashCommand("remove-role", "Removes role from mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task RemoveRole(InteractionContext msg,
