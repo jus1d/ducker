@@ -11,49 +11,6 @@ namespace ducker.SlashCommands
 {
     public partial class SlashCommands : ApplicationCommandModule
     {
-        // ban
-        [SlashCommand("ban", "Ban mentioned user in current server"), RequirePermissions(Permissions.Administrator)]
-        public async Task Ban(InteractionContext msg, [Option("user", "User for ban")] DiscordUser user, [Option("reason", "Reason for ban this user")] string reason = "") 
-        {
-            var banEmbed = new DiscordEmbedBuilder();
-            try
-            {
-                if (reason == "")
-                    await ((DiscordMember) user).BanAsync();
-                else
-                    await ((DiscordMember) user).BanAsync(0, reason);
-                
-                banEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "User banned",
-                    Description = $"gl, {user.Mention} :)",
-                    ImageUrl = "https://static.wikia.nocookie.net/angrybirds-fiction/images/b/b7/%D0%91%D0%B0%D0%BD%D1%85%D0%B0%D0%BC%D0%BC%D0%B5%D1%80.png/revision/latest?cb=20190731080031&path-prefix=ru",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                };
-            }
-            catch (Exception e)
-            {
-                banEmbed = new DiscordEmbedBuilder
-                {
-                    Description = ":x: **You can't ban this user**",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-            }
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().AddEmbed(banEmbed));
-        }
-        
-        
         // kick
         [SlashCommand("kick", "Kicks mentioned user from current server"), RequirePermissions(Permissions.Administrator)]
         public async Task Kick(InteractionContext msg, [Option("user", "User for kick")] DiscordUser user, [Option("reason", "Reason for kick this member")] string reason = "")
