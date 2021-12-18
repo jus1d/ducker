@@ -32,8 +32,4 @@
       <PackageReference Include="TwitchLib.Api" Version="3.4.0-preview-f3b3afbb4fa8d1641bf4b69747b8cd1db7c2f86a" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="SlashCommands\MusicModule" />
-    </ItemGroup>
-
 </Project>
