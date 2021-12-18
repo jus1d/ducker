@@ -12,22 +12,6 @@ namespace ducker.SlashCommands
 {
     public partial class SlashCommands : ApplicationCommandModule
     {
-        [SlashCommand("reaction-role-embed", "Send embed with reactions, press them to get role"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task ReactionRoleEmbed(InteractionContext msg)
-        {
-            DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
-            DiscordEmoji chelEmoji = DiscordEmoji.FromName(msg.Client, ":chel:");
-            var followButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_follow_role", "", false, new DiscordComponentEmoji(twitchRgbEmoji));
-            var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
-            
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder()
-                .AddEmbed(ducker.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
-                .AddComponents(followButton, chelButton));
-        }
-
-
         [SlashCommand("stream", "Send stream announcement"), RequirePermissions(Permissions.Administrator)]
         public async Task StreamAnnouncement(InteractionContext msg, [Option("description", "Stream description")] string description = "")
         {
