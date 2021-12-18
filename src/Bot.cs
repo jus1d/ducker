@@ -104,6 +104,8 @@ namespace ducker
             };
             Client.UpdateStatusAsync(activity);
             return Task.CompletedTask;
+            
+            // TODO: move to EventHandler
         }
     }
 }
