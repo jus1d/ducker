@@ -8,6 +8,7 @@ namespace ducker.Events
     {
         public static async Task OnMemberAdded(DiscordClient client, GuildMemberAddEventArgs e)
         {
+            await e.Member.GrantRoleAsync(e.Guild.GetRole(Role.ChelRoleId));
             await Log.LogToAudit(e.Guild, $"{e.Member.Mention}, just landed on the `{e.Guild.Name}`");
         }
     }
