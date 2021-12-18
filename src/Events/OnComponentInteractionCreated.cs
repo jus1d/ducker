@@ -141,8 +141,6 @@ namespace ducker.Events
                 await e.Interaction.CreateResponseAsync(InteractionResponseType.DeferredMessageUpdate);
                 await e.Interaction.Channel.SendMessageAsync(Embed.Queue(e.Interaction.User));
             }
-            
-            // TODO: logs
         }
     }
 }

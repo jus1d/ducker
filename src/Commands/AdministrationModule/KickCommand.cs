@@ -7,7 +7,7 @@ using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("kick"),
          Description("Kick mentioned user from current server"),
@@ -22,7 +22,7 @@ namespace ducker.Commands.AdministrationModule
             }
             catch
             {
-                var incorrectKickEmbed = new DiscordEmbedBuilder
+                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Description = ":x: You can't kick this member",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -31,9 +31,7 @@ namespace ducker.Commands.AdministrationModule
                         Text = msg.User.Username
                     },
                     Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectKickEmbed);
-                throw;
+                });
             }
         }
 

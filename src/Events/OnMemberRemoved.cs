@@ -1,5 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
+using ducker.Logs;
 
 namespace ducker.Events
 {
@@ -7,10 +8,7 @@ namespace ducker.Events
     {
         public static async Task OnMemberRemoved(DiscordClient client, GuildMemberRemoveEventArgs e)
         {
-            var channel = e.Guild.GetChannel(Database.GetLogsChannel(e.Guild.Id));
-            await channel.SendMessageAsync($"{e.Member.Mention}. On siebalsya ksta");
-            
-            // TODO: logs
+            await Log.LogToAudit(e.Guild, $"{e.Member.Mention} just leaved from server");
         }
     }
 }

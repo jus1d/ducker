@@ -15,6 +15,9 @@ using ducker.Commands.AdministrationModule;
 using ducker.Commands.MusicModule;
 using ducker.Config;
 using ducker.Events;
+using ducker.SlashCommands.AdministrationModule;
+using ducker.SlashCommands.MiscModule;
+using ducker.SlashCommands.MusicModule;
 
 namespace ducker
 {
@@ -28,9 +31,8 @@ namespace ducker
         public static DiscordColor IncorrectEmbedColor = new ("#ff0000");
         public static DiscordColor WarningColor = new ("#ff9f30");
         public static readonly ulong Id = ConfigJson.GetConfigField().Id;
-        public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=918248095869968434&permissions=8&scope=bot%20applications.commands";
+        public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=921896450915434537&permissions=8&scope=bot%20applications.commands";
         public static readonly ulong MainGuildId = 696496218934608004;
-        public static readonly ulong AuditCnahhel = 921491645038477412;
 
         public static List<LavalinkTrack> Queue = new ();
 
@@ -42,7 +44,7 @@ namespace ducker
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 MinimumLogLevel = LogLevel.Debug,
-                LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss tt",
+                LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss",
                 Intents = DiscordIntents.All
             };
             
@@ -83,12 +85,13 @@ namespace ducker
             var slash = Client.UseSlashCommands();
             
             Commands = Client.UseCommandsNext(commandsConfig);
-            Commands.RegisterCommands<AdministrationModule>();
+            Commands.RegisterCommands<AdministrationCommands>();
             Commands.RegisterCommands<MiscCommands>();
             Commands.RegisterCommands<MusicCommands>();
             Commands.SetHelpFormatter<DefaultHelpFormatter>();
-            // slash.RegisterCommands<SlashCommands>(696496218934608004);
-            // slash.RegisterCommands(Array.Empty<SlashCommands>(), 696496218934608004);
+            slash.RegisterCommands<AdministrationSlashCommands>(696496218934608004);
+            slash.RegisterCommands<MiscSlashCommands>(696496218934608004);
+            slash.RegisterCommands<MusicSlashCommands>(696496218934608004);
             
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
@@ -98,13 +101,14 @@ namespace ducker
 
         private Task OnClientReady(DiscordClient client, ReadyEventArgs e)
         {
-            var activity = new DiscordActivity
+            Client.UpdateStatusAsync(new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
                 Name = "with ducks | -help"
-            };
-            Client.UpdateStatusAsync(activity);
+            }, UserStatus.Idle);
             return Task.CompletedTask;
+            
+            // TODO: move to EventHandler
         }
     }
 }

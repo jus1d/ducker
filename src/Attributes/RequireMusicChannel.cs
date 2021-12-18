@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using ducker.Database;
 
 namespace ducker.Attributes
 {
@@ -11,8 +12,8 @@ namespace ducker.Attributes
     {
         public override Task<bool> ExecuteCheckAsync(CommandContext msg, bool help)
         {
-            ulong musicChannelId = Database.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelId = Database.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelId = DB.GetMusicChannel(msg.Guild.Id);
+            ulong cmdChannelId = DB.GetCmdChannel(msg.Guild.Id);
             bool correctChannel = msg.Channel.Id == musicChannelId || msg.Channel.Id == cmdChannelId;
             if (!correctChannel)
                 msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelId));

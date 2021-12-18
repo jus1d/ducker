@@ -6,7 +6,7 @@ using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("activity"),
          Description("Change bot activity"),
@@ -20,7 +20,7 @@ namespace ducker.Commands.AdministrationModule
                     ActivityType = ActivityType.Streaming,
                     Name = "with ducks |  -help",
                     StreamUrl = "https://www.twitch.tv/itakash1"
-                });
+                }, UserStatus.Idle);
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Description = "Activity changed to streaming type",
@@ -39,7 +39,7 @@ namespace ducker.Commands.AdministrationModule
                 {
                     ActivityType = ActivityType.Playing,
                     Name = "with ducks | -help"
-                });
+                }, UserStatus.Idle);
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Description = "Activity changed to playing type",

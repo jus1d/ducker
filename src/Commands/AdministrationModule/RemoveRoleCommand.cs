@@ -7,7 +7,7 @@ using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("remove-role"), 
          Description("Remove role from mentioned user"),

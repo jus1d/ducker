@@ -7,7 +7,7 @@ using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule : BaseCommandModule
+    public partial class AdministrationCommands : BaseCommandModule
     {
         [Command("ban"),
          Description("Ban mentioned user in current server"),
@@ -22,7 +22,7 @@ namespace ducker.Commands.AdministrationModule
             }
             catch
             {
-                var incorrectBanCommandEmbed = new DiscordEmbedBuilder
+                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Description = "You can't ban this user",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -31,15 +31,14 @@ namespace ducker.Commands.AdministrationModule
                         Text = msg.User.Username
                     },
                     Color = Bot.WarningColor
-                };
-                await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
+                });
             }
         }
 
         [Command("ban")]
         public async Task BanCommand(CommandContext msg, [RemainingText] string text)
         {
-            var incorrectBanCommandEmbed = new DiscordEmbedBuilder
+            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
             {
                 Title = $"Missing argument",
                 Description = $"**Usage:** `-ban <member>`",
@@ -49,8 +48,7 @@ namespace ducker.Commands.AdministrationModule
                     Text = msg.User.Username
                 },
                 Color = Bot.IncorrectEmbedColor
-            };
-            await msg.Channel.SendMessageAsync(incorrectBanCommandEmbed);
+            });
         }
     }
 }

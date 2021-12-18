@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
+using ducker.Database;
 
 namespace ducker.Events
 {
@@ -16,7 +17,7 @@ namespace ducker.Events
                 return;
             }
 
-            ulong musicChannelIdFromDb = Database.GetMusicChannel(sender.Guild.Id);
+            ulong musicChannelIdFromDb = DB.GetMusicChannel(sender.Guild.Id);
 
             await sender.PlayAsync(Bot.Queue[0]);
             await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await (await sender.Node.Discord.GetGuildAsync(696496218934608004)).GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(musicChannelIdFromDb));

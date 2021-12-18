@@ -31,8 +31,6 @@ namespace ducker.Events
                 };
                 await msg.Message.Channel.SendMessageAsync(embed);
             }
-            
-            // TODO: logs
         }
     }
 }

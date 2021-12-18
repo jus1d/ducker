@@ -3,18 +3,19 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Attributes;
+using ducker.Database;
 using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("unmute"), 
          Description("Unmute mentioned member"),
          RequireAdmin]
         public async Task Unmute(CommandContext msg, DiscordMember member, [RemainingText] string reason)
         {
-            ulong muteRoleId = Database.GetMuteRoleId(msg.Guild.Id);
+            ulong muteRoleId = DB.GetMuteRoleId(msg.Guild.Id);
             if (muteRoleId == 0)
             {
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
