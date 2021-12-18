@@ -11,38 +11,6 @@ namespace ducker.SlashCommands
 {
     public partial class SlashCommands : ApplicationCommandModule
     {
-        // kick
-        [SlashCommand("kick", "Kicks mentioned user from current server"), RequirePermissions(Permissions.Administrator)]
-        public async Task Kick(InteractionContext msg, [Option("user", "User for kick")] DiscordUser user, [Option("reason", "Reason for kick this member")] string reason = "")
-        {
-            try
-            {
-                if (reason == "")
-                    await ((DiscordMember) user).RemoveAsync();
-                else
-                    await ((DiscordMember) user).RemoveAsync(reason);
-            }
-            catch (Exception e)
-            {
-                var incorrectKickEmbed = new DiscordEmbedBuilder
-                {
-                    Description = ":x: You can't kick this member",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectKickEmbed));
-                throw;
-            }
-            await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                new DiscordInteractionResponseBuilder().WithContent($"{user.Mention} kicked"));
-        }
-        
-        
         // clear
         [SlashCommand("clear", "Clear amount messages in a current channel"),
          RequirePermissions(Permissions.Administrator)]
