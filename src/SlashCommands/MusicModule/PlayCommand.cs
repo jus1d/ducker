@@ -8,10 +8,10 @@ using SpotifyAPI.Web;
 
 namespace ducker.SlashCommands.MusicModule
 {
-    public class PlayCommand
+    public partial class MusicSlashCommands
     {
         [SlashCommand("play", "Start playing track")]
-        public async Task Play(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
+        public async Task PlayCommand(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
