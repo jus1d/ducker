@@ -6,7 +6,7 @@ using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("reaction-role"), 
          Description("Send an embed with buttons, by press there you will granted a role"),

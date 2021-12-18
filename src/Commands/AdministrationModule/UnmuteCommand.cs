@@ -8,7 +8,7 @@ using ducker.Logs;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("unmute"), 
          Description("Unmute mentioned member"),

@@ -6,7 +6,7 @@ using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("embed"), 
          Description("Create, and sends an embed with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted)"),
@@ -80,9 +80,9 @@ namespace ducker.Commands.AdministrationModule
                     {
                         color = new DiscordColor(embedConfig[i + 1]);
                     }
-                    catch (Exception e)
+                    catch
                     {
-                        var incorrectColorFlag = new DiscordEmbedBuilder
+                        await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                         {
                             Title = "Missing argument",
                             Description = "Incorrect `-color` flag\n" +
@@ -93,8 +93,7 @@ namespace ducker.Commands.AdministrationModule
                                 Text = msg.User.Username
                             },
                             Color = Bot.IncorrectEmbedColor
-                        };
-                        await msg.Channel.SendMessageAsync(incorrectColorFlag);
+                        });
                         throw;
                     }
                 }
