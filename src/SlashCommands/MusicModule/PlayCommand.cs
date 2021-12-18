@@ -19,17 +19,17 @@ namespace ducker.SlashCommands.MusicModule
             
             if (musicChannelIdFromDb == 0)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
+                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
                 return;
             }
             if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
+                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
                 return;
             }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NotInVoiceChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NotInVoiceChannelEmbed(msg));
                 return;
             }
             
@@ -39,7 +39,7 @@ namespace ducker.SlashCommands.MusicModule
             
             if (connection == null)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NoConnectionEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NoConnectionEmbed(msg));
                 return;
             }
 
@@ -117,7 +117,7 @@ namespace ducker.SlashCommands.MusicModule
                     var loadResult = await node.Rest.GetTracksAsync(search);
                     if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
                     {
-                        await msg.Channel.SendMessageAsync(ducker.Embed.SearchFailedEmbed(msg, search));
+                        await msg.Channel.SendMessageAsync(Embed.SearchFailedEmbed(msg, search));
                         return;
                     }
 
@@ -168,7 +168,7 @@ namespace ducker.SlashCommands.MusicModule
                             var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
                             track = loadResult.Tracks.First();
                             Bot.Queue.Add(track);
-                            await msg.Channel.SendMessageAsync(ducker.Embed.TrackQueuedEmbed(msg));
+                            await msg.Channel.SendMessageAsync(Embed.TrackQueuedEmbed(msg));
                         }
                         else
                         {
@@ -212,7 +212,7 @@ namespace ducker.SlashCommands.MusicModule
 
                     if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
                     {
-                        await msg.Channel.SendMessageAsync(ducker.Embed.SearchFailedEmbed(msg, search));
+                        await msg.Channel.SendMessageAsync(Embed.SearchFailedEmbed(msg, search));
                         return;
                     }
 

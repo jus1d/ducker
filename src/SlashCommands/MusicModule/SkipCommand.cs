@@ -34,7 +34,7 @@ namespace ducker.SlashCommands.MusicModule
             {
                 LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
             }
-            catch (Exception exception)
+            catch
             {
                 await msg.Channel.SendMessageAsync(Embed.ClearQueueEmbed(msg.User));
                 return;
