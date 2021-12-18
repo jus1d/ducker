@@ -42,7 +42,7 @@ namespace ducker
                 TokenType = TokenType.Bot,
                 AutoReconnect = true,
                 MinimumLogLevel = LogLevel.Debug,
-                LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss tt",
+                LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss",
                 Intents = DiscordIntents.All
             };
             
