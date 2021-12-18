@@ -3,7 +3,7 @@ using DSharpPlus.SlashCommands;
 
 namespace ducker.SlashCommands.MiscModule
 {
-    public class RandomCommand
+    public partial class MiscSlashCommands
     {
         [SlashCommand("random", "Send random value in your range from min to max value to current channel")]
         public async Task Random(InteractionContext msg, 
