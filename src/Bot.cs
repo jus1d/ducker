@@ -97,12 +97,11 @@ namespace ducker
 
         private Task OnClientReady(DiscordClient client, ReadyEventArgs e)
         {
-            var activity = new DiscordActivity
+            Client.UpdateStatusAsync(new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
                 Name = "with ducks | -help"
-            };
-            Client.UpdateStatusAsync(activity);
+            });
             return Task.CompletedTask;
             
             // TODO: move to EventHandler
