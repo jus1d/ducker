@@ -101,7 +101,7 @@ namespace ducker
             {
                 ActivityType = ActivityType.Playing,
                 Name = "with ducks | -help"
-            });
+            }, UserStatus.Idle);
             return Task.CompletedTask;
             
             // TODO: move to EventHandler
