@@ -33,7 +33,6 @@ namespace ducker
         public static readonly ulong Id = ConfigJson.GetConfigField().Id;
         public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=918248095869968434&permissions=8&scope=bot%20applications.commands";
         public static readonly ulong MainGuildId = 696496218934608004;
-        public static readonly ulong AuditCnahhel = 921491645038477412;
 
         public static List<LavalinkTrack> Queue = new ();
 
