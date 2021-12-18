@@ -11,58 +11,6 @@ namespace ducker.SlashCommands
 {
     public partial class SlashCommands : ApplicationCommandModule
     {
-        // clear
-        [SlashCommand("clear", "Clear amount messages in a current channel"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task Clear(InteractionContext msg, [Option("amount", "Amount messages to delete")] long amount)
-        {
-            if (amount > 100 || amount < 0)
-            {
-                var incorrectCommandEmbed = new DiscordEmbedBuilder
-                {
-                    Title = "Missing argument",
-                    Description = "**Usage:** `-clear <amount> (amount must be less than 100 and bigger than 0)`",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.IncorrectEmbedColor
-                };
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(incorrectCommandEmbed).AsEphemeral(true));
-            }
-            else
-            {
-                await msg.Channel.DeleteMessagesAsync(await msg.Channel.GetMessagesAsync((int)amount + 1));
-
-                string messageOrMessages;
-                if (amount.ToString()[amount.ToString().Length - 1] == '1' && amount != 11)
-                {
-                    messageOrMessages = "message";
-                }
-                else
-                {
-                    messageOrMessages = "messages";
-                }
-            
-                var deletedMessagesReport = new DiscordEmbedBuilder
-                {
-                    Title = "Deleted messages report", 
-                    Description = $"I have deleted {amount} {messageOrMessages}",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.MainEmbedColor
-                };
-                await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
-                    new DiscordInteractionResponseBuilder().AddEmbed(deletedMessagesReport).AsEphemeral(true));
-            }
-        }
-
-
         // embed
         [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"),
          RequirePermissions(Permissions.Administrator)]
