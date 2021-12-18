@@ -2,19 +2,18 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 using ducker.Attributes;
 using ducker.Database;
 using MySqlConnector;
 
-namespace ducker.SlashCommands
+namespace ducker.SlashCommands.AdministrationModule
 {
-    public partial class SlashCommands : ApplicationCommandModule
+    public partial class AdministrationSlashCommands
     {
         [SlashCommand("set-channel", "Set music channel for this server"),
-         RequirePermissions(Permissions.Administrator)]
-        public async Task SetMusicCommand(InteractionContext msg,
+         RequireAdmin]
+        public async Task SetChannelCommand(InteractionContext msg,
             [Option("channelType", "Channel to set")] 
             [Choice("Command channel", "cmd")] 
             [Choice("Logs channel", "logs")] 
@@ -87,7 +86,6 @@ namespace ducker.SlashCommands
                     }
                     break;
             }
-
             await msg.Channel.SendMessageAsync(ducker.Embed.ChannelConfiguredEmbed(msg.User, channelType, channel));
         }
     }
