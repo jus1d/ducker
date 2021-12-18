@@ -6,7 +6,7 @@ using ducker.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("stream"), 
          Description("Send stream announcement"),

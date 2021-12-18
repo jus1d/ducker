@@ -83,7 +83,7 @@ namespace ducker
             var slash = Client.UseSlashCommands();
             
             Commands = Client.UseCommandsNext(commandsConfig);
-            Commands.RegisterCommands<AdministrationModule>();
+            Commands.RegisterCommands<AdministrationCommands>();
             Commands.RegisterCommands<MiscCommands>();
             Commands.RegisterCommands<MusicCommands>();
             Commands.SetHelpFormatter<DefaultHelpFormatter>();

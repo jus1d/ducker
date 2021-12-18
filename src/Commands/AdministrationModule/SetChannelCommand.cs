@@ -10,7 +10,7 @@ using MySqlConnector;
 
 namespace ducker.Commands.AdministrationModule
 {
-    public partial class AdministrationModule
+    public partial class AdministrationCommands
     {
         [Command("set-channel"), 
          Description("Set music channel for this guild"),
