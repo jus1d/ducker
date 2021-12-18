@@ -11,6 +11,7 @@ using DSharpPlus.SlashCommands;
 using MySqlConnector;
 using SpotifyAPI.Web;
 using ducker;
+using ducker.Attributes;
 using ducker.Config;
 using ducker.Database;
 
@@ -18,62 +19,7 @@ namespace ducker.SlashCommands
 {
     public partial class SlashCommands
     {
-        [SlashCommand("join", "Join your voice channel")]
-        public async Task Join(InteractionContext msg)
-        {
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
-            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
-            {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NotInVoiceChannelEmbed(msg));
-                return;
-            }
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            await node.ConnectAsync(msg.Member.VoiceState.Channel);
-        }
 
-        [SlashCommand("quit", "Quit voice channel"), RequirePermissions(Permissions.Administrator)]
-        public async Task Quit(InteractionContext msg)
-        {
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(ducker.Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
-            if (connection == null)
-            {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NoConnectionEmbed(msg));
-                return;
-            }
-            await connection.DisconnectAsync();
-            Bot.Queue.Clear();
-        }
-        
         [SlashCommand("play", "Start playing track")]
         public async Task Play(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
         {

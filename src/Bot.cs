@@ -17,6 +17,7 @@ using ducker.Config;
 using ducker.Events;
 using ducker.SlashCommands.AdministrationModule;
 using ducker.SlashCommands.MiscModule;
+using ducker.SlashCommands.MusicModule;
 
 namespace ducker
 {
@@ -91,6 +92,7 @@ namespace ducker
             Commands.SetHelpFormatter<DefaultHelpFormatter>();
             slash.RegisterCommands<AdministrationSlashCommands>();
             slash.RegisterCommands<MiscSlashCommands>();
+            slash.RegisterCommands<MusicSlashCommands>();
             // slash.RegisterCommands<SlashCommands>(696496218934608004);
             // slash.RegisterCommands(Array.Empty<SlashCommands>(), 696496218934608004);
             
