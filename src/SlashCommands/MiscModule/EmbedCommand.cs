@@ -1,12 +1,11 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using ducker.SlashCommands.Attributes;
 
-namespace ducker.SlashCommands.AdministrationModule
+namespace ducker.SlashCommands.MiscModule
 {
-    public partial class AdministrationSlashCommands
+    public partial class MiscSlashCommands
     {
-        [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"), RequireAdmin]
+        [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings")]
         public async Task EmbedCommand(InteractionContext msg,
             [Option("description", "Set description tp your embed")] string description = "",
             [Option("title", "Set title for your embed")] string title = "",
@@ -29,7 +28,6 @@ namespace ducker.SlashCommands.AdministrationModule
                 },
                 Color = color
             });
-            // TODO: check it!
         }
     }
 }

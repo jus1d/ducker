@@ -1,17 +1,15 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using ducker.Commands.Attributes;
 
-namespace ducker.Commands.AdministrationModule
+namespace ducker.Commands.MiscModule
 {
-    public partial class AdministrationCommands
+    public partial class MiscCommands
     {
         [Command("embed"), 
          Description("Create, and sends an embed with your title, description, title URL, image (All optional, but title or description must be. If you use -del flag, message with config will be deleted)"),
-         Aliases("e"),
-         RequireAdmin]
-        public async Task Embed(CommandContext msg, params string[] embedConfig)
+         Aliases("e")]
+        public async Task EmbedCommand(CommandContext msg, params string[] embedConfig)
         {
             var color = Bot.MainEmbedColor;
             var incorrectCommandEmbed = new DiscordEmbedBuilder
