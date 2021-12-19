@@ -3,8 +3,5 @@
     "prefix":"your prefix here",
     "spotifyId":"your spotify client id here",
     "spotifySecret":"your spotify client secret here",
-    "musicChannelId":"music channel id",
-    "serverLogsChannelId":"logs channel id",
-    "cmdChannelId":"channel testing or admin channel id",
     "id":"bot id"
 }
