@@ -107,8 +107,6 @@ namespace ducker
                 Name = "with ducks | -help"
             }, UserStatus.Idle);
             return Task.CompletedTask;
-            
-            // TODO: move to EventHandler
         }
     }
 }

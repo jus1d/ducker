@@ -1,11 +1,12 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using ducker.SlashCommands.Attributes;
 
 namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands : ApplicationCommandModule
     {
-        [SlashCommand("activity", "Changes activity to the bot")]
+        [SlashCommand("activity", "Changes activity to the bot"), RequireAdmin]
         public async Task ActivityCommand(InteractionContext msg,
             [Choice("playing", "playing")] 
             [Choice("streaming", "streaming")] 

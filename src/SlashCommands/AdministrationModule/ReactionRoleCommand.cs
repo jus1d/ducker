@@ -1,13 +1,13 @@
 ﻿using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using ducker.Attributes;
+using ducker.SlashCommands.Attributes;
 
 namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("reaction-role-embed", "Send embed with reactions, press them to get role"), RequireAdmin]
+        [SlashCommand("reaction-role", "Send embed with reactions, press them to get role"), RequireAdmin, RequireMainGuild]
         public async Task ReactionRoleCommand(InteractionContext msg)
         {
             DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
@@ -17,7 +17,7 @@ namespace ducker.SlashCommands.AdministrationModule
             
             await msg.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                 new DiscordInteractionResponseBuilder()
-                    .AddEmbed(ducker.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                    .AddEmbed(Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                     .AddComponents(followButton, chelButton));
         }
     }

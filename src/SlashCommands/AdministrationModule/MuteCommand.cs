@@ -1,22 +1,21 @@
 ﻿using System.Data;
 using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using ducker.Commands.Attributes;
+using DSharpPlus.SlashCommands;
+using ducker.SlashCommands.Attributes;
 using ducker.Database;
 using ducker.Logs;
 using MySqlConnector;
 
-namespace ducker.Commands.AdministrationModule
+namespace ducker.SlashCommands.AdministrationModule
 {
-    public partial class AdministrationCommands
+    public partial class AdministrationSlashCommands
     {
-        [Command("mute"),
-         Description("Mute mentioned member"),
-         RequireAdmin]
-        public async Task MuteCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "No reason given")
+        [SlashCommand("mute", "Mute mentioned member"), RequireAdmin]
+        public async Task MuteCommand(InteractionContext msg, [Option("member", "Member to mute")] DiscordUser user, [Option("reason", "Reason for mute")] string reason = "No reason given")
         {
+            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+            DiscordMember member = (DiscordMember) user;
             ulong muteRoleId = DB.GetMuteRoleId(msg.Guild.Id);
             if (muteRoleId == 0)
             {
@@ -46,31 +45,13 @@ namespace ducker.Commands.AdministrationModule
             
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
-                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id)));
-                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id))); // TODO: fix bug (if delete mute role command doesn't work)
             }
             else
             {
-                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id)));
-                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id))); // TODO: fix bug (if delete mute role command doesn't work)
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
-        }
-        
-        [Command("mute")]
-        public async Task MuteCommand(CommandContext msg, [RemainingText] string text)
-        {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-            {
-                Title = "Missing argument",
-                Description = "**Usage:** `-mute <member>`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
         }
     }
 }

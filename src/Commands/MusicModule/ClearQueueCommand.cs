@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using ducker.Attributes;
+using ducker.Commands.Attributes;
 
 namespace ducker.Commands.MusicModule
 {

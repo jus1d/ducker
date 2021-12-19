@@ -1,27 +1,24 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using ducker.SlashCommands.Attributes;
+using ducker.Database;
 using ducker.Logs;
 
 namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("ban", "Ban mentioned user in current server"), RequireAdmin]
-        public async Task BanCommand(InteractionContext msg, [Option("user", "User for ban")] DiscordUser user, [Option("reason", "Reason for ban this user")] string reason = "No reason given")
+        [SlashCommand("unmute", "Unmute mentioned member"), RequireAdmin]
+        public async Task UnmuteCommand(InteractionContext msg, [Option("member", "Member to unmute")] DiscordUser user, [Option("reason", "Reason for unmute")] string reason)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;
-            try
-            {
-                await msg.Guild.BanMemberAsync(member, 0, reason);
-                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} banned {member.Mention}. Reason: {reason}");
-            }
-            catch
+            ulong muteRoleId = DB.GetMuteRoleId(msg.Guild.Id);
+            if (muteRoleId == 0)
             {
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
-                    Description = "You can't ban this user",
+                    Description = "Mute role is not configured for this server\nUse `mute` to configure it",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -29,6 +26,11 @@ namespace ducker.SlashCommands.AdministrationModule
                     },
                     Color = Bot.WarningColor
                 });
+            }
+            else
+            {
+                await member.RevokeRoleAsync(msg.Guild.GetRole(muteRoleId)); // TODO: fix bug (if delete mute role command doesn't work)
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} unmuted {member.Mention}. Reason: {reason}");
             }
         }
     }
