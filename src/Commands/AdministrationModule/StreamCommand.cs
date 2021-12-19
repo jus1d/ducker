@@ -1,8 +1,7 @@
-﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using ducker.Attributes;
+using ducker.Commands.Attributes;
 
 namespace ducker.Commands.AdministrationModule
 {

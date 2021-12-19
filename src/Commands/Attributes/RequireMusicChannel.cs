@@ -2,7 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using ducker.Database;
 
-namespace ducker.Attributes
+namespace ducker.Commands.Attributes
 {
     /// <summary>
     /// Check whether the command is executed from hell server(main bot guild)

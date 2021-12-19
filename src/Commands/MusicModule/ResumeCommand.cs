@@ -2,7 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
-using ducker.Attributes;
+using ducker.Commands.Attributes;
 
 namespace ducker.Commands.MusicModule
 {

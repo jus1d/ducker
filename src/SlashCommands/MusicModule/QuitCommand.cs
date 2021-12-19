@@ -1,7 +1,7 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
-using ducker.Attributes;
+using ducker.Commands.Attributes;
 using ducker.Database;
 
 namespace ducker.SlashCommands.MusicModule

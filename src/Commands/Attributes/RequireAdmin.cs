@@ -2,7 +2,7 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
-namespace ducker.Attributes
+namespace ducker.Commands.Attributes
 {
     /// <summary>
     /// Check whether the command invoker has admin permissions at current server
