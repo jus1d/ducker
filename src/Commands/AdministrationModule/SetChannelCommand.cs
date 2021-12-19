@@ -15,7 +15,7 @@ namespace ducker.Commands.AdministrationModule
          Description("Set music channel for this guild"),
          Aliases("sc"), 
          RequireAdmin]
-        public async Task SetMusicCommand(CommandContext msg, string channelType, DiscordChannel channel)
+        public async Task SetChannelCommand(CommandContext msg, string channelType, DiscordChannel channel)
         {
             await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DB db = new DB();

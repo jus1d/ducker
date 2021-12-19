@@ -11,7 +11,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("remove-role"), 
          Description("Remove role from mentioned user"),
          RequireAdmin]
-        public async Task RemoveRole(CommandContext msg, DiscordMember member, DiscordRole role, [RemainingText] string reason)
+        public async Task RemoveRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role, [RemainingText] string reason)
         {
             await msg.Message.DeleteAsync();
             if (!member.Roles.ToArray().Contains(role))

@@ -12,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
          Description("Send an embed with buttons, by press there you will granted a role"),
          Aliases("rr"),
          RequireAdmin, RequireMainGuild]
-        public async Task ReactionRolesEmbed(CommandContext msg, [RemainingText] string text)
+        public async Task ReactionRoleCommand(CommandContext msg, [RemainingText] string text)
         {
             await msg.Message.DeleteAsync();
 
