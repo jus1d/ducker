@@ -29,11 +29,9 @@ namespace ducker.SlashCommands.AdministrationModule
             }
             else
             {
-                await member.RevokeRoleAsync(msg.Guild.GetRole(muteRoleId));
+                await member.RevokeRoleAsync(msg.Guild.GetRole(muteRoleId)); // TODO: fix bug (if delete mute role command doesn't work)
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} unmuted {member.Mention}. Reason: {reason}");
             }
-            
-            // TODO: fix bug (if delete mute role command doesn't work)
         }
     }
 }
