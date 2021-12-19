@@ -7,7 +7,7 @@ namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("add-role", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)] // TODO: add to attributes
+        [SlashCommand("add-role", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRoleCommand(InteractionContext msg,
             [Option("member", "Member to add role")] DiscordUser user,
             [Option("role", "Role to add it")] DiscordRole role)
