@@ -72,7 +72,7 @@ namespace ducker.Commands
             {
                 this.EmbedBuilder.WithDescription($"List of all server commands." +
                                                   $"\nPrefix for this server: {ConfigJson.GetConfigField().Prefix}, but you can use slash commands(just type `/`)" +
-                                                  $"\nUse `/help <command>` to see certain command description");
+                                                  $"\nUse `{ConfigJson.GetConfigField().Prefix}help <command>` to see certain command description");
             }
             return new CommandHelpMessage(embed: EmbedBuilder.Build());
         }
