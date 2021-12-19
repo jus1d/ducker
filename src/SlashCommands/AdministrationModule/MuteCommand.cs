@@ -52,6 +52,8 @@ namespace ducker.SlashCommands.AdministrationModule
                 await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id)));
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
+            
+            // TODO: fix bug (if delete mute role command doesn't work)
         }
     }
 }
