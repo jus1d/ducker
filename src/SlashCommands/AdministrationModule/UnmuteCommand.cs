@@ -1,7 +1,6 @@
-﻿using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using ducker.Attributes;
+using ducker.SlashCommands.Attributes;
 using ducker.Database;
 using ducker.Logs;
 
