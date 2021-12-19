@@ -8,11 +8,11 @@ namespace ducker.SlashCommands.AdministrationModule
     {
         [SlashCommand("embed", "Sends to current channel embed with your title, description and other settings"), RequireAdmin]
         public async Task EmbedCommand(InteractionContext msg,
-            [Option("description", "Set description tp your embed")] string description = null,
-            [Option("title", "Set title for your embed")] string title = null,
-            [Option("color", "Set color to your embed")] string colorHexCode = null,
-            [Option("image", "Add image to your embed")] string imageUrl = null,
-            [Option("titleURL", "Set title clickable to your URL")] string titleUrl = null)
+            [Option("description", "Set description tp your embed")] string description = "",
+            [Option("title", "Set title for your embed")] string title = "",
+            [Option("color", "Set color to your embed")] string colorHexCode = "9b73ff",
+            [Option("image", "Add image to your embed")] string imageUrl = "",
+            [Option("titleURL", "Set title clickable to your URL")] string titleUrl = "")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             var color = new DiscordColor(colorHexCode);
