@@ -9,9 +9,9 @@ namespace ducker.Commands.Attributes
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class RequireMainGuild : CheckBaseAttribute
     {
-        public override Task<bool> ExecuteCheckAsync(CommandContext msg, bool help)
+        public override async Task<bool> ExecuteCheckAsync(CommandContext msg, bool help)
         {
-            return Task.FromResult(msg.Guild.Id == Bot.MainGuildId);
+            return msg.Guild.Id == Bot.MainGuildId;
         }
 
     }
