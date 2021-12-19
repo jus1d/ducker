@@ -7,7 +7,7 @@ namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("reaction-role", "Send embed with reactions, press them to get role"), RequireAdmin]
+        [SlashCommand("reaction-role", "Send embed with reactions, press them to get role"), RequireAdmin, RequireMainGuild]
         public async Task ReactionRoleCommand(InteractionContext msg)
         {
             DiscordEmoji twitchRgbEmoji = DiscordEmoji.FromName(msg.Client, ":twitchrgb:");
