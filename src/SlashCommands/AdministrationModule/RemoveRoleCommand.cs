@@ -1,13 +1,12 @@
-﻿using DSharpPlus;
-using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using ducker.SlashCommands.Attributes;
 
 namespace ducker.SlashCommands.AdministrationModule
 {
     public partial class AdministrationSlashCommands
     {
-        [SlashCommand("remove-role", "Removes role from mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
+        [SlashCommand("remove-role", "Removes role from mentioned member"),  RequireAdmin]
         public async Task RemoveRoleCommand(InteractionContext msg,
             [Option("member", "Member for remove role")] DiscordUser user,
             [Option("role", "Role to remove it")] DiscordRole role)

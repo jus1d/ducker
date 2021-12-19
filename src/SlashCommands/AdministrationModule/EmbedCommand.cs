@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using ducker.Attributes;
+using ducker.SlashCommands.Attributes;
 
 namespace ducker.SlashCommands.AdministrationModule
 {

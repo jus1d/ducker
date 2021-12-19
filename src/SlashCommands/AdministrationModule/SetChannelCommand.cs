@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using ducker.Attributes;
+using ducker.SlashCommands.Attributes;
 using ducker.Database;
 using MySqlConnector;
 
