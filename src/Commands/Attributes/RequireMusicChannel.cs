@@ -5,7 +5,7 @@ using ducker.Database;
 namespace ducker.Commands.Attributes
 {
     /// <summary>
-    /// Check whether the command is executed from hell server(main bot guild)
+    /// Check whether the command is executed from music channel
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public class RequireMusicChannel : CheckBaseAttribute

@@ -1,9 +1,11 @@
-﻿using DSharpPlus.CommandsNext;
-using DSharpPlus.SlashCommands;
+﻿using DSharpPlus.SlashCommands;
 using ducker.Database;
 
 namespace ducker.SlashCommands.Attributes
 {
+    /// <summary>
+    /// Check whether the command is executed from music channel
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public class RequireMusicChannel : SlashCheckBaseAttribute
     {
