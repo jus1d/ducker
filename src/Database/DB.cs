@@ -31,7 +31,7 @@ public class DB
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
         db.OpenConnection();
-        MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `{field}` = {value} WHERE `ducker`.`guildId` = {guildId}", db.GetConnection());
+        MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET {field} = {value} WHERE `ducker`.`guildId` = {guildId}", db.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
     }
@@ -42,7 +42,7 @@ public class DB
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
         db.OpenConnection();
-        MySqlCommand command = new MySqlCommand($"SELECT `{field}` FROM `ducker` WHERE `ducker`.`guildId` = {guildId}", db.GetConnection());
+        MySqlCommand command = new MySqlCommand($"SELECT {field} FROM `ducker` WHERE `ducker`.`guildId` = {guildId}", db.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
@@ -65,7 +65,7 @@ public class DB
         DataTable table = new DataTable();
         MySqlDataAdapter adapter = new MySqlDataAdapter();
         db.OpenConnection();
-        MySqlCommand command = new MySqlCommand($"SELECT `{field}` FROM `ducker` WHERE `guildId` = {guildId}", db.GetConnection());
+        MySqlCommand command = new MySqlCommand($"SELECT {field} FROM `ducker` WHERE `guildId` = {guildId}", db.GetConnection());
         adapter.SelectCommand = command;
         adapter.Fill(table);
         if (table.Rows.Count > 0)
