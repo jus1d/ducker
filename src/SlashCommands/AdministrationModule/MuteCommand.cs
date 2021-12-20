@@ -45,11 +45,11 @@ namespace ducker.SlashCommands.AdministrationModule
             
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
-                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id))); // TODO: fix bug (if delete mute role command doesn't work)
+                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id)));
             }
             else
             {
-                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id))); // TODO: fix bug (if delete mute role command doesn't work)
+                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id)));
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
         }
