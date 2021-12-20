@@ -6,33 +6,20 @@ namespace ducker.Database;
 
 public class DB
 {
-    /// <summary>
-    /// MySQL Database connection
-    /// </summary>
     private MySqlConnection _connection = new (ConfigJson.GetConfigField().MySqlConnectionString);
 
-    /// <summary>
-    /// Method for open database connection
-    /// </summary>
     public void OpenConnection()
     {
         if (_connection.State == ConnectionState.Closed)
             _connection.Open();
     }
 
-    /// <summary>
-    /// Method for close database connection
-    /// </summary>
     public void CloseConnection()
     {
         if (_connection.State == ConnectionState.Open)
             _connection.Close();
     }
 
-    /// <summary>
-    /// Get database connection
-    /// </summary>
-    /// <returns>Return database connection</returns>
     public MySqlConnection GetConnection()
     {
         return _connection;
