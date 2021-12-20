@@ -12,9 +12,9 @@ namespace ducker.Commands.AdministrationModule
         [Command("unmute"), 
          Description("Unmute mentioned member"),
          RequireAdmin]
-        public async Task UnmuteCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason)
+        public async Task UnmuteCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "No reason given")
         {
-            ulong muteRoleId = DB.GetMuteRoleId(msg.Guild.Id);
+            ulong muteRoleId = DB.GetId(msg.Guild.Id, "muteRoleId");
             if (muteRoleId == 0)
             {
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder

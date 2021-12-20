@@ -12,8 +12,8 @@ namespace ducker.Commands.Attributes
     {
         public override async Task<bool> ExecuteCheckAsync(CommandContext msg, bool help)
         {
-            ulong musicChannelId = DB.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelId = DB.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelId = DB.GetId(msg.Guild.Id, "musicChannelId");
+            ulong cmdChannelId = DB.GetId(msg.Guild.Id, "cmdChannelId");
             bool correctChannel = msg.Channel.Id == musicChannelId || msg.Channel.Id == cmdChannelId;
             if (!correctChannel)
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelId));

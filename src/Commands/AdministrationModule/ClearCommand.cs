@@ -38,7 +38,6 @@ namespace ducker.Commands.AdministrationModule
                     messageOrMessages = "messages";
                 
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} cleared {amount} {messageOrMessages} in {msg.Channel.Mention}");
-                // TODO: logs(@jus1d cleared amount messages from #channel, message list)
                 
                 DiscordMessage message = await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {

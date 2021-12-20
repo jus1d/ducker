@@ -9,11 +9,11 @@ namespace ducker.SlashCommands.AdministrationModule
     public partial class AdministrationSlashCommands
     {
         [SlashCommand("unmute", "Unmute mentioned member"), RequireAdmin]
-        public async Task UnmuteCommand(InteractionContext msg, [Option("member", "Member to unmute")] DiscordUser user, [Option("reason", "Reason for unmute")] string reason)
+        public async Task UnmuteCommand(InteractionContext msg, [Option("member", "Member to unmute")] DiscordUser user, [Option("reason", "Reason for unmute")] string reason = "No reason given")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;
-            ulong muteRoleId = DB.GetMuteRoleId(msg.Guild.Id);
+            ulong muteRoleId = DB.GetId(msg.Guild.Id, "muteRoleId");
             if (muteRoleId == 0)
             {
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
@@ -29,7 +29,7 @@ namespace ducker.SlashCommands.AdministrationModule
             }
             else
             {
-                await member.RevokeRoleAsync(msg.Guild.GetRole(muteRoleId)); // TODO: fix bug (if delete mute role command doesn't work)
+                await member.RevokeRoleAsync(msg.Guild.GetRole(muteRoleId));
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} unmuted {member.Mention}. Reason: {reason}");
             }
         }
