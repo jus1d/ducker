@@ -10,6 +10,11 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Company>jus1d</Company>
         <DockerDefaultTargetOS>Windows</DockerDefaultTargetOS>
+        <PackageId>jus1dApp</PackageId>
+        <Version>1.0.0</Version>
+        <Authors>jus1d</Authors>
+        <PackageDescription>This package adds an Octocat!</PackageDescription>
+        <RepositoryUrl>https://github.com/jus1d/ducker</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>
