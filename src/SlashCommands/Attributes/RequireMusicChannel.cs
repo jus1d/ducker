@@ -11,8 +11,8 @@ namespace ducker.SlashCommands.Attributes
     {
         public override async Task<bool> ExecuteChecksAsync(InteractionContext msg)
         {
-            ulong musicChannelId = DB.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelId = DB.GetCmdChannel(msg.Guild.Id);
+            ulong musicChannelId = DB.GetId(msg.Guild.Id, "musicChannelId");
+            ulong cmdChannelId = DB.GetId(msg.Guild.Id, "cmdChannelId");
             bool correctChannel = msg.Channel.Id == musicChannelId || msg.Channel.Id == cmdChannelId;
             if (!correctChannel)
                 await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelId));

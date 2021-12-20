@@ -16,7 +16,7 @@ namespace ducker.SlashCommands.AdministrationModule
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;
-            ulong muteRoleId = DB.GetMuteRoleId(msg.Guild.Id);
+            ulong muteRoleId = DB.GetId(msg.Guild.Id, "muteRoleId");
             if (muteRoleId == 0)
             {
                 DiscordRole muteRole = await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.DarkGray, false, false);
@@ -45,11 +45,12 @@ namespace ducker.SlashCommands.AdministrationModule
             
                 adapter.SelectCommand = command;
                 adapter.Fill(table);
-                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id)));
+                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
             else
             {
-                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetMuteRoleId(msg.Guild.Id)));
+                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
         }

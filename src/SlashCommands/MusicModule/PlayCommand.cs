@@ -3,30 +3,17 @@ using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 using ducker.Config;
-using ducker.Database;
+using ducker.SlashCommands.Attributes;
 using SpotifyAPI.Web;
 
 namespace ducker.SlashCommands.MusicModule
 {
     public partial class MusicSlashCommands
     {
-        [SlashCommand("play", "Start playing track")]
+        [SlashCommand("play", "Start playing track"), RequireMusicChannel]
         public async Task PlayCommand(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            ulong musicChannelIdFromDb = DB.GetMusicChannel(msg.Guild.Id);
-            ulong cmdChannelIdFromDb = DB.GetCmdChannel(msg.Guild.Id);
-            
-            if (musicChannelIdFromDb == 0)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
-                return;
-            }
-            if (msg.Channel.Id != musicChannelIdFromDb && msg.Channel.Id != cmdChannelIdFromDb)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectMusicChannelEmbed(msg, musicChannelIdFromDb));
-                return;
-            }
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
                 await msg.Channel.SendMessageAsync(Embed.NotInVoiceChannelEmbed(msg));
