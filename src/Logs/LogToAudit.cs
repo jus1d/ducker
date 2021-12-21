@@ -10,7 +10,12 @@ namespace ducker.Logs
         {
             ulong auditChannelId = DB.GetId(guild.Id, "logsChannelId");
             DiscordChannel auditChannel = guild.GetChannel(auditChannelId);
-            await auditChannel.SendMessageAsync(logText);
+            await auditChannel.SendMessageAsync(new DiscordEmbedBuilder()
+                .WithTitle("Audit log")
+                .WithDescription(logText)
+                .WithFooter("UTC time")
+                .WithTimestamp(DateTimeOffset.Now.ToUniversalTime())
+                .WithColor(Bot.LogColor));
         }
     }
 }
