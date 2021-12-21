@@ -33,7 +33,7 @@ namespace ducker.SlashCommands.AdministrationModule
                     await Log.LogToAudit(msg.Guild, $"Logs channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     break;
             }
-            await msg.Channel.SendMessageAsync(Embed.ChannelConfiguredEmbed(msg.User, channelType, channel));
+            await msg.Channel.SendMessageAsync(Embed.ChannelConfiguredEmbed(msg.User, channelType, channel)); 
         }
     }
 }
