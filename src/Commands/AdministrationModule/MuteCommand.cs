@@ -6,7 +6,6 @@ using DSharpPlus.Entities;
 using ducker.Commands.Attributes;
 using ducker.Database;
 using ducker.Logs;
-using MySqlConnector;
 
 namespace ducker.Commands.AdministrationModule
 {
