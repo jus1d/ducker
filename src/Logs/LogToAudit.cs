@@ -15,7 +15,7 @@ namespace ducker.Logs
                 .WithDescription(logText)
                 .WithFooter("UTC time")
                 .WithTimestamp(DateTimeOffset.Now.ToUniversalTime())
-                .WithColor(Bot.LogColor));
+                .WithColor(Bot.LogColor)); 
         }
     }
 }
