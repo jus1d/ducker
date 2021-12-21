@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using ducker.Logs;
 using ducker.SlashCommands.Attributes;
 
 namespace ducker.SlashCommands.AdministrationModule
@@ -34,6 +35,7 @@ namespace ducker.SlashCommands.AdministrationModule
                 else
                     messageOrMessages = "messages";
                 
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} cleared {amount} {messageOrMessages} in {msg.Channel.Mention}");
                 var message = await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Title = "Deleted messages report", 

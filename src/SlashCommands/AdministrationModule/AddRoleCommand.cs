@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
+using ducker.Logs;
 
 namespace ducker.SlashCommands.AdministrationModule
 {
@@ -10,7 +11,8 @@ namespace ducker.SlashCommands.AdministrationModule
         [SlashCommand("add-role", "Adds a role to mentioned member"),  RequirePermissions(Permissions.ManageRoles)]
         public async Task AddRoleCommand(InteractionContext msg,
             [Option("member", "Member to add role")] DiscordUser user,
-            [Option("role", "Role to add it")] DiscordRole role)
+            [Option("role", "Role to add it")] DiscordRole role, 
+            [Option("reason", "Reason to add role")] string reason = "No reason given")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;
@@ -29,7 +31,6 @@ namespace ducker.SlashCommands.AdministrationModule
                 });
                 return;
             }
-            
             try
             {
                 await member.GrantRoleAsync(role);
@@ -43,6 +44,7 @@ namespace ducker.SlashCommands.AdministrationModule
                     },
                     Color = Bot.MainEmbedColor
                 });
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {member.Mention}. Reason: {reason}");
             }
             catch
             {
