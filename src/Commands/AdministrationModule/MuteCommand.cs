@@ -6,7 +6,6 @@ using DSharpPlus.Entities;
 using ducker.Commands.Attributes;
 using ducker.Database;
 using ducker.Logs;
-using MySqlConnector;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -29,29 +28,33 @@ namespace ducker.Commands.AdministrationModule
                     await channel.AddOverwriteAsync(muteRole, Permissions.None, Permissions.SendMessages);
                 }
 
-                muteRoleId = muteRole.Id;
-
-                DB db = new DB();
-                DataTable table = new DataTable();
-                DataTable findGuildTable = new DataTable();
-                MySqlDataAdapter adapter = new MySqlDataAdapter();
-
-                MySqlCommand findGuildCommand = new MySqlCommand($"SELECT * FROM `ducker` WHERE `guildId` = '{msg.Guild.Id}'", 
-                    db.GetConnection());
-                adapter.SelectCommand = findGuildCommand;
-                adapter.Fill(findGuildTable);
+                DB.Update(msg.Guild.Id, "muteRoleId", muteRole.Id.ToString());
                 
-                MySqlCommand command = new MySqlCommand($"UPDATE `ducker` SET `muteRoleId` = {muteRoleId} WHERE `ducker`.`guildId` = {msg.Guild.Id}",
-                    db.GetConnection());
-            
-                adapter.SelectCommand = command;
-                adapter.Fill(table);
                 await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
             else
             {
-                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+                try
+                {
+                    await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+                }
+                catch
+                {
+                    DiscordRole muteRole = await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.DarkGray, false, false);
+
+                    var channels = await msg.Guild.GetChannelsAsync();
+
+                    foreach (var channel in channels)
+                    {
+                        await channel.AddOverwriteAsync(muteRole, Permissions.None, Permissions.SendMessages);
+                    }
+
+                    DB.Update(msg.Guild.Id, "muteRoleId", muteRole.Id.ToString());
+                
+                    await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+                }
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
                 await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
