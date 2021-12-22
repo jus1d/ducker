@@ -32,7 +32,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await member.GrantRoleAsync(role);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {member.Mention}.", reason);
             }
             catch
             {

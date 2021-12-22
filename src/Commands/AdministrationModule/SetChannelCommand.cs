@@ -23,15 +23,15 @@ namespace ducker.Commands.AdministrationModule
             {
                 case "music":
                     DB.Update(msg.Guild.Id, "musicChannelId", channel.Id.ToString());
-                    await Log.LogToAudit(msg.Guild, $"Music channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
+                    await Log.Audit(msg.Guild, $"Music channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     break;
                 case "cmd":
                     DB.Update(msg.Guild.Id, "cmdChannelId", channel.Id.ToString());
-                    await Log.LogToAudit(msg.Guild, $"Commands channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
+                    await Log.Audit(msg.Guild, $"Commands channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     break;
                 case "logs":
                     DB.Update(msg.Guild.Id, "logsChannelId", channel.Id.ToString());
-                    await Log.LogToAudit(msg.Guild, $"Logs channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
+                    await Log.Audit(msg.Guild, $"Logs channel for this server is set to {channel.Mention} by {msg.Member.Mention}");
                     break;
             }
             await msg.Channel.SendMessageAsync(Embed.ChannelConfiguredEmbed(msg.User, channelType, channel));

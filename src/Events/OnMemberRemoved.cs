@@ -8,7 +8,7 @@ namespace ducker.Events
     {
         public static async Task OnMemberRemoved(DiscordClient client, GuildMemberRemoveEventArgs e)
         {
-            await Log.LogToAudit(e.Guild, $"{e.Member.Mention} just leaved from server");
+            await Log.Audit(e.Guild, $"{e.Member.Mention} just leaved from server");
         }
     }
 }

@@ -11,15 +11,15 @@ namespace ducker.Events
             if (msg.Author.IsBot)
                 return;
 
-            DiscordMember member = (DiscordMember)msg.Author; // mows
+            DiscordMember member = (DiscordMember)msg.Author;
                 
             if (msg.Message.MentionEveryone)
             {
-                if (member.Guild.Permissions == Permissions.Administrator) // ignore owner
+                if (member.Guild.Permissions == Permissions.Administrator) // ignore admins
                     return;
                     
                 await msg.Message.DeleteAsync();
-                var embed = new DiscordEmbedBuilder
+                await msg.Message.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Title = $"Don't tag everyone!",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
@@ -28,8 +28,7 @@ namespace ducker.Events
                         Text = msg.Author.Username
                     },
                     Color = Bot.IncorrectEmbedColor
-                };
-                await msg.Message.Channel.SendMessageAsync(embed);
+                });
             }
         }
     }
