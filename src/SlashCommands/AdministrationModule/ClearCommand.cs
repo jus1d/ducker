@@ -35,7 +35,7 @@ namespace ducker.SlashCommands.AdministrationModule
                 else
                     messageOrMessages = "messages";
                 
-                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} cleared {amount} {messageOrMessages} in {msg.Channel.Mention}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} cleared {amount} {messageOrMessages} in {msg.Channel.Mention}");
                 var message = await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
                     Title = "Deleted messages report", 

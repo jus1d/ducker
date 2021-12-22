@@ -10,12 +10,12 @@ namespace ducker.Events
         {
             try
             {
-                await Log.LogToAudit(e.Guild,
+                await Log.Audit(e.Guild,
                     $"{e.Author.Mention} changed the message: `{e.MessageBefore.Content}` -> `{e.Message.Content}` in {e.Channel.Mention}");
             }
             catch
             {
-                await Log.LogToAudit(e.Guild, 
+                await Log.Audit(e.Guild, 
                     $"{e.Author.Mention} changed message with {e.Message.Id} ID. `I can't load message before content (message not cached)` -> `{e.Message.Content}` in {e.Channel.Mention}");
             }
         }

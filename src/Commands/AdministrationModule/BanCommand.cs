@@ -17,7 +17,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await member.Guild.BanMemberAsync(member, 0, reason);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} banned {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} banned {member.Mention}. Reason: {reason}");
             }
             catch
             {

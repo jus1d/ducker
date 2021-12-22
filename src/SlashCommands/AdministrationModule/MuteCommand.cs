@@ -28,7 +28,7 @@ namespace ducker.SlashCommands.AdministrationModule
 
                 DB.Update(msg.Guild.Id, "muteRoleId", muteRole.Id.ToString());
                 await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
-                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
             else
             {
@@ -51,7 +51,7 @@ namespace ducker.SlashCommands.AdministrationModule
                 
                     await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
                 }
-                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}. Reason: {reason}");
             }
         }
     }

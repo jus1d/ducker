@@ -44,7 +44,7 @@ namespace ducker.SlashCommands.AdministrationModule
                     },
                     Color = Bot.MainEmbedColor
                 });
-                await Log.LogToAudit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {member.Mention}. Reason: {reason}");
             }
             catch
             {
