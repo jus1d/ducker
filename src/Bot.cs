@@ -70,7 +70,8 @@ namespace ducker
                 StringPrefixes = new [] { ConfigJson.GetConfigField().Prefix },
                 EnableDms = true,
                 EnableMentionPrefix = true,
-                EnableDefaultHelp = true
+                EnableDefaultHelp = true,
+                IgnoreExtraArguments = true
             };
             var endpoint = new ConnectionEndpoint
             {
