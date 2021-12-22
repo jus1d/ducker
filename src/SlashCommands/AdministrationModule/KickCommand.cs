@@ -15,7 +15,7 @@ namespace ducker.SlashCommands.AdministrationModule
             try
             {
                 await member.RemoveAsync(reason);
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} kicked {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} kicked {member.Mention}.", reason);
             }
             catch
             {

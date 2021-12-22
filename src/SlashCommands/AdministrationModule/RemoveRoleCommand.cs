@@ -43,7 +43,7 @@ namespace ducker.SlashCommands.AdministrationModule
                     },
                     Color = Bot.MainEmbedColor
                 });
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} removed role {role.Mention} from {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} removed role {role.Mention} from {member.Mention}.", reason);
             }
             catch
             {

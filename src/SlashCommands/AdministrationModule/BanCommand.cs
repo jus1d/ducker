@@ -15,7 +15,7 @@ namespace ducker.SlashCommands.AdministrationModule
             try
             {
                 await msg.Guild.BanMemberAsync(member, 0, reason);
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} banned {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} banned {member.Mention}.", reason);
             }
             catch
             {

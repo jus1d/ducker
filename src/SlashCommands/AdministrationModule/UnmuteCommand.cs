@@ -30,7 +30,7 @@ namespace ducker.SlashCommands.AdministrationModule
             else
             {
                 await member.RevokeRoleAsync(msg.Guild.GetRole(muteRoleId));
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} unmuted {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} unmuted {member.Mention}.", reason);
             }
         }
     }
