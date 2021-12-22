@@ -33,7 +33,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await member.RevokeRoleAsync(role);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} remove role {role.Mention} from {member.Mention}. Reason: {reason}");
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} remove role {role.Mention} from {member.Mention}.", reason);
             }
             catch
             {
