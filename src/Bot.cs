@@ -34,6 +34,7 @@ namespace ducker
         public static readonly ulong Id = ConfigJson.GetConfigField().Id;
         public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=921896450915434537&permissions=8&scope=bot%20applications.commands";
         public static readonly ulong MainGuildId = 696496218934608004;
+        public static DateTime Uptime;
 
         public static List<LavalinkTrack> Queue = new ();
 
@@ -104,6 +105,7 @@ namespace ducker
 
         private Task OnClientReady(DiscordClient client, ReadyEventArgs e)
         {
+            Uptime = DateTime.Now;
             Client.UpdateStatusAsync(new DiscordActivity
             {
                 ActivityType = ActivityType.Playing,
