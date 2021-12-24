@@ -5,6 +5,7 @@ src/bin/Debug/net6.0/config.json
 .idea/
 src/bin/
 src/obj/
+ducker.sln.DotSettings.user
 
 # link to .exe file
 ducker.lnk
