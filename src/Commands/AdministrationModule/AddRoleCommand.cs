@@ -83,17 +83,8 @@ namespace ducker.Commands.AdministrationModule
         [Command("add-role")]
         public async Task AddRoleCommand(CommandContext msg, [RemainingText] string text)
         {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-            {
-                Title = "Missing argument",
-                Description = "**Usage:** `-add-role <member> <role>`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
+            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg,
+                "add-role <member or reply to message> <role> <reason>"));
         }
     }
 }
