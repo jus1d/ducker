@@ -34,6 +34,7 @@ namespace ducker
         public static readonly ulong Id = ConfigJson.GetConfigField().Id;
         public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=921896450915434537&permissions=8&scope=bot%20applications.commands";
         public static readonly ulong MainGuildId = 696496218934608004;
+        public static readonly ulong DevGuildId = 906326660796801085;
         public static DateTime Uptime;
 
         public static List<LavalinkTrack> Queue = new ();
@@ -93,10 +94,13 @@ namespace ducker
             Commands.RegisterCommands<MiscCommands>();
             Commands.RegisterCommands<MusicCommands>();
             Commands.SetHelpFormatter<DefaultHelpFormatter>();
-            slash.RegisterCommands<AdministrationSlashCommands>(696496218934608004);
-            slash.RegisterCommands<MiscSlashCommands>(696496218934608004);
-            slash.RegisterCommands<MusicSlashCommands>(696496218934608004);
-            
+            slash.RegisterCommands<AdministrationSlashCommands>(MainGuildId);
+            slash.RegisterCommands<AdministrationSlashCommands>(DevGuildId);
+            slash.RegisterCommands<MiscSlashCommands>(MainGuildId);
+            slash.RegisterCommands<MiscSlashCommands>(DevGuildId);
+            slash.RegisterCommands<MusicSlashCommands>(MainGuildId);
+            slash.RegisterCommands<MusicSlashCommands>(DevGuildId);
+
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += Events.EventHandler.OnPlaybackFinished;
