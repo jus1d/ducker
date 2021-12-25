@@ -23,7 +23,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
-                    Description = ":x: You can't kick this member",
+                    Description = "You can't kick this member",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -32,15 +32,14 @@ namespace ducker.Commands.AdministrationModule
                     Color = Bot.IncorrectEmbedColor
                 });
             }
-        }
+        } 
 
         [Command("kick")]
         public async Task KickCommand(CommandContext msg, [RemainingText] string text)
         {
             await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -kick <member> <reason>",
+                Description = "You can't kick this member",
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,

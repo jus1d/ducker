@@ -14,10 +14,10 @@ using ducker.Commands.MiscModule;
 using ducker.Commands.AdministrationModule;
 using ducker.Commands.MusicModule;
 using ducker.Config;
-using ducker.Events;
 using ducker.SlashCommands.AdministrationModule;
 using ducker.SlashCommands.MiscModule;
 using ducker.SlashCommands.MusicModule;
+using EventHandler = ducker.Events.EventHandler;
 
 namespace ducker
 {
@@ -34,6 +34,7 @@ namespace ducker
         public static readonly ulong Id = ConfigJson.GetConfigField().Id;
         public static readonly string InviteLink = "https://discord.com/api/oauth2/authorize?client_id=921896450915434537&permissions=8&scope=bot%20applications.commands";
         public static readonly ulong MainGuildId = 696496218934608004;
+        public static readonly ulong DevGuildId = 906326660796801085;
         public static DateTime Uptime;
 
         public static List<LavalinkTrack> Queue = new ();
@@ -59,16 +60,16 @@ namespace ducker
                 Timeout = TimeSpan.FromHours(1)
             });
 
-            Client.ComponentInteractionCreated += Events.EventHandler.OnComponentInteractionCreated;
-            Client.GuildMemberAdded += Events.EventHandler.OnMemberAdded;
-            Client.MessageCreated += Events.EventHandler.OnMessageCreated;
-            Client.GuildMemberRemoved += Events.EventHandler.OnMemberRemoved;
-            Client.MessageUpdated += Events.EventHandler.OnMessageUpdated;
-            Client.ChannelCreated += Events.EventHandler.OnChannelCreated;
+            Client.ComponentInteractionCreated += EventHandler.OnComponentInteractionCreated;
+            Client.GuildMemberAdded += EventHandler.OnMemberAdded;
+            Client.MessageCreated += EventHandler.OnMessageCreated;
+            Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
+            Client.MessageUpdated += EventHandler.OnMessageUpdated;
+            Client.ChannelCreated += EventHandler.OnChannelCreated;
 
             var commandsConfig = new CommandsNextConfiguration 
             {
-                StringPrefixes = new [] { ConfigJson.GetConfigField().Prefix },
+                StringPrefixes = new [] { ConfigJson.GetConfigField().Prefix, "." },
                 EnableDms = true,
                 EnableMentionPrefix = true,
                 EnableDefaultHelp = true,
@@ -93,10 +94,13 @@ namespace ducker
             Commands.RegisterCommands<MiscCommands>();
             Commands.RegisterCommands<MusicCommands>();
             Commands.SetHelpFormatter<DefaultHelpFormatter>();
-            slash.RegisterCommands<AdministrationSlashCommands>(696496218934608004);
-            slash.RegisterCommands<MiscSlashCommands>(696496218934608004);
-            slash.RegisterCommands<MusicSlashCommands>(696496218934608004);
-            
+            slash.RegisterCommands<AdministrationSlashCommands>(MainGuildId);
+            slash.RegisterCommands<AdministrationSlashCommands>(DevGuildId);
+            slash.RegisterCommands<MiscSlashCommands>(MainGuildId);
+            slash.RegisterCommands<MiscSlashCommands>(DevGuildId);
+            slash.RegisterCommands<MusicSlashCommands>(MainGuildId);
+            slash.RegisterCommands<MusicSlashCommands>(DevGuildId);
+
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
             (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += Events.EventHandler.OnPlaybackFinished;

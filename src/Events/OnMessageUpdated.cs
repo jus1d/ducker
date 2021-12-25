@@ -8,6 +8,9 @@ namespace ducker.Events
     {
         public static async Task OnMessageUpdated(DiscordClient client, MessageUpdateEventArgs e)
         {
+            if (e.MessageBefore.Content == e.Message.Content)
+                return;
+            
             try
             {
                 await Log.Audit(e.Guild,

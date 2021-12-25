@@ -30,24 +30,39 @@ namespace ducker.Commands.AdministrationModule
                         Text = msg.User.Username
                     },
                     Color = Bot.WarningColor
-                });
+                }); 
             }
         }
 
         [Command("ban")]
-        public async Task BanCommand(CommandContext msg, [RemainingText] string text)
+        public async Task BanCommand(CommandContext msg, [RemainingText] string reason)
         {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
+            if (msg.Message.ReferencedMessage == null)
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-ban <member>`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
+                await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "ban <member or reply to message>"));
+                return;
+            }
+            
+            DiscordMember member = (DiscordMember)msg.Message.ReferencedMessage.Author;
+            try
+            {
+                await member.BanAsync(0, reason);
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} banned {member.Mention}.", reason);
+            }
+            catch
+            {
+                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
+                    Description = "You can't ban this user",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.WarningColor
+                });
+            }
         }
     }
 }
