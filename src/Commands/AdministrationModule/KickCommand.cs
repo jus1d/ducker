@@ -48,6 +48,6 @@ namespace ducker.Commands.AdministrationModule
                 },
                 Color = Bot.IncorrectEmbedColor
             });
-        }
+        } 
     }
 }
