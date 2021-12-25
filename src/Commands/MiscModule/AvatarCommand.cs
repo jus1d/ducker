@@ -11,6 +11,7 @@ namespace ducker.Commands.MiscModule
          Aliases("ava")]
         public async Task Avatar(CommandContext msg, DiscordMember member)
         {
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
             {
                 Title = "User's avatar",
@@ -24,22 +25,31 @@ namespace ducker.Commands.MiscModule
                 },
                 Color = Bot.MainEmbedColor
             });
-            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
         }
         
         [Command("avatar")]
         public async Task Avatar(CommandContext msg, [RemainingText] string text)
         {
+            await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+            if (msg.Message.ReferencedMessage == null)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg,
+                    "avatar <member or reply to message>"));
+                return;
+            }
+            
             await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
             {
-                Title = "Missing argument",
-                Description = "**Usage:** `-avatar <user>`",
+                Title = "User's avatar",
+                Description = $"**{msg.Message.ReferencedMessage.Author.Mention}'s avatar**",
+                ImageUrl = msg.Message.ReferencedMessage.Author.AvatarUrl,
+                Url = msg.Message.ReferencedMessage.Author.AvatarUrl,
                 Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     IconUrl = msg.User.AvatarUrl,
                     Text = msg.User.Username
                 },
-                Color = Bot.IncorrectEmbedColor
+                Color = Bot.MainEmbedColor
             });
         }
     }
