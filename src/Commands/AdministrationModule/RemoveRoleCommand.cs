@@ -51,19 +51,40 @@ namespace ducker.Commands.AdministrationModule
         }
         
         [Command("remove-role")]
+        public async Task RemoveRoleCommand(CommandContext msg, DiscordRole role, [RemainingText] string reason)
+        {
+            if (msg.Message.ReferencedMessage == null)
+            {
+                await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg,
+                    "remove-role <member or reply to message> <role> <reason>"));
+                return;
+            }
+            
+            try
+            {
+                await ((DiscordMember)msg.Message.ReferencedMessage.Author).RevokeRoleAsync(role);
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} removed role {role.Mention} from {msg.Message.ReferencedMessage.Author.Mention}.", reason);
+            }
+            catch
+            {
+                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
+                {
+                    Description = "You can't remove this role from this user",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.WarningColor
+                });
+            }
+        }
+        
+        [Command("remove-role")]
         public async Task RemoveRoleCommand(CommandContext msg, [RemainingText] string text)
         {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-            {
-                Title = $"Missing argument",
-                Description = $"**Usage:** `-remove <member> <role>`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
+            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "remove <member or reply to message> <role>"));
         }
     }
 }
