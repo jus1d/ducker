@@ -69,7 +69,7 @@ namespace ducker
 
             var commandsConfig = new CommandsNextConfiguration 
             {
-                StringPrefixes = new [] { ConfigJson.GetConfigField().Prefix },
+                StringPrefixes = new [] { ConfigJson.GetConfigField().Prefix, "." },
                 EnableDms = true,
                 EnableMentionPrefix = true,
                 EnableDefaultHelp = true,
