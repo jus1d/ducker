@@ -1,7 +1,7 @@
 # ducker
 The bot is developing in C# by jus1d, based on DSharpPlus library. This bot currently still under developing, most changes is coming. 
 ####
-Standard bot prefix is `-`, but you can also use the slash commands by typing `/` in your input discord line.
+Standard bot prefix is `-`, but you can also use the slash commands by typing `/` in your input discord line. Only slash commands will remain in future releases
 
 ### Developer Mode
 To use some commands you'll need member's, channel's or guild's IDs. To use IDs, you have to turn on the discord developer mode. **Go to: User settings -> Advanced -> Developer Mode**
