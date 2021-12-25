@@ -14,10 +14,10 @@ using ducker.Commands.MiscModule;
 using ducker.Commands.AdministrationModule;
 using ducker.Commands.MusicModule;
 using ducker.Config;
-using ducker.Events;
 using ducker.SlashCommands.AdministrationModule;
 using ducker.SlashCommands.MiscModule;
 using ducker.SlashCommands.MusicModule;
+using EventHandler = ducker.Events.EventHandler;
 
 namespace ducker
 {
@@ -60,12 +60,12 @@ namespace ducker
                 Timeout = TimeSpan.FromHours(1)
             });
 
-            Client.ComponentInteractionCreated += Events.EventHandler.OnComponentInteractionCreated;
-            Client.GuildMemberAdded += Events.EventHandler.OnMemberAdded;
-            Client.MessageCreated += Events.EventHandler.OnMessageCreated;
-            Client.GuildMemberRemoved += Events.EventHandler.OnMemberRemoved;
-            Client.MessageUpdated += Events.EventHandler.OnMessageUpdated;
-            Client.ChannelCreated += Events.EventHandler.OnChannelCreated;
+            Client.ComponentInteractionCreated += EventHandler.OnComponentInteractionCreated;
+            Client.GuildMemberAdded += EventHandler.OnMemberAdded;
+            Client.MessageCreated += EventHandler.OnMessageCreated;
+            Client.GuildMemberRemoved += EventHandler.OnMemberRemoved;
+            Client.MessageUpdated += EventHandler.OnMessageUpdated;
+            Client.ChannelCreated += EventHandler.OnChannelCreated;
 
             var commandsConfig = new CommandsNextConfiguration 
             {
