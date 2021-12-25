@@ -23,7 +23,7 @@ namespace ducker.Commands.AdministrationModule
             {
                 await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
-                    Description = ":x: You can't kick this member",
+                    Description = "You can't kick this member",
                     Footer = new DiscordEmbedBuilder.EmbedFooter
                     {
                         IconUrl = msg.User.AvatarUrl,
@@ -35,19 +35,35 @@ namespace ducker.Commands.AdministrationModule
         }
 
         [Command("kick")]
-        public async Task KickCommand(CommandContext msg, [RemainingText] string text)
+        public async Task KickCommand(CommandContext msg, [RemainingText] string reason)
         {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
+            if (msg.Message.ReferencedMessage == null)
             {
-                Title = $"Missing argument",
-                Description = $"**Usage:** -kick <member> <reason>",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
+                await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg,
+                    "kick <member or reply to message> <reason>"));
+                return;
+            }
+
+            DiscordMember member = (DiscordMember) msg.Message.ReferencedMessage.Author;
+            try
+            {
+                await member.RemoveAsync(reason);
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} kicked {member.Mention}.", reason);
+            }
+            catch
+            {
+                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
                 {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
+                    Description = "You can't kick this member",
+                    Footer = new DiscordEmbedBuilder.EmbedFooter
+                    {
+                        IconUrl = msg.User.AvatarUrl,
+                        Text = msg.User.Username
+                    },
+                    Color = Bot.IncorrectEmbedColor
+                });
+            }
         }
     }
 }
