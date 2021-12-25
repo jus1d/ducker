@@ -1,4 +1,4 @@
-# ducker
+# ducker 
 The bot is developing in C# by jus1d, based on DSharpPlus library. This bot currently still under developing, most changes is coming. 
 ####
 Standard bot prefix is `-`, but you can also use the slash commands by typing `/` in your input discord line.
