@@ -30,7 +30,7 @@ namespace ducker.Commands.AdministrationModule
                         Text = msg.User.Username
                     },
                     Color = Bot.WarningColor
-                });
+                }); 
             }
         }
 

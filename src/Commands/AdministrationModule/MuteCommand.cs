@@ -58,7 +58,7 @@ namespace ducker.Commands.AdministrationModule
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
                 await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}.", reason);
             }
-        }
+        } 
         
         [Command("mute")]
         public async Task MuteCommand(CommandContext msg, [RemainingText] string text)

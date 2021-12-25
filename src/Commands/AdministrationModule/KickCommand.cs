@@ -32,7 +32,7 @@ namespace ducker.Commands.AdministrationModule
                     Color = Bot.IncorrectEmbedColor
                 });
             }
-        }
+        } 
 
         [Command("kick")]
         public async Task KickCommand(CommandContext msg, [RemainingText] string text)

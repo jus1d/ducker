@@ -49,7 +49,7 @@ namespace ducker.Commands.AdministrationModule
                 });
             }
         }
-        
+         
         [Command("remove-role")]
         public async Task RemoveRoleCommand(CommandContext msg, [RemainingText] string text)
         {

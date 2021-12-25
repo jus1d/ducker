@@ -28,7 +28,7 @@ namespace ducker.Commands.AdministrationModule
                 return;
             }
             
-            try
+            try 
             {
                 await member.GrantRoleAsync(role);
                 await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
