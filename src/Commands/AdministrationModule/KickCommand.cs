@@ -37,16 +37,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("kick")]
         public async Task KickCommand(CommandContext msg, [RemainingText] string text)
         {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-            {
-                Description = "You can't kick this member",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
+            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "kick <member> <reason>"));
         }
     }
 }
