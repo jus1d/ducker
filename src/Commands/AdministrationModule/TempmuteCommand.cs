@@ -1,0 +1,63 @@
+﻿using DSharpPlus;
+using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
+using DSharpPlus.Entities;
+using ducker.Commands.Attributes;
+using ducker.Database;
+using ducker.Logs;
+
+namespace ducker.Commands.AdministrationModule
+{
+    public partial class AdministrationCommands
+    {
+        [Command("tempmute"), Description("Mute member for some duration"), RequireAdmin]
+        public async Task TempmuteCommand(CommandContext msg, DiscordMember member, int minutesDuration, [RemainingText] string reason = "No reason given")
+        {
+            ulong muteRoleId = DB.GetId(msg.Guild.Id, "muteRoleId");
+            if (muteRoleId == 0)
+            {
+                DiscordRole muteRole = await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.DarkGray, false, false);
+
+                var channels = await msg.Guild.GetChannelsAsync();
+
+                foreach (var channel in channels)
+                {
+                    await channel.AddOverwriteAsync(muteRole, Permissions.None, Permissions.SendMessages);
+                }
+
+                DB.Update(msg.Guild.Id, "muteRoleId", muteRole.Id.ToString());
+                
+                await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention} for {minutesDuration} minutes.", reason);
+            }
+            else
+            {
+                try
+                {
+                    await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+                }
+                catch
+                {
+                    DiscordRole muteRole = await msg.Guild.CreateRoleAsync("Muted", Permissions.None, DiscordColor.DarkGray, false, false);
+
+                    var channels = await msg.Guild.GetChannelsAsync();
+
+                    foreach (var channel in channels)
+                    {
+                        await channel.AddOverwriteAsync(muteRole, Permissions.None, Permissions.SendMessages);
+                    }
+
+                    DB.Update(msg.Guild.Id, "muteRoleId", muteRole.Id.ToString());
+                
+                    await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+                }
+                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention} for {minutesDuration} minutes.", reason);
+            }
+            Thread.Sleep(minutesDuration * 60000);
+            await member.RevokeRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+            await Log.Audit(msg.Guild, $"{member.Mention} unmuted", "Mute time expired");
+        }
+    }
+}
