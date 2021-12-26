@@ -63,17 +63,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("mute")]
         public async Task MuteCommand(CommandContext msg, [RemainingText] string text)
         {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-            {
-                Title = "Missing argument",
-                Description = "**Usage:** `-mute <member>`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
+            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "mute <member> <reason>"));
         }
     }
 }
