@@ -1,21 +1,20 @@
-﻿using System.Data;
-using DSharpPlus;
-using DSharpPlus.CommandsNext;
-using DSharpPlus.CommandsNext.Attributes;
+﻿using DSharpPlus;
 using DSharpPlus.Entities;
-using ducker.Commands.Attributes;
+using DSharpPlus.SlashCommands;
 using ducker.Database;
 using ducker.Logs;
+using ducker.SlashCommands.Attributes;
 
-namespace ducker.Commands.AdministrationModule
+namespace ducker.SlashCommands.AdministrationModule
 {
-    public partial class AdministrationCommands
+    public partial class AdministrationSlashCommands
     {
-        [Command("mute"),
-         Description("Mute mentioned member"),
-         RequireAdmin]
-        public async Task MuteCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "No reason given")
+        [SlashCommand("tempmute", "Temporarily mute mentioned member"), RequireAdmin]
+        public async Task TempmuteCommand(InteractionContext msg, [Option("member", "Member to mute")] DiscordUser user,
+            [Option("duration", "Duration for mute in minutes")] long hoursDuration,
+            [Option("reason", "Reason to mute")] string reason = "No reason given")
         {
+            DiscordMember member = (DiscordMember)user;
             ulong muteRoleId = DB.GetId(msg.Guild.Id, "muteRoleId");
             if (muteRoleId == 0)
             {
@@ -31,8 +30,8 @@ namespace ducker.Commands.AdministrationModule
                 DB.Update(msg.Guild.Id, "muteRoleId", muteRole.Id.ToString());
                 
                 await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
-                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}.", reason);
+                await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention} for {hoursDuration} minutes.", reason);
             }
             else
             {
@@ -55,15 +54,13 @@ namespace ducker.Commands.AdministrationModule
                 
                     await member.GrantRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
                 }
-                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention}.", reason);
+                await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+                await Log.Audit(msg.Guild, $"{msg.Member.Mention} muted {member.Mention} for {hoursDuration} minutes.", reason);
             }
-        } 
-        
-        [Command("mute")]
-        public async Task MuteCommand(CommandContext msg, [RemainingText] string text)
-        {
-            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "mute <member> <reason>"));
+            
+            Thread.Sleep((int)hoursDuration * 3600000);
+            await member.RevokeRoleAsync(msg.Guild.GetRole(DB.GetId(msg.Guild.Id, "muteRoleId")));
+            await Log.Audit(msg.Guild, $"{member.Mention} unmuted", "Mute time expired");
         }
     }
 }

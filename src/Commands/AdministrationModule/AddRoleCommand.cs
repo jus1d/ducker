@@ -50,41 +50,10 @@ namespace ducker.Commands.AdministrationModule
         }
         
         [Command("add-role")]
-        public async Task AddRoleCommand(CommandContext msg, DiscordRole role, [RemainingText] string reason)
-        {
-            if (msg.Message.ReferencedMessage == null)
-            {
-                await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg,
-                    "add-role <member or reply to message> <role>"));
-                return;
-            }
-            
-            try
-            {
-                await ((DiscordMember)msg.Message.ReferencedMessage.Author).GrantRoleAsync(role);
-                await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-                await Log.Audit(msg.Guild, $"{msg.Member.Mention} added role {role.Mention} to {msg.Message.ReferencedMessage.Author.Mention}.", reason);
-            }
-            catch
-            {
-                await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-                {
-                    Description = "You can't add this role to this user",
-                    Footer = new DiscordEmbedBuilder.EmbedFooter
-                    {
-                        IconUrl = msg.User.AvatarUrl,
-                        Text = msg.User.Username
-                    },
-                    Color = Bot.WarningColor
-                });
-            }
-        }
-        
-        [Command("add-role")]
         public async Task AddRoleCommand(CommandContext msg, [RemainingText] string text)
         {
             await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg,
-                "add-role <member or reply to message> <role> <reason>"));
+                "add-role <member> <role> <reason>"));
         }
     }
 }

@@ -39,17 +39,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("unmute")]
         public async Task UnmuteCommand(CommandContext msg, [RemainingText] string text)
         {
-            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-            {
-                Title = "Missing argument",
-                Description = "**Usage:** `-unmute <member>`",
-                Footer = new DiscordEmbedBuilder.EmbedFooter
-                {
-                    IconUrl = msg.User.AvatarUrl,
-                    Text = msg.User.Username
-                },
-                Color = Bot.IncorrectEmbedColor
-            });
+            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "unmute <member> <reason>"));
         }
     }
 }
