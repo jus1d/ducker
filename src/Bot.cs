@@ -23,7 +23,16 @@ namespace ducker
 {
     public class Bot
     {
-        public DiscordClient Client { get; private set; }
+        public DiscordClient Client { get; private set; } = new (new DiscordConfiguration
+        {
+            Token = ConfigJson.GetConfigField().Token,
+            TokenType = TokenType.Bot,
+            AutoReconnect = true,
+            MinimumLogLevel = LogLevel.Debug,
+            LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss",
+            Intents = DiscordIntents.All
+        });
+
         public CommandsNextExtension Commands { get; private set; }
 
         public static string RespondEmojiName = ":verify:";
@@ -41,18 +50,6 @@ namespace ducker
 
         public async Task RunAsync()
         {
-            var config = new DiscordConfiguration
-            {
-                Token = ConfigJson.GetConfigField().Token,
-                TokenType = TokenType.Bot,
-                AutoReconnect = true,
-                MinimumLogLevel = LogLevel.Debug,
-                LogTimestampFormat = "dd.MM.yyyy - hh:mm:ss",
-                Intents = DiscordIntents.All
-            };
-            
-            Client = new DiscordClient(config);
-
             Client.Ready += OnClientReady;
             Client.UseInteractivity(new InteractivityConfiguration
             {
