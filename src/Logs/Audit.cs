@@ -4,7 +4,7 @@ using Microsoft.VisualBasic;
 
 namespace ducker.Logs
 {
-    public partial class Log
+    public class Log
     {
         public static async Task Audit(DiscordGuild guild, string logText, string reason = "noneReason", LogType logType = LogType.Audit)
         {

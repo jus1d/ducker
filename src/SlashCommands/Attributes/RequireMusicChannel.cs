@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.SlashCommands;
+using ducker.DiscordData;
 using ducker.Database;
 
 namespace ducker.SlashCommands.Attributes

@@ -1,5 +1,6 @@
 ﻿using DSharpPlus;
 using DSharpPlus.EventArgs;
+using ducker.DiscordData;
 using ducker.Logs;
 
 namespace ducker.Events

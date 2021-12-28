@@ -1,7 +1,7 @@
-﻿using System.Data;
-using DSharpPlus.Entities;
+﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using ducker.SlashCommands.Attributes;
+using ducker.DiscordData;
 using ducker.Database;
 using ducker.Logs;
 

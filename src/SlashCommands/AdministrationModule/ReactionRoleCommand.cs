@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 using ducker.SlashCommands.Attributes;
+using ducker.DiscordData;
 
 namespace ducker.SlashCommands.AdministrationModule
 {

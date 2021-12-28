@@ -1,9 +1,9 @@
-﻿using System.Data;
-using DSharpPlus;
+﻿using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Commands.Attributes;
+using ducker.DiscordData;
 using ducker.Database;
 using ducker.Logs;
 

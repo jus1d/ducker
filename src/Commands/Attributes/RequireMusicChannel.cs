@@ -1,5 +1,6 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
+using ducker.DiscordData;
 using ducker.Database;
 
 namespace ducker.Commands.Attributes

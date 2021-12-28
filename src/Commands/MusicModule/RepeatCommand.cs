@@ -2,6 +2,7 @@
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Lavalink;
 using ducker.Commands.Attributes;
+using ducker.DiscordData;
 
 namespace ducker.Commands.MusicModule
 {
