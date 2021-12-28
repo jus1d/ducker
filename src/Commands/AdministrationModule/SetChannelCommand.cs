@@ -1,11 +1,10 @@
-﻿using System.Data;
-using DSharpPlus.CommandsNext;
+﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Commands.Attributes;
 using ducker.Database;
 using ducker.Logs;
-using MySqlConnector;
+using ducker.DiscordData;
 
 namespace ducker.Commands.AdministrationModule
 {

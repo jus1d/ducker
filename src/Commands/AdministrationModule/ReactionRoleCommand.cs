@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using ducker.Commands.Attributes;
+using ducker.DiscordData;
 
 namespace ducker.Commands.AdministrationModule
 {
@@ -22,7 +23,7 @@ namespace ducker.Commands.AdministrationModule
             var chelButton = new DiscordButtonComponent(ButtonStyle.Secondary, "get_chel_role", "", false, new DiscordComponentEmoji(chelEmoji));
             
             await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
-                .AddEmbed(ducker.Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
+                .AddEmbed(Embed.ReactionRolesEmbed(msg.Client, msg.Guild))
                 .AddComponents(followButton, chelButton));
         }
     }

@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Lavalink;
+using ducker.DiscordData;
 
 namespace ducker.Events
 {

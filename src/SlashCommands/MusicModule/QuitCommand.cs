@@ -2,7 +2,7 @@
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 using ducker.Commands.Attributes;
-using ducker.Database;
+using ducker.DiscordData;
 
 namespace ducker.SlashCommands.MusicModule
 {

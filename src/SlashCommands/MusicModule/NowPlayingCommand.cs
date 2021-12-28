@@ -2,6 +2,7 @@
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 using ducker.SlashCommands.Attributes;
+using ducker.DiscordData;
 
 namespace ducker.SlashCommands.MusicModule
 {
@@ -13,7 +14,7 @@ namespace ducker.SlashCommands.MusicModule
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NotInVoiceChannelEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NotInVoiceChannelEmbed(msg));
                 return;
             }
             var lava = msg.Client.GetLavalink();
@@ -21,16 +22,16 @@ namespace ducker.SlashCommands.MusicModule
             var connection = node.GetGuildConnection(msg.Member.VoiceState.Guild);
             if (connection == null)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NoConnectionEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NoConnectionEmbed(msg));
                 return;
             }
             if (connection.CurrentState == null || connection.CurrentState.CurrentTrack == null)
             {
-                await msg.Channel.SendMessageAsync(ducker.Embed.NoTracksPlayingEmbed(msg));
+                await msg.Channel.SendMessageAsync(Embed.NoTracksPlayingEmbed(msg));
                 return;
             }
 
-            await msg.Channel.SendMessageAsync(ducker.Embed.NowPlayingEmbed(connection.CurrentState.CurrentTrack,
+            await msg.Channel.SendMessageAsync(Embed.NowPlayingEmbed(connection.CurrentState.CurrentTrack,
                 msg.User));
         }
     }

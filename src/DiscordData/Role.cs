@@ -1,4 +1,4 @@
-﻿namespace ducker
+﻿namespace ducker.DiscordData
 {
     public class Role
     {

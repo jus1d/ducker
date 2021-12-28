@@ -4,7 +4,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
 
-namespace ducker
+namespace ducker.DiscordData
 {
     public class Embed
     {

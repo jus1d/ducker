@@ -1,6 +1,6 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using ducker.Database;
+using ducker.DiscordData;
 using ducker.SlashCommands.Attributes;
 
 namespace ducker.SlashCommands.MusicModule

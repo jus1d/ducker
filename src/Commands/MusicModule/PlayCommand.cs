@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using ducker.Commands.Attributes;
+using ducker.DiscordData;
 using ducker.Config;
 using SpotifyAPI.Web;
 

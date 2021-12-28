@@ -1,6 +1,7 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using ducker.DiscordData;
 using ducker.Logs;
 
 namespace ducker.Commands.MiscModule
