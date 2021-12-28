@@ -100,7 +100,7 @@ namespace ducker
 
             await Client.ConnectAsync();
             await lavalink.ConnectAsync(lavalinkConfig);
-            (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += Events.EventHandler.OnPlaybackFinished;
+            (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
             await Task.Delay(-1);
         }
 
