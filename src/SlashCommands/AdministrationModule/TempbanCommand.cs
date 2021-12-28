@@ -1,7 +1,7 @@
 ﻿using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
-using ducker.Logs;
 using ducker.SlashCommands.Attributes;
+using ducker.Logs;
 
 namespace ducker.SlashCommands.AdministrationModule
 {
