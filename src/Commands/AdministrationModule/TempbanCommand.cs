@@ -10,7 +10,7 @@ namespace ducker.Commands.AdministrationModule
     {
         [Command("tempban"), Description("Temporarily ban mentioned member"), RequireAdmin]
         public async Task TempbanCommand(CommandContext msg, DiscordMember member, int duration,
-            string reason = "No reason given")
+            string reason = "noneReason")
         {
             await msg.Message.CreateReactionAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             await member.BanAsync(0, reason);

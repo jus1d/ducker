@@ -12,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("ban"),
          Description("Ban mentioned user in current server"),
          RequireAdmin]
-        public async Task BanCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "No reason given")
+        public async Task BanCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "noneReason")
         {
             try
             {

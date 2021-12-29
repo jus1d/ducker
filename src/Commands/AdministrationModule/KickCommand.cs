@@ -12,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("kick"),
          Description("Kick mentioned user from current server"),
          RequireAdmin]
-        public async Task KickCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "No reason given")
+        public async Task KickCommand(CommandContext msg, DiscordMember member, [RemainingText] string reason = "noneReason")
         {
             try
             {
