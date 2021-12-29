@@ -9,7 +9,9 @@ namespace ducker.SlashCommands.AdministrationModule
     public partial class AdministrationSlashCommands
     {
         [SlashCommand("unmute", "Unmute mentioned member"), RequireAdmin]
-        public async Task UnmuteCommand(InteractionContext msg, [Option("member", "Member to unmute")] DiscordUser user, [Option("reason", "Reason for unmute")] string reason = "noneReason")
+        public async Task UnmuteCommand(InteractionContext msg, 
+            [Option("member", "Member to unmute")] DiscordUser user, 
+            [Option("reason", "Reason for unmute")] string reason = "noneReason")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;

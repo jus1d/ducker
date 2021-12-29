@@ -8,7 +8,9 @@ namespace ducker.SlashCommands.AdministrationModule
     public partial class AdministrationSlashCommands
     {
         [SlashCommand("kick", "Kicks mentioned user from current server"), RequireAdmin]
-        public async Task KickCommand(InteractionContext msg, [Option("user", "User for kick")] DiscordUser user, [Option("reason", "Reason for kick this member")] string reason = "noneReason")
+        public async Task KickCommand(InteractionContext msg, 
+            [Option("user", "User for kick")] DiscordUser user, 
+            [Option("reason", "Reason for kick this member")] string reason = "noneReason")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;
