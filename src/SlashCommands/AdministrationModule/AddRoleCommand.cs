@@ -12,7 +12,7 @@ namespace ducker.SlashCommands.AdministrationModule
         public async Task AddRoleCommand(InteractionContext msg,
             [Option("member", "Member to add role")] DiscordUser user,
             [Option("role", "Role to add it")] DiscordRole role, 
-            [Option("reason", "Reason to add role")] string reason = "No reason given")
+            [Option("reason", "Reason to add role")] string reason = "noneReason")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;

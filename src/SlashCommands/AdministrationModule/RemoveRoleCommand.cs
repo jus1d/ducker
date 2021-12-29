@@ -11,7 +11,7 @@ namespace ducker.SlashCommands.AdministrationModule
         public async Task RemoveRoleCommand(InteractionContext msg,
             [Option("member", "Member for remove role")] DiscordUser user,
             [Option("role", "Role to remove it")] DiscordRole role,
-            [Option("reason", "Reason to remove role")] string reason = "No reason given")
+            [Option("reason", "Reason to remove role")] string reason = "noneReason")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;

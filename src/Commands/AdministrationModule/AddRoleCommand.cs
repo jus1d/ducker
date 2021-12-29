@@ -12,7 +12,7 @@ namespace ducker.Commands.AdministrationModule
         [Command("add-role"), 
          Description("Add a role to mentioned user"),
          RequireAdmin]
-        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role, [RemainingText] string reason = "No reason given")
+        public async Task AddRoleCommand(CommandContext msg, DiscordMember member, DiscordRole role, [RemainingText] string reason = "noneReason")
         {
             if (member.Roles.ToArray().Contains(role))
             {
