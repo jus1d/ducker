@@ -12,7 +12,7 @@ namespace ducker.SlashCommands.AdministrationModule
         [SlashCommand("tempmute", "Temporarily mute mentioned member"), RequireAdmin]
         public async Task TempmuteCommand(InteractionContext msg, [Option("member", "Member to mute")] DiscordUser user,
             [Option("duration", "Mute duration in hours")] long hoursDuration,
-            [Option("reason", "Reason to mute")] string reason = "No reason given")
+            [Option("reason", "Reason to mute")] string reason = "noneReason")
         {
             DiscordMember member = (DiscordMember)user;
             ulong muteRoleId = DB.GetId(msg.Guild.Id, "muteRoleId");

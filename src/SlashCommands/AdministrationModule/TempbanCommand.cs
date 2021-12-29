@@ -11,7 +11,7 @@ namespace ducker.SlashCommands.AdministrationModule
         public async Task TempbanCommand(InteractionContext msg, 
             [Option("member", "Member to ban")] DiscordUser user, 
             [Option("duration", "Ban duration in hours")] long duration,
-            [Option("reason", "Reason for ban")] string reason = "No reason given")
+            [Option("reason", "Reason for ban")] string reason = "noneReason")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember)user;

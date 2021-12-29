@@ -10,7 +10,7 @@ namespace ducker.SlashCommands.AdministrationModule
     public partial class AdministrationSlashCommands
     {
         [SlashCommand("mute", "Mute mentioned member"), RequireAdmin]
-        public async Task MuteCommand(InteractionContext msg, [Option("member", "Member to mute")] DiscordUser user, [Option("reason", "Reason for mute")] string reason = "No reason given")
+        public async Task MuteCommand(InteractionContext msg, [Option("member", "Member to mute")] DiscordUser user, [Option("reason", "Reason for mute")] string reason = "noneReason")
         {
             await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
             DiscordMember member = (DiscordMember) user;
