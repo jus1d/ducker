@@ -3,6 +3,7 @@ using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using DSharpPlus.Lavalink;
 using ducker.DiscordData;
+using ducker.Logs;
 
 namespace ducker.Events
 {
@@ -17,6 +18,7 @@ namespace ducker.Events
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)))
                 {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
+                    await Log.Audit(e.Interaction.Guild, $"{e.Interaction.User} remove his {e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)} role");
                     grantedEmbed = new DiscordEmbedBuilder
                     {
                         Description = $"You removed your `{e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId).Name}` role",
@@ -31,6 +33,7 @@ namespace ducker.Events
                 else
                 {
                     await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
+                    await Log.Audit(e.Interaction.Guild, $"{e.Interaction.User} get a {e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)} role");
                     grantedEmbed = new DiscordEmbedBuilder
                     {
                         Description = $"You got the `{e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId).Name}` role",
@@ -51,6 +54,7 @@ namespace ducker.Events
                 if (member.Roles.Contains(e.Interaction.Guild.GetRole(Role.ChelRoleId)))
                 {
                     await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
+                    await Log.Audit(e.Interaction.Guild, $"{e.Interaction.User} get a {e.Interaction.Guild.GetRole(Role.ChelRoleId)} role");
                     grantedEmbed = new DiscordEmbedBuilder
                     {
                         Description = $"You removed your `{e.Interaction.Guild.GetRole(Role.ChelRoleId).Name}` role",
@@ -65,6 +69,7 @@ namespace ducker.Events
                 else
                 {
                     await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
+                    await Log.Audit(e.Interaction.Guild, $"{e.Interaction.User} get a {e.Interaction.Guild.GetRole(Role.ChelRoleId)} role");
                     grantedEmbed = new DiscordEmbedBuilder
                     {
                         Description = $"You got the `{e.Interaction.Guild.GetRole(Role.ChelRoleId).Name}` role",
@@ -77,7 +82,7 @@ namespace ducker.Events
                     };
                 }
                 
-                var message = e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
+                await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                     new DiscordInteractionResponseBuilder().AddEmbed(grantedEmbed).AsEphemeral(true));
             }
             else if (e.Interaction.Data.CustomId == "play_button")
@@ -124,7 +129,7 @@ namespace ducker.Events
                 {
                     LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
                 }
-                catch (Exception exception)
+                catch
                 {
                     await e.Interaction.CreateResponseAsync(InteractionResponseType.ChannelMessageWithSource,
                         new DiscordInteractionResponseBuilder().AddEmbed(Embed.ClearQueueEmbed(e.Interaction.User)));
