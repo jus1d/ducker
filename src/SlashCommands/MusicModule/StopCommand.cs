@@ -4,24 +4,25 @@ using DSharpPlus.SlashCommands;
 using ducker.DiscordData;
 using ducker.SlashCommands.Attributes;
 
-namespace ducker.SlashCommands.MusicModule
-{
-    public partial class MusicSlashCommands
-    {
-        [SlashCommand("stop", "Stop playing"), RequireMusicChannel]
-        public async Task StopCommand(InteractionContext msg)
-        {
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = node.GetGuildConnection(msg.Member.VoiceState.Channel.Guild);
+namespace ducker.SlashCommands.MusicModule;
 
-            if (connection == null)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoConnectionEmbed(msg));
-                return;
-            }
-            await connection.DisconnectAsync();
+public partial class MusicSlashCommands
+{
+    [SlashCommand("stop", "Stop playing")]
+    [RequireMusicChannel]
+    public async Task StopCommand(InteractionContext msg)
+    {
+        await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+        var lava = msg.Client.GetLavalink();
+        var node = lava.ConnectedNodes.Values.First();
+        var connection = node.GetGuildConnection(msg.Member.VoiceState.Channel.Guild);
+
+        if (connection == null)
+        {
+            await msg.Channel.SendMessageAsync(Embed.NoConnectionEmbed(msg));
+            return;
         }
+
+        await connection.DisconnectAsync();
     }
 }

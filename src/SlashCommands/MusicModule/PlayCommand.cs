@@ -7,212 +7,219 @@ using ducker.DiscordData;
 using ducker.SlashCommands.Attributes;
 using SpotifyAPI.Web;
 
-namespace ducker.SlashCommands.MusicModule
+namespace ducker.SlashCommands.MusicModule;
+
+public partial class MusicSlashCommands
 {
-    public partial class MusicSlashCommands
+    [SlashCommand("play", "Start playing track")]
+    [RequireMusicChannel]
+    public async Task PlayCommand(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
     {
-        [SlashCommand("play", "Start playing track"), RequireMusicChannel]
-        public async Task PlayCommand(InteractionContext msg, [Option("search", "Track name or url to play")] string search)
+        await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+        if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
         {
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            if (msg.Member.VoiceState == null || msg.Member.VoiceState.Channel == null)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NotInVoiceChannelEmbed(msg));
-                return;
-            }
-            
-            var lava = msg.Client.GetLavalink();
-            var node = lava.ConnectedNodes.Values.First();
-            var connection = await node.ConnectAsync(msg.Member.VoiceState.Channel);
-            
-            if (connection == null)
-            {
-                await msg.Channel.SendMessageAsync(Embed.NoConnectionEmbed(msg));
-                return;
-            }
+            await msg.Channel.SendMessageAsync(Embed.NotInVoiceChannelEmbed(msg));
+            return;
+        }
 
-            if (connection.CurrentState.CurrentTrack == null)
+        var lava = msg.Client.GetLavalink();
+        var node = lava.ConnectedNodes.Values.First();
+        var connection = await node.ConnectAsync(msg.Member.VoiceState.Channel);
+
+        if (connection == null)
+        {
+            await msg.Channel.SendMessageAsync(Embed.NoConnectionEmbed(msg));
+            return;
+        }
+
+        if (connection.CurrentState.CurrentTrack == null)
+        {
+            Uri url;
+            if (Uri.TryCreate(search, UriKind.Absolute, out url))
             {
-                Uri url;
-                if (Uri.TryCreate(search, UriKind.Absolute, out url))
+                if (url.Authority == "open.spotify.com")
                 {
-                    if (url.Authority == "open.spotify.com")
+                    var track = new LavalinkTrack();
+                    if (url.LocalPath[Range.EndAt(7)] == "/track/")
                     {
+                        var config = SpotifyClientConfig.CreateDefault();
+                        var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId,
+                            ConfigJson.GetConfigField().SpotifySecret);
+                        var response = await new OAuthClient(config).RequestToken(request);
+                        var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+                        var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
 
-                        LavalinkTrack track = new LavalinkTrack();
-                        if (url.LocalPath[Range.EndAt(7)] == "/track/")
-                        {
-                            var config = SpotifyClientConfig.CreateDefault();
-                            var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
-                            var response = await new OAuthClient(config).RequestToken(request);
-                            var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-                            var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
-                        
-                            string authors = "";
-                            for (int i = 0; i < trackSpotify.Artists.Count; i++)
-                            {
-                                if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
-                                {
-                                    authors += trackSpotify.Artists[i].Name;
-                                }
-                                else
-                                {
-                                    authors += trackSpotify.Artists[i].Name + ", ";
-                                }
-                            }
+                        var authors = "";
+                        for (var i = 0; i < trackSpotify.Artists.Count; i++)
+                            if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
+                                authors += trackSpotify.Artists[i].Name;
+                            else
+                                authors += trackSpotify.Artists[i].Name + ", ";
 
-                            string searchBySpotifyName = trackSpotify.Name + " - " + authors;
-                            var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
-                            track = loadResult.Tracks.First();
-                            await connection.PlayAsync(track);
-                            
-                            var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
-                            var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
-                            var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
-                            var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
-                            await msg.Channel.SendMessageAsync(new DiscordMessageBuilder().AddEmbed(Embed.NowPlayingEmbed(track, msg.User)).AddComponents(playButton, pauseButton, nextButton, queueButton));
-                        }
-                        else
-                        {
-                            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-                            {
-                                Description = "Episodes and playlists will available in next version",
-                                Footer = new DiscordEmbedBuilder.EmbedFooter
-                                {
-                                    IconUrl = msg.User.AvatarUrl,
-                                    Text = msg.User.Username
-                                },
-                                Color = Bot.MainEmbedColor
-                            });
-                            return;
-                        }
-                    }
-                    else 
-                    {
-                        var loadResult = await node.Rest.GetTracksAsync(url);
-                        var track = loadResult.Tracks.First();
+                        var searchBySpotifyName = trackSpotify.Name + " - " + authors;
+                        var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
+                        track = loadResult.Tracks.First();
                         await connection.PlayAsync(track);
-                        var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
-                        var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
-                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
-                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
-                        await msg.Channel.SendMessageAsync(new DiscordMessageBuilder().AddEmbed(Embed.NowPlayingEmbed(track, msg.User)).AddComponents(playButton, pauseButton, nextButton, queueButton));
 
+                        var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", "Play", false,
+                            new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":arrow_forward:")));
+                        var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", "Pause",
+                            false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":pause_button:")));
+                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", "Skip", false,
+                            new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":track_next:")));
+                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", "Queue",
+                            false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":page_facing_up:")));
+                        await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
+                            .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
+                            .AddComponents(playButton, pauseButton, nextButton, queueButton));
+                    }
+                    else
+                    {
+                        await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
+                        {
+                            Description = "Episodes and playlists will available in next version",
+                            Footer = new DiscordEmbedBuilder.EmbedFooter
+                            {
+                                IconUrl = msg.User.AvatarUrl,
+                                Text = msg.User.Username
+                            },
+                            Color = Bot.MainEmbedColor
+                        });
                     }
                 }
                 else
                 {
-                    var loadResult = await node.Rest.GetTracksAsync(search);
-                    if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
-                    {
-                        await msg.Channel.SendMessageAsync(Embed.SearchFailedEmbed(msg, search));
-                        return;
-                    }
-
+                    var loadResult = await node.Rest.GetTracksAsync(url);
                     var track = loadResult.Tracks.First();
                     await connection.PlayAsync(track);
-                    
-                    var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", $"Play", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":arrow_forward:")));
-                    var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", $"Pause", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":pause_button:")));
-                    var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
-                    var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+                    var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", "Play", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":arrow_forward:")));
+                    var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", "Pause", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":pause_button:")));
+                    var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", "Skip", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":track_next:")));
+                    var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", "Queue", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":page_facing_up:")));
                     await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
                         .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
                         .AddComponents(playButton, pauseButton, nextButton, queueButton));
-
                 }
             }
             else
             {
-                Uri url;
-                if (Uri.TryCreate(search, UriKind.Absolute, out url))
+                var loadResult = await node.Rest.GetTracksAsync(search);
+                if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed ||
+                    loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
                 {
-                    if (url.Authority == "open.spotify.com")
-                    {
-                        var config = SpotifyClientConfig.CreateDefault();
-                        var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId, ConfigJson.GetConfigField().SpotifySecret);
-                        var response = await new OAuthClient(config).RequestToken(request);
-                        var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-
-                        LavalinkTrack track;
-                        if (url.LocalPath[Range.EndAt(7)] == "/track/")
-                        {
-                            var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
-                        
-                            string authors = "";
-                            for (int i = 0; i < trackSpotify.Artists.Count; i++)
-                            {
-                                if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
-                                {
-                                    authors += trackSpotify.Artists[i].Name;
-                                }
-                                else
-                                {
-                                    authors += trackSpotify.Artists[i].Name + ", ";
-                                }
-                            }
-
-                            string searchBySpotifyName = trackSpotify.Name + " - " + authors;
-                            var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
-                            track = loadResult.Tracks.First();
-                            Bot.Queue.Add(track);
-                            await msg.Channel.SendMessageAsync(Embed.TrackQueuedEmbed(msg));
-                        }
-                        else
-                        {
-                            await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
-                            {
-                                Description = "Episodes and playlists will available in next version",
-                                Footer = new DiscordEmbedBuilder.EmbedFooter
-                                {
-                                    IconUrl = msg.User.AvatarUrl,
-                                    Text = msg.User.Username
-                                },
-                                Color = Bot.MainEmbedColor
-                            });
-                            return;
-                        }
-                        
-                        
-                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
-                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
-                        await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
-                            .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
-                            .AddComponents(nextButton, queueButton));
-
-                    }
-                    else 
-                    {
-                        var loadResult = await node.Rest.GetTracksAsync(url);
-                        var track = loadResult.Tracks.First();
-                        Bot.Queue.Add(track);
-                        var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
-                        var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
-                        await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
-                            .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
-                            .AddComponents(nextButton, queueButton));
-
-                    }
+                    await msg.Channel.SendMessageAsync(Embed.SearchFailedEmbed(msg, search));
+                    return;
                 }
-                else
-                {
-                    var loadResult = await node.Rest.GetTracksAsync(search);
 
-                    if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
+                var track = loadResult.Tracks.First();
+                await connection.PlayAsync(track);
+
+                var playButton = new DiscordButtonComponent(ButtonStyle.Secondary, "play_button", "Play", false,
+                    new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":arrow_forward:")));
+                var pauseButton = new DiscordButtonComponent(ButtonStyle.Secondary, "pause_button", "Pause", false,
+                    new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":pause_button:")));
+                var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", "Skip", false,
+                    new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":track_next:")));
+                var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", "Queue", false,
+                    new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":page_facing_up:")));
+                await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
+                    .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
+                    .AddComponents(playButton, pauseButton, nextButton, queueButton));
+            }
+        }
+        else
+        {
+            Uri url;
+            if (Uri.TryCreate(search, UriKind.Absolute, out url))
+            {
+                if (url.Authority == "open.spotify.com")
+                {
+                    var config = SpotifyClientConfig.CreateDefault();
+                    var request = new ClientCredentialsRequest(ConfigJson.GetConfigField().SpotifyId,
+                        ConfigJson.GetConfigField().SpotifySecret);
+                    var response = await new OAuthClient(config).RequestToken(request);
+                    var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+
+                    LavalinkTrack track;
+                    if (url.LocalPath[Range.EndAt(7)] == "/track/")
                     {
-                        await msg.Channel.SendMessageAsync(Embed.SearchFailedEmbed(msg, search));
+                        var trackSpotify = await spotify.Tracks.Get(url.ToString()[Range.StartAt(31)][Range.EndAt(22)]);
+
+                        var authors = "";
+                        for (var i = 0; i < trackSpotify.Artists.Count; i++)
+                            if (trackSpotify.Artists.Count == 1 || trackSpotify.Artists.Count == i + 1)
+                                authors += trackSpotify.Artists[i].Name;
+                            else
+                                authors += trackSpotify.Artists[i].Name + ", ";
+
+                        var searchBySpotifyName = trackSpotify.Name + " - " + authors;
+                        var loadResult = await node.Rest.GetTracksAsync(searchBySpotifyName);
+                        track = loadResult.Tracks.First();
+                        Bot.Queue.Add(track);
+                        await msg.Channel.SendMessageAsync(Embed.TrackQueuedEmbed(msg));
+                    }
+                    else
+                    {
+                        await msg.Channel.SendMessageAsync(new DiscordEmbedBuilder
+                        {
+                            Description = "Episodes and playlists will available in next version",
+                            Footer = new DiscordEmbedBuilder.EmbedFooter
+                            {
+                                IconUrl = msg.User.AvatarUrl,
+                                Text = msg.User.Username
+                            },
+                            Color = Bot.MainEmbedColor
+                        });
                         return;
                     }
 
-                    var track = loadResult.Tracks.First();
-                    Bot.Queue.Add(track);
-                    var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", $"Skip", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":track_next:")));
-                    var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", $"Queue", false, new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client,":page_facing_up:")));
+
+                    var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", "Skip", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":track_next:")));
+                    var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", "Queue", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":page_facing_up:")));
                     await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
                         .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
                         .AddComponents(nextButton, queueButton));
-
                 }
+                else
+                {
+                    var loadResult = await node.Rest.GetTracksAsync(url);
+                    var track = loadResult.Tracks.First();
+                    Bot.Queue.Add(track);
+                    var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", "Skip", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":track_next:")));
+                    var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", "Queue", false,
+                        new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":page_facing_up:")));
+                    await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
+                        .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
+                        .AddComponents(nextButton, queueButton));
+                }
+            }
+            else
+            {
+                var loadResult = await node.Rest.GetTracksAsync(search);
+
+                if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed ||
+                    loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
+                {
+                    await msg.Channel.SendMessageAsync(Embed.SearchFailedEmbed(msg, search));
+                    return;
+                }
+
+                var track = loadResult.Tracks.First();
+                Bot.Queue.Add(track);
+                var nextButton = new DiscordButtonComponent(ButtonStyle.Secondary, "next_button", "Skip", false,
+                    new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":track_next:")));
+                var queueButton = new DiscordButtonComponent(ButtonStyle.Secondary, "queue_button", "Queue", false,
+                    new DiscordComponentEmoji(DiscordEmoji.FromName(msg.Client, ":page_facing_up:")));
+                await msg.Channel.SendMessageAsync(new DiscordMessageBuilder()
+                    .AddEmbed(Embed.NowPlayingEmbed(track, msg.User))
+                    .AddComponents(nextButton, queueButton));
             }
         }
     }

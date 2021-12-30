@@ -1,28 +1,29 @@
 ﻿using DSharpPlus.Lavalink;
 using DSharpPlus.Lavalink.EventArgs;
-using ducker.DiscordData;
 using ducker.Database;
+using ducker.DiscordData;
 
-namespace ducker.Events
+namespace ducker.Events;
+
+public partial class EventHandler
 {
-    public partial class EventHandler
+    public static async Task OnPlaybackFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
     {
-        public static async Task OnPlaybackFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
+        try
         {
-            try
-            {
-                LavalinkTrack lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
-            }
-            catch
-            {
-                return;
-            }
-
-            ulong musicChannelIdFromDb = DB.GetId(sender.Guild.Id, "musicChannelId");
-
-            await sender.PlayAsync(Bot.Queue[0]);
-            await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0], await (await sender.Node.Discord.GetGuildAsync(696496218934608004)).GetMemberAsync(Bot.Id)).SendAsync(sender.Guild.GetChannel(musicChannelIdFromDb));
-            Bot.Queue.Remove(Bot.Queue[0]);
+            var lavalinkTrack = Bot.Queue[0]; // try use list's element to catch exception
         }
+        catch
+        {
+            return;
+        }
+
+        var musicChannelIdFromDb = DB.GetId(sender.Guild.Id, "musicChannelId");
+
+        await sender.PlayAsync(Bot.Queue[0]);
+        await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0],
+                await (await sender.Node.Discord.GetGuildAsync(696496218934608004)).GetMemberAsync(Bot.Id))
+            .SendAsync(sender.Guild.GetChannel(musicChannelIdFromDb));
+        Bot.Queue.Remove(Bot.Queue[0]);
     }
 }

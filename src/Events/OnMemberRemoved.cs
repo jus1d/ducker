@@ -2,13 +2,12 @@
 using DSharpPlus.EventArgs;
 using ducker.Logs;
 
-namespace ducker.Events
+namespace ducker.Events;
+
+public partial class EventHandler
 {
-    public partial class EventHandler
+    public static async Task OnMemberRemoved(DiscordClient client, GuildMemberRemoveEventArgs e)
     {
-        public static async Task OnMemberRemoved(DiscordClient client, GuildMemberRemoveEventArgs e)
-        {
-            await Log.Audit(e.Guild, $"{e.Member.Mention} just leaved from server");
-        }
+        await Log.Audit(e.Guild, $"{e.Member.Mention} just leaved from server");
     }
 }

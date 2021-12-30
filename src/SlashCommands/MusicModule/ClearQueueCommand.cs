@@ -3,16 +3,16 @@ using DSharpPlus.SlashCommands;
 using ducker.DiscordData;
 using ducker.SlashCommands.Attributes;
 
-namespace ducker.SlashCommands.MusicModule
+namespace ducker.SlashCommands.MusicModule;
+
+public partial class MusicSlashCommands
 {
-    public partial class MusicSlashCommands
+    [SlashCommand("clear-queue", "Clear queue list")]
+    [RequireMusicChannel]
+    public async Task ClearQueueCommand(InteractionContext msg)
     {
-        [SlashCommand("clear-queue", "Clear queue list"), RequireMusicChannel]
-        public async Task ClearQueueCommand(InteractionContext msg)
-        {
-            await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
-            Bot.Queue.Clear();
-            await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
-        }
+        await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
+        Bot.Queue.Clear();
+        await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
     }
 }

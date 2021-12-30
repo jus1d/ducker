@@ -3,31 +3,30 @@ using DSharpPlus.CommandsNext.Attributes;
 using ducker.Commands.Attributes;
 using ducker.DiscordData;
 
-namespace ducker.Commands.MusicModule
+namespace ducker.Commands.MusicModule;
+
+public partial class MusicCommands
 {
-    public partial class MusicCommands
+    [Command("remove-from-queue")]
+    [Description("Remove track from queue by it's position")]
+    [RequireMusicChannel]
+    public async Task RemoveFromQueue(CommandContext msg, uint position)
     {
-        [Command("remove-from-queue"),
-         Description("Remove track from queue by it's position"),
-         RequireMusicChannel]
-        public async Task RemoveFromQueue(CommandContext msg, uint position)
+        try
         {
-            try
-            {
-                Bot.Queue.RemoveAt((int)position - 1);
-            }
-            catch
-            {
-                await msg.Channel.SendMessageAsync(Embed.InvalidTrackPositionEmbed(msg.User));
-            }
-
-            await msg.Channel.SendMessageAsync(Embed.TrackRemovedFromQueueEmbed(msg.User));
+            Bot.Queue.RemoveAt((int) position - 1);
+        }
+        catch
+        {
+            await msg.Channel.SendMessageAsync(Embed.InvalidTrackPositionEmbed(msg.User));
         }
 
-        [Command("remove-from-queue")]
-        public async Task RemoveFromQueueCommand(CommandContext msg, [RemainingText] string text)
-        {
-            await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "-remove-from-queue <position>"));
-        }
+        await msg.Channel.SendMessageAsync(Embed.TrackRemovedFromQueueEmbed(msg.User));
+    }
+
+    [Command("remove-from-queue")]
+    public async Task RemoveFromQueueCommand(CommandContext msg, [RemainingText] string text)
+    {
+        await msg.Channel.SendMessageAsync(Embed.IncorrectCommand(msg, "-remove-from-queue <position>"));
     }
 }
