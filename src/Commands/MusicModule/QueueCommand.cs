@@ -3,22 +3,21 @@ using DSharpPlus.CommandsNext.Attributes;
 using ducker.Commands.Attributes;
 using ducker.DiscordData;
 
-namespace ducker.Commands.MusicModule
-{
-    public partial class MusicCommands
-    {
-        [Command("queue"),
-         Description("Send queue list"),
-         RequireMusicChannel]
-        public async Task QueueCommand(CommandContext msg)
-        {
-            await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
-        }
+namespace ducker.Commands.MusicModule;
 
-        [Command("queue")]
-        public async Task QueueCommand(CommandContext msg, [RemainingText] string text)
-        {
-            await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
-        }
+public partial class MusicCommands
+{
+    [Command("queue")]
+    [Description("Send queue list")]
+    [RequireMusicChannel]
+    public async Task QueueCommand(CommandContext msg)
+    {
+        await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
+    }
+
+    [Command("queue")]
+    public async Task QueueCommand(CommandContext msg, [RemainingText] string text)
+    {
+        await msg.Channel.SendMessageAsync(Embed.Queue(msg.User));
     }
 }

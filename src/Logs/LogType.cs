@@ -1,8 +1,7 @@
-﻿namespace ducker.Logs
+﻿namespace ducker.Logs;
+
+public enum LogType
 {
-    public enum LogType
-    {
-        Report,
-        Audit
-    }
+    Report,
+    Audit
 }
