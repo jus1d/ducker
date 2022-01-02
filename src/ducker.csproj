@@ -18,25 +18,25 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="DSharpPlus" Version="4.2.0-nightly-01053"/>
-        <PackageReference Include="DSharpPlus.CommandsNext" Version="4.2.0-nightly-01053"/>
-        <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0-nightly-01053"/>
-        <PackageReference Include="DSharpPlus.Lavalink" Version="4.2.0-nightly-01053"/>
-        <PackageReference Include="DSharpPlus.SlashCommands" Version="4.2.0-nightly-01053"/>
-        <PackageReference Include="DSharpPlus.VoiceNext" Version="4.2.0-nightly-01053"/>
-        <PackageReference Include="Json.Net" Version="1.0.33"/>
-        <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1"/>
+        <PackageReference Include="DSharpPlus" Version="4.2.0-nightly-01053" />
+        <PackageReference Include="DSharpPlus.CommandsNext" Version="4.2.0-nightly-01053" />
+        <PackageReference Include="DSharpPlus.Interactivity" Version="4.2.0-nightly-01053" />
+        <PackageReference Include="DSharpPlus.Lavalink" Version="4.2.0-nightly-01053" />
+        <PackageReference Include="DSharpPlus.SlashCommands" Version="4.2.0-nightly-01053" />
+        <PackageReference Include="DSharpPlus.VoiceNext" Version="4.2.0-nightly-01053" />
+        <PackageReference Include="Json.Net" Version="1.0.33" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.1" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0"/>
-        <PackageReference Include="MySqlConnector" Version="2.1.0"/>
-        <PackageReference Include="SpotifyAPI.Web" Version="6.2.2"/>
-        <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7"/>
-        <PackageReference Include="TwitchLib.Api" Version="3.4.0-preview-f3b3afbb4fa8d1641bf4b69747b8cd1db7c2f86a"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0" />
+        <PackageReference Include="MySqlConnector" Version="2.1.0" />
+        <PackageReference Include="SpotifyAPI.Web" Version="6.2.2" />
+        <PackageReference Include="System.ComponentModel.Annotations" Version="6.0.0-preview.4.21253.7" />
+        <PackageReference Include="TwitchLib.Api" Version="3.4.0-preview-f3b3afbb4fa8d1641bf4b69747b8cd1db7c2f86a" />
     </ItemGroup>
 
 </Project>

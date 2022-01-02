@@ -53,7 +53,7 @@ public class Bot
 
     public async Task RunAsync()
     {
-        Client.Ready += OnClientReady;
+        Client.Ready += EventHandler.OnClientReady;
         Client.UseInteractivity(new InteractivityConfiguration
         {
             PollBehaviour = PollBehaviour.DeleteEmojis,
@@ -105,16 +105,5 @@ public class Bot
         await lavalink.ConnectAsync(lavalinkConfig);
         (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
         await Task.Delay(-1);
-    }
-
-    private Task OnClientReady(DiscordClient client, ReadyEventArgs e)
-    {
-        Uptime = DateTime.Now;
-        Client.UpdateStatusAsync(new DiscordActivity
-        {
-            ActivityType = ActivityType.Playing,
-            Name = "with ducks | -help"
-        }, UserStatus.Idle);
-        return Task.CompletedTask;
     }
 }
