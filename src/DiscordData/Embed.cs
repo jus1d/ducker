@@ -636,7 +636,8 @@ public class Embed
             channelType = "Music channel";
         else if (channelTypeIn == "cmd")
             channelType = "Command channel";
-        else if (channelType == "logs") channelType = "Logs channel";
+        else if (channelTypeIn == "logs")
+            channelType = "Logs channel";
 
         return new DiscordEmbedBuilder
         {
