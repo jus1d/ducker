@@ -95,11 +95,8 @@ public class Bot
         Commands.RegisterCommands<MusicCommands>();
         Commands.SetHelpFormatter<DefaultHelpFormatter>();
         slash.RegisterCommands<AdministrationSlashCommands>(MainGuildId);
-        slash.RegisterCommands<AdministrationSlashCommands>(DevGuildId);
         slash.RegisterCommands<MiscSlashCommands>(MainGuildId);
-        slash.RegisterCommands<MiscSlashCommands>(DevGuildId);
         slash.RegisterCommands<MusicSlashCommands>(MainGuildId);
-        slash.RegisterCommands<MusicSlashCommands>(DevGuildId);
 
         await Client.ConnectAsync();
         await lavalink.ConnectAsync(lavalinkConfig);
