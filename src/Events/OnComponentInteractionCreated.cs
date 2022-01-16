@@ -19,7 +19,7 @@ public partial class EventHandler
             {
                 await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
                 await Log.Audit(e.Interaction.Guild,
-                    $"{e.Interaction.User} remove his {e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)} role");
+                    $"{e.Interaction.User.Mention} remove his {e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId).Name} role");
                 grantedEmbed = new DiscordEmbedBuilder
                 {
                     Description =
@@ -36,7 +36,7 @@ public partial class EventHandler
             {
                 await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId));
                 await Log.Audit(e.Interaction.Guild,
-                    $"{e.Interaction.User} get a {e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId)} role");
+                    $"{e.Interaction.User.Mention} get a {e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId).Name} role");
                 grantedEmbed = new DiscordEmbedBuilder
                 {
                     Description = $"You got the `{e.Interaction.Guild.GetRole(Role.TwitchFollowerRoleId).Name}` role",
@@ -58,7 +58,7 @@ public partial class EventHandler
             {
                 await member.RevokeRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
                 await Log.Audit(e.Interaction.Guild,
-                    $"{e.Interaction.User} get a {e.Interaction.Guild.GetRole(Role.ChelRoleId)} role");
+                    $"{e.Interaction.User.Mention} get a {e.Interaction.Guild.GetRole(Role.ChelRoleId).Name} role");
                 grantedEmbed = new DiscordEmbedBuilder
                 {
                     Description = $"You removed your `{e.Interaction.Guild.GetRole(Role.ChelRoleId).Name}` role",
@@ -74,7 +74,7 @@ public partial class EventHandler
             {
                 await member.GrantRoleAsync(e.Interaction.Guild.GetRole(Role.ChelRoleId));
                 await Log.Audit(e.Interaction.Guild,
-                    $"{e.Interaction.User} get a {e.Interaction.Guild.GetRole(Role.ChelRoleId)} role");
+                    $"{e.Interaction.User.Mention} get a {e.Interaction.Guild.GetRole(Role.ChelRoleId).Name} role");
                 grantedEmbed = new DiscordEmbedBuilder
                 {
                     Description = $"You got the `{e.Interaction.Guild.GetRole(Role.ChelRoleId).Name}` role",
