@@ -654,8 +654,16 @@ public class Embed
 
     public static DiscordEmbedBuilder AboutMemberEmbed(DiscordMember member)
     {
+        var roleString = from r in member.Roles
+            select $"<@&{r.Id}>";
+
         return new DiscordEmbedBuilder()
             .WithTitle("About")
-            .WithAuthor($"{member.Username}", $"https://discord.com/users/{member.Id}", member.AvatarUrl);
+            .WithAuthor($"{member.Username}", $"https://discord.com/users/{member.Id}", member.AvatarUrl)
+            .AddField("Member's ID:", member.Id.ToString(), true)
+            .AddField("Member's display name on server:", member.DisplayName, true)
+            .AddField("Member's account created at ", $"{member.CreationTimestamp:dd.MM.yyyy - hh:mm:ss}")
+            .AddField("Member joined at ", $"{member.JoinedAt:dd.MM.yyyy - hh:mm:ss}")
+            .AddField("Member's roles ", string.Join(", ", roleString));
     }
 }
