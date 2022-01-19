@@ -3,6 +3,7 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
 using DSharpPlus.SlashCommands;
+using Microsoft.VisualBasic;
 
 namespace ducker.DiscordData;
 
@@ -649,5 +650,12 @@ public class Embed
             },
             Color = Bot.MainEmbedColor
         };
+    }
+
+    public static DiscordEmbedBuilder AboutMemberEmbed(DiscordMember member)
+    {
+        return new DiscordEmbedBuilder()
+            .WithTitle("About")
+            .WithAuthor($"{member.Username}", $"https://discord.com/users/{member.Id}", member.AvatarUrl);
     }
 }
