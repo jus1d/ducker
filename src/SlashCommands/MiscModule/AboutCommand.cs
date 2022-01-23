@@ -7,7 +7,7 @@ namespace ducker.SlashCommands.MiscModule;
 public partial class MiscSlashCommands
 {
     [SlashCommand("about", "Send information about mentioned member or you")]
-    public async Task AboutCommand(InteractionContext msg, DiscordUser user)
+    public async Task AboutCommand(InteractionContext msg, [Option("user", "User to get info about")] DiscordUser user)
     {
         DiscordMember member = (DiscordMember) user;
         await msg.CreateResponseAsync(DiscordEmoji.FromName(msg.Client, Bot.RespondEmojiName));
