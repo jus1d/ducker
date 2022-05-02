@@ -22,7 +22,7 @@ public partial class EventHandler
 
         await sender.PlayAsync(Bot.Queue[0]);
         await Embed.NowPlaying(sender.Node.Discord, Bot.Queue[0],
-                await (await sender.Node.Discord.GetGuildAsync(696496218934608004)).GetMemberAsync(Bot.Id))
+                await (await sender.Node.Discord.GetGuildAsync(Bot.MainGuildId)).GetMemberAsync(Bot.Id))
             .SendAsync(sender.Guild.GetChannel(musicChannelIdFromDb));
         Bot.Queue.Remove(Bot.Queue[0]);
     }

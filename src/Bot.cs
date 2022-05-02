@@ -1,7 +1,6 @@
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
-using DSharpPlus.EventArgs;
 using DSharpPlus.Interactivity;
 using DSharpPlus.Interactivity.Enums;
 using DSharpPlus.Interactivity.Extensions;
@@ -53,7 +52,7 @@ public class Bot
 
     public async Task RunAsync()
     {
-        Client.Ready += OnClientReady;
+        Client.Ready += EventHandler.OnClientReady;
         Client.UseInteractivity(new InteractivityConfiguration
         {
             PollBehaviour = PollBehaviour.DeleteEmojis,
@@ -95,26 +94,12 @@ public class Bot
         Commands.RegisterCommands<MusicCommands>();
         Commands.SetHelpFormatter<DefaultHelpFormatter>();
         slash.RegisterCommands<AdministrationSlashCommands>(MainGuildId);
-        slash.RegisterCommands<AdministrationSlashCommands>(DevGuildId);
         slash.RegisterCommands<MiscSlashCommands>(MainGuildId);
-        slash.RegisterCommands<MiscSlashCommands>(DevGuildId);
         slash.RegisterCommands<MusicSlashCommands>(MainGuildId);
-        slash.RegisterCommands<MusicSlashCommands>(DevGuildId);
 
         await Client.ConnectAsync();
         await lavalink.ConnectAsync(lavalinkConfig);
         (await lavalink.ConnectAsync(lavalinkConfig)).PlaybackFinished += EventHandler.OnPlaybackFinished;
         await Task.Delay(-1);
-    }
-
-    private Task OnClientReady(DiscordClient client, ReadyEventArgs e)
-    {
-        Uptime = DateTime.Now;
-        Client.UpdateStatusAsync(new DiscordActivity
-        {
-            ActivityType = ActivityType.Playing,
-            Name = "with ducks | -help"
-        }, UserStatus.Idle);
-        return Task.CompletedTask;
     }
 }

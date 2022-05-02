@@ -12,7 +12,7 @@ public class RequireMusicChannel : SlashCheckBaseAttribute
 {
     public override async Task<bool> ExecuteChecksAsync(InteractionContext msg)
     {
-        var musicChannelId = DB.GetId(msg.Guild.Id, "musicChannelId");
+        /*var musicChannelId = DB.GetId(msg.Guild.Id, "musicChannelId");
         var cmdChannelId = DB.GetId(msg.Guild.Id, "cmdChannelId");
         var correctChannel = msg.Channel.Id == musicChannelId || msg.Channel.Id == cmdChannelId;
         if (!correctChannel)
@@ -20,6 +20,7 @@ public class RequireMusicChannel : SlashCheckBaseAttribute
         if (musicChannelId == 0)
             await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
 
-        return correctChannel;
+        return correctChannel;*/
+        return true;
     }
 }
