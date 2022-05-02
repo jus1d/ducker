@@ -13,7 +13,7 @@ public class RequireMusicChannel : CheckBaseAttribute
 {
     public override async Task<bool> ExecuteCheckAsync(CommandContext msg, bool help)
     {
-        var musicChannelId = DB.GetId(msg.Guild.Id, "musicChannelId");
+        /*var musicChannelId = DB.GetId(msg.Guild.Id, "musicChannelId");
         var cmdChannelId = DB.GetId(msg.Guild.Id, "cmdChannelId");
         var correctChannel = msg.Channel.Id == musicChannelId || msg.Channel.Id == cmdChannelId;
         if (!correctChannel)
@@ -21,6 +21,7 @@ public class RequireMusicChannel : CheckBaseAttribute
         if (musicChannelId == 0)
             await msg.Channel.SendMessageAsync(Embed.NoMusicChannelConfigured(msg.User));
 
-        return correctChannel;
+        return correctChannel;*/
+        return true;
     }
 }
